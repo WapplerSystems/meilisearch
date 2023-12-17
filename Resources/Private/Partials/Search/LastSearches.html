@@ -1,6 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en"
 	xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
-	xmlns:s="http://typo3.org/ns/ApacheSolrForTypo3/Solr/ViewHelpers"
+	xmlns:s="http://typo3.org/ns/ApacheMeilisearchForTypo3/Meilisearch/ViewHelpers"
 	data-namespace-typo3-fluid="true"
 >
 
@@ -9,18 +9,18 @@
 <s:lastSearches>
 	<f:if condition="{lastSearches}">
 
-		<div id="tx-solr-lastsearches" class="secondaryContentSection card">
+		<div id="tx-meilisearch-lastsearches" class="secondaryContentSection card">
 			<div class="card-header">
 				<span class="bi bi-clock-history"></span>
 				<a data-bs-toggle="collapse" href="#lastSearches">
-					<f:translate key="lastSearches" extensionName="solr">Last searches</f:translate>
+					<f:translate key="lastSearches" extensionName="meilisearch">Last searches</f:translate>
 				</a>
 			</div>
 
 			<ul class="list-group collapse show" id="lastSearches">
 				<f:for each="{lastSearches}" as="searchedFor">
 					<li class="list-group-item">
-						<a href="{s:uri.search.startNewSearch(queryString: searchedFor)}" class="solr-ajaxified"><f:format.htmlentities>{searchedFor}</f:format.htmlentities></a>
+						<a href="{s:uri.search.startNewSearch(queryString: searchedFor)}" class="meilisearch-ajaxified"><f:format.htmlentities>{searchedFor}</f:format.htmlentities></a>
 					</li>
 				</f:for>
 			</ul>

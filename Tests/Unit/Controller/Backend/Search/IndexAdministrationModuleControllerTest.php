@@ -16,9 +16,9 @@
 namespace WapplerSystems\Meilisearch\Tests\Unit\Controller\Backend\Search;
 
 use WapplerSystems\Meilisearch\Controller\Backend\Search\IndexAdministrationModuleController;
-use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
-use WapplerSystems\Meilisearch\System\Solr\Service\SolrAdminService;
-use WapplerSystems\Meilisearch\System\Solr\SolrConnection;
+use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Meilisearch\Service\MeilisearchAdminService;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchConnection;
 use PHPUnit\Framework\MockObject\MockObject;
 use Solarium\Core\Client\Endpoint;
 
@@ -49,14 +49,14 @@ class IndexAdministrationModuleControllerTest extends AbstractModuleController
         $responseMock->expects(self::once())->method('getHttpStatus')->willReturn(200);
 
         $writeEndpointMock = $this->createMock(Endpoint::class);
-        $adminServiceMock = $this->createMock(SolrAdminService::class);
+        $adminServiceMock = $this->createMock(MeilisearchAdminService::class);
         $adminServiceMock->expects(self::once())->method('reloadCore')->willReturn($responseMock);
         $adminServiceMock->expects(self::once())->method('getPrimaryEndpoint')->willReturn($writeEndpointMock);
 
-        $solrConnection = $this->createMock(SolrConnection::class);
-        $solrConnection->expects(self::once())->method('getAdminService')->willReturn($adminServiceMock);
+        $meilisearchConnection = $this->createMock(MeilisearchConnection::class);
+        $meilisearchConnection->expects(self::once())->method('getAdminService')->willReturn($adminServiceMock);
 
-        $fakeConnections = [$solrConnection];
+        $fakeConnections = [$meilisearchConnection];
         $this->connectionManagerMock->expects(self::once())
             ->method('getConnectionsBySite')
             ->with($this->selectedSiteMock)

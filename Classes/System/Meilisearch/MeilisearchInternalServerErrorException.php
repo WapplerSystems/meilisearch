@@ -18,6 +18,6 @@ declare(strict_types=1);
 namespace WapplerSystems\Meilisearch\System\Meilisearch;
 
 /**
- * This exception is used when the solr an 500 internal server error is thrown by the solr server
+ * This exception is used when the meilisearch an 500 internal server error is thrown by the meilisearch server
  */
 class MeilisearchInternalServerErrorException extends MeilisearchCommunicationException {}

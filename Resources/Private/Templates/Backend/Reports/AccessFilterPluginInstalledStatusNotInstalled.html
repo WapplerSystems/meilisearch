@@ -1,5 +1,5 @@
 <p style="margin-bottom: 10px;">
-    EXT:meilisearch comes with a plugin for the Apache Solr server to
+    EXT:meilisearch comes with a plugin for the Apache Meilisearch server to
     ensure TYPO3 access restrictions are enforced for search
     results, thus allowing visitors to only see results they are
     allowed to see. The plugin is not installed on the following
@@ -10,29 +10,29 @@
     <thead>
     <tr>
         <td colspan="2">
-            Affected Solr server
+            Affected Meilisearch server
         </td>
     </tr>
     </thead>
     <tbody>
     <tr>
         <th>Host</th>
-        <td>{solr.primaryEndpoint.host}</td>
+        <td>{meilisearch.primaryEndpoint.host}</td>
     </tr>
     <tr>
         <th>Path</th>
-        <td>{solr.corePath}</td>
+        <td>{meilisearch.corePath}</td>
     </tr>
     <tr>
         <th>Port</th>
-        <td>{solr.primaryEndpoint.port}</td>
+        <td>{meilisearch.primaryEndpoint.port}</td>
     </tr>
     </tbody>
 </table>
 
 <p>Please download and install the
     <a target="_blank"
-       href="http://www.typo3-solr.com/fileadmin/files/solr/solr-typo3-plugin-{recommendedVersion}.jar">
+       href="http://www.typo3-meilisearch.com/fileadmin/files/meilisearch/meilisearch-typo3-plugin-{recommendedVersion}.jar">
         current version of the plugin
     </a>.
 </p>

@@ -31,14 +31,14 @@ class TrigramPhraseFields extends AbstractFieldList implements ParameterBuilderI
         return self::initializeFromString($fieldListString, $delimiter);
     }
 
-    public static function fromTypoScriptConfiguration(TypoScriptConfiguration $solrConfiguration): TrigramPhraseFields
+    public static function fromTypoScriptConfiguration(TypoScriptConfiguration $meilisearchConfiguration): TrigramPhraseFields
     {
-        $isEnabled = $solrConfiguration->getTrigramPhraseSearchIsEnabled();
+        $isEnabled = $meilisearchConfiguration->getTrigramPhraseSearchIsEnabled();
         if (!$isEnabled) {
             return new TrigramPhraseFields(false);
         }
 
-        return self::fromString($solrConfiguration->getSearchQueryTrigramPhraseFields());
+        return self::fromString($meilisearchConfiguration->getSearchQueryTrigramPhraseFields());
     }
 
     /**

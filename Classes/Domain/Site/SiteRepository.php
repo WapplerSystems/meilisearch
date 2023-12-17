@@ -233,7 +233,7 @@ class SiteRepository
             return $language->getLanguageId();
         }, $typo3Site->getLanguages());
 
-        // Try to get first instantiable TSFE for one of site languages, to get TypoScript with `plugin.tx_solr.index.*`,
+        // Try to get first instantiable TSFE for one of site languages, to get TypoScript with `plugin.tx_meilisearch.index.*`,
         // to be able to collect indexing configuration,
         // which are required for BE-Modules/CLI-Commands or RecordMonitor within BE/TCE-commands.
         // If TSFE for none of languages can be initialized, then the \WapplerSystems\Meilisearch\Domain\Site\Site object unusable at all,
@@ -244,30 +244,30 @@ class SiteRepository
             return null;
         }
 
-        $solrConnectionConfigurations = [];
+        $meilisearchConnectionConfigurations = [];
 
         foreach ($availableLanguageIds as $languageUid) {
-            $solrConnection = SiteUtility::getMeilisearchConnectionConfiguration($typo3Site, $languageUid);
-            if ($solrConnection !== null) {
-                $solrConnectionConfigurations[$languageUid] = $solrConnection;
+            $meilisearchConnection = SiteUtility::getMeilisearchConnectionConfiguration($typo3Site, $languageUid);
+            if ($meilisearchConnection !== null) {
+                $meilisearchConnectionConfigurations[$languageUid] = $meilisearchConnection;
             }
         }
 
-        $solrConfiguration = $this->frontendEnvironment->getMeilisearchConfigurationFromPageId(
+        $meilisearchConfiguration = $this->frontendEnvironment->getMeilisearchConfigurationFromPageId(
             $rootPageRecord['uid'],
             $tsfeToUseForTypoScriptConfiguration->getLanguage()->getLanguageId()
         );
 
         return GeneralUtility::makeInstance(
             Site::class,
-            $solrConfiguration,
+            $meilisearchConfiguration,
             $rootPageRecord,
             $domain,
             $siteHash,
             $pageRepository,
             $defaultLanguage,
             $availableLanguageIds,
-            $solrConnectionConfigurations,
+            $meilisearchConnectionConfigurations,
             $typo3Site
         );
     }

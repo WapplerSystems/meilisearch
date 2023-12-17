@@ -13,7 +13,7 @@ plugin.tx_meilisearch {
 
     }
 
-    // assigns processing instructions to Solr fields during indexing, Solr field = processing instruction
+    // assigns processing instructions to Meilisearch fields during indexing, Meilisearch field = processing instruction
     fieldProcessingInstructions {
       changed = timestampToIsoDate
       created = timestampToIsoDate
@@ -23,7 +23,7 @@ plugin.tx_meilisearch {
 
     queue {
 
-      // mapping tableName.fields.SolrFieldName => TableFieldName (+ cObj processing)
+      // mapping tableName.fields.MeilisearchFieldName => TableFieldName (+ cObj processing)
 
       pages = 1
       pages {
@@ -54,7 +54,7 @@ plugin.tx_meilisearch {
   }
 
   search {
-    // fields that are allowed to contain html and should be skipped during escaping after retrieval from Solr
+    // fields that are allowed to contain html and should be skipped during escaping after retrieval from Meilisearch
     // by default all fields except url get escaped, you might need to add other url fields here as well because of &
     // characters in the url.
     trustedFields = url
@@ -105,12 +105,12 @@ plugin.tx_meilisearch {
       // https://meilisearch.pl/en/2010/07/14/meilisearch-and-phrasequery-phrase-bonus-in-query-stage/
 
       // see https://lucene.apache.org/meilisearch/guide/7_0/the-dismax-query-parser.html#TheDisMaxQueryParser-Thepf_PhraseFields_Parameter
-      // EXT:Solr configures Schemas from Apache Solr to use content field with boost of 2.0 per default.
-      // By enabling of phrase search, Apache Solr will build a phrase queries for a list of defined fields(phrase.fields) and boost the documents containing the terms in defined proximity(phrase.slop).
+      // EXT:Meilisearch configures Schemas from Apache Meilisearch to use content field with boost of 2.0 per default.
+      // By enabling of phrase search, Apache Meilisearch will build a phrase queries for a list of defined fields(phrase.fields) and boost the documents containing the terms in defined proximity(phrase.slop).
       // phrase.querySlop
       phrase = 0
       phrase {
-        // Note: Those are field for implicit phrase searching. On explicit "phrase searching" Apache Solr uses queryFields("qf" parameter)
+        // Note: Those are field for implicit phrase searching. On explicit "phrase searching" Apache Meilisearch uses queryFields("qf" parameter)
         fields = content^10.0, title^10.0, tagsH1^10.0, tagsH2H3^10.0, tagsH4H5H6^10.0, tagsInline^10.0, description^10.0, abstract^10.0, subtitle^10.0, navtitle^10.0
         // The number of words between words in query phrase is the slop-value.
         // e.g. on query phrase "Hello World"
@@ -385,8 +385,8 @@ plugin.tx_meilisearch {
 lib.meilisearch_extbase_bootstrap = USER
 lib.meilisearch_extbase_bootstrap {
   userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
-  vendorName = ApacheSolrForTypo3
-  extensionName = Solr
+  vendorName = ApacheMeilisearchForTypo3
+  extensionName = Meilisearch
   settings < plugin.tx_meilisearch.settings
   persistence < plugin.tx_meilisearch.persistence
   view < plugin.tx_meilisearch.view

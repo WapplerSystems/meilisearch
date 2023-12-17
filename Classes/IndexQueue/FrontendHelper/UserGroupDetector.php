@@ -165,7 +165,7 @@ class UserGroupDetector implements
      */
     public function postProcessContentObjectInitialization(ContentObjectRenderer &$parentObject)
     {
-        $this->request = $parentObject->getRequest()->getAttribute('solr.pageIndexingInstructions');
+        $this->request = $parentObject->getRequest()->getAttribute('meilisearch.pageIndexingInstructions');
         if (!empty($parentObject->currentRecord)) {
             [$table] = explode(':', $parentObject->currentRecord);
 

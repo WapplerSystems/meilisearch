@@ -42,7 +42,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
- * The concrete QueryBuilder contains all TYPO3 specific initialization logic of solr queries, for TYPO3.
+ * The concrete QueryBuilder contains all TYPO3 specific initialization logic of meilisearch queries, for TYPO3.
  *
  * @author Timo Hund <timo.hund@dkd.de>
  */
@@ -61,11 +61,11 @@ class QueryBuilder extends AbstractQueryBuilder
 
     public function __construct(
         TypoScriptConfiguration $configuration = null,
-        MeilisearchLogManager   $solrLogManager = null,
+        MeilisearchLogManager   $meilisearchLogManager = null,
         SiteHashService         $siteHashService = null,
     ) {
         $this->typoScriptConfiguration = $configuration ?? Util::getMeilisearchConfiguration();
-        $this->logger = $solrLogManager ?? GeneralUtility::makeInstance(MeilisearchLogManager::class, __CLASS__);
+        $this->logger = $meilisearchLogManager ?? GeneralUtility::makeInstance(MeilisearchLogManager::class, __CLASS__);
         $this->siteHashService = $siteHashService ?? GeneralUtility::makeInstance(SiteHashService::class);
     }
 
@@ -136,7 +136,7 @@ class QueryBuilder extends AbstractQueryBuilder
 
     /**
      * Returns Query for Search which finds document for given page.
-     * Note: The Connection is per language as recommended in ext-solr docs.
+     * Note: The Connection is per language as recommended in ext-meilisearch docs.
      *
      * @throws DBALException
      */
@@ -253,11 +253,11 @@ class QueryBuilder extends AbstractQueryBuilder
     }
 
     /**
-     * Can be used to apply the allowed sites from plugin.tx_solr.search.query.allowedSites to the query.
+     * Can be used to apply the allowed sites from plugin.tx_meilisearch.search.query.allowedSites to the query.
      */
     public function useSiteHashFromTypoScript(int $requestedPageId): QueryBuilder
     {
-        $queryConfiguration = $this->typoScriptConfiguration->getObjectByPathOrDefault('plugin.tx_solr.search.query.');
+        $queryConfiguration = $this->typoScriptConfiguration->getObjectByPathOrDefault('plugin.tx_meilisearch.search.query.');
         $allowedSites = $this->siteHashService->getAllowedSitesForPageIdAndAllowedSitesConfiguration($requestedPageId, $queryConfiguration['allowedSites'] ?? '');
         return $this->useSiteHashFromAllowedSites($allowedSites);
     }
@@ -300,7 +300,7 @@ class QueryBuilder extends AbstractQueryBuilder
     }
 
     /**
-     * Applies the configured initial query settings to set the alternative query for solr as required.
+     * Applies the configured initial query settings to set the alternative query for meilisearch as required.
      */
     public function useInitialQueryFromTypoScript(): QueryBuilder
     {

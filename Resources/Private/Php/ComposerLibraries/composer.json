@@ -1,5 +1,5 @@
 {
-  "name": "non-composer-typo3-mode-libs-for/ext-solr",
+  "name": "non-composer-typo3-mode-libs-for/ext-meilisearch",
   "description": "This file contains the wanted by EXT:meilisearch libraries. Note: in replace defined libs are provided by TYPO3 source.",
   "config": {
     "platform": {

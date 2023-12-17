@@ -17,40 +17,40 @@ declare(strict_types=1);
 
 namespace WapplerSystems\Meilisearch\Tests\Integration\Report;
 
-use WapplerSystems\Meilisearch\Report\SolrVersionStatus;
+use WapplerSystems\Meilisearch\Report\MeilisearchVersionStatus;
 use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Reports\Status;
 
 /**
- * Integration test for the Solr version test
+ * Integration test for the Meilisearch version test
  *
  * @author Timo Hund
  */
-class SolrVersionStatusTest extends IntegrationTest
+class MeilisearchVersionStatusTest extends IntegrationTest
 {
     protected function setUp(): void
     {
         parent::setUp();
-        $this->writeDefaultSolrTestSiteConfiguration();
+        $this->writeDefaultMeilisearchTestSiteConfiguration();
     }
 
     /**
      * @test
      */
-    public function canGetAGreenSolrConfigStatusAgainstTestServer(): void
+    public function canGetAGreenMeilisearchConfigStatusAgainstTestServer(): void
     {
-        /** @var SolrVersionStatus $solrVersionStatus */
-        $solrVersionStatus = GeneralUtility::makeInstance(SolrVersionStatus::class);
-        $results = $solrVersionStatus->getStatus();
+        /** @var MeilisearchVersionStatus $meilisearchVersionStatus */
+        $meilisearchVersionStatus = GeneralUtility::makeInstance(MeilisearchVersionStatus::class);
+        $results = $meilisearchVersionStatus->getStatus();
         self::assertCount(6, $results);
         self::assertEmpty(
             array_filter(
                 $results,
                 static fn(Status $status): bool => $status->getSeverity() !== ContextualFeedbackSeverity::OK
             ),
-            'We expect to get no violations against the test Solr server '
+            'We expect to get no violations against the test Meilisearch server '
         );
     }
 }

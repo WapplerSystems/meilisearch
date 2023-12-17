@@ -26,7 +26,7 @@ use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Repository class to encapsulate the database access for records used in solr.
+ * Repository class to encapsulate the database access for records used in meilisearch.
  *
  * @author Timo Hund <timo.hund@dkd.de>
  */

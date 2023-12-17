@@ -1,4 +1,4 @@
-"tx_solr_indexqueue_item",
+"tx_meilisearch_indexqueue_item",
 ,"uid","root","item_type","item_uid","indexing_configuration","has_indexing_properties","indexing_priority","errors","pages_mountidentifier","changed","indexed"
 ,4711,1,"pages",1,"pages",0,0,,,1449151778,0
 "sys_template",
@@ -7,7 +7,7 @@
 page = PAGE
 page.typeNum = 0
 
-plugin.tx_solr {
+plugin.tx_meilisearch {
     enabled = 1
 
     index {
@@ -18,7 +18,7 @@ plugin.tx_solr {
             rootline = pageUidToHierarchy
         }
         queue {
-            // mapping tableName.fields.SolrFieldName => TableFieldName (+ cObj processing)
+            // mapping tableName.fields.MeilisearchFieldName => TableFieldName (+ cObj processing)
             pages = 1
             pages {
                 initialization = WapplerSystems\Meilisearch\IndexQueue\Initializer\Page

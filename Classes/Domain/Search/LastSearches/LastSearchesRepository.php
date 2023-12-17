@@ -23,7 +23,7 @@ use function json_encode;
 
 class LastSearchesRepository extends AbstractRepository
 {
-    protected string $table = 'tx_solr_last_searches';
+    protected string $table = 'tx_meilisearch_last_searches';
 
     /**
      * Finds the last searched keywords from the database

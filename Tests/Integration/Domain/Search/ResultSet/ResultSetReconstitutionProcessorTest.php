@@ -21,7 +21,7 @@ use WapplerSystems\Meilisearch\Domain\Search\ResultSet\ResultSetReconstitutionPr
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSet;
 use WapplerSystems\Meilisearch\Domain\Search\SearchRequest;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
-use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
 use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Http\ServerRequest;
@@ -33,10 +33,10 @@ class ResultSetReconstitutionProcessorTest extends IntegrationTest
      */
     public function canApplyRenderingInstructionsOnOptions()
     {
-        $this->writeDefaultSolrTestSiteConfiguration();
+        $this->writeDefaultMeilisearchTestSiteConfiguration();
         $GLOBALS['TYPO3_REQUEST'] = new ServerRequest('https://example.com');
 
-        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_solr_response_with_multiple_fields_facets.json');
+        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_meilisearch_response_with_multiple_fields_facets.json');
 
         // before the reconstitution of the domain object from the response we expect that no facets
         // are present
@@ -83,9 +83,9 @@ class ResultSetReconstitutionProcessorTest extends IntegrationTest
      */
     public function labelCanBeUsedAsCObject()
     {
-        $this->writeDefaultSolrTestSiteConfiguration();
+        $this->writeDefaultMeilisearchTestSiteConfiguration();
         $GLOBALS['TYPO3_REQUEST'] = new ServerRequest('https://example.com');
-        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_solr_response_with_multiple_fields_facets.json');
+        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_meilisearch_response_with_multiple_fields_facets.json');
 
         // before the reconstitution of the domain object from the response we expect that no facets
         // are present
@@ -130,7 +130,7 @@ class ResultSetReconstitutionProcessorTest extends IntegrationTest
     protected function getConfigurationArrayFromFacetConfigurationArray(array $facetConfiguration): array
     {
         $configuration = [];
-        $configuration['plugin.']['tx_solr.']['search.']['faceting.'] = $facetConfiguration;
+        $configuration['plugin.']['tx_meilisearch.']['search.']['faceting.'] = $facetConfiguration;
         return $configuration;
     }
 

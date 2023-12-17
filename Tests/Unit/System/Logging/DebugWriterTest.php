@@ -29,7 +29,7 @@ class DebugWriterTest extends SetUpUnitTestCase
     /**
      * @test
      */
-    public function testDebugMessageIsWrittenForMessageFromSolr(): void
+    public function testDebugMessageIsWrittenForMessageFromMeilisearch(): void
     {
         $logWriter = $this->getMockBuilder(DebugWriter::class)->onlyMethods(['getIsAllowedByDevIPMask', 'getIsdebugOutputEnabled', 'writeDebugMessage'])->getMock();
         $logWriter->expects(self::any())->method('getIsAllowedByDevIPMask')->willReturn(true);

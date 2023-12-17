@@ -1,4 +1,4 @@
-"tx_solr_statistics",
+"tx_meilisearch_statistics",
 ,"uid","pid","root_pid","tstamp","language","num_found","suggestions_shown","time_total","time_preparation","time_processing","feuser_id","ip","keywords","page","filters"
 ,4,37,1,1471203378,0,7,0,29,0,29,0,"192.168.144.1","content",0,"a:0:{}"
 ,5,37,1,1471203378,0,3,0,69,0,29,0,"192.168.144.1","content",0,"a:0:{}"

@@ -26,12 +26,12 @@ class ScoreCalculationService
     /**
      * Renders an overview in HTML of how the score for a certain document has been calculated by Apache Meilisearch using debug data.
      *
-     * @param string $solrDebugData debug data from the solr response
+     * @param string $meilisearchDebugData debug data from the meilisearch response
      * @return string The HTML showing the score analysis
      */
-    public function getRenderedScores(string $solrDebugData, string $queryFields): string
+    public function getRenderedScores(string $meilisearchDebugData, string $queryFields): string
     {
-        $highScores = $this->parseScores($solrDebugData, $queryFields);
+        $highScores = $this->parseScores($meilisearchDebugData, $queryFields);
         return $this->render($highScores);
     }
 

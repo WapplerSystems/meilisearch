@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2015-12-23T10:36:54Z" product-name="solr">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2015-12-23T10:36:54Z" product-name="meilisearch">
 		<header/>
 		<body>
 			<!-- From ModuleScheduler/locallang.xlf //-->
@@ -17,16 +17,16 @@
 				<target>Re-Indexierung der Seite erzwingen</target>
 			</trans-unit>
 			<trans-unit id="reindex_description" xml:space="preserve" approved="yes">
-				<source>Purges the Solr Index and initializes the Index Queue of a site.</source>
-				<target>Leert den solr index und initialisiert die Index Queue einer Seite.</target>
+				<source>Purges the Meilisearch Index and initializes the Index Queue of a site.</source>
+				<target>Leert den meilisearch index und initialisiert die Index Queue einer Seite.</target>
 			</trans-unit>
 			<trans-unit id="indexqueueworker_title" xml:space="preserve" approved="yes">
 				<source>Index Queue Worker</source>
 				<target>Index Queue Worker</target>
 			</trans-unit>
 			<trans-unit id="indexqueueworker_description" xml:space="preserve" approved="yes">
-				<source>Processes the items in the Index Queue and sends them to Solr.</source>
-				<target>Verarbeitet einen Item in der Index Queue und sendet ihn an den Solr Server.</target>
+				<source>Processes the items in the Index Queue and sends them to Meilisearch.</source>
+				<target>Verarbeitet einen Item in der Index Queue und sendet ihn an den Meilisearch Server.</target>
 			</trans-unit>
 			<trans-unit id="indexqueueworker_field_documentsToIndexLimit" xml:space="preserve" approved="yes">
 				<source>Number of documents to index</source>
@@ -37,20 +37,20 @@
 				<target>Forced webroot (Nur notwendig wenn webroot von PATH_site abweicht)</target>
 			</trans-unit>
 			<trans-unit id="field_host" xml:space="preserve" approved="yes">
-				<source>Solr Host</source>
-				<target>Solr host</target>
+				<source>Meilisearch Host</source>
+				<target>Meilisearch host</target>
 			</trans-unit>
 			<trans-unit id="field_port" xml:space="preserve" approved="yes">
-				<source>Solr Port</source>
-				<target>Solr Port</target>
+				<source>Meilisearch Port</source>
+				<target>Meilisearch Port</target>
 			</trans-unit>
 			<trans-unit id="field_path" xml:space="preserve" approved="yes">
-				<source>Solr Path</source>
-				<target>Solr Pfad</target>
+				<source>Meilisearch Path</source>
+				<target>Meilisearch Pfad</target>
 			</trans-unit>
 			<trans-unit id="field_server" xml:space="preserve" approved="yes">
-				<source>Solr Server</source>
-				<target>Solr Server</target>
+				<source>Meilisearch Server</source>
+				<target>Meilisearch Server</target>
 			</trans-unit>
 			<trans-unit id="field_site" xml:space="preserve" approved="yes">
 				<source>Site</source>
@@ -62,15 +62,15 @@
 			</trans-unit>
 			<trans-unit id="optimizer_description" xml:space="preserve" approved="yes">
 				<source></source>
-				<target>Optimiert den Solr Index</target>
+				<target>Optimiert den Meilisearch Index</target>
 			</trans-unit>
 			<trans-unit id="commit_title" xml:space="preserve" approved="yes">
 				<source></source>
-				<target>Commit Solr index</target>
+				<target>Commit Meilisearch index</target>
 			</trans-unit>
 			<trans-unit id="commit_description" xml:space="preserve" approved="yes">
 				<source></source>
-				<target>Macht Änderungen am Solr Index sichtbar</target>
+				<target>Macht Änderungen am Meilisearch Index sichtbar</target>
 			</trans-unit>
 
 			<!-- From PluginResults|PluginSearch|PluginFrequentSearches/locallang.xlf -->
@@ -208,11 +208,11 @@
 				<target>Top Treffer</target>
 			</trans-unit>
 
-			<trans-unit id="solr.backend.index_queue_module.flashmessage.initialize_failure.title" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.flashmessage.initialize_failure.title" xml:space="preserve">
 				<source>Error occured while initializing</source>
 				<target>Beim Initialisieren ist ein Fehler aufgetreten</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.flashmessage.initialize_failure" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.flashmessage.initialize_failure" xml:space="preserve">
 				<source>An error occurred while initializing the index queue: %1$s [%2$d]</source>
 				<target>Bei der Initialisierung der Index-Queue ist ein Fehler aufgetreten: %1$s [%2$d]</target>
 			</trans-unit>

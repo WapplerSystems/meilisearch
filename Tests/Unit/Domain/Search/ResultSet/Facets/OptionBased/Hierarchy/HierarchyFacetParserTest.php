@@ -42,7 +42,7 @@ class HierarchyFacetParserTest extends SetUpFacetParser
         ];
 
         $searchResultSet = $this->initializeSearchResultSetFromFakeResponse(
-            'fake_solr_response_with_hierarchy_facet.json',
+            'fake_meilisearch_response_with_hierarchy_facet.json',
             $facetConfiguration
         );
 
@@ -72,7 +72,7 @@ class HierarchyFacetParserTest extends SetUpFacetParser
                         'sortBy' => 'count',
                     ],
                 ],
-                'fake_solr_response_with_deep_more_then_10_hierarchy_facet_sorted_by_count.json',
+                'fake_meilisearch_response_with_deep_more_then_10_hierarchy_facet_sorted_by_count.json',
             ],
             'sortByIndex' => [
                 [
@@ -83,7 +83,7 @@ class HierarchyFacetParserTest extends SetUpFacetParser
                         'sortBy' => 'index',
                     ],
                 ],
-                'fake_solr_response_with_deep_more_then_10_hierarchy_facet_sorted_by_index.json',
+                'fake_meilisearch_response_with_deep_more_then_10_hierarchy_facet_sorted_by_index.json',
             ],
         ];
     }
@@ -136,7 +136,7 @@ class HierarchyFacetParserTest extends SetUpFacetParser
             'keepAllOptionsOnSelection' => 1,
         ];
         $searchResultSet = $this->initializeSearchResultSetFromFakeResponse(
-            'fake_solr_response_with_hierachy_facet_with_slash_in_title.json',
+            'fake_meilisearch_response_with_hierachy_facet_with_slash_in_title.json',
             $facetConfiguration,
             ['categoryHierarchyByTitle:/folder2\/level1\//folder2\/level2\//']
         );
@@ -154,7 +154,7 @@ class HierarchyFacetParserTest extends SetUpFacetParser
         // sub-options of facet
         $optionValue = '/folder2\/level1\//folder2\/level2\//folder2\/level3/';
         $searchResultSet = $this->initializeSearchResultSetFromFakeResponse(
-            'fake_solr_response_with_hierachy_facet_with_slash_in_title.json',
+            'fake_meilisearch_response_with_hierachy_facet_with_slash_in_title.json',
             $facetConfiguration,
             ['categoryHierarchyByTitle:' . $optionValue]
         );
@@ -179,7 +179,7 @@ class HierarchyFacetParserTest extends SetUpFacetParser
         ];
 
         $searchResultSet = $this->initializeSearchResultSetFromFakeResponse(
-            'fake_solr_response_with_hierarchy_facet.json',
+            'fake_meilisearch_response_with_hierarchy_facet.json',
             $facetConfiguration
         );
 
@@ -202,7 +202,7 @@ class HierarchyFacetParserTest extends SetUpFacetParser
         ];
 
         $searchResultSet = $this->initializeSearchResultSetFromFakeResponse(
-            'fake_solr_response_with_hierarchy_facet.json',
+            'fake_meilisearch_response_with_hierarchy_facet.json',
             $facetConfiguration,
             ['pageHierarchy:/1/14/']
         );

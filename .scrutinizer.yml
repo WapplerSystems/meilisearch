@@ -3,7 +3,7 @@ filter:
     - 'Documentation/*'
     - 'Tests/*'
     - 'Resources/Public/JavaScript/*'
-    - 'Resources/Private/Solr/*'
+    - 'Resources/Private/Meilisearch/*'
   paths:
     - 'Classes/*'
 

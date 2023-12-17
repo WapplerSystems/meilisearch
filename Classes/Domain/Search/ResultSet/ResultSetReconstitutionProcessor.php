@@ -27,7 +27,7 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use UnexpectedValueException;
 
 /**
- * This processor is used to transform the solr response into a
+ * This processor is used to transform the meilisearch response into a
  * domain object hierarchy that can be used in the application (controller and view).
  *
  * @author Frans Saris <frans@beech.it>
@@ -52,7 +52,7 @@ class ResultSetReconstitutionProcessor implements SearchResultSetProcessor
         $resultSet = $this->parseSpellCheckingResponseIntoObjects($resultSet);
         $resultSet = $this->parseSortingIntoObjects($resultSet);
 
-        // here we can reconstitute other domain objects from the solr response
+        // here we can reconstitute other domain objects from the meilisearch response
         return $this->parseFacetsIntoObjects($resultSet);
     }
 

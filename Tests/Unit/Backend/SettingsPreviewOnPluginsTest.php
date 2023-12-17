@@ -41,7 +41,7 @@ class SettingsPreviewOnPluginsTest extends SetUpUnitTestCase
     /**
      * @test
      */
-    public function doesNotPrintPreviewOnNonExtSolrPlugins()
+    public function doesNotPrintPreviewOnNonExtMeilisearchPlugins()
     {
         $settingPreviewMock = $this->getMockOfSettingsPreviewOnPlugins(['getPreviewContent']);
         $settingPreviewMock

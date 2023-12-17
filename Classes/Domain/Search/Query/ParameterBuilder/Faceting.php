@@ -22,7 +22,7 @@ use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\SortingExpression;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 
 /**
- * The Faceting ParameterProvider is responsible to build the solr query parameters
+ * The Faceting ParameterProvider is responsible to build the meilisearch query parameters
  * that are needed for the highlighting.
  */
 class Faceting extends AbstractDeactivatable implements ParameterBuilderInterface
@@ -137,16 +137,16 @@ class Faceting extends AbstractDeactivatable implements ParameterBuilderInterfac
         return $facetParameters;
     }
 
-    public static function fromTypoScriptConfiguration(TypoScriptConfiguration $solrConfiguration): Faceting
+    public static function fromTypoScriptConfiguration(TypoScriptConfiguration $meilisearchConfiguration): Faceting
     {
-        $isEnabled = $solrConfiguration->getSearchFaceting();
+        $isEnabled = $meilisearchConfiguration->getSearchFaceting();
         if (!$isEnabled) {
             return new Faceting(false);
         }
 
-        $minCount = $solrConfiguration->getSearchFacetingMinimumCount();
-        $limit = $solrConfiguration->getSearchFacetingFacetLimit();
-        $sorting = $solrConfiguration->getSearchFacetingSortBy();
+        $minCount = $meilisearchConfiguration->getSearchFacetingMinimumCount();
+        $limit = $meilisearchConfiguration->getSearchFacetingFacetLimit();
+        $sorting = $meilisearchConfiguration->getSearchFacetingSortBy();
 
         return new Faceting(true, $sorting, $minCount, $limit);
     }

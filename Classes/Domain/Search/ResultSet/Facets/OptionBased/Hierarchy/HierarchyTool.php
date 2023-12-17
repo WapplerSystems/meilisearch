@@ -27,7 +27,7 @@ class HierarchyTool
     }
 
     /**
-     * Replaces @@@slash@@@ with \/ to have the path usable for solr again.
+     * Replaces @@@slash@@@ with \/ to have the path usable for meilisearch again.
      */
     public static function unSubstituteSlashes(string $pathWithReplacedContentSlashes): string
     {

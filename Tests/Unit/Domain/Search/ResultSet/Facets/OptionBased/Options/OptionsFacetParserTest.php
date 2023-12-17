@@ -16,7 +16,7 @@
 namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Search\ResultSet\Facets\OptionBased\Options;
 
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\OptionBased\Options\OptionsFacetParser;
-use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 
 class OptionsFacetParserTest extends SetUpUnitTestCase
@@ -24,7 +24,7 @@ class OptionsFacetParserTest extends SetUpUnitTestCase
     /**
      * @test
      */
-    public function canListFloatValuesAsOptionsFromSolrResponse(): void
+    public function canListFloatValuesAsOptionsFromMeilisearchResponse(): void
     {
         $responseAdapter = new ResponseAdapter(
             /* @lang JSON */
@@ -47,9 +47,9 @@ class OptionsFacetParserTest extends SetUpUnitTestCase
             '',
             false
         );
-        /** @link OptionsFacetParser::getOptionsFromSolrResponse */
+        /** @link OptionsFacetParser::getOptionsFromMeilisearchResponse */
         $optionsArray = $optionsFacetParser->_call(
-            'getOptionsFromSolrResponse',
+            'getOptionsFromMeilisearchResponse',
             'floatOptions',
             $responseAdapter,
         );

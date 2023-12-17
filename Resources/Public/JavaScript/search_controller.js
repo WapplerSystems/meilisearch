@@ -5,27 +5,27 @@ function SearchController() {
     _this.ajaxType = 7383;
 
     this.init = function() {
-        jQuery("body").delegate("a.solr-ajaxified", "click", _this.handleClickOnAjaxifiedUri);
+        jQuery("body").delegate("a.meilisearch-ajaxified", "click", _this.handleClickOnAjaxifiedUri);
     };
 
     this.handleClickOnAjaxifiedUri = function() {
         var clickedLink = jQuery(this);
 
-        var solrContainer = clickedLink.closest(".tx_solr");
-        var solrParent = solrContainer.parent();
+        var meilisearchContainer = clickedLink.closest(".tx_meilisearch");
+        var meilisearchParent = meilisearchContainer.parent();
 
-        var loader = jQuery("<div class='tx-solr-loader'></div>");
+        var loader = jQuery("<div class='tx-meilisearch-loader'></div>");
         var uri = clickedLink.uri();
 
-        solrParent.append(loader);
+        meilisearchParent.append(loader);
         uri.addQuery("type", _this.ajaxType);
 
         jQuery.get(
             uri.href(),
             function(data) {
-                solrContainer = solrContainer.replaceWith(data);
-                _this.scrollToTopOfElement(solrParent, 50);
-                jQuery("body").trigger("tx_solr_updated");
+                meilisearchContainer = meilisearchContainer.replaceWith(data);
+                _this.scrollToTopOfElement(meilisearchParent, 50);
+                jQuery("body").trigger("tx_meilisearch_updated");
                 loader.fadeOut().remove();
                 history.replaceState({}, null, uri.removeQuery("type").href());
             }
@@ -45,10 +45,10 @@ function SearchController() {
 }
 
 jQuery(document).ready(function() {
-    var solrSearchController = new SearchController();
-    solrSearchController.init();
+    var meilisearchSearchController = new SearchController();
+    meilisearchSearchController.init();
 
-    if(typeof solrSearchAjaxType !== "undefined") {
-        solrSearchController.setAjaxType(solrSearchAjaxType);
+    if(typeof meilisearchSearchAjaxType !== "undefined") {
+        meilisearchSearchController.setAjaxType(meilisearchSearchAjaxType);
     }
 });

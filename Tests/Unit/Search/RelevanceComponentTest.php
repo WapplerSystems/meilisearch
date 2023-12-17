@@ -424,7 +424,7 @@ class RelevanceComponentTest extends SetUpUnitTestCase
             'query.' => [
                 'boostQuery.' => [
                     'type:pages^100',
-                    'type:tx_solr_file^400',
+                    'type:tx_meilisearch_file^400',
                  ],
             ],
         ];
@@ -451,7 +451,7 @@ class RelevanceComponentTest extends SetUpUnitTestCase
         $subject->__invoke($event);
 
         self::assertSame('type:pages^100', $this->getQueryParameters($query)['bq'][0], 'Configured boostQuery was not applied');
-        self::assertSame('type:tx_solr_file^400', $this->getQueryParameters($query)['bq'][1], 'Configured boostQuery was not applied');
+        self::assertSame('type:tx_meilisearch_file^400', $this->getQueryParameters($query)['bq'][1], 'Configured boostQuery was not applied');
     }
 
     /**
@@ -528,7 +528,7 @@ class RelevanceComponentTest extends SetUpUnitTestCase
     {
         return new TypoScriptConfiguration([
             'plugin.' => [
-                'tx_solr.' => [
+                'tx_meilisearch.' => [
                     'search.' => $searchConfiguration,
                 ],
             ],

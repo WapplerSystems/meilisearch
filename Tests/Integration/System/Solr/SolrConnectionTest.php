@@ -13,23 +13,23 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace WapplerSystems\Meilisearch\Tests\Integration\System\Solr;
+namespace WapplerSystems\Meilisearch\Tests\Integration\System\Meilisearch;
 
 use WapplerSystems\Meilisearch\ConnectionManager;
-use WapplerSystems\Meilisearch\NoSolrConnectionFoundException;
-use WapplerSystems\Meilisearch\System\Solr\SolrConnection;
+use WapplerSystems\Meilisearch\NoMeilisearchConnectionFoundException;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchConnection;
 use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Class SolrConnectionTest
+ * Class MeilisearchConnectionTest
  */
-class SolrConnectionTest extends IntegrationTest
+class MeilisearchConnectionTest extends IntegrationTest
 {
     protected function setUp(): void
     {
         parent::setUp();
-        $this->writeDefaultSolrTestSiteConfiguration();
+        $this->writeDefaultMeilisearchTestSiteConfiguration();
     }
 
     /**
@@ -53,23 +53,23 @@ class SolrConnectionTest extends IntegrationTest
      *
      * @param ?int $pageUid defaults to 1
      */
-    protected function canFindSolrConnectionByPageAndReturn(?int $pageUid = 1): SolrConnection
+    protected function canFindMeilisearchConnectionByPageAndReturn(?int $pageUid = 1): MeilisearchConnection
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/slim_basic_sites.csv');
 
         /** @var ConnectionManager $connectionManager */
         $connectionManager = GeneralUtility::makeInstance(ConnectionManager::class);
 
-        $messageOnNoSolrConnectionFoundException = vsprintf(
-            'The SolrConnection for page with uid "%s" could not be found. Can\'t proceed with dependent tests.',
+        $messageOnNoMeilisearchConnectionFoundException = vsprintf(
+            'The MeilisearchConnection for page with uid "%s" could not be found. Can\'t proceed with dependent tests.',
             [$pageUid]
         );
         try {
-            $solrConnection = $connectionManager->getConnectionByPageId($pageUid, 0);
-            self::assertInstanceOf(SolrConnection::class, $solrConnection, $messageOnNoSolrConnectionFoundException);
-            return $solrConnection;
-        } catch (NoSolrConnectionFoundException $exception) {
-            self::fail($messageOnNoSolrConnectionFoundException);
+            $meilisearchConnection = $connectionManager->getConnectionByPageId($pageUid, 0);
+            self::assertInstanceOf(MeilisearchConnection::class, $meilisearchConnection, $messageOnNoMeilisearchConnectionFoundException);
+            return $meilisearchConnection;
+        } catch (NoMeilisearchConnectionFoundException $exception) {
+            self::fail($messageOnNoMeilisearchConnectionFoundException);
         }
     }
 
@@ -80,9 +80,9 @@ class SolrConnectionTest extends IntegrationTest
     {
         $GLOBALS['TYPO3_CONF_VARS']['HTTP']['connect_timeout'] = 0.0001;
         $GLOBALS['TYPO3_CONF_VARS']['HTTP']['timeout'] = 0.0001;
-        $solrConnection = $this->canFindSolrConnectionByPageAndReturn();
+        $meilisearchConnection = $this->canFindMeilisearchConnectionByPageAndReturn();
 
-        $httpClientAdapter = $solrConnection->getReadService()->getClient()->getAdapter();
+        $httpClientAdapter = $meilisearchConnection->getReadService()->getClient()->getAdapter();
         $httpClientObject = $this->getInaccessiblePropertyFromObject(
             $httpClientAdapter,
             'httpClient'

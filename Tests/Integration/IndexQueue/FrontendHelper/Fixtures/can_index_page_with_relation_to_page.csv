@@ -7,6 +7,6 @@
 "tx_fakeextension3_pages_mm",
 ,"uid_local","uid_foreign","tablenames","fieldname","sorting","sorting_foreign"
 ,10,3,"pages","page_relations",0,0
-"tx_solr_indexqueue_item",
+"tx_meilisearch_indexqueue_item",
 ,"uid","root","item_type","item_uid","indexing_configuration","changed","indexed","has_indexing_properties","indexing_priority","indexed","errors"
 ,4711,1,"pages",2,"pages",1449151778,0,0,0,0,0

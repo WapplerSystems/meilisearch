@@ -7,22 +7,22 @@
 		<body>
 
 			<!-- Index Administration -->
-			<trans-unit id="solr.backend.index_administration.description" xml:space="preserve">
-				<source>The Index Administration Module is responsible for emptying the cores(deleting documents) on Solr Server and index queues in TYPO3 CMS. </source>
-				<target>Modul správy indexu je zodpovědný za vyprázdnění jader (mazání dokumentů) na Solr Server a indexové fronty v TYPO3 CMS.</target>
+			<trans-unit id="meilisearch.backend.index_administration.description" xml:space="preserve">
+				<source>The Index Administration Module is responsible for emptying the cores(deleting documents) on Meilisearch Server and index queues in TYPO3 CMS. </source>
+				<target>Modul správy indexu je zodpovědný za vyprázdnění jader (mazání dokumentů) na Meilisearch Server a indexové fronty v TYPO3 CMS.</target>
 			</trans-unit>
 
-			<trans-unit id="solr.backend.index_administration.index_emptied_all" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_administration.index_emptied_all" xml:space="preserve">
 				<source>Index emptied for Site "%s" (%s).</source>
 				<target>Index pro stránku "%s" (%s) byl vyprázdněn.</target>
 			</trans-unit>
 
-			<trans-unit id="solr.backend.index_administration.success.queue_emptied" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_administration.success.queue_emptied" xml:space="preserve">
 				<source>Index Queue emptied for Site "%s".</source>
 				<target>Fronta indexu pro stránku "%s" byla vyprázdněna.</target>
 			</trans-unit>
 
-			<trans-unit id="solr.backend.index_administration.error.on_empty_index" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_administration.error.on_empty_index" xml:space="preserve">
 				<source>An error occurred while trying to delete documents from the index: %s</source>
 				<target>Při pokusu o odstranění dokumentů z indexu došlo k chybě: %s</target>
 			</trans-unit>
@@ -74,12 +74,12 @@
 
 			<!-- From ModuleAdministration/locallang.xlf //-->
 			<trans-unit id="mlang_labels_tablabel" xml:space="preserve">
-				<source>Apache Solr Search Administration</source>
-				<target>Administrace vyhledávání Apache Solr</target>
+				<source>Apache Meilisearch Search Administration</source>
+				<target>Administrace vyhledávání Apache Meilisearch</target>
 			</trans-unit>
 			<trans-unit id="mlang_labels_tabdescr" xml:space="preserve">
-				<source>Allows you to manage Apache Solr from TYPO3.<br /><em>Access for 'admin' users only!</em></source>
-				<target>Umožňuje vám spravovat Apache Solr z TYPO3.<br /><em>Přístup pouze pro uživatele „admin“!</em></target>
+				<source>Allows you to manage Apache Meilisearch from TYPO3.<br /><em>Access for 'admin' users only!</em></source>
+				<target>Umožňuje vám spravovat Apache Meilisearch z TYPO3.<br /><em>Přístup pouze pro uživatele „admin“!</em></target>
 			</trans-unit>
 			<trans-unit id="mlang_tabs_tab" xml:space="preserve">
 				<source>Search</source>
@@ -88,20 +88,20 @@
 
 			<!-- From ModuleReports/locallang.xlf //-->
 			<trans-unit id="index_title" xml:space="preserve">
-				<source>Apache Solr Index</source>
-				<target>Index Apache Solr</target>
+				<source>Apache Meilisearch Index</source>
+				<target>Index Apache Meilisearch</target>
 			</trans-unit>
 			<trans-unit id="index_description" xml:space="preserve">
 				<source>View the number of documents and fields in your index</source>
 				<target>Zobrazení počtu dokumentů a polí v indexu</target>
 			</trans-unit>
 			<trans-unit id="statistics_title" xml:space="preserve">
-				<source>Apache Solr Statistics</source>
-				<target>Statistiky Apache Solr</target>
+				<source>Apache Meilisearch Statistics</source>
+				<target>Statistiky Apache Meilisearch</target>
 			</trans-unit>
 			<trans-unit id="statistics_description" xml:space="preserve">
-				<source>Provides several Solr usage statistics</source>
-				<target>Poskytuje několik statistik využití Solr</target>
+				<source>Provides several Meilisearch usage statistics</source>
+				<target>Poskytuje několik statistik využití Meilisearch</target>
 			</trans-unit>
 
 			<!-- From ModuleScheduler/locallang.xlf //-->
@@ -110,16 +110,16 @@
 				<target>Vynutit opětovné indexování webu</target>
 			</trans-unit>
 			<trans-unit id="reindex_description" xml:space="preserve">
-				<source>Purges the Solr Index and initializes the Index Queue of a site.</source>
-				<target>Vyčistí index Solr a inicializuje frontu indexu webu.</target>
+				<source>Purges the Meilisearch Index and initializes the Index Queue of a site.</source>
+				<target>Vyčistí index Meilisearch a inicializuje frontu indexu webu.</target>
 			</trans-unit>
 			<trans-unit id="indexqueueworker_title" xml:space="preserve">
 				<source>Index Queue Worker</source>
 				<target>Pracovník indexové fronty</target>
 			</trans-unit>
 			<trans-unit id="indexqueueworker_description" xml:space="preserve">
-				<source>Processes the items in the Index Queue and sends them to Solr.</source>
-				<target>Zpracuje položky v indexové frontě a odešle je do Solr.</target>
+				<source>Processes the items in the Index Queue and sends them to Meilisearch.</source>
+				<target>Zpracuje položky v indexové frontě a odešle je do Meilisearch.</target>
 			</trans-unit>
 			<trans-unit id="indexqueueworker_field_documentsToIndexLimit" xml:space="preserve">
 				<source>Number of documents to index</source>
@@ -130,20 +130,20 @@
 				<target>Vynucený webroot (potřebný pouze v případě, že webroot není PATH_site)</target>
 			</trans-unit>
 			<trans-unit id="field_host" xml:space="preserve">
-				<source>Solr Host</source>
-				<target>Solr Hostitel</target>
+				<source>Meilisearch Host</source>
+				<target>Meilisearch Hostitel</target>
 			</trans-unit>
 			<trans-unit id="field_port" xml:space="preserve">
-				<source>Solr Port</source>
-				<target>Solr Port</target>
+				<source>Meilisearch Port</source>
+				<target>Meilisearch Port</target>
 			</trans-unit>
 			<trans-unit id="field_path" xml:space="preserve">
-				<source>Solr Path</source>
-				<target>Solr Cesta</target>
+				<source>Meilisearch Path</source>
+				<target>Meilisearch Cesta</target>
 			</trans-unit>
 			<trans-unit id="field_server" xml:space="preserve">
-				<source>Solr Server</source>
-				<target>Solr Server</target>
+				<source>Meilisearch Server</source>
+				<target>Meilisearch Server</target>
 			</trans-unit>
 			<trans-unit id="field_site" xml:space="preserve">
 				<source>Site</source>
@@ -284,128 +284,128 @@
 				<target>Nejlepší výsledky</target>
 			</trans-unit>
 			<!-- From locallang.xlf -->
-			<trans-unit id="solr.backend.index_queue_module.description" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.description" xml:space="preserve">
 				<source>The Index Queue manages content indexing. Content enters the Index Queue by initialization below or when new content is created based on configuration. Items in the Index Queue are indexed newest changes first until all items in the queue have been indexed.</source>
 				<target>Indexování obsahu spravuje Fronta indexů. Obsah vstupuje do indexové fronty inicializací níže nebo při vytvoření nového obsahu na základě konfigurace. Položky v indexové frontě jsou indexovány jako první nejnovější změny, dokud nebudou indexovány všechny položky ve frontě</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.errors.reset_button" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.errors.reset_button" xml:space="preserve">
 				<source>Reset errors</source>
 				<target>Resetovat chyby</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.errors.headline" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.errors.headline" xml:space="preserve">
 				<source>Indexing Errors</source>
 				<target>Chyba indexování</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.errors.id" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.errors.id" xml:space="preserve">
 				<source>ID</source>
 				<target>ID</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.errors.item_type" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.errors.item_type" xml:space="preserve">
 				<source>Item Type</source>
 				<target>Typ předmětu</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.errors.item_uid" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.errors.item_uid" xml:space="preserve">
 				<source>Item UID</source>
 				<target>UID položky</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.errors.show_button" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.errors.show_button" xml:space="preserve">
 				<source>Show error</source>
 				<target>Zobrazit chyby</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.flashmessage.error.index_manual" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.flashmessage.error.index_manual" xml:space="preserve">
 				<source>An error occurred while indexing manual from the backend.</source>
 				<target>Při indexování manuálu z backendu došlo k chybě.</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.flashmessage.error.reset_errors" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.flashmessage.error.reset_errors" xml:space="preserve">
 				<source>An error occurred while resetting the error log in the index queue.</source>
 				<target>Při resetování protokolu chyb ve frontě indexu došlo k chybě.</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.flashmessage.error.single_item_not_requeued" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.flashmessage.error.single_item_not_requeued" xml:space="preserve">
 				<source>Single item was not requeued.</source>
 				<target>Jedna položka nebyla znovu zařazena do fronty.</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.flashmessage.initialize.no_selection" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.flashmessage.initialize.no_selection" xml:space="preserve">
 				<source>No indexing configurations selected.</source>
 				<target>Nejsou vybrány žádné konfigurace indexování.</target>
 			</trans-unit>
 
-			<trans-unit id="solr.backend.index_queue_module.flashmessage.initialize.success" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.flashmessage.initialize.success" xml:space="preserve">
 				<source>Initialized indexing configurations: %s</source>
 				<target>Inicializované konfigurace indexování: %s</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.flashmessage.initialize.title" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.flashmessage.initialize.title" xml:space="preserve">
 				<source>Index Queue initialized</source>
 				<target>Indexová fronta inicializována</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.flashmessage.not_initialized.title" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.flashmessage.not_initialized.title" xml:space="preserve">
 				<source>Index Queue not initialized</source>
 				<target>Indexová fronta není inicializována</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.flashmessage.success.reset_errors" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.flashmessage.success.reset_errors" xml:space="preserve">
 				<source>All errors have been reset.</source>
 				<target>Všechny chyby byly resetovány.</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.flashmessage.success.index_manual" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.flashmessage.success.index_manual" xml:space="preserve">
 				<source>Indexing from the backend was successfully finished.</source>
 				<target>Indexování z backendu bylo úspěšně dokončeno.</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.flashmessage.success.single_item_was_requeued" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.flashmessage.success.single_item_was_requeued" xml:space="preserve">
 				<source>Single item was successfully marked for reindexing.</source>
 				<target>Jedna položka byla úspěšně označena k reindexaci.</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.flashmessage.title" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.flashmessage.title" xml:space="preserve">
 				<source>Index Queue</source>
 				<target>Indexová fronta</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.flashmessage.index_manual" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.flashmessage.index_manual" xml:space="preserve">
 				<source>Manual Indexing</source>
 				<target>Manuální indexování</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.help" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.help" xml:space="preserve">
 				<source>Initializing the Index Queue is the most complete way to force re-indexing, or to build the Index Queue for the first time. The Index Queue Worker scheduler task will then index the items listed in the Index Queue.</source>
 				<target>Inicializace indexové fronty je nejúplnější způsob, jak vynutit opětovné indexování nebo poprvé vytvořit indexovou frontu. Úloha plánovače Index Queue Worker pak indexuje položky uvedené v Index Queue.</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.status.errors" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.status.errors" xml:space="preserve">
 				<source> Errors</source>
 				<target> Chyby</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.status.header" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.status.header" xml:space="preserve">
 				<source>Indexing Progress</source>
 				<target>Průběh indexování</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.status.indexed" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.status.indexed" xml:space="preserve">
 				<source> Indexed</source>
 				<target> Indexováno</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.status.pending" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.status.pending" xml:space="preserve">
 				<source> Pending</source>
 				<target> Čekající</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.header_init" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.header_init" xml:space="preserve">
 				<source>Index Queue Initialization</source>
 				<target>Inicializace indexové fronty</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.header_status" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.header_status" xml:space="preserve">
 				<source>Index Queue Status</source>
 				<target>Stav indexové fronty</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.button.clear_index_queue" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.button.clear_index_queue" xml:space="preserve">
 				<source>Clear Index Queue</source>
 				<target>Vymazat indexovou frontu</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.back" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.back" xml:space="preserve">
 				<source>Go back</source>
 				<target>Zpět</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.flashmessage.error.no_queue_item_for_queue_error" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.flashmessage.error.no_queue_item_for_queue_error" xml:space="preserve">
 				<source>No valid queue item passed to show the error information!</source>
 				<target>Nebyla předána žádná platná položka fronty k zobrazení informací o chybě!</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.error_details" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.error_details" xml:space="preserve">
 				<source>Error details for queue item</source>
 				<target>Podrobnosti o chybě položky fronty</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.index_now" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.index_now" xml:space="preserve">
 				<source>Index now</source>
 				<target>Indexuj nyní</target>
 			</trans-unit>
@@ -424,35 +424,35 @@
 				<target>Hledat: Pouze formulář</target>
 			</trans-unit>
 
-			<trans-unit id="solr.backend.search_statistics_module.item_phrase" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.search_statistics_module.item_phrase" xml:space="preserve">
 				<source>Phrase</source>
 				<target>Fráze</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.search_statistics_module.item_count" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.search_statistics_module.item_count" xml:space="preserve">
 				<source>Number of Queries</source>
 				<target>Počet dotazů</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.search_statistics_module.results" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.search_statistics_module.results" xml:space="preserve">
 				<source>Number of Results (Average)</source>
 				<target>Počet výsledků (průměr)</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.search_statistics_module.percentage" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.search_statistics_module.percentage" xml:space="preserve">
 				<source>Percentage</source>
 				<target>Procenta</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.search_statistics_module.no_records_found" xml:space="preserve">
-				<source>No records found. Did you enabled 'plugin.tx_solr.statistics = 1' in the typoscript configuration of your site?</source>
-				<target>Nenalezeny žádné záznamy. Povolili jste 'plugin.tx_solr.statistics = 1' v konfiguraci typoscriptu vašeho webu?</target>
+			<trans-unit id="meilisearch.backend.search_statistics_module.no_records_found" xml:space="preserve">
+				<source>No records found. Did you enabled 'plugin.tx_meilisearch.statistics = 1' in the typoscript configuration of your site?</source>
+				<target>Nenalezeny žádné záznamy. Povolili jste 'plugin.tx_meilisearch.statistics = 1' v konfiguraci typoscriptu vašeho webu?</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.search_statistics_module.top_search_phrases" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.search_statistics_module.top_search_phrases" xml:space="preserve">
 				<source>Top %d Search Phrases</source>
 				<target>Top %d vyhledaných frází</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.search_statistics_module.top_search_phrases_without_hits" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.search_statistics_module.top_search_phrases_without_hits" xml:space="preserve">
 				<source>Top %d Search Phrases Without Hits</source>
 				<target>Top %d vyhledávacích frází bez hitů</target>
 			</trans-unit>
-			<trans-unit id="solr.backend.search_statistics_module.search_phrases_header" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.search_statistics_module.search_phrases_header" xml:space="preserve">
 				<source>Search Phrase Statistics</source>
 				<target>Statistika vyhledaných frází</target>
 			</trans-unit>

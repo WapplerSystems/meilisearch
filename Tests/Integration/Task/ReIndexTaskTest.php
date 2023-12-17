@@ -48,7 +48,7 @@ class ReIndexTaskTest extends IntegrationTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->writeDefaultSolrTestSiteConfiguration();
+        $this->writeDefaultMeilisearchTestSiteConfiguration();
         $this->task = GeneralUtility::makeInstance(ReIndexTask::class);
         $this->indexQueue = GeneralUtility::makeInstance(Queue::class);
 
@@ -126,11 +126,11 @@ class ReIndexTaskTest extends IntegrationTest
      * @test
      * @throws Exception
      */
-    public function solrIsEmptyAfterCleanup()
+    public function meilisearchIsEmptyAfterCleanup()
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/can_reindex_task_fill_queue.csv');
 
-        // fill the solr
+        // fill the meilisearch
         $siteRepository = GeneralUtility::makeInstance(SiteRepository::class);
         $site = $siteRepository->getFirstAvailableSite();
         $this->indexQueue->updateItem('pages', 1);
@@ -138,19 +138,19 @@ class ReIndexTaskTest extends IntegrationTest
         /** @var Indexer $indexer */
         $indexer = GeneralUtility::makeInstance(Indexer::class);
         $indexer->index($items[0]);
-        $this->waitToBeVisibleInSolr();
+        $this->waitToBeVisibleInMeilisearch();
 
-        $this->assertSolrContainsDocumentCount(1);
+        $this->assertMeilisearchContainsDocumentCount(1);
         $this->task->setRootPageId($site->getRootPageId());
         $this->task->setIndexingConfigurationsToReIndex(['pages']);
         $this->task->execute();
 
-        $this->waitToBeVisibleInSolr();
+        $this->waitToBeVisibleInMeilisearch();
 
-        // after the task was running the solr server should be empty
-        $this->assertSolrIsEmpty();
+        // after the task was running the meilisearch server should be empty
+        $this->assertMeilisearchIsEmpty();
 
         // if not we cleanup now
-        $this->cleanUpSolrServerAndAssertEmpty();
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
     }
 }

@@ -30,7 +30,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class NumericRangeUrlDecoderTest extends SetUpUnitTestCase
 {
     /**
-     * Parser to build Solr range queries
+     * Parser to build Meilisearch range queries
      *
      * @var NumericRangeUrlDecoder
      */

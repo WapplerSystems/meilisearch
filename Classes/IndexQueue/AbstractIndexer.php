@@ -45,9 +45,9 @@ abstract class AbstractIndexer
      */
     protected static array $unAllowedOverrideFields = ['type'];
 
-    public static function isAllowedToOverrideField(string $solrFieldName): bool
+    public static function isAllowedToOverrideField(string $meilisearchFieldName): bool
     {
-        return !in_array($solrFieldName, static::$unAllowedOverrideFields);
+        return !in_array($meilisearchFieldName, static::$unAllowedOverrideFields);
     }
 
     /**
@@ -62,21 +62,21 @@ abstract class AbstractIndexer
     {
         $data = static::addVirtualContentFieldToRecord($document, $data);
 
-        // mapping of record fields => solr document fields, resolving cObj
-        foreach ($indexingConfiguration as $solrFieldName => $recordFieldName) {
+        // mapping of record fields => meilisearch document fields, resolving cObj
+        foreach ($indexingConfiguration as $meilisearchFieldName => $recordFieldName) {
             if (is_array($recordFieldName)) {
                 // configuration for a content object, skipping
                 continue;
             }
 
-            if (!static::isAllowedToOverrideField($solrFieldName)) {
+            if (!static::isAllowedToOverrideField($meilisearchFieldName)) {
                 throw new InvalidFieldNameException(
-                    'Must not overwrite field .' . $solrFieldName,
+                    'Must not overwrite field .' . $meilisearchFieldName,
                     1435441863
                 );
             }
 
-            $fieldValue = $this->resolveFieldValue($indexingConfiguration, $solrFieldName, $data, $tsfe);
+            $fieldValue = $this->resolveFieldValue($indexingConfiguration, $meilisearchFieldName, $data, $tsfe);
             if ($fieldValue === null
                 || $fieldValue === ''
                 || (is_array($fieldValue) && empty($fieldValue))
@@ -84,20 +84,20 @@ abstract class AbstractIndexer
                 continue;
             }
 
-            $document->setField($solrFieldName, $fieldValue);
+            $document->setField($meilisearchFieldName, $fieldValue);
         }
 
         return $document;
     }
 
     /**
-     * Adds the content of the field 'content' from the solr document as virtual field __solr_content in the record,
+     * Adds the content of the field 'content' from the meilisearch document as virtual field __meilisearch_content in the record,
      * to have it available in typoscript.
      */
     public static function addVirtualContentFieldToRecord(Document $document, array $data): array
     {
         if (isset($document['content'])) {
-            $data['__solr_content'] = $document['content'];
+            $data['__meilisearch_content'] = $document['content'];
             return $data;
         }
         return $data;
@@ -110,18 +110,18 @@ abstract class AbstractIndexer
      * cObj processing if wanted/needed. Otherwise, the plain item/record value
      * is taken.
      *
-     * @param array $indexingConfiguration Indexing configuration as defined in plugin.tx_solr_index.queue.[indexingConfigurationName].fields
-     * @param string $solrFieldName A Meilisearch field name that is configured in the indexing configuration
+     * @param array $indexingConfiguration Indexing configuration as defined in plugin.tx_meilisearch_index.queue.[indexingConfigurationName].fields
+     * @param string $meilisearchFieldName A Meilisearch field name that is configured in the indexing configuration
      * @param array $data A record or item's data
      * @return array|float|int|string|null The resolved string value to be indexed; null if value could not be resolved
      */
     protected function resolveFieldValue(
         array $indexingConfiguration,
-        string $solrFieldName,
+        string $meilisearchFieldName,
         array $data,
         TypoScriptFrontendController $tsfe
     ): mixed {
-        if (isset($indexingConfiguration[$solrFieldName . '.'])) {
+        if (isset($indexingConfiguration[$meilisearchFieldName . '.'])) {
             // configuration found => need to resolve a cObj
 
             // need to change directory to make IMAGE content objects work in BE context
@@ -131,24 +131,24 @@ abstract class AbstractIndexer
 
             $tsfe->cObj->start($data, $this->type);
             $fieldValue = $tsfe->cObj->cObjGetSingle(
-                $indexingConfiguration[$solrFieldName],
-                $indexingConfiguration[$solrFieldName . '.']
+                $indexingConfiguration[$meilisearchFieldName],
+                $indexingConfiguration[$meilisearchFieldName . '.']
             );
 
             chdir($backupWorkingDirectory);
 
             if ($this->isSerializedValue(
                 $indexingConfiguration,
-                $solrFieldName
+                $meilisearchFieldName
             )
             ) {
                 $fieldValue = unserialize($fieldValue);
             }
         } elseif (
-            str_starts_with($indexingConfiguration[$solrFieldName], '<')
+            str_starts_with($indexingConfiguration[$meilisearchFieldName], '<')
         ) {
             $referencedTsPath = trim(substr(
-                $indexingConfiguration[$solrFieldName],
+                $indexingConfiguration[$meilisearchFieldName],
                 1
             ));
             $typoScriptParser = GeneralUtility::makeInstance(TypoScriptParser::class);
@@ -167,13 +167,13 @@ abstract class AbstractIndexer
 
             if ($this->isSerializedValue(
                 $indexingConfiguration,
-                $solrFieldName
+                $meilisearchFieldName
             )
             ) {
                 $fieldValue = unserialize($fieldValue);
             }
         } else {
-            $indexingFieldName = $indexingConfiguration[$solrFieldName] ?? null;
+            $indexingFieldName = $indexingConfiguration[$meilisearchFieldName] ?? null;
             if (empty($indexingFieldName) ||
                 !is_string($indexingFieldName) ||
                 !array_key_exists($indexingFieldName, $data)) {
@@ -186,8 +186,8 @@ abstract class AbstractIndexer
 
         // find last underscore, substr from there, cut off last character (S/M)
         $fieldType = substr(
-            $solrFieldName,
-            strrpos($solrFieldName, '_') + 1,
+            $meilisearchFieldName,
+            strrpos($meilisearchFieldName, '_') + 1,
             -1
         );
         if (is_array($fieldValue)) {
@@ -212,34 +212,34 @@ abstract class AbstractIndexer
      * unserialized.
      *
      * @param array $indexingConfiguration Current item's indexing configuration
-     * @param string $solrFieldName Current field being indexed
+     * @param string $meilisearchFieldName Current field being indexed
      * @return bool TRUE if the value is expected to be serialized, FALSE otherwise
      */
-    public static function isSerializedValue(array $indexingConfiguration, string $solrFieldName): bool
+    public static function isSerializedValue(array $indexingConfiguration, string $meilisearchFieldName): bool
     {
-        return static::isSerializedResultFromRegisteredHook($indexingConfiguration, $solrFieldName)
-            || static::isSerializedResultFromCustomContentElement($indexingConfiguration, $solrFieldName);
+        return static::isSerializedResultFromRegisteredHook($indexingConfiguration, $meilisearchFieldName)
+            || static::isSerializedResultFromCustomContentElement($indexingConfiguration, $meilisearchFieldName);
     }
 
     /**
      * Checks if the response comes from a custom content element that returns a serialized value.
      */
-    protected static function isSerializedResultFromCustomContentElement(array $indexingConfiguration, string $solrFieldName): bool
+    protected static function isSerializedResultFromCustomContentElement(array $indexingConfiguration, string $meilisearchFieldName): bool
     {
         $isSerialized = false;
 
         // SOLR_CLASSIFICATION - always returns serialized array
-        if (($indexingConfiguration[$solrFieldName] ?? null) == Classification::CONTENT_OBJECT_NAME) {
+        if (($indexingConfiguration[$meilisearchFieldName] ?? null) == Classification::CONTENT_OBJECT_NAME) {
             $isSerialized = true;
         }
 
         // SOLR_MULTIVALUE - always returns serialized array
-        if (($indexingConfiguration[$solrFieldName] ?? null) == Multivalue::CONTENT_OBJECT_NAME) {
+        if (($indexingConfiguration[$meilisearchFieldName] ?? null) == Multivalue::CONTENT_OBJECT_NAME) {
             $isSerialized = true;
         }
 
         // SOLR_RELATION - returns serialized array if multiValue option is set
-        if (($indexingConfiguration[$solrFieldName] ?? null) == Relation::CONTENT_OBJECT_NAME && !empty($indexingConfiguration[$solrFieldName . '.']['multiValue'])) {
+        if (($indexingConfiguration[$meilisearchFieldName] ?? null) == Relation::CONTENT_OBJECT_NAME && !empty($indexingConfiguration[$meilisearchFieldName . '.']['multiValue'])) {
             $isSerialized = true;
         }
 
@@ -249,7 +249,7 @@ abstract class AbstractIndexer
     /**
      * Checks registered hooks if a SerializedValueDetector detects a serialized response.
      */
-    protected static function isSerializedResultFromRegisteredHook(array $indexingConfiguration, string $solrFieldName): bool
+    protected static function isSerializedResultFromRegisteredHook(array $indexingConfiguration, string $meilisearchFieldName): bool
     {
         if (!is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['meilisearch']['detectSerializedValue'] ?? null)) {
             return false;
@@ -262,7 +262,7 @@ abstract class AbstractIndexer
                 throw new UnexpectedValueException($message, 1404471741);
             }
 
-            $isSerialized = (bool)$serializedValueDetector->isSerializedValue($indexingConfiguration, $solrFieldName);
+            $isSerialized = (bool)$serializedValueDetector->isSerializedValue($indexingConfiguration, $meilisearchFieldName);
             if ($isSerialized) {
                 return true;
             }

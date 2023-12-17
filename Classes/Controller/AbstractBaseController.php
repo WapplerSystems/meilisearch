@@ -49,7 +49,7 @@ abstract class AbstractBaseController extends ActionController
 
     protected ?TypoScriptFrontendController $typoScriptFrontendController = null;
 
-    private ?MeilisearchConfigurationManager $solrConfigurationManager = null;
+    private ?MeilisearchConfigurationManager $meilisearchConfigurationManager = null;
 
     /**
      * The configuration is private if you need it please get it from the MeilisearchVariableProvider of RenderingContext.
@@ -82,7 +82,7 @@ abstract class AbstractBaseController extends ActionController
 
     public function injectMeilisearchConfigurationManager(MeilisearchConfigurationManager $configurationManager): void
     {
-        $this->solrConfigurationManager = $configurationManager;
+        $this->meilisearchConfigurationManager = $configurationManager;
     }
 
     public function setResetConfigurationBeforeInitialize(bool $resetConfigurationBeforeInitialize): void
@@ -97,12 +97,12 @@ abstract class AbstractBaseController extends ActionController
     {
         // Reset configuration (to reset flexform overrides) if resetting is enabled
         if ($this->resetConfigurationBeforeInitialize) {
-            $this->solrConfigurationManager->reset();
+            $this->meilisearchConfigurationManager->reset();
         }
         /** @var TypoScriptService $typoScriptService */
         $typoScriptService = GeneralUtility::makeInstance(TypoScriptService::class);
 
-        // Merge settings done by typoscript with solrConfiguration plugin.tx_solr (obsolete when part of ext:solr)
+        // Merge settings done by typoscript with meilisearchConfiguration plugin.tx_meilisearch (obsolete when part of ext:meilisearch)
         $frameWorkConfiguration = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
         $pluginSettings = [];
         foreach (['search', 'settings', 'suggest', 'statistics', 'logging', 'general', 'meilisearch', 'view'] as $key) {
@@ -111,7 +111,7 @@ abstract class AbstractBaseController extends ActionController
             }
         }
 
-        $this->typoScriptConfiguration = $this->solrConfigurationManager->getTypoScriptConfiguration();
+        $this->typoScriptConfiguration = $this->meilisearchConfigurationManager->getTypoScriptConfiguration();
         if ($pluginSettings !== []) {
             $this->typoScriptConfiguration->mergeMeilisearchConfiguration(
                 $typoScriptService->convertPlainArrayToTypoScriptArray($pluginSettings),
@@ -132,21 +132,21 @@ abstract class AbstractBaseController extends ActionController
         $this->typoScriptFrontendController = $GLOBALS['TSFE'];
         $this->initializeSettings();
 
-        if ($this->actionMethodName !== 'solrNotAvailableAction') {
+        if ($this->actionMethodName !== 'meilisearchNotAvailableAction') {
             $this->initializeSearch();
         }
     }
 
     /**
-     * Inject settings of plugin.tx_solr
+     * Inject settings of plugin.tx_meilisearch
      */
     protected function initializeSettings(): void
     {
         $typoScriptService = GeneralUtility::makeInstance(TypoScriptService::class);
 
-        // Make sure plugin.tx_solr.settings are available in the view as {settings}
+        // Make sure plugin.tx_meilisearch.settings are available in the view as {settings}
         $this->settings = $typoScriptService->convertTypoScriptArrayToPlainArray(
-            $this->typoScriptConfiguration->getObjectByPathOrDefault('plugin.tx_solr.settings.')
+            $this->typoScriptConfiguration->getObjectByPathOrDefault('plugin.tx_meilisearch.settings.')
         );
     }
 
@@ -157,12 +157,12 @@ abstract class AbstractBaseController extends ActionController
     protected function initializeSearch(): void
     {
         try {
-            $solrConnection = GeneralUtility::makeInstance(ConnectionManager::class)->getConnectionByTypo3Site(
+            $meilisearchConnection = GeneralUtility::makeInstance(ConnectionManager::class)->getConnectionByTypo3Site(
                 $this->typoScriptFrontendController->getSite(),
                 $this->typoScriptFrontendController->getLanguage()->getLanguageId()
             );
 
-            $search = GeneralUtility::makeInstance(Search::class, $solrConnection);
+            $search = GeneralUtility::makeInstance(Search::class, $meilisearchConnection);
 
             $this->searchService = GeneralUtility::makeInstance(
                 SearchResultSetService::class,
@@ -184,7 +184,7 @@ abstract class AbstractBaseController extends ActionController
     }
 
     /**
-     * Called when the solr server is unavailable.
+     * Called when the meilisearch server is unavailable.
      */
     protected function logMeilisearchUnavailable(): void
     {

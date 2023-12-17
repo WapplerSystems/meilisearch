@@ -22,7 +22,7 @@
 		</include>
 	</coverage>
 	<testsuites>
-		<testsuite name="ext-solr-unit-tests">
+		<testsuite name="ext-meilisearch-unit-tests">
 			<directory>../../Tests/Unit/</directory>
 		</testsuite>
 	</testsuites>

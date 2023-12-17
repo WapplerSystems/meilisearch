@@ -46,7 +46,7 @@ class PageTest extends IntegrationTest
         parent::setUp();
         $this->importCSVDataSet(__DIR__ . '/../../Fixtures/sites_setup_and_data_set/be_users.csv');
         $GLOBALS['BE_USER'] = $this->setUpBackendUser(1);
-        $this->writeDefaultSolrTestSiteConfiguration();
+        $this->writeDefaultMeilisearchTestSiteConfiguration();
         $this->pageInitializer = GeneralUtility::makeInstance(Page::class);
         $this->indexQueue = GeneralUtility::makeInstance(Queue::class);
     }
@@ -80,7 +80,7 @@ class PageTest extends IntegrationTest
         foreach ($sites as $site) {
             $this->pageInitializer->setIndexingConfigurationName('pages');
             $this->pageInitializer->setIndexingConfiguration(
-                $site->getSolrConfiguration()->getIndexQueueConfigurationByName('pages')
+                $site->getMeilisearchConfiguration()->getIndexQueueConfigurationByName('pages')
             );
             $this->pageInitializer->setSite($site);
             $this->pageInitializer->setType('pages');
@@ -249,7 +249,7 @@ class PageTest extends IntegrationTest
         $this->assertItemsInQueue(5); // The root page of "testtwo.site aka integration_tree_two" is included.
 
         $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
-        $flashMessageQueue = $flashMessageService->getMessageQueueByIdentifier('solr.queue.initializer');
+        $flashMessageQueue = $flashMessageService->getMessageQueueByIdentifier('meilisearch.queue.initializer');
         self::assertEquals(2, count($flashMessageQueue->getAllMessages()));
     }
 

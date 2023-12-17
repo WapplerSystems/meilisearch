@@ -30,7 +30,7 @@ class SortingHelper
     /**
      * Constructor
      *
-     * @param array $sortingConfiguration Raw configuration from plugin.tx_solr.search.sorting.options
+     * @param array $sortingConfiguration Raw configuration from plugin.tx_meilisearch.search.sorting.options
      */
     public function __construct(array $sortingConfiguration)
     {
@@ -38,12 +38,12 @@ class SortingHelper
     }
 
     /**
-     * Takes the tx_solr[sort] URL parameter containing the option names and
+     * Takes the tx_meilisearch[sort] URL parameter containing the option names and
      * directions to sort by and resolves it to the actual sort fields and
      * directions as configured through TypoScript. Makes sure that only
      * configured sorting options get applied to the query.
      *
-     * @param string $urlParameters tx_solr[sort] URL parameter.
+     * @param string $urlParameters tx_meilisearch[sort] URL parameter.
      * @return string The actual index field configured to sort by for the given sort option name
      * @throws InvalidArgumentException if the given sort option is not configured
      */

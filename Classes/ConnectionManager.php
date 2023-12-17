@@ -97,11 +97,11 @@ class ConnectionManager implements SingletonInterface
     }
 
     /**
-     * Creates a solr configuration from the configuration array and returns it.
+     * Creates a meilisearch configuration from the configuration array and returns it.
      */
-    public function getConnectionFromConfiguration(array $solrConfiguration): MeilisearchConnection
+    public function getConnectionFromConfiguration(array $meilisearchConfiguration): MeilisearchConnection
     {
-        return $this->getMeilisearchConnectionForEndpoints($solrConfiguration['read'], $solrConfiguration['write']);
+        return $this->getMeilisearchConnectionForEndpoints($meilisearchConfiguration['read'], $meilisearchConfiguration['write']);
     }
 
     /**
@@ -174,14 +174,14 @@ class ConnectionManager implements SingletonInterface
      */
     public function getAllConnections(): array
     {
-        $solrConnections = [];
+        $meilisearchConnections = [];
         foreach ($this->siteRepository->getAvailableSites() as $site) {
-            foreach ($site->getAllMeilisearchConnectionConfigurations() as $solrConfiguration) {
-                $solrConnections[] = $this->getConnectionFromConfiguration($solrConfiguration);
+            foreach ($site->getAllMeilisearchConnectionConfigurations() as $meilisearchConfiguration) {
+                $meilisearchConnections[] = $this->getConnectionFromConfiguration($meilisearchConfiguration);
             }
         }
 
-        return $solrConnections;
+        return $meilisearchConnections;
     }
 
     /**
@@ -193,8 +193,8 @@ class ConnectionManager implements SingletonInterface
     {
         $connections = [];
 
-        foreach ($site->getAllMeilisearchConnectionConfigurations() as $languageId => $solrConnectionConfiguration) {
-            $connections[$languageId] = $this->getConnectionFromConfiguration($solrConnectionConfiguration);
+        foreach ($site->getAllMeilisearchConnectionConfigurations() as $languageId => $meilisearchConnectionConfiguration) {
+            $connections[$languageId] = $this->getConnectionFromConfiguration($meilisearchConnectionConfiguration);
         }
 
         return $connections;

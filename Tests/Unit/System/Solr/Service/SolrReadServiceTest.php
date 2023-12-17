@@ -13,15 +13,15 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace WapplerSystems\Meilisearch\Tests\Unit\System\Solr\Service;
+namespace WapplerSystems\Meilisearch\Tests\Unit\System\Meilisearch\Service;
 
 use WapplerSystems\Meilisearch\Domain\Search\Query\SearchQuery;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
-use WapplerSystems\Meilisearch\System\Solr\Service\SolrReadService;
-use WapplerSystems\Meilisearch\System\Solr\SolrCommunicationException;
-use WapplerSystems\Meilisearch\System\Solr\SolrInternalServerErrorException;
-use WapplerSystems\Meilisearch\System\Solr\SolrUnavailableException;
+use WapplerSystems\Meilisearch\System\Meilisearch\Service\MeilisearchReadService;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchCommunicationException;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchInternalServerErrorException;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchUnavailableException;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Solarium\Client;
@@ -31,16 +31,16 @@ use Solarium\Exception\HttpException;
 use Solarium\QueryType\Ping\Query as PingQuery;
 
 /**
- * Tests the WapplerSystems\Meilisearch\SolrService class
+ * Tests the WapplerSystems\Meilisearch\MeilisearchService class
  *
  * @author Timo Hund <timo.hund@dkd.de>
  */
-class SolrReadServiceTest extends SetUpUnitTestCase
+class MeilisearchReadServiceTest extends SetUpUnitTestCase
 {
     protected Request|MockObject $requestMock;
     protected Response|MockObject $responseMock;
     protected Client|MockObject $clientMock;
-    protected SolrReadService $service;
+    protected MeilisearchReadService $service;
 
     protected function setUp(): void
     {
@@ -50,7 +50,7 @@ class SolrReadServiceTest extends SetUpUnitTestCase
         $this->clientMock->expects(self::any())->method('createRequest')->willReturn($this->requestMock);
         $this->clientMock->expects(self::any())->method('executeRequest')->willReturn($this->responseMock);
 
-        $this->service = new SolrReadService($this->clientMock);
+        $this->service = new MeilisearchReadService($this->clientMock);
         parent::setUp();
     }
 
@@ -100,9 +100,9 @@ class SolrReadServiceTest extends SetUpUnitTestCase
     public function readServiceExceptionDataProvider()
     {
         return [
-            'Communication error' => ['exceptionClass' => SolrUnavailableException::class, 0],
-            'Internal Server eror' => ['expcetionClass' => SolrInternalServerErrorException::class, 500],
-            'Other unspecific error' => ['expcetionClass' => SolrCommunicationException::class, 555],
+            'Communication error' => ['exceptionClass' => MeilisearchUnavailableException::class, 0],
+            'Internal Server eror' => ['expcetionClass' => MeilisearchInternalServerErrorException::class, 500],
+            'Other unspecific error' => ['expcetionClass' => MeilisearchCommunicationException::class, 555],
         ];
     }
 
@@ -118,7 +118,7 @@ class SolrReadServiceTest extends SetUpUnitTestCase
         $this->clientMock->expects(self::once())->method('createRequest')->willReturn($this->createMock(Request::class));
 
         $this->clientMock->expects(self::once())->method('executeRequest')->willReturnCallback(function () use ($statusCode) {
-            throw new HttpException('Solr error', $statusCode);
+            throw new HttpException('Meilisearch error', $statusCode);
         });
         $searchQuery = new SearchQuery();
         $searchQuery->setQuery('foo');
@@ -128,14 +128,14 @@ class SolrReadServiceTest extends SetUpUnitTestCase
     }
 
     /**
-     * @return SolrReadService
+     * @return MeilisearchReadService
      */
-    protected function getDefaultSolrServiceWithMockedDependencies()
+    protected function getDefaultMeilisearchServiceWithMockedDependencies()
     {
         $clientMock = $this->createMock(Client::class);
         $fakeConfiguration = $this->createMock(TypoScriptConfiguration::class);
         $logManagerMock = $this->createMock(MeilisearchLogManager::class);
-        $solrService = new SolrReadService($clientMock, $fakeConfiguration, $logManagerMock);
-        return $solrService;
+        $meilisearchService = new MeilisearchReadService($clientMock, $fakeConfiguration, $logManagerMock);
+        return $meilisearchService;
     }
 }

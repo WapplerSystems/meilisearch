@@ -200,7 +200,7 @@ class FacetingComponent implements LoggerAwareInterface
     {
         $resultParameters = $searchRequest->getArguments();
         // format for filter URL parameter:
-        // tx_solr[filter]=$facetName0:$facetValue0,$facetName1:$facetValue1,$facetName2:$facetValue2
+        // tx_meilisearch[filter]=$facetName0:$facetValue0,$facetName1:$facetValue1,$facetName2:$facetValue2
         $filters = array_map('rawurldecode', $resultParameters['filter']);
         // $filters look like ['name:value1','name:value2','fieldname2:foo']
         $configuredFacets = $this->getFacetNamesWithConfiguredField($allFacets);

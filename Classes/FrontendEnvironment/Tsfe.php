@@ -83,7 +83,7 @@ class Tsfe implements SingletonInterface
         $cacheIdentifier = $this->getCacheIdentifier($pageId, $language, $rootPageId);
 
         // Handle spacer and sys-folders, since they are not accessible in frontend, and TSFE can not be fully initialized on them.
-        // Apart from this, the plugin.tx_solr.index.queue.[indexConfig].additionalPageIds is handled as well.
+        // Apart from this, the plugin.tx_meilisearch.index.queue.[indexConfig].additionalPageIds is handled as well.
         $pidToUse = $this->getPidToUseForTsfeInitialization($pageId, $rootPageId);
         if ($pidToUse !== $pageId) {
             $this->initializeTsfe($pidToUse, $language, $rootPageId);
@@ -311,7 +311,7 @@ class Tsfe implements SingletonInterface
      * The TSFE can not be initialized for Spacer and sys-folders.
      * See: "Spacer and sys folders is not accessible in frontend" on {@link TypoScriptFrontendController::getPageAndRootline}
      *
-     * Note: The requested $pidToUse can be one of configured plugin.tx_solr.index.queue.[indexConfig].additionalPageIds.
+     * Note: The requested $pidToUse can be one of configured plugin.tx_meilisearch.index.queue.[indexConfig].additionalPageIds.
      *
      * @throws Exception\Exception
      * @throws DBALException
@@ -321,7 +321,7 @@ class Tsfe implements SingletonInterface
         $incomingPidToUse = $pidToUse;
         $incomingRootPageId = $rootPageId;
 
-        // handle plugin.tx_solr.index.queue.[indexConfig].additionalPageIds
+        // handle plugin.tx_meilisearch.index.queue.[indexConfig].additionalPageIds
         if (isset($rootPageId) && !$this->isRequestedPageAPartOfRequestedSite($pidToUse)) {
             return $rootPageId;
         }

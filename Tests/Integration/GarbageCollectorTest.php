@@ -33,7 +33,7 @@ use TYPO3\CMS\Scheduler\Scheduler;
 
 /**
  * This testcase is used to check if the GarbageCollector can delete garbage from the
- * solr server as expected
+ * meilisearch server as expected
  *
  * @author Timo Schmidt
  */
@@ -45,7 +45,7 @@ class GarbageCollectorTest extends IntegrationTest
     ];
 
     protected array $testExtensionsToLoad = [
-        'typo3conf/ext/solr',
+        'typo3conf/ext/meilisearch',
         '../vendor/wapplersystems/meilisearch/Tests/Integration/Fixtures/Extensions/fake_extension',
     ];
 
@@ -89,7 +89,7 @@ class GarbageCollectorTest extends IntegrationTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->writeDefaultSolrTestSiteConfiguration();
+        $this->writeDefaultMeilisearchTestSiteConfiguration();
         $this->recordMonitor = GeneralUtility::makeInstance(RecordMonitor::class);
         $this->dataHandler = GeneralUtility::makeInstance(DataHandler::class);
         $this->indexQueue = GeneralUtility::makeInstance(Queue::class);
@@ -219,7 +219,7 @@ class GarbageCollectorTest extends IntegrationTest
         $dataHandler = $this->dataHandler;
         $this->recordMonitor->processDatamap_afterDatabaseOperations('update', 'pages', 2, [], $dataHandler);
 
-        // we expect that one item is now in the solr server
+        // we expect that one item is now in the meilisearch server
         $this->assertIndexQueueContainsItemAmount(1);
 
         $this->garbageCollector->collectGarbage('pages', 2);
@@ -351,8 +351,8 @@ class GarbageCollectorTest extends IntegrationTest
         $this->addToQueueAndIndexRecord('pages', 11);
         $this->addToQueueAndIndexRecord('pages', 12);
         $this->addToQueueAndIndexRecord('pages', 13);
-        $this->waitToBeVisibleInSolr();
-        $this->assertSolrContainsDocumentCount(4);
+        $this->waitToBeVisibleInMeilisearch();
+        $this->assertMeilisearchContainsDocumentCount(4);
 
         $this->dataHandler->start(
             [],
@@ -362,7 +362,7 @@ class GarbageCollectorTest extends IntegrationTest
 
         $this->dataHandler->process_cmdmap();
         $this->assertIndexQueueContainsItemAmount(4);
-        $this->assertSolrContainsDocumentCount(0);
+        $this->assertMeilisearchContainsDocumentCount(0);
     }
 
     /**
@@ -377,7 +377,7 @@ class GarbageCollectorTest extends IntegrationTest
         $this->addToQueueAndIndexRecord('pages', 11);
         $this->addToQueueAndIndexRecord('pages', 12);
         $this->addToQueueAndIndexRecord('pages', 13);
-        $this->waitToBeVisibleInSolr();
+        $this->waitToBeVisibleInMeilisearch();
         $this->assertIndexQueueContainsItemAmount(4);
 
         $this->dataHandler->start(
@@ -387,7 +387,7 @@ class GarbageCollectorTest extends IntegrationTest
         );
         $this->dataHandler->process_cmdmap();
         $this->assertEmptyIndexQueue();
-        $this->assertSolrContainsDocumentCount(0);
+        $this->assertMeilisearchContainsDocumentCount(0);
     }
 
     /**
@@ -402,8 +402,8 @@ class GarbageCollectorTest extends IntegrationTest
         $this->addToQueueAndIndexRecord('pages', 11);
         $this->addToQueueAndIndexRecord('pages', 12);
         $this->addToQueueAndIndexRecord('pages', 13);
-        $this->waitToBeVisibleInSolr();
-        $this->assertSolrContainsDocumentCount(4);
+        $this->waitToBeVisibleInMeilisearch();
+        $this->assertMeilisearchContainsDocumentCount(4);
 
         $this->dataHandler->start(
             [],
@@ -413,7 +413,7 @@ class GarbageCollectorTest extends IntegrationTest
 
         $this->dataHandler->process_cmdmap();
         $this->assertIndexQueueContainsItemAmount(4);
-        $this->assertSolrContainsDocumentCount(3);
+        $this->assertMeilisearchContainsDocumentCount(3);
     }
 
     /**
@@ -423,9 +423,9 @@ class GarbageCollectorTest extends IntegrationTest
     {
         $this->prepareCanRemoveDeletedContentElement();
 
-        // after applying the commands solr should be empty (because the page was removed from solr and queued for indexing)
-        $this->waitToBeVisibleInSolr();
-        $this->assertSolrIsEmpty();
+        // after applying the commands meilisearch should be empty (because the page was removed from meilisearch and queued for indexing)
+        $this->waitToBeVisibleInMeilisearch();
+        $this->assertMeilisearchIsEmpty();
 
         // we expect the is one item in the indexQueue
         $this->assertIndexQueueContainsItemAmount(1);
@@ -436,9 +436,9 @@ class GarbageCollectorTest extends IntegrationTest
         $this->indexPages([1]);
 
         // now the content of the deleted content element should be gone
-        $solrContent = file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/core_en/select?q=*:*');
-        self::assertStringNotContainsString('will be removed!', $solrContent, 'solr did not remove deleted content');
-        self::assertStringContainsString('will stay!', $solrContent, 'solr did not contain rendered page content');
+        $meilisearchContent = file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/core_en/select?q=*:*');
+        self::assertStringNotContainsString('will be removed!', $meilisearchContent, 'meilisearch did not remove deleted content');
+        self::assertStringContainsString('will stay!', $meilisearchContent, 'meilisearch did not contain rendered page content');
     }
 
     /**
@@ -451,8 +451,8 @@ class GarbageCollectorTest extends IntegrationTest
         $this->assertEventQueueContainsItemAmount(2);
         $this->processEventQueue();
         $this->assertEmptyEventQueue();
-        $this->waitToBeVisibleInSolr();
-        $this->assertSolrIsEmpty();
+        $this->waitToBeVisibleInMeilisearch();
+        $this->assertMeilisearchIsEmpty();
     }
 
     /**
@@ -462,16 +462,16 @@ class GarbageCollectorTest extends IntegrationTest
      */
     protected function prepareCanRemoveDeletedContentElement(): void
     {
-        $this->cleanUpSolrServerAndAssertEmpty();
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
         $this->addSimpleFrontendRenderingToTypoScriptRendering(1);
         $this->importCSVDataSet(__DIR__ . '/Fixtures/indexed_content.csv');
 
-        // we index a page with two content elements and expect solr contains the content of both
+        // we index a page with two content elements and expect meilisearch contains the content of both
         $this->indexPages([1]);
 
-        $solrContent = file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/core_en/select?q=*:*');
-        self::assertStringContainsString('will be removed!', $solrContent, 'solr did not contain rendered page content');
-        self::assertStringContainsString('will stay!', $solrContent, 'solr did not contain rendered page content');
+        $meilisearchContent = file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/core_en/select?q=*:*');
+        self::assertStringContainsString('will be removed!', $meilisearchContent, 'meilisearch did not contain rendered page content');
+        self::assertStringContainsString('will stay!', $meilisearchContent, 'meilisearch did not contain rendered page content');
 
         // we delete the second content element
         $cmd = ['tt_content' => [88 => ['delete' => 1 ]]];
@@ -488,9 +488,9 @@ class GarbageCollectorTest extends IntegrationTest
         $data = ['tt_content' => ['88' => ['hidden' => 1]]];
         $this->prepareCanRemoveContentElementTests($data);
 
-        // after applying the commands solr should be empty (because the page was removed from solr and queued for indexing)
-        $this->waitToBeVisibleInSolr();
-        $this->assertSolrIsEmpty();
+        // after applying the commands meilisearch should be empty (because the page was removed from meilisearch and queued for indexing)
+        $this->waitToBeVisibleInMeilisearch();
+        $this->assertMeilisearchIsEmpty();
 
         // we expect the is one item in the indexQueue
         $this->assertIndexQueueContainsItemAmount(1);
@@ -499,12 +499,12 @@ class GarbageCollectorTest extends IntegrationTest
 
         // we index this item
         $this->indexPages([1]);
-        $this->waitToBeVisibleInSolr();
+        $this->waitToBeVisibleInMeilisearch();
 
         // now the content of the deletec content element should be gone
-        $solrContent = file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/core_en/select?q=*:*');
-        self::assertStringNotContainsString('will be removed!', $solrContent, 'solr did not remove hidden content');
-        self::assertStringContainsString('will stay!', $solrContent, 'solr did not contain rendered page content');
+        $meilisearchContent = file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/core_en/select?q=*:*');
+        self::assertStringNotContainsString('will be removed!', $meilisearchContent, 'meilisearch did not remove hidden content');
+        self::assertStringContainsString('will stay!', $meilisearchContent, 'meilisearch did not contain rendered page content');
     }
 
     /**
@@ -536,7 +536,7 @@ class GarbageCollectorTest extends IntegrationTest
         $this->prepareCanRemoveContentElementTests($data);
 
         // we expect the is one item in the indexQueue
-        $this->waitToBeVisibleInSolr();
+        $this->waitToBeVisibleInMeilisearch();
         $this->assertIndexQueueContainsItemAmount(1);
         $items = $this->indexQueue->getItems('pages', 1);
         self::assertSame(1, count($items));
@@ -545,9 +545,9 @@ class GarbageCollectorTest extends IntegrationTest
         $this->indexPages([1]);
 
         // now the content of the deleted content element should be gone
-        $solrContent = file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/core_en/select?q=*:*');
-        self::assertStringNotContainsString('will be removed!', $solrContent, 'solr did not remove content hidden by endtime in past');
-        self::assertStringContainsString('will stay!', $solrContent, 'solr did not contain rendered page content');
+        $meilisearchContent = file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/core_en/select?q=*:*');
+        self::assertStringNotContainsString('will be removed!', $meilisearchContent, 'meilisearch did not remove content hidden by endtime in past');
+        self::assertStringContainsString('will stay!', $meilisearchContent, 'meilisearch did not contain rendered page content');
     }
 
     /**
@@ -579,10 +579,10 @@ class GarbageCollectorTest extends IntegrationTest
         $this->prepareCanRemoveContentElementTests($data, 'does_not_remove_updated_content_element_with_not_set_endtime.csv', [2]);
 
         // document should stay in the index, because endtime was not in past but empty
-        $solrContent = file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/core_en/select?q=*:*');
-        self::assertStringContainsString('will stay! still present after update!', $solrContent, 'solr did not contain rendered page content, which is needed for test.');
+        $meilisearchContent = file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/core_en/select?q=*:*');
+        self::assertStringContainsString('will stay! still present after update!', $meilisearchContent, 'meilisearch did not contain rendered page content, which is needed for test.');
 
-        $this->waitToBeVisibleInSolr();
+        $this->waitToBeVisibleInMeilisearch();
 
         $this->assertIndexQueueContainsItemAmount(1);
         $items = $this->indexQueue->getItems('pages', 2);
@@ -592,8 +592,8 @@ class GarbageCollectorTest extends IntegrationTest
         $this->indexPages([2]);
 
         // now the content of the deleted content element should be gone
-        $solrContent = file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/core_en/select?q=*:*');
-        self::assertStringContainsString('Updated! Will stay after update!', $solrContent, 'solr did not remove content hidden by endtime in past');
+        $meilisearchContent = file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/core_en/select?q=*:*');
+        self::assertStringContainsString('Updated! Will stay after update!', $meilisearchContent, 'meilisearch did not remove content hidden by endtime in past');
     }
 
     /**
@@ -633,9 +633,9 @@ class GarbageCollectorTest extends IntegrationTest
         $this->indexPages([1]);
 
         // now the content of the deletec content element should be gone
-        $solrContent = file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/core_en/select?q=*:*');
-        self::assertStringNotContainsString('will be removed!', $solrContent, 'solr did not remove content hidden by starttime in future');
-        self::assertStringContainsString('will stay!', $solrContent, 'solr did not contain rendered page content');
+        $meilisearchContent = file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/core_en/select?q=*:*');
+        self::assertStringNotContainsString('will be removed!', $meilisearchContent, 'meilisearch did not remove content hidden by starttime in future');
+        self::assertStringContainsString('will stay!', $meilisearchContent, 'meilisearch did not contain rendered page content');
     }
 
     /**
@@ -671,19 +671,19 @@ class GarbageCollectorTest extends IntegrationTest
      */
     protected function prepareCanRemoveContentElementTests(array $dataMap, string $fixture = 'indexed_content.csv', array $indexPageIds = [1]): void
     {
-        $this->cleanUpSolrServerAndAssertEmpty();
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
         $this->addSimpleFrontendRenderingToTypoScriptRendering(1);
         $this->importCSVDataSet(__DIR__ . '/Fixtures/' . $fixture);
 
-        // we index a page with two content elements and expect solr contains the content of both
+        // we index a page with two content elements and expect meilisearch contains the content of both
         $this->indexPages($indexPageIds);
-        $this->waitToBeVisibleInSolr();
+        $this->waitToBeVisibleInMeilisearch();
 
-        $solrContent = file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/core_en/select?q=*:*');
+        $meilisearchContent = file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/core_en/select?q=*:*');
         if ($fixture === 'indexed_content.csv') {
-            self::assertStringContainsString('will be removed!', $solrContent, 'Solr did not contain rendered page content');
+            self::assertStringContainsString('will be removed!', $meilisearchContent, 'Meilisearch did not contain rendered page content');
         }
-        self::assertStringContainsString('will stay!', $solrContent, 'Solr did not contain required page or content element content');
+        self::assertStringContainsString('will stay!', $meilisearchContent, 'Meilisearch did not contain required page or content element content');
 
         // we hide the second content element
         $this->dataHandler->start($dataMap, [], $this->backendUser);
@@ -700,7 +700,7 @@ class GarbageCollectorTest extends IntegrationTest
         $dataMap = ['pages' => ['2' => ['hidden' => 1]]];
         $this->prepareCanRemovePagesTests($dataMap);
 
-        $this->waitToBeVisibleInSolr();
+        $this->waitToBeVisibleInMeilisearch();
         $this->assertIndexQueueContainsItemAmount(1);
 
         // we reindex all queue items
@@ -712,13 +712,13 @@ class GarbageCollectorTest extends IntegrationTest
             $pages[] = $item->getRecordUid();
         }
         $this->indexPages($pages);
-        $this->waitToBeVisibleInSolr();
+        $this->waitToBeVisibleInMeilisearch();
 
         // now only one document should be left with the content of the first content element
-        $solrContent = file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/core_en/select?q=*:*');
-        self::assertStringNotContainsString('will be removed!', $solrContent, 'Solr did not remove content from hidden page');
-        self::assertStringContainsString('will stay!', $solrContent, 'Solr did not contain rendered page content');
-        self::assertStringContainsString('"numFound":1', $solrContent, 'Expected to have two documents in the index');
+        $meilisearchContent = file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/core_en/select?q=*:*');
+        self::assertStringNotContainsString('will be removed!', $meilisearchContent, 'Meilisearch did not remove content from hidden page');
+        self::assertStringContainsString('will stay!', $meilisearchContent, 'Meilisearch did not contain rendered page content');
+        self::assertStringContainsString('"numFound":1', $meilisearchContent, 'Expected to have two documents in the index');
     }
 
     /**
@@ -745,7 +745,7 @@ class GarbageCollectorTest extends IntegrationTest
         $cmd = ['pages' => [2 => ['delete' => 1 ]]];
         $this->prepareCanRemovePagesTests([], $cmd);
 
-        $this->waitToBeVisibleInSolr();
+        $this->waitToBeVisibleInMeilisearch();
         $this->assertIndexQueueContainsItemAmount(1);
 
         // we reindex all queue items
@@ -757,13 +757,13 @@ class GarbageCollectorTest extends IntegrationTest
             $pages[] = $item->getRecordUid();
         }
         $this->indexPages($pages);
-        $this->waitToBeVisibleInSolr();
+        $this->waitToBeVisibleInMeilisearch();
 
         // now only one document should be left with the content of the first content element
-        $solrContent = file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/core_en/select?q=*:*');
-        self::assertStringNotContainsString('will be removed!', $solrContent, 'solr did not remove content from deleted page');
-        self::assertStringContainsString('will stay!', $solrContent, 'solr did not contain rendered page content');
-        self::assertStringContainsString('"numFound":1', $solrContent, 'Expected to have two documents in the index');
+        $meilisearchContent = file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/core_en/select?q=*:*');
+        self::assertStringNotContainsString('will be removed!', $meilisearchContent, 'meilisearch did not remove content from deleted page');
+        self::assertStringContainsString('will stay!', $meilisearchContent, 'meilisearch did not contain rendered page content');
+        self::assertStringContainsString('"numFound":1', $meilisearchContent, 'Expected to have two documents in the index');
     }
 
     /**
@@ -799,7 +799,7 @@ class GarbageCollectorTest extends IntegrationTest
         // check queue directly as Queue wouldn't return invalid records
         /** @var Connection $connection */
         $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionByName(ConnectionPool::DEFAULT_CONNECTION_NAME);
-        $queueItemUid = $connection->select(['uid'], 'tx_solr_indexqueue_item')->fetchOne();
+        $queueItemUid = $connection->select(['uid'], 'tx_meilisearch_indexqueue_item')->fetchOne();
         self::assertEquals(234, $queueItemUid);
     }
 
@@ -818,7 +818,7 @@ class GarbageCollectorTest extends IntegrationTest
         // check queue directly as Queue wouldn't return invalid records
         /** @var Connection $connection */
         $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionByName(ConnectionPool::DEFAULT_CONNECTION_NAME);
-        $queueItemUid = $connection->select(['uid'], 'tx_solr_indexqueue_item')->fetchOne();
+        $queueItemUid = $connection->select(['uid'], 'tx_meilisearch_indexqueue_item')->fetchOne();
         self::assertEquals(123, $queueItemUid);
     }
 
@@ -841,7 +841,7 @@ class GarbageCollectorTest extends IntegrationTest
         // check queue directly as Queue wouldn't return invalid records
         /** @var Connection $connection */
         $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionByName(ConnectionPool::DEFAULT_CONNECTION_NAME);
-        $queueItemUid = $connection->select(['uid'], 'tx_solr_indexqueue_item')->fetchOne();
+        $queueItemUid = $connection->select(['uid'], 'tx_meilisearch_indexqueue_item')->fetchOne();
         self::assertEquals(234, $queueItemUid);
     }
 
@@ -854,17 +854,17 @@ class GarbageCollectorTest extends IntegrationTest
      */
     protected function prepareCanRemovePagesTests(array $dataMap, array $cmdMap = []): void
     {
-        $this->cleanUpSolrServerAndAssertEmpty();
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
         $this->addSimpleFrontendRenderingToTypoScriptRendering(1);
         $this->importCSVDataSet(__DIR__ . '/Fixtures/can_remove_page.csv');
 
         // we index two pages and check that both are visible
         $this->indexPages([1, 2]);
 
-        $solrContent = file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/core_en/select?q=*:*');
-        self::assertStringContainsString('will be removed!', $solrContent, 'solr did not contain rendered page content');
-        self::assertStringContainsString('will stay!', $solrContent, 'solr did not contain rendered page content');
-        self::assertStringContainsString('"numFound":2', $solrContent, 'Expected to have two documents in the index');
+        $meilisearchContent = file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/core_en/select?q=*:*');
+        self::assertStringContainsString('will be removed!', $meilisearchContent, 'meilisearch did not contain rendered page content');
+        self::assertStringContainsString('will stay!', $meilisearchContent, 'meilisearch did not contain rendered page content');
+        self::assertStringContainsString('"numFound":2', $meilisearchContent, 'Expected to have two documents in the index');
 
         // we hide the second page
         $this->dataHandler->start($dataMap, $cmdMap, $this->backendUser);
@@ -879,8 +879,8 @@ class GarbageCollectorTest extends IntegrationTest
     public function canTriggerHookAfterRecordDeletion(): void
     {
         $this->prepareCanTriggerHookAfterRecordDeletion();
-        $this->waitToBeVisibleInSolr();
-        $this->assertSolrIsEmpty();
+        $this->waitToBeVisibleInMeilisearch();
+        $this->assertMeilisearchIsEmpty();
 
         // since our hook is a singleton we check here if it was called.
         /** @var TestGarbageCollectorPostProcessor $hook */
@@ -921,7 +921,7 @@ class GarbageCollectorTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_solr.index.queue {
+            plugin.tx_meilisearch.index.queue {
                 foo = 1
                 foo {
                     table = tx_fakeextension_domain_model_foo
@@ -930,11 +930,11 @@ class GarbageCollectorTest extends IntegrationTest
             }'
         );
 
-        $this->cleanUpSolrServerAndAssertEmpty();
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
 
         $this->addToQueueAndIndexRecord('tx_fakeextension_domain_model_foo', 111);
-        $this->waitToBeVisibleInSolr();
-        $this->assertSolrContainsDocumentCount(1);
+        $this->waitToBeVisibleInMeilisearch();
+        $this->assertMeilisearchContainsDocumentCount(1);
 
         // we hide the second page
         $cmd = ['tx_fakeextension_domain_model_foo' => [111 => ['delete' => 1 ]]];

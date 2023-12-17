@@ -31,7 +31,7 @@ class SuggestControllerTest extends IntegrationTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->writeDefaultSolrTestSiteConfiguration();
+        $this->writeDefaultMeilisearchTestSiteConfiguration();
         $this->addTypoScriptToTemplateRecord(
             1,
             /* @lang TYPO3_TypoScript */
@@ -46,11 +46,11 @@ class SuggestControllerTest extends IntegrationTest
     }
 
     /**
-     * Executed after each test. Empties solr and checks if the index is empty
+     * Executed after each test. Empties meilisearch and checks if the index is empty
      */
     protected function tearDown(): void
     {
-        $this->cleanUpSolrServerAndAssertEmpty();
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
         parent::tearDown();
     }
 
@@ -93,14 +93,14 @@ class SuggestControllerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-			plugin.tx_solr.suggest.suggestField = title
+			plugin.tx_meilisearch.suggest.suggestField = title
             '
         );
 
         $this->indexPages([1, 2, 3, 4, 5]);
 
         // @todo: add more variants
-        // @TODO: Check why does solr return some/larg instead of some/large
+        // @TODO: Check why does meilisearch return some/larg instead of some/large
         $testCases = [
             [
                 'prefix' => 'Some/',
@@ -130,10 +130,10 @@ class SuggestControllerTest extends IntegrationTest
         $request = $request
             ->withPageId(1)
             ->withQueryParameter('type', '7384')
-            ->withQueryParameter('tx_solr[queryString]', $queryString);
+            ->withQueryParameter('tx_meilisearch[queryString]', $queryString);
 
         if ($callback !== null) {
-            $request = $request->withQueryParameter('tx_solr[callback]', $callback);
+            $request = $request->withQueryParameter('tx_meilisearch[callback]', $callback);
         }
         return $this->executeFrontendSubRequest($request);
     }

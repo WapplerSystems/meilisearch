@@ -18,8 +18,8 @@ namespace WapplerSystems\Meilisearch\Tests\Integration\IndexQueue;
 use WapplerSystems\Meilisearch\IndexQueue\Indexer;
 use WapplerSystems\Meilisearch\IndexQueue\Item;
 use WapplerSystems\Meilisearch\IndexQueue\Queue;
-use WapplerSystems\Meilisearch\System\Solr\Document\Document;
-use WapplerSystems\Meilisearch\System\Solr\SolrConnection;
+use WapplerSystems\Meilisearch\System\Meilisearch\Document\Document;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchConnection;
 use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use Psr\Http\Server\RequestHandlerInterface;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
@@ -38,7 +38,7 @@ class IndexerTest extends IntegrationTest
     protected bool $skipImportRootPagesAndTemplatesForConfiguredSites = true;
 
     protected array $testExtensionsToLoad = [
-        'typo3conf/ext/solr',
+        'typo3conf/ext/meilisearch',
         '../vendor/wapplersystems/meilisearch/Tests/Integration/Fixtures/Extensions/fake_extension2',
     ];
 
@@ -55,7 +55,7 @@ class IndexerTest extends IntegrationTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->writeDefaultSolrTestSiteConfiguration();
+        $this->writeDefaultMeilisearchTestSiteConfiguration();
         $this->indexQueue = GeneralUtility::makeInstance(Queue::class);
         $this->indexer = GeneralUtility::makeInstance(Indexer::class);
 
@@ -74,7 +74,7 @@ class IndexerTest extends IntegrationTest
     protected function tearDown(): void
     {
         parent::tearDown();
-        $this->cleanUpSolrServerAndAssertEmpty();
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
         unset(
             $this->indexQueue,
             $this->indexer,
@@ -88,7 +88,7 @@ class IndexerTest extends IntegrationTest
      */
     public function canIndexItemWithMMRelation(): void
     {
-        $this->cleanUpSolrServerAndAssertEmpty();
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
         $this->importCSVDataSet(__DIR__ . '/Fixtures/can_index_custom_record_with_mm_relation.csv');
 
         $result = $this->addToQueueAndIndexRecord('tx_fakeextension_domain_model_bar', 88);
@@ -96,13 +96,13 @@ class IndexerTest extends IntegrationTest
         self::assertTrue($result, 'Indexing was not indicated to be successful');
 
         // do we have the record in the index with the value from the mm relation?
-        $this->waitToBeVisibleInSolr();
-        $solrContent = file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/core_en/select?q=*:*');
+        $this->waitToBeVisibleInMeilisearch();
+        $meilisearchContent = file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/core_en/select?q=*:*');
 
-        self::assertStringContainsString('"category_stringM":["the tag"]', $solrContent, 'Did not find MM related tag');
-        self::assertStringContainsString('"numFound":1', $solrContent, 'Could not index document into solr');
-        self::assertStringContainsString('"title":"testnews"', $solrContent, 'Could not index document into solr');
-        $this->cleanUpSolrServerAndAssertEmpty();
+        self::assertStringContainsString('"category_stringM":["the tag"]', $meilisearchContent, 'Did not find MM related tag');
+        self::assertStringContainsString('"numFound":1', $meilisearchContent, 'Could not index document into meilisearch');
+        self::assertStringContainsString('"title":"testnews"', $meilisearchContent, 'Could not index document into meilisearch');
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
     }
 
     public function getTranslatedRecordDataProvider(): array
@@ -120,8 +120,8 @@ class IndexerTest extends IntegrationTest
      */
     public function testCanIndexTranslatedCustomRecord(string $fixture): void
     {
-        $this->cleanUpSolrServerAndAssertEmpty();
-        $this->cleanUpSolrServerAndAssertEmpty('core_de');
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
+        $this->cleanUpMeilisearchServerAndAssertEmpty('core_de');
 
         $this->importCSVDataSet(__DIR__ . '/Fixtures/' . $fixture);
 
@@ -132,29 +132,29 @@ class IndexerTest extends IntegrationTest
         self::assertTrue($result, 'Indexing was not indicated to be successful');
 
         // do we have the record in the index with the value from the mm relation?
-        $this->waitToBeVisibleInSolr();
-        $solrContent = file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/core_en/select?q=*:*');
-        self::assertStringContainsString('"numFound":2', $solrContent, 'Could not index document into solr');
-        self::assertStringContainsString('"title":"original"', $solrContent, 'Could not index document into solr');
-        self::assertStringContainsString('"title":"original2"', $solrContent, 'Could not index document into solr');
-        self::assertStringContainsString('"url":"http://testone.site/en/?tx_foo%5Buid%5D=88', $solrContent, 'Can not build typolink as expected');
-        self::assertStringContainsString('"url":"http://testone.site/en/?tx_foo%5Buid%5D=777', $solrContent, 'Can not build typolink as expected');
+        $this->waitToBeVisibleInMeilisearch();
+        $meilisearchContent = file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/core_en/select?q=*:*');
+        self::assertStringContainsString('"numFound":2', $meilisearchContent, 'Could not index document into meilisearch');
+        self::assertStringContainsString('"title":"original"', $meilisearchContent, 'Could not index document into meilisearch');
+        self::assertStringContainsString('"title":"original2"', $meilisearchContent, 'Could not index document into meilisearch');
+        self::assertStringContainsString('"url":"http://testone.site/en/?tx_foo%5Buid%5D=88', $meilisearchContent, 'Can not build typolink as expected');
+        self::assertStringContainsString('"url":"http://testone.site/en/?tx_foo%5Buid%5D=777', $meilisearchContent, 'Can not build typolink as expected');
 
-        $this->waitToBeVisibleInSolr('core_de');
-        $solrContent = file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/core_de/select?q=*:*');
-        self::assertStringContainsString('"numFound":2', $solrContent, 'Could not find translated record in solr document into solr');
+        $this->waitToBeVisibleInMeilisearch('core_de');
+        $meilisearchContent = file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/core_de/select?q=*:*');
+        self::assertStringContainsString('"numFound":2', $meilisearchContent, 'Could not find translated record in meilisearch document into meilisearch');
         if ($fixture === 'can_index_custom_translated_record_without_l_param_and_content_fallback.csv') {
-            self::assertStringContainsString('"title":"original"', $solrContent, 'Could not index  translated document into solr');
-            self::assertStringContainsString('"title":"original2"', $solrContent, 'Could not index  translated document into solr');
+            self::assertStringContainsString('"title":"original"', $meilisearchContent, 'Could not index  translated document into meilisearch');
+            self::assertStringContainsString('"title":"original2"', $meilisearchContent, 'Could not index  translated document into meilisearch');
         } else {
-            self::assertStringContainsString('"title":"translation"', $solrContent, 'Could not index  translated document into solr');
-            self::assertStringContainsString('"title":"translation2"', $solrContent, 'Could not index  translated document into solr');
+            self::assertStringContainsString('"title":"translation"', $meilisearchContent, 'Could not index  translated document into meilisearch');
+            self::assertStringContainsString('"title":"translation2"', $meilisearchContent, 'Could not index  translated document into meilisearch');
         }
-        self::assertStringContainsString('"url":"http://testone.site/de/?tx_foo%5Buid%5D=88', $solrContent, 'Can not build typolink as expected');
-        self::assertStringContainsString('"url":"http://testone.site/de/?tx_foo%5Buid%5D=777', $solrContent, 'Can not build typolink as expected');
+        self::assertStringContainsString('"url":"http://testone.site/de/?tx_foo%5Buid%5D=88', $meilisearchContent, 'Can not build typolink as expected');
+        self::assertStringContainsString('"url":"http://testone.site/de/?tx_foo%5Buid%5D=777', $meilisearchContent, 'Can not build typolink as expected');
 
-        $this->cleanUpSolrServerAndAssertEmpty();
-        $this->cleanUpSolrServerAndAssertEmpty('core_de');
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
+        $this->cleanUpMeilisearchServerAndAssertEmpty('core_de');
     }
 
     /**
@@ -164,7 +164,7 @@ class IndexerTest extends IntegrationTest
      */
     public function canIndexItemWithMMRelationsInTheExpectedOrder(): void
     {
-        $this->cleanUpSolrServerAndAssertEmpty();
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
         $this->importCSVDataSet(__DIR__ . '/Fixtures/can_index_custom_record_with_multiple_mm_relations.csv');
 
         $result = $this->addToQueueAndIndexRecord('tx_fakeextension_domain_model_bar', 88);
@@ -172,23 +172,23 @@ class IndexerTest extends IntegrationTest
         self::assertTrue($result, 'Indexing was not indicated to be successful');
 
         // do we have the record in the index with the values from the mm relation?
-        $this->waitToBeVisibleInSolr();
-        $solrContentJson = file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/core_en/select?q=*:*');
-        $solrContent = json_decode($solrContentJson, true);
-        $solrContentResponse = $solrContent['response'];
+        $this->waitToBeVisibleInMeilisearch();
+        $meilisearchContentJson = file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/core_en/select?q=*:*');
+        $meilisearchContent = json_decode($meilisearchContentJson, true);
+        $meilisearchContentResponse = $meilisearchContent['response'];
 
-        self::assertArrayHasKey('docs', $solrContentResponse, 'Did not find docs in solr response');
+        self::assertArrayHasKey('docs', $meilisearchContentResponse, 'Did not find docs in meilisearch response');
 
-        $solrDocs = $solrContentResponse['docs'];
+        $meilisearchDocs = $meilisearchContentResponse['docs'];
 
-        self::assertCount(1, $solrDocs, 'Could not found index document into solr');
-        self::assertIsArray($solrDocs[0]);
-        self::assertEquals('testnews', (string)$solrDocs[0]['title'], 'Title of Solr document is not as expected.');
-        self::assertArrayHasKey('category_stringM', $solrDocs[0], 'Did not find MM related tags.');
-        self::assertCount(2, $solrDocs[0]['category_stringM'], 'Did not find all MM related tags.');
-        self::assertSame(['the tag', 'another tag'], $solrDocs[0]['category_stringM']);
+        self::assertCount(1, $meilisearchDocs, 'Could not found index document into meilisearch');
+        self::assertIsArray($meilisearchDocs[0]);
+        self::assertEquals('testnews', (string)$meilisearchDocs[0]['title'], 'Title of Meilisearch document is not as expected.');
+        self::assertArrayHasKey('category_stringM', $meilisearchDocs[0], 'Did not find MM related tags.');
+        self::assertCount(2, $meilisearchDocs[0]['category_stringM'], 'Did not find all MM related tags.');
+        self::assertSame(['the tag', 'another tag'], $meilisearchDocs[0]['category_stringM']);
 
-        $this->cleanUpSolrServerAndAssertEmpty();
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
     }
 
     /**
@@ -199,23 +199,23 @@ class IndexerTest extends IntegrationTest
      */
     public function canIndexTranslatedItemWithMMRelation(): void
     {
-        $this->cleanUpSolrServerAndAssertEmpty();
-        $this->cleanUpSolrServerAndAssertEmpty('core_de');
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
+        $this->cleanUpMeilisearchServerAndAssertEmpty('core_de');
         $this->importCSVDataSet(__DIR__ . '/Fixtures/can_index_custom_translated_record_with_mm_relation.csv');
 
         $result = $this->addToQueueAndIndexRecord('tx_fakeextension_domain_model_bar', 88);
         self::assertTrue($result, 'Indexing was not indicated to be successful');
 
         // do we have the record in the index with the value from the mm relation?
-        $this->waitToBeVisibleInSolr('core_de');
-        $solrContent = file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/core_de/select?q=*:*');
+        $this->waitToBeVisibleInMeilisearch('core_de');
+        $meilisearchContent = file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/core_de/select?q=*:*');
 
-        self::assertStringContainsString('"category_stringM":["translated tag"]', $solrContent, 'Did not find MM related tag');
-        self::assertStringContainsString('"numFound":1', $solrContent, 'Could not index document into solr');
-        self::assertStringContainsString('"title":"translation"', $solrContent, 'Could not index document into solr');
+        self::assertStringContainsString('"category_stringM":["translated tag"]', $meilisearchContent, 'Did not find MM related tag');
+        self::assertStringContainsString('"numFound":1', $meilisearchContent, 'Could not index document into meilisearch');
+        self::assertStringContainsString('"title":"translation"', $meilisearchContent, 'Could not index document into meilisearch');
 
-        $this->cleanUpSolrServerAndAssertEmpty();
-        $this->cleanUpSolrServerAndAssertEmpty('core_de');
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
+        $this->cleanUpMeilisearchServerAndAssertEmpty('core_de');
     }
 
     /**
@@ -225,24 +225,24 @@ class IndexerTest extends IntegrationTest
      */
     public function canIndexMultipleMMRelatedItems(): void
     {
-        $this->cleanUpSolrServerAndAssertEmpty();
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
         $this->importCSVDataSet(__DIR__ . '/Fixtures/can_index_custom_record_with_multiple_mm_relations.csv');
 
         $result = $this->addToQueueAndIndexRecord('tx_fakeextension_domain_model_bar', 88);
         self::assertTrue($result, 'Indexing was not indicated to be successful');
 
         // do we have the record in the index with the value from the mm relation?
-        $this->waitToBeVisibleInSolr();
-        $solrContent = file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/core_en/select?q=*:*');
+        $this->waitToBeVisibleInMeilisearch();
+        $meilisearchContent = file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/core_en/select?q=*:*');
 
-        $decodedSolrContent = json_decode($solrContent);
-        $tags = $decodedSolrContent->response->docs[0]->tags_stringM;
+        $decodedMeilisearchContent = json_decode($meilisearchContent);
+        $tags = $decodedMeilisearchContent->response->docs[0]->tags_stringM;
 
         self::assertSame(['the tag', 'another tag'], $tags, 'Did not find MM related tags');
-        self::assertStringContainsString('"numFound":1', $solrContent, 'Could not index document into solr');
-        self::assertStringContainsString('"title":"testnews"', $solrContent, 'Could not index document into solr');
+        self::assertStringContainsString('"numFound":1', $meilisearchContent, 'Could not index document into meilisearch');
+        self::assertStringContainsString('"title":"testnews"', $meilisearchContent, 'Could not index document into meilisearch');
 
-        $this->cleanUpSolrServerAndAssertEmpty();
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
     }
 
     /**
@@ -252,20 +252,20 @@ class IndexerTest extends IntegrationTest
      */
     public function canIndexItemWithMMRelationAndAdditionalWhere(): void
     {
-        $this->cleanUpSolrServerAndAssertEmpty();
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
         $this->importCSVDataSet(__DIR__ . '/Fixtures/can_index_custom_record_with_mm_relationAndAdditionalWhere.csv');
 
         $result = $this->addToQueueAndIndexRecord('tx_fakeextension_domain_model_bar', 88);
         self::assertTrue($result, 'Indexing was not indicated to be successful');
 
         // do we have the record in the index with the value from the mm relation?
-        $this->waitToBeVisibleInSolr();
-        $solrContent = file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/core_en/select?q=*:*');
+        $this->waitToBeVisibleInMeilisearch();
+        $meilisearchContent = file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/core_en/select?q=*:*');
 
-        self::assertStringContainsString('"category_stringM":["another tag"]', $solrContent, 'Did not find MM related tag');
-        self::assertStringContainsString('"numFound":1', $solrContent, 'Could not index document into solr');
-        self::assertStringContainsString('"title":"testnews"', $solrContent, 'Could not index document into solr');
-        $this->cleanUpSolrServerAndAssertEmpty();
+        self::assertStringContainsString('"category_stringM":["another tag"]', $meilisearchContent, 'Did not find MM related tag');
+        self::assertStringContainsString('"numFound":1', $meilisearchContent, 'Could not index document into meilisearch');
+        self::assertStringContainsString('"title":"testnews"', $meilisearchContent, 'Could not index document into meilisearch');
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
     }
 
     /**
@@ -275,25 +275,25 @@ class IndexerTest extends IntegrationTest
      */
     public function canIndexItemWithMMRelationToATranslatedPage(): void
     {
-        $this->cleanUpSolrServerAndAssertEmpty();
-        $this->cleanUpSolrServerAndAssertEmpty('core_de');
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
+        $this->cleanUpMeilisearchServerAndAssertEmpty('core_de');
         $this->importCSVDataSet(__DIR__ . '/Fixtures/can_index_custom_translated_record_with_mm_relation_to_a_page.csv');
 
         $result = $this->addToQueueAndIndexRecord('tx_fakeextension_domain_model_bar', 88);
         self::assertTrue($result, 'Indexing was not indicated to be successful');
 
         // do we have the record in the index with the value from the mm relation?
-        $this->waitToBeVisibleInSolr();
-        $this->waitToBeVisibleInSolr('core_de');
+        $this->waitToBeVisibleInMeilisearch();
+        $this->waitToBeVisibleInMeilisearch('core_de');
 
-        $solrContentEn = file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/core_en/select?q=*:*');
-        $solrContentDe = file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/core_de/select?q=*:*');
+        $meilisearchContentEn = file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/core_en/select?q=*:*');
+        $meilisearchContentDe = file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/core_de/select?q=*:*');
 
-        self::assertStringContainsString('"relatedPageTitles_stringM":["Related page"]', $solrContentEn, 'Can not find related page title');
-        self::assertStringContainsString('"relatedPageTitles_stringM":["Translated related page"]', $solrContentDe, 'Can not find translated related page title');
+        self::assertStringContainsString('"relatedPageTitles_stringM":["Related page"]', $meilisearchContentEn, 'Can not find related page title');
+        self::assertStringContainsString('"relatedPageTitles_stringM":["Translated related page"]', $meilisearchContentDe, 'Can not find translated related page title');
 
-        $this->cleanUpSolrServerAndAssertEmpty();
-        $this->cleanUpSolrServerAndAssertEmpty('core_de');
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
+        $this->cleanUpMeilisearchServerAndAssertEmpty('core_de');
     }
 
     /**
@@ -303,23 +303,23 @@ class IndexerTest extends IntegrationTest
      */
     public function canIndexItemWithDirectRelation(): void
     {
-        $this->cleanUpSolrServerAndAssertEmpty();
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
         $this->importCSVDataSet(__DIR__ . '/Fixtures/can_index_custom_record_with_direct_relation.csv');
 
         $result = $this->addToQueueAndIndexRecord('tx_fakeextension_domain_model_bar', 111);
         self::assertTrue($result, 'Indexing was not indicated to be successful');
 
         // do we have the record in the index with the value from the mm relation?
-        $this->waitToBeVisibleInSolr();
-        $solrContent = file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/core_en/select?q=*:*');
+        $this->waitToBeVisibleInMeilisearch();
+        $meilisearchContent = file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/core_en/select?q=*:*');
 
-        self::assertStringContainsString('"category_stringM":["the category"]', $solrContent, 'Did not find direct related category');
-        self::assertStringContainsString('"numFound":1', $solrContent, 'Could not index document into solr');
-        self::assertStringContainsString('"title":"testnews"', $solrContent, 'Could not index document into solr');
-        self::assertStringContainsString('"sysCategoryId_stringM":["1"]', $solrContent, 'Uid of related sys_category couldn\'t be resolved by using "foreignLabelField"');
-        self::assertStringContainsString('"sysCategory_stringM":["sys_category"]', $solrContent, 'Label of related sys_category couldn\'t be resolved by using "foreignLabelField" and "enableRecursiveValueResolution"');
-        self::assertStringContainsString('"sysCategoryDescription_stringM":["sys_category description"]', $solrContent, 'Description of related sys_category couldn\'t be resolved by using "foreignLabelField" and "enableRecursiveValueResolution"');
-        $this->cleanUpSolrServerAndAssertEmpty();
+        self::assertStringContainsString('"category_stringM":["the category"]', $meilisearchContent, 'Did not find direct related category');
+        self::assertStringContainsString('"numFound":1', $meilisearchContent, 'Could not index document into meilisearch');
+        self::assertStringContainsString('"title":"testnews"', $meilisearchContent, 'Could not index document into meilisearch');
+        self::assertStringContainsString('"sysCategoryId_stringM":["1"]', $meilisearchContent, 'Uid of related sys_category couldn\'t be resolved by using "foreignLabelField"');
+        self::assertStringContainsString('"sysCategory_stringM":["sys_category"]', $meilisearchContent, 'Label of related sys_category couldn\'t be resolved by using "foreignLabelField" and "enableRecursiveValueResolution"');
+        self::assertStringContainsString('"sysCategoryDescription_stringM":["sys_category description"]', $meilisearchContent, 'Description of related sys_category couldn\'t be resolved by using "foreignLabelField" and "enableRecursiveValueResolution"');
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
     }
 
     /**
@@ -329,34 +329,34 @@ class IndexerTest extends IntegrationTest
      */
     public function canIndexItemWithMultipleDirectRelation(): void
     {
-        $this->cleanUpSolrServerAndAssertEmpty();
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
         $this->importCSVDataSet(__DIR__ . '/Fixtures/can_index_custom_record_with_multiple_direct_relations.csv');
 
         $result = $this->addToQueueAndIndexRecord('tx_fakeextension_domain_model_bar', 111);
         self::assertTrue($result, 'Indexing was not indicated to be successful');
 
         // do we have the record in the index with the value from the mm relation?
-        $this->waitToBeVisibleInSolr();
-        $solrContent = file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/core_en/select?q=*:*');
-        $decodedSolrContent = json_decode($solrContent);
+        $this->waitToBeVisibleInMeilisearch();
+        $meilisearchContent = file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/core_en/select?q=*:*');
+        $decodedMeilisearchContent = json_decode($meilisearchContent);
 
-        self::assertStringContainsString('"numFound":1', $solrContent, 'Could not index document into solr');
-        self::assertStringContainsString('"title":"testnews"', $solrContent, 'Could not index document into solr');
+        self::assertStringContainsString('"numFound":1', $meilisearchContent, 'Could not index document into meilisearch');
+        self::assertStringContainsString('"title":"testnews"', $meilisearchContent, 'Could not index document into meilisearch');
 
         // @extensionScannerIgnoreLine
-        $category_stringM = $decodedSolrContent->response->docs[0]->category_stringM;
+        $category_stringM = $decodedMeilisearchContent->response->docs[0]->category_stringM;
         self::assertSame(['the category', 'the second category'], $category_stringM, 'Unexpected category_stringM value');
         // @extensionScannerIgnoreLine
-        $sysCategoryId_stringM = $decodedSolrContent->response->docs[0]->sysCategoryId_stringM;
+        $sysCategoryId_stringM = $decodedMeilisearchContent->response->docs[0]->sysCategoryId_stringM;
         self::assertSame(['1', '2'], $sysCategoryId_stringM, 'Unexpected sysCategoryId_stringM value');
         // @extensionScannerIgnoreLine
-        $sysCategory_stringM = $decodedSolrContent->response->docs[0]->sysCategory_stringM;
+        $sysCategory_stringM = $decodedMeilisearchContent->response->docs[0]->sysCategory_stringM;
         self::assertSame(['sys_category', 'sys_category 2'], $sysCategory_stringM, 'Unexpected sysCategory_stringM value');
         // @extensionScannerIgnoreLine
-        $sysCategoryDescription_stringM = $decodedSolrContent->response->docs[0]->sysCategoryDescription_stringM;
+        $sysCategoryDescription_stringM = $decodedMeilisearchContent->response->docs[0]->sysCategoryDescription_stringM;
         self::assertSame(['sys_category description', 'second sys_category description'], $sysCategoryDescription_stringM, 'Unexpected sysCategoryDescription_stringM value');
 
-        $this->cleanUpSolrServerAndAssertEmpty();
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
     }
 
     /**
@@ -367,20 +367,20 @@ class IndexerTest extends IntegrationTest
      */
     public function canIndexItemWithDirectRelationAndAdditionalWhere(): void
     {
-        $this->cleanUpSolrServerAndAssertEmpty();
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
         $this->importCSVDataSet(__DIR__ . '/Fixtures/can_index_custom_record_with_direct_relationAndAdditionalWhere.csv');
 
         $result = $this->addToQueueAndIndexRecord('tx_fakeextension_domain_model_bar', 111);
         self::assertTrue($result, 'Indexing was not indicated to be successful');
 
         // do we have the record in the index with the value from the mm relation?
-        $this->waitToBeVisibleInSolr();
-        $solrContent = file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/core_en/select?q=*:*');
+        $this->waitToBeVisibleInMeilisearch();
+        $meilisearchContent = file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/core_en/select?q=*:*');
 
-        self::assertStringContainsString('"category_stringM":["another category"]', $solrContent, 'Did not find direct related category');
-        self::assertStringContainsString('"numFound":1', $solrContent, 'Could not index document into solr');
-        self::assertStringContainsString('"title":"testnews"', $solrContent, 'Could not index document into solr');
-        $this->cleanUpSolrServerAndAssertEmpty();
+        self::assertStringContainsString('"category_stringM":["another category"]', $meilisearchContent, 'Did not find direct related category');
+        self::assertStringContainsString('"numFound":1', $meilisearchContent, 'Could not index document into meilisearch');
+        self::assertStringContainsString('"title":"testnews"', $meilisearchContent, 'Could not index document into meilisearch');
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
     }
 
     /**
@@ -388,20 +388,20 @@ class IndexerTest extends IntegrationTest
      */
     public function canUseConfigurationFromTemplateInRootLine(): void
     {
-        $this->cleanUpSolrServerAndAssertEmpty();
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
         $this->importCSVDataSet(__DIR__ . '/Fixtures/can_index_custom_record_with_configuration_in_rootline.csv');
 
         $result = $this->addToQueueAndIndexRecord('tx_fakeextension_domain_model_bar', 111);
         self::assertTrue($result, 'Indexing was not indicated to be successful');
 
         // do we have the record in the index with the value from the mm relation?
-        $this->waitToBeVisibleInSolr();
-        $solrContent = file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/core_en/select?q=*:*');
+        $this->waitToBeVisibleInMeilisearch();
+        $meilisearchContent = file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/core_en/select?q=*:*');
 
-        self::assertStringContainsString('"fieldFromRootLine_stringS":"TESTNEWS"', $solrContent, 'Did not find field configured in rootline');
-        self::assertStringContainsString('"title":"testnews"', $solrContent, 'Could not index document into solr');
-        self::assertStringContainsString('"numFound":1', $solrContent, 'Could not index document into solr');
-        $this->cleanUpSolrServerAndAssertEmpty();
+        self::assertStringContainsString('"fieldFromRootLine_stringS":"TESTNEWS"', $meilisearchContent, 'Did not find field configured in rootline');
+        self::assertStringContainsString('"title":"testnews"', $meilisearchContent, 'Could not index document into meilisearch');
+        self::assertStringContainsString('"numFound":1', $meilisearchContent, 'Could not index document into meilisearch');
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
     }
 
     /**
@@ -428,7 +428,7 @@ class IndexerTest extends IntegrationTest
      */
     public function testCanIndexCustomRecordOutsideOfSiteRoot(): void
     {
-        $this->cleanUpSolrServerAndAssertEmpty();
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
         $this->importCSVDataSet(__DIR__ . '/Fixtures/can_index_custom_record_outside_site_root.csv');
 
         $result = $this->addToQueueAndIndexRecord('tx_fakeextension_domain_model_bar', 111);
@@ -436,12 +436,12 @@ class IndexerTest extends IntegrationTest
         self::assertTrue($result, 'Indexing was not indicated to be successful');
 
         // do we have the record in the index with the value from the mm relation?
-        $this->waitToBeVisibleInSolr();
-        $solrContent = file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/core_en/select?q=*:*');
+        $this->waitToBeVisibleInMeilisearch();
+        $meilisearchContent = file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/core_en/select?q=*:*');
 
-        self::assertStringContainsString('"numFound":1', $solrContent, 'Could not index document into solr');
-        self::assertStringContainsString('"title":"external testnews"', $solrContent, 'Could not index document into solr');
-        $this->cleanUpSolrServerAndAssertEmpty();
+        self::assertStringContainsString('"numFound":1', $meilisearchContent, 'Could not index document into meilisearch');
+        self::assertStringContainsString('"title":"external testnews"', $meilisearchContent, 'Could not index document into meilisearch');
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
     }
 
     /**
@@ -449,7 +449,7 @@ class IndexerTest extends IntegrationTest
      */
     public function testCanIndexCustomRecordOutsideOfSiteRootWithTemplate(): void
     {
-        $this->cleanUpSolrServerAndAssertEmpty();
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
         $this->importCSVDataSet(__DIR__ . '/Fixtures/can_index_custom_record_outside_site_root_with_template.csv');
 
         $result = $this->addToQueueAndIndexRecord('tx_fakeextension_domain_model_bar', 1);
@@ -457,14 +457,14 @@ class IndexerTest extends IntegrationTest
         self::assertTrue($result, 'Indexing was not indicated to be successful');
 
         // do we have the record in the index with the value from the mm relation?
-        $this->waitToBeVisibleInSolr();
-        $solrContent = file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/core_en/select?q=*:*');
-        self::assertStringContainsString('"numFound":2', $solrContent, 'Could not index document into solr');
+        $this->waitToBeVisibleInMeilisearch();
+        $meilisearchContent = file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/core_en/select?q=*:*');
+        self::assertStringContainsString('"numFound":2', $meilisearchContent, 'Could not index document into meilisearch');
 
-        $solrContent = file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/core_en/select?q=*:*&fq=site:testone.site');
-        self::assertStringContainsString('"numFound":1', $solrContent, 'Could not index document into solr');
-        self::assertStringContainsString('"url":"http://testone.site/en/"', $solrContent, 'Item was indexed with false site UID');
-        $this->cleanUpSolrServerAndAssertEmpty();
+        $meilisearchContent = file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/core_en/select?q=*:*&fq=site:testone.site');
+        self::assertStringContainsString('"numFound":1', $meilisearchContent, 'Could not index document into meilisearch');
+        self::assertStringContainsString('"url":"http://testone.site/en/"', $meilisearchContent, 'Item was indexed with false site UID');
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
     }
 
     protected function addToQueueAndIndexRecord(string $table, int $uid): bool
@@ -485,7 +485,7 @@ class IndexerTest extends IntegrationTest
     /**
      * @test
      */
-    public function getSolrConnectionsByItemReturnsNoDefaultConnectionIfRootPageIsHideDefaultLanguage(): void
+    public function getMeilisearchConnectionsByItemReturnsNoDefaultConnectionIfRootPageIsHideDefaultLanguage(): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/can_index_with_rootPage_set_to_hide_default_language.csv');
         $itemMetaData = [
@@ -498,19 +498,19 @@ class IndexerTest extends IntegrationTest
         ];
         $item = new Item($itemMetaData);
 
-        $result = $this->callInaccessibleMethod($this->indexer, 'getSolrConnectionsByItem', $item);
+        $result = $this->callInaccessibleMethod($this->indexer, 'getMeilisearchConnectionsByItem', $item);
 
-        self::assertInstanceOf(SolrConnection::class, $result[1], 'Expect SolrConnection object in connection array item with key 1.');
+        self::assertInstanceOf(MeilisearchConnection::class, $result[1], 'Expect MeilisearchConnection object in connection array item with key 1.');
         self::assertCount(1, $result, 'Expect only one SOLR connection.');
-        self::assertArrayNotHasKey(0, $result, 'Expect, that there is no solr connection returned for default language,');
+        self::assertArrayNotHasKey(0, $result, 'Expect, that there is no meilisearch connection returned for default language,');
     }
 
     /**
      * @test
      */
-    public function getSolrConnectionsByItemReturnsNoDefaultConnectionDefaultLanguageIsHiddenInSiteConfig(): void
+    public function getMeilisearchConnectionsByItemReturnsNoDefaultConnectionDefaultLanguageIsHiddenInSiteConfig(): void
     {
-        $this->writeDefaultSolrTestSiteConfigurationForHostAndPort('http', 'localhost', 8999, true);
+        $this->writeDefaultMeilisearchTestSiteConfigurationForHostAndPort('http', 'localhost', 8999, true);
         $this->importCSVDataSet(__DIR__ . '/Fixtures/can_index_with_rootPage_set_to_hide_default_language.csv');
         $itemMetaData = [
             'uid' => 1,
@@ -522,21 +522,21 @@ class IndexerTest extends IntegrationTest
         ];
         $item = new Item($itemMetaData);
 
-        $result = $this->callInaccessibleMethod($this->indexer, 'getSolrConnectionsByItem', $item);
+        $result = $this->callInaccessibleMethod($this->indexer, 'getMeilisearchConnectionsByItem', $item);
 
         self::assertEmpty($result[0], 'Connection for default language was expected to be empty');
-        self::assertInstanceOf(SolrConnection::class, $result[1], 'Expect SolrConnection object in connection array item with key 1.');
+        self::assertInstanceOf(MeilisearchConnection::class, $result[1], 'Expect MeilisearchConnection object in connection array item with key 1.');
         self::assertCount(1, $result, 'Expect only one SOLR connection.');
-        self::assertArrayNotHasKey(0, $result, 'Expect, that there is no solr connection returned for default language,');
+        self::assertArrayNotHasKey(0, $result, 'Expect, that there is no meilisearch connection returned for default language,');
     }
 
     /**
      * @test
      */
-    public function getSolrConnectionsByItemReturnsProperItemInNestedSite(): void
+    public function getMeilisearchConnectionsByItemReturnsProperItemInNestedSite(): void
     {
-        $this->cleanUpSolrServerAndAssertEmpty();
-        $this->writeDefaultSolrTestSiteConfigurationForHostAndPort();
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
+        $this->writeDefaultMeilisearchTestSiteConfigurationForHostAndPort();
         $this->importCSVDataSet(__DIR__ . '/Fixtures/can_index_with_multiple_sites.csv');
         $result = $this->addToQueueAndIndexRecord('pages', 1);
         self::assertTrue($result, 'Indexing was not indicated to be successful');
@@ -544,16 +544,16 @@ class IndexerTest extends IntegrationTest
         self::assertTrue($result, 'Indexing was not indicated to be successful');
         $result = $this->addToQueueAndIndexRecord('pages', 120);
         self::assertTrue($result, 'Indexing was not indicated to be successful');
-        $this->waitToBeVisibleInSolr();
-        $solrContentJson = file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/core_en/select?q=*:*');
-        $solrContent = json_decode($solrContentJson, true);
-        $solrContentResponse = $solrContent['response'];
-        self::assertArrayHasKey('docs', $solrContentResponse, 'Did not find docs in solr response');
+        $this->waitToBeVisibleInMeilisearch();
+        $meilisearchContentJson = file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/core_en/select?q=*:*');
+        $meilisearchContent = json_decode($meilisearchContentJson, true);
+        $meilisearchContentResponse = $meilisearchContent['response'];
+        self::assertArrayHasKey('docs', $meilisearchContentResponse, 'Did not find docs in meilisearch response');
 
-        $solrDocs = $solrContentResponse['docs'];
-        self::assertCount(3, $solrDocs, 'Could not found index document into solr');
+        $meilisearchDocs = $meilisearchContentResponse['docs'];
+        self::assertCount(3, $meilisearchDocs, 'Could not found index document into meilisearch');
 
-        $sites = array_column($solrDocs, 'site');
+        $sites = array_column($meilisearchDocs, 'site');
         self::assertEquals('testone.site', $sites[0]);
         self::assertEquals('testtwo.site', $sites[1]);
         self::assertEquals('testtwo.site', $sites[2]);

@@ -17,9 +17,9 @@ namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Index\Queue\GarbageRemove
 
 use WapplerSystems\Meilisearch\Domain\Index\Queue\GarbageRemover\AbstractStrategy;
 use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
-use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
-use WapplerSystems\Meilisearch\System\Solr\Service\SolrWriteService;
-use WapplerSystems\Meilisearch\System\Solr\SolrConnection;
+use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Meilisearch\Service\MeilisearchWriteService;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchConnection;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
@@ -39,9 +39,9 @@ abstract class AbstractStrategyTest extends SetUpUnitTestCase
 
     /**
      * @test
-     * @dataProvider canDeleteRecordInAllSolrConnectionsDataProvider
+     * @dataProvider canDeleteRecordInAllMeilisearchConnectionsDataProvider
      */
-    public function canDeleteRecordInAllSolrConnections(int $status, bool $commit): void
+    public function canDeleteRecordInAllMeilisearchConnections(int $status, bool $commit): void
     {
         $query = 'type:tx_fakeextension_foo AND uid:123 AND siteHash:#siteHash#';
         $response = new ResponseAdapter(
@@ -50,7 +50,7 @@ abstract class AbstractStrategyTest extends SetUpUnitTestCase
             'msg' . $status,
         );
 
-        $writeServiceMock = $this->createMock(SolrWriteService::class);
+        $writeServiceMock = $this->createMock(MeilisearchWriteService::class);
         $writeServiceMock
             ->expects(self::once())
             ->method('deleteByQuery')
@@ -66,16 +66,16 @@ abstract class AbstractStrategyTest extends SetUpUnitTestCase
             ->method('getCorePath')
             ->willReturn('core_en');
 
-        $connectionMock = $this->createMock(SolrConnection::class);
+        $connectionMock = $this->createMock(MeilisearchConnection::class);
         $connectionMock
             ->expects(self::atLeastOnce())
             ->method('getWriteService')
             ->willReturn($writeServiceMock);
 
-        $solrLogManagerMock = $this->createMock(MeilisearchLogManager::class);
-        GeneralUtility::addInstance(MeilisearchLogManager::class, $solrLogManagerMock);
+        $meilisearchLogManagerMock = $this->createMock(MeilisearchLogManager::class);
+        GeneralUtility::addInstance(MeilisearchLogManager::class, $meilisearchLogManagerMock);
         if ($status !== 200) {
-            $solrLogManagerMock
+            $meilisearchLogManagerMock
                 ->expects(self::once())
                 ->method('error')
                 ->with(
@@ -88,13 +88,13 @@ abstract class AbstractStrategyTest extends SetUpUnitTestCase
                     ]
                 );
         } else {
-            $solrLogManagerMock
+            $meilisearchLogManagerMock
                 ->expects(self::never())
                 ->method('log');
         }
 
         $this->subject->_call(
-            'deleteRecordInAllSolrConnections',
+            'deleteRecordInAllMeilisearchConnections',
             'tx_fakeextension_foo',
             123,
             [$connectionMock],
@@ -104,9 +104,9 @@ abstract class AbstractStrategyTest extends SetUpUnitTestCase
     }
 
     /**
-     * Data provider for canDeleteRecordInAllSolrConnectionsDataProvider
+     * Data provider for canDeleteRecordInAllMeilisearchConnectionsDataProvider
      */
-    public function canDeleteRecordInAllSolrConnectionsDataProvider(): \Generator
+    public function canDeleteRecordInAllMeilisearchConnectionsDataProvider(): \Generator
     {
         yield 'can delete and commit' => [
             'status' => 200,

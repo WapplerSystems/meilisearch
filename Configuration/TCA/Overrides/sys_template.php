@@ -5,7 +5,7 @@ defined('TYPO3') or die('Access denied.');
 // TypoScript
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
     'meilisearch',
-    'Configuration/TypoScript/Solr/',
+    'Configuration/TypoScript/Meilisearch/',
     'Search - Base Configuration'
 );
 
@@ -119,7 +119,7 @@ defined('TYPO3') or die('Access denied.');
     'Search - Ajaxify the search results with jQuery'
 );
 
-// Solr Fluid Grouping Examples
+// Meilisearch Fluid Grouping Examples
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
     'meilisearch',
     'Configuration/TypoScript/Examples/TypeFieldGroup/',

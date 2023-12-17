@@ -28,7 +28,7 @@ use UnexpectedValueException;
 
 /**
  * An implementation ob a garbage remover strategy is responsible to remove all garbage from the index queue and
- * the solr server for a certain table and uid combination.
+ * the meilisearch server for a certain table and uid combination.
  */
 abstract class AbstractStrategy
 {
@@ -55,12 +55,12 @@ abstract class AbstractStrategy
 
     /**
      * An implementation of the GarbageCollection strategy is responsible to remove the garbage from
-     * the indexqueue and from the solr server.
+     * the indexqueue and from the meilisearch server.
      */
     abstract protected function removeGarbageOfByStrategy(string $table, int $uid): void;
 
     /**
-     * Deletes a document from solr and from the index queue.
+     * Deletes a document from meilisearch and from the index queue.
      *
      * @throws DBALException
      */
@@ -71,7 +71,7 @@ abstract class AbstractStrategy
     }
 
     /**
-     * Deletes a document from solr and updates the item in the index queue (e.g. on page content updates).
+     * Deletes a document from meilisearch and updates the item in the index queue (e.g. on page content updates).
      *
      * @throws DBALException
      * @throws UnexpectedTYPO3SiteInitializationException
@@ -107,27 +107,27 @@ abstract class AbstractStrategy
             $enableCommitsSetting = $site->getMeilisearchConfiguration()->getEnableCommits();
             $siteHash = $site->getSiteHash();
             // a site can have multiple connections (cores / languages)
-            $solrConnections = $this->connectionManager->getConnectionsBySite($site);
-            if ($language > 0 && isset($solrConnections[$language])) {
-                $solrConnections = [$language => $solrConnections[$language]];
+            $meilisearchConnections = $this->connectionManager->getConnectionsBySite($site);
+            if ($language > 0 && isset($meilisearchConnections[$language])) {
+                $meilisearchConnections = [$language => $meilisearchConnections[$language]];
             }
-            $this->deleteRecordInAllMeilisearchConnections($table, $uid, $solrConnections, $siteHash, $enableCommitsSetting);
+            $this->deleteRecordInAllMeilisearchConnections($table, $uid, $meilisearchConnections, $siteHash, $enableCommitsSetting);
         }
     }
 
     /**
-     * Deletes the record in all solr connections from that site.
+     * Deletes the record in all meilisearch connections from that site.
      */
     protected function deleteRecordInAllMeilisearchConnections(
         string $table,
         int $uid,
-        array $solrConnections,
+        array $meilisearchConnections,
         string $siteHash,
         bool $enableCommitsSetting,
     ): void {
-        foreach ($solrConnections as $solr) {
+        foreach ($meilisearchConnections as $meilisearch) {
             $query = 'type:' . $table . ' AND uid:' . $uid . ' AND siteHash:' . $siteHash;
-            $response = $solr->getWriteService()->deleteByQuery($query);
+            $response = $meilisearch->getWriteService()->deleteByQuery($query);
 
             if ($response->getHttpStatus() !== 200) {
                 $logger = GeneralUtility::makeInstance(MeilisearchLogManager::class, __CLASS__);
@@ -136,7 +136,7 @@ abstract class AbstractStrategy
                     [
                         'status' => $response->getHttpStatus(),
                         'msg' => $response->getHttpStatusMessage(),
-                        'core' => $solr->getWriteService()->getCorePath(),
+                        'core' => $meilisearch->getWriteService()->getCorePath(),
                         'query' => $query,
                     ]
                 );
@@ -146,7 +146,7 @@ abstract class AbstractStrategy
             }
 
             if ($enableCommitsSetting) {
-                $solr->getWriteService()->commit(false, false);
+                $meilisearch->getWriteService()->commit(false, false);
             }
         }
     }

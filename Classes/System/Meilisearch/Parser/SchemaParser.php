@@ -20,14 +20,14 @@ use stdClass;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Class to parse the schema from a solr response.
+ * Class to parse the schema from a meilisearch response.
  *
  * @author Timo Hund <timo.hund@dkd.de>
  */
 class SchemaParser
 {
     /**
-     * Parse the solr stopwords response from a json string to an array.
+     * Parse the meilisearch stopwords response from a json string to an array.
      */
     public function parseJson(string $jsonString): Schema
     {
@@ -50,7 +50,7 @@ class SchemaParser
     }
 
     /**
-     * Extracts the language from a solr schema response.
+     * Extracts the language from a meilisearch schema response.
      */
     protected function parseManagedResourceId(stdClass $schema): ?string
     {
@@ -65,7 +65,7 @@ class SchemaParser
             }
             // we have a text field
             foreach ($fieldType->queryAnalyzer->filters as $filter) {
-                if ($filter->class === 'solr.ManagedSynonymGraphFilterFactory') {
+                if ($filter->class === 'meilisearch.ManagedSynonymGraphFilterFactory') {
                     $managedResourceId = $filter->managed;
                 }
             }

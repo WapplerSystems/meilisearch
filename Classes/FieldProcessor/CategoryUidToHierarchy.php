@@ -22,9 +22,9 @@ use Doctrine\DBAL\Exception as DBALException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * This Processor takes a UID of sys_category, and resolves its rootline in solr notation.
+ * This Processor takes a UID of sys_category, and resolves its rootline in meilisearch notation.
  *
- * Format of this field corresponds to http://wiki.apache.org/solr/HierarchicalFaceting
+ * Format of this field corresponds to http://wiki.apache.org/meilisearch/HierarchicalFaceting
  *
  * Let's say we have a category with uid 111 which is a sub category like shown in this tree:
  *

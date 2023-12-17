@@ -1,4 +1,4 @@
-{namespace solr=WapplerSystems\Meilisearch\ViewHelpers}
+{namespace meilisearch=WapplerSystems\Meilisearch\ViewHelpers}
 <f:layout name="Backend/WithPageTree"/>
 
 <f:section name="Main">
@@ -66,7 +66,7 @@
     <h2>Site: {site.label}</h2>
 
     <f:if condition="{connectedHosts}">
-        <f:be.infobox title="Following Apache Solr servers have been contacted:" state="0">
+        <f:be.infobox title="Following Apache Meilisearch servers have been contacted:" state="0">
             <ul>
                 <f:for each="{connectedHosts}" as="connectedHost">
                     <li>{connectedHost}</li>
@@ -76,7 +76,7 @@
     </f:if>
 
     <f:if condition="{missingHosts}">
-        <f:be.infobox title="Unable to contact following Apache Solr servers:" state="2">
+        <f:be.infobox title="Unable to contact following Apache Meilisearch servers:" state="2">
             <ul>
                 <f:for each="{missingHosts}" as="missingHost">
                     <li>{missingHost}</li>
@@ -104,7 +104,7 @@
 
     <hr class="double" />
 
-    No solr server running? You can use <strong><a href="http://www.hosted-solr.com/" target="_blank">hosted-solr.com</a></strong> to setup a solr core with just a few clicks.
+    No meilisearch server running? You can use <strong><a href="http://www.hosted-meilisearch.com/" target="_blank">hosted-meilisearch.com</a></strong> to setup a meilisearch core with just a few clicks.
 </f:section>
 
 <f:section name="Statistics">
@@ -132,7 +132,7 @@
             <div class="col-md-12">
                 <h2>
 									<f:format.printf arguments="{0: '{topHitsLimit}'}">
-										<f:translate key="solr.backend.search_statistics_module.top_search_phrases"/>
+										<f:translate key="meilisearch.backend.search_statistics_module.top_search_phrases"/>
 									</f:format.printf>
                 </h2>
 
@@ -154,7 +154,7 @@
             <div class="col-md-12">
                 <h2>
 									<f:format.printf arguments="{0: '{noHitsLimit}'}">
-										<f:translate key="solr.backend.search_statistics_module.top_search_phrases_without_hits"/>
+										<f:translate key="meilisearch.backend.search_statistics_module.top_search_phrases_without_hits"/>
 									</f:format.printf>
                 </h2>
 
@@ -174,7 +174,7 @@
     <div class="row section-with-header">
         <div class="col-md-12">
             <h2>
-                <f:translate key="solr.backend.search_statistics_module.search_phrases_header"/>
+                <f:translate key="meilisearch.backend.search_statistics_module.search_phrases_header"/>
             </h2>
 
             <f:if condition="{search_phrases_statistics}">
@@ -184,16 +184,16 @@
                         <tr class="t3-row-header">
                             <th class="nowrap">&nbsp;</th>
                             <th>
-                                <f:translate key="solr.backend.search_statistics_module.item_phrase"/>
+                                <f:translate key="meilisearch.backend.search_statistics_module.item_phrase"/>
                             </th>
                             <th>
-                                <f:translate key="solr.backend.search_statistics_module.item_count"/>
+                                <f:translate key="meilisearch.backend.search_statistics_module.item_count"/>
                             </th>
                             <th>
-                                <f:translate key="solr.backend.search_statistics_module.results"/>
+                                <f:translate key="meilisearch.backend.search_statistics_module.results"/>
                             </th>
                             <th>
-                                <f:translate key="solr.backend.search_statistics_module.percentage"/>
+                                <f:translate key="meilisearch.backend.search_statistics_module.percentage"/>
                             </th>
                         </tr>
                         </thead>
@@ -212,7 +212,7 @@
                 </f:then>
                 <f:else>
                     <f:be.infobox state="2">
-                        <f:translate key="solr.backend.search_statistics_module.no_records_found"/>
+                        <f:translate key="meilisearch.backend.search_statistics_module.no_records_found"/>
                     </f:be.infobox>
                 </f:else>
             </f:if>
@@ -241,7 +241,7 @@
                 </div>
                 <div id="collapse-core{iterator.index}" class="panel-collapse collapse {f:if(condition: '{iterator.isFirst}', then: 'in')}">
                     <div class="panel-body">
-                        <f:render partial="Backend/ApacheSolr/FieldTypesForSingleCore" arguments="{indexFieldsInfoForCore: indexFieldsInfoForCore}"/>
+                        <f:render partial="Backend/ApacheMeilisearch/FieldTypesForSingleCore" arguments="{indexFieldsInfoForCore: indexFieldsInfoForCore}"/>
                     </div>
                 </div>
             </div>
@@ -315,13 +315,13 @@
                                                 <core:icon identifier="actions-document-view" />
                                             </f:link.action>
                                         </span>
-                                        <solr:backend.security.ifHasAccessToModule extension="Solr" main="searchbackend" sub="indexqueue">
+                                        <meilisearch:backend.security.ifHasAccessToModule extension="Meilisearch" main="searchbackend" sub="indexqueue">
                                             <span class="btn btn-default">
                                                 <f:be.link route="searchbackend_indexqueue.Backend\Search\IndexQueueModule_requeueDocument" parameters="{uid: document.uid, type: document.type}">
                                                     <core:icon identifier="actions-refresh" />
                                                 </f:be.link>
                                             </span>
-                                        </solr:backend.security.ifHasAccessToModule>
+                                        </meilisearch:backend.security.ifHasAccessToModule>
                                     </td>
                                 </tr>
                             </f:for>

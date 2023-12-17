@@ -27,7 +27,7 @@ abstract class AbstractHierarchyProcessor
      *
      * @param array $idRootline Array of Ids representing a rootline
      * @return array Meilisearch hierarchy
-     * @see http://wiki.apache.org/solr/HierarchicalFaceting
+     * @see http://wiki.apache.org/meilisearch/HierarchicalFaceting
      */
     protected function buildMeilisearchHierarchyFromIdRootline(array $idRootline): array
     {

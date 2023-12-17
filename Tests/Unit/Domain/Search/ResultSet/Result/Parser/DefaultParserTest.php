@@ -20,7 +20,7 @@ use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Result\Parser\DefaultResu
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSet;
 use WapplerSystems\Meilisearch\Domain\Search\SearchRequest;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
-use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Solarium\Component\Grouping;
@@ -45,12 +45,12 @@ class DefaultParserTest extends SetUpUnitTestCase
     /**
      * @test
      */
-    public function parseWillCreateResultCollectionFromSolrResponse(): void
+    public function parseWillCreateResultCollectionFromMeilisearchResponse(): void
     {
         $fakeResultSet = $this->getMockBuilder(SearchResultSet::class)->onlyMethods(['getResponse'])->getMock();
 
-        $fakedSolrResponse = $this->getFixtureContentByName('fakeResponse.json');
-        $fakeResponse = new ResponseAdapter($fakedSolrResponse);
+        $fakedMeilisearchResponse = $this->getFixtureContentByName('fakeResponse.json');
+        $fakeResponse = new ResponseAdapter($fakedMeilisearchResponse);
 
         $fakeResultSet->expects(self::once())->method('getResponse')->willReturn($fakeResponse);
         $parsedResultSet = $this->parser->parse($fakeResultSet, true);
@@ -64,8 +64,8 @@ class DefaultParserTest extends SetUpUnitTestCase
     {
         $fakeResultSet = $this->getMockBuilder(SearchResultSet::class)->onlyMethods(['getResponse'])->getMock();
 
-        $fakedSolrResponse = $this->getFixtureContentByName('fake_solr_response_with_query_fields_facets.json');
-        $fakeResponse = new ResponseAdapter($fakedSolrResponse);
+        $fakedMeilisearchResponse = $this->getFixtureContentByName('fake_meilisearch_response_with_query_fields_facets.json');
+        $fakeResponse = new ResponseAdapter($fakedMeilisearchResponse);
 
         $fakeResultSet->expects(self::once())->method('getResponse')->willReturn($fakeResponse);
         $parsedResultSet = $this->parser->parse($fakeResultSet, true);
@@ -79,8 +79,8 @@ class DefaultParserTest extends SetUpUnitTestCase
     {
         $fakeResultSet = $this->getMockBuilder(SearchResultSet::class)->onlyMethods(['getResponse'])->getMock();
 
-        $fakedSolrResponse = $this->getFixtureContentByName('fakeResponse.json');
-        $fakeResponse = new ResponseAdapter($fakedSolrResponse);
+        $fakedMeilisearchResponse = $this->getFixtureContentByName('fakeResponse.json');
+        $fakeResponse = new ResponseAdapter($fakedMeilisearchResponse);
 
         $fakeResultSet->expects(self::once())->method('getResponse')->willReturn($fakeResponse);
         $parsedResultSet = $this->parser->parse($fakeResultSet, true);

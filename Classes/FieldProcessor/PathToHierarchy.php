@@ -50,7 +50,7 @@ class PathToHierarchy implements FieldProcessor
      *
      * @param string $path path string
      * @return array Meilisearch hierarchy
-     * @see http://wiki.apache.org/solr/HierarchicalFaceting
+     * @see http://wiki.apache.org/meilisearch/HierarchicalFaceting
      */
     protected function buildMeilisearchHierarchyFromPath(string $path): array
     {

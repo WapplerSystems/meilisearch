@@ -38,7 +38,7 @@ services:
     autowire: true
     tags: ['backend.controller']
 
-  WapplerSystems\Meilisearch\Domain\Search\ApacheSolrDocument\Builder:
+  WapplerSystems\Meilisearch\Domain\Search\ApacheMeilisearchDocument\Builder:
     public: true
     autowire: true
 

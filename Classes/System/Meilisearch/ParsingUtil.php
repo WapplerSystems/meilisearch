@@ -20,7 +20,7 @@ namespace WapplerSystems\Meilisearch\System\Meilisearch;
 use UnexpectedValueException;
 
 /**
- * This class provides static helper functions that are helpful during the result parsing for solr.
+ * This class provides static helper functions that are helpful during the result parsing for meilisearch.
  */
 class ParsingUtil
 {

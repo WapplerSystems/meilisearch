@@ -29,7 +29,7 @@ use TYPO3\CMS\Core\SingletonInterface;
  */
 class EventQueueItemRepository extends AbstractRepository implements SingletonInterface
 {
-    protected string $table = 'tx_solr_eventqueue_item';
+    protected string $table = 'tx_meilisearch_eventqueue_item';
 
     /**
      * Add event to event queue

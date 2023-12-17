@@ -203,12 +203,12 @@ class Queue implements QueueInterface, QueueInitializationServiceAwareInterface
                 continue;
             }
 
-            $solrConfiguration = $site->getMeilisearchConfiguration();
-            $indexingConfiguration = $this->recordService->getIndexingConfigurationName($itemType, $itemUid, $solrConfiguration);
+            $meilisearchConfiguration = $site->getMeilisearchConfiguration();
+            $indexingConfiguration = $this->recordService->getIndexingConfigurationName($itemType, $itemUid, $meilisearchConfiguration);
             if ($indexingConfiguration === null) {
                 continue;
             }
-            $indexingPriority = $solrConfiguration->getIndexQueueIndexingPriorityByConfigurationName($indexingConfiguration);
+            $indexingPriority = $meilisearchConfiguration->getIndexQueueIndexingPriorityByConfigurationName($indexingConfiguration);
             $itemInQueueForRootPage = $this->containsItemWithRootPageId($itemType, $itemUid, $rootPageId, $indexingConfiguration);
             if ($itemInQueueForRootPage) {
                 // update changed time if that item is in the queue already
@@ -524,7 +524,7 @@ class Queue implements QueueInterface, QueueInitializationServiceAwareInterface
     /**
      * Gets $limit number of items to index for a particular $site.
      *
-     * @return Item[] Items to index to the given solr server
+     * @return Item[] Items to index to the given meilisearch server
      *
      * @throws DBALException
      */

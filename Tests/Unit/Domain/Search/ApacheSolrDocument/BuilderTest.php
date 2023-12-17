@@ -15,20 +15,20 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Search\ApacheSolrDocument;
+namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Search\ApacheMeilisearchDocument;
 
 use WapplerSystems\Meilisearch\Access\Rootline;
-use WapplerSystems\Meilisearch\Domain\Search\ApacheSolrDocument\Builder;
+use WapplerSystems\Meilisearch\Domain\Search\ApacheMeilisearchDocument\Builder;
 use WapplerSystems\Meilisearch\Domain\Site\Site;
 use WapplerSystems\Meilisearch\Domain\Variants\IdBuilder;
-use WapplerSystems\Meilisearch\System\Solr\Document\Document;
+use WapplerSystems\Meilisearch\System\Meilisearch\Document\Document;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use WapplerSystems\Meilisearch\Typo3PageContentExtractor;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
- * Testcase for the Builder of ApacheSolrDocument
+ * Testcase for the Builder of ApacheMeilisearchDocument
  *
  * @author Timo Hund <timo.hund@dkd.de>
  */
@@ -69,7 +69,7 @@ class BuilderTest extends SetUpUnitTestCase
     /**
      * @test
      */
-    public function canBuildApacheSolrDocumentFromEmptyPage(): void
+    public function canBuildApacheMeilisearchDocumentFromEmptyPage(): void
     {
         $fakePage = $this->createMock(TypoScriptFrontendController::class);
         $fakeRootLine = $this->createMock(Rootline::class);
@@ -80,7 +80,7 @@ class BuilderTest extends SetUpUnitTestCase
 
         $fakePage->page = self::FAKE_PAGE_RECORD;
         $fakePage->id = 4711;
-        $document = $this->documentBuilder->fromPage($fakePage, 'http://www.typo3-solr.com', $fakeRootLine, '');
+        $document = $this->documentBuilder->fromPage($fakePage, 'http://www.typo3-meilisearch.com', $fakeRootLine, '');
 
         self::assertInstanceOf(Document::class, $document, 'Expect to get an ' . Document::class . ' back');
         self::assertSame('siteHash/pages/4711', $document['id'], 'Builder did not use documentId from mock');
@@ -89,7 +89,7 @@ class BuilderTest extends SetUpUnitTestCase
     /**
      * @test
      */
-    public function canSetKeywordsForApacheSolrDocument(): void
+    public function canSetKeywordsForApacheMeilisearchDocument(): void
     {
         $fakePage = $this->createMock(TypoScriptFrontendController::class);
         $fakeRootLine = $this->createMock(Rootline::class);
@@ -100,7 +100,7 @@ class BuilderTest extends SetUpUnitTestCase
 
         $fakePage->page = array_merge(self::FAKE_PAGE_RECORD, ['keywords' => 'foo,bar']);
         $fakePage->id = 4711;
-        $document = $this->documentBuilder->fromPage($fakePage, 'http://www.typo3-solr.com', $fakeRootLine, '');
+        $document = $this->documentBuilder->fromPage($fakePage, 'http://www.typo3-meilisearch.com', $fakeRootLine, '');
 
         self::assertSame($document['keywords'], ['foo', 'bar'], 'Could not set keywords from page document');
     }
@@ -108,7 +108,7 @@ class BuilderTest extends SetUpUnitTestCase
     /**
      * @test
      */
-    public function canSetEndtimeForApacheSolrDocument(): void
+    public function canSetEndtimeForApacheMeilisearchDocument(): void
     {
         $fakePage = $this->createMock(TypoScriptFrontendController::class);
         $fakeRootLine = $this->createMock(Rootline::class);
@@ -119,7 +119,7 @@ class BuilderTest extends SetUpUnitTestCase
 
         $fakePage->page = array_merge(self::FAKE_PAGE_RECORD, ['endtime' => 1234]);
         $fakePage->id = 4711;
-        $document = $this->documentBuilder->fromPage($fakePage, 'http://www.typo3-solr.com', $fakeRootLine, '');
+        $document = $this->documentBuilder->fromPage($fakePage, 'http://www.typo3-meilisearch.com', $fakeRootLine, '');
 
         self::assertSame($document['endtime'], 1234, 'Could not set endtime from page document');
     }
@@ -127,7 +127,7 @@ class BuilderTest extends SetUpUnitTestCase
     /**
      * @test
      */
-    public function canSetTagFieldsForApacheSolrDocument(): void
+    public function canSetTagFieldsForApacheMeilisearchDocument(): void
     {
         $fakePage = $this->createMock(TypoScriptFrontendController::class);
         $fakeRootLine = $this->createMock(Rootline::class);
@@ -138,9 +138,9 @@ class BuilderTest extends SetUpUnitTestCase
 
         $fakePage->page = self::FAKE_PAGE_RECORD;
         $fakePage->id = 4711;
-        $document = $this->documentBuilder->fromPage($fakePage, 'http://www.typo3-solr.com', $fakeRootLine, '');
+        $document = $this->documentBuilder->fromPage($fakePage, 'http://www.typo3-meilisearch.com', $fakeRootLine, '');
 
-        self::assertSame($document['tagsH1'], 'Fake H1 content', 'Could not assign extracted h1 heading to solr document');
+        self::assertSame($document['tagsH1'], 'Fake H1 content', 'Could not assign extracted h1 heading to meilisearch document');
     }
 
     /**

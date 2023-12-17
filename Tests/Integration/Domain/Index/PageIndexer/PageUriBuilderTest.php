@@ -28,14 +28,14 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class PageUriBuilderTest extends IntegrationTest
 {
     protected array $testExtensionsToLoad = [
-        'typo3conf/ext/solr',
+        'typo3conf/ext/meilisearch',
         '../vendor/wapplersystems/meilisearch/Tests/Integration/Fixtures/Extensions/fake_extension3',
     ];
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->writeDefaultSolrTestSiteConfiguration();
+        $this->writeDefaultMeilisearchTestSiteConfiguration();
     }
 
     /**

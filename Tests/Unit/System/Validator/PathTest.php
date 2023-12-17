@@ -29,10 +29,10 @@ class PathTest extends SetUpUnitTestCase
     /**
      * @test
      */
-    public function canIsValidSolrPathisValidPath()
+    public function canIsValidMeilisearchPathisValidPath()
     {
         $path = GeneralUtility::makeInstance(Path::class);
-        $isValidPath = $path->isValidSolrPath('/sorl/core_da');
+        $isValidPath = $path->isValidMeilisearchPath('/sorl/core_da');
 
         self::assertTrue($isValidPath);
     }
@@ -40,10 +40,10 @@ class PathTest extends SetUpUnitTestCase
     /**
      * @test
      */
-    public function canIsValidSolrPathEmptyString()
+    public function canIsValidMeilisearchPathEmptyString()
     {
         $path = GeneralUtility::makeInstance(Path::class);
-        $isValidPath = $path->isValidSolrPath('');
+        $isValidPath = $path->isValidMeilisearchPath('');
 
         self::assertFalse($isValidPath);
     }
@@ -51,10 +51,10 @@ class PathTest extends SetUpUnitTestCase
     /**
      * @test
      */
-    public function canIsValidSolrPathisInvalidPathButAppears()
+    public function canIsValidMeilisearchPathisInvalidPathButAppears()
     {
         $path = GeneralUtility::makeInstance(Path::class);
-        $isValidPath = $path->isValidSolrPath('/sorl/#/core_da');
+        $isValidPath = $path->isValidMeilisearchPath('/sorl/#/core_da');
 
         self::assertFalse($isValidPath);
     }
@@ -62,10 +62,10 @@ class PathTest extends SetUpUnitTestCase
     /**
      * @test
      */
-    public function canIsValidSolrPathisInvalidPath()
+    public function canIsValidMeilisearchPathisInvalidPath()
     {
         $path = GeneralUtility::makeInstance(Path::class);
-        $isValidPath = $path->isValidSolrPath('/sorl/core_da?bogus');
+        $isValidPath = $path->isValidMeilisearchPath('/sorl/core_da?bogus');
 
         self::assertFalse($isValidPath);
     }

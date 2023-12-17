@@ -1,6 +1,6 @@
-.tx-solr-autosuggest { border: 1px solid #CCC; background: #FFF; overflow: auto; }
-.tx-solr-autosuggest strong { font-weight: bolder; color: #f18f0b; }
-.tx-solr-autosuggest .autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
-.tx-solr-autosuggest .autocomplete-selected { background: #F1E0B6; }
-.tx-solr-autosuggest .autocomplete-group { padding: 10px 5px; }
-.tx-solr-autosuggest .autocomplete-group strong { display: block; border-bottom: 1px solid #999; }
+.tx-meilisearch-autosuggest { border: 1px solid #CCC; background: #FFF; overflow: auto; }
+.tx-meilisearch-autosuggest strong { font-weight: bolder; color: #f18f0b; }
+.tx-meilisearch-autosuggest .autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
+.tx-meilisearch-autosuggest .autocomplete-selected { background: #F1E0B6; }
+.tx-meilisearch-autosuggest .autocomplete-group { padding: 10px 5px; }
+.tx-meilisearch-autosuggest .autocomplete-group strong { display: block; border-bottom: 1px solid #999; }

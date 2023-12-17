@@ -101,7 +101,7 @@ class AbstractIndexerTest extends SetUpUnitTestCase
      * @test
      * @dataProvider indexingDataProvider
      */
-    public function resolveFieldValue(array $indexingConfiguration, string $solrFieldName, array $data, $expectedValue): void
+    public function resolveFieldValue(array $indexingConfiguration, string $meilisearchFieldName, array $data, $expectedValue): void
     {
         $subject = new class () extends AbstractIndexer {};
         $tsfe = $this->createMock(TypoScriptFrontendController::class);
@@ -110,7 +110,7 @@ class AbstractIndexerTest extends SetUpUnitTestCase
                 $subject,
                 'resolveFieldValue',
                 $indexingConfiguration,
-                $solrFieldName,
+                $meilisearchFieldName,
                 $data,
                 $tsfe
             ),
@@ -120,21 +120,21 @@ class AbstractIndexerTest extends SetUpUnitTestCase
 
     public function indexingDataProvider(): \Generator
     {
-        yield 'solr field defined as string' => [
-            ['solrFieldName_stringS' => 'solrFieldName'],
-            'solrFieldName_stringS',
-            ['solrFieldName' => 'test'],
+        yield 'meilisearch field defined as string' => [
+            ['meilisearchFieldName_stringS' => 'meilisearchFieldName'],
+            'meilisearchFieldName_stringS',
+            ['meilisearchFieldName' => 'test'],
             'test',
         ];
-        yield 'solr field defined as int' => [
-            ['solrFieldName_intS' => 'solrFieldName'],
-            'solrFieldName_intS',
-            ['solrFieldName' => 123],
+        yield 'meilisearch field defined as int' => [
+            ['meilisearchFieldName_intS' => 'meilisearchFieldName'],
+            'meilisearchFieldName_intS',
+            ['meilisearchFieldName' => 123],
             123,
         ];
-        yield 'solr field not defined' => [
-            ['solrFieldName_stringS' => 'solrFieldName'],
-            'solrFieldName_stringS',
+        yield 'meilisearch field not defined' => [
+            ['meilisearchFieldName_stringS' => 'meilisearchFieldName'],
+            'meilisearchFieldName_stringS',
             [],
             null,
         ];

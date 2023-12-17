@@ -20,7 +20,7 @@ use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 use function str_starts_with;
 
 /**
- * The Filters ParameterProvider is responsible to build the solr query parameters
+ * The Filters ParameterProvider is responsible to build the meilisearch query parameters
  * that are needed for the filtering.
  */
 class Filters
@@ -110,9 +110,9 @@ class Filters
     }
 
     /**
-     * @todo: Check why $solrConfiguration isn't used.
+     * @todo: Check why $meilisearchConfiguration isn't used.
      */
-    public static function fromTypoScriptConfiguration(TypoScriptConfiguration $solrConfiguration): Filters
+    public static function fromTypoScriptConfiguration(TypoScriptConfiguration $meilisearchConfiguration): Filters
     {
         return new self();
     }

@@ -21,7 +21,7 @@ use WapplerSystems\Meilisearch\Domain\Search\Query\AbstractQueryBuilder;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 
 /**
- * The Elevation ParameterProvider is responsible to build the solr query parameters
+ * The Elevation ParameterProvider is responsible to build the meilisearch query parameters
  * that are needed for the elevation.
  */
 class Elevation extends AbstractDeactivatable implements ParameterBuilderInterface
@@ -63,15 +63,15 @@ class Elevation extends AbstractDeactivatable implements ParameterBuilderInterfa
         $this->markElevatedResults = $markElevatedResults;
     }
 
-    public static function fromTypoScriptConfiguration(TypoScriptConfiguration $solrConfiguration): Elevation
+    public static function fromTypoScriptConfiguration(TypoScriptConfiguration $meilisearchConfiguration): Elevation
     {
-        $isEnabled = $solrConfiguration->getSearchElevation();
+        $isEnabled = $meilisearchConfiguration->getSearchElevation();
         if (!$isEnabled) {
             return new Elevation(false);
         }
 
-        $force = $solrConfiguration->getSearchElevationForceElevation();
-        $markResults = $solrConfiguration->getSearchElevationMarkElevatedResults();
+        $force = $meilisearchConfiguration->getSearchElevationForceElevation();
+        $markResults = $meilisearchConfiguration->getSearchElevationMarkElevatedResults();
         return new Elevation(true, $force, $markResults);
     }
 

@@ -34,7 +34,7 @@ class IndexAdministrationModuleController extends AbstractModuleController
      */
     public function indexAction(): ResponseInterface
     {
-        if ($this->selectedSite === null || empty($this->solrConnectionManager->getConnectionsBySite($this->selectedSite))) {
+        if ($this->selectedSite === null || empty($this->meilisearchConnectionManager->getConnectionsBySite($this->selectedSite))) {
             $this->view->assign('can_not_proceed', true);
         }
         return $this->getModuleTemplateResponse();
@@ -49,18 +49,18 @@ class IndexAdministrationModuleController extends AbstractModuleController
 
         try {
             $affectedCores = [];
-            $solrServers = $this->solrConnectionManager->getConnectionsBySite($this->selectedSite);
-            foreach ($solrServers as $solrServer) {
-                $writeService = $solrServer->getWriteService();
-                /** @var MeilisearchConnection $solrServer */
+            $meilisearchServers = $this->meilisearchConnectionManager->getConnectionsBySite($this->selectedSite);
+            foreach ($meilisearchServers as $meilisearchServer) {
+                $writeService = $meilisearchServer->getWriteService();
+                /** @var MeilisearchConnection $meilisearchServer */
                 $writeService->deleteByQuery('siteHash:' . $siteHash);
                 $writeService->commit(false, false);
                 $affectedCores[] = $writeService->getPrimaryEndpoint()->getCore();
             }
-            $message = LocalizationUtility::translate('solr.backend.index_administration.index_emptied_all', 'Meilisearch', [$this->selectedSite->getLabel(), implode(', ', $affectedCores)]);
+            $message = LocalizationUtility::translate('meilisearch.backend.index_administration.index_emptied_all', 'Meilisearch', [$this->selectedSite->getLabel(), implode(', ', $affectedCores)]);
             $this->addFlashMessage($message);
         } catch (Throwable $e) {
-            $this->addFlashMessage(LocalizationUtility::translate('solr.backend.index_administration.error.on_empty_index', 'Meilisearch', [$e->__toString()]), '', ContextualFeedbackSeverity::ERROR);
+            $this->addFlashMessage(LocalizationUtility::translate('meilisearch.backend.index_administration.error.on_empty_index', 'Meilisearch', [$e->__toString()]), '', ContextualFeedbackSeverity::ERROR);
         }
 
         return new RedirectResponse($this->uriBuilder->uriFor('index'), 303);
@@ -73,10 +73,10 @@ class IndexAdministrationModuleController extends AbstractModuleController
     {
         $coresReloaded = true;
         $reloadedCores = [];
-        $solrServers = $this->solrConnectionManager->getConnectionsBySite($this->selectedSite);
+        $meilisearchServers = $this->meilisearchConnectionManager->getConnectionsBySite($this->selectedSite);
 
-        foreach ($solrServers as $solrServer) {
-            $coreAdmin = $solrServer->getAdminService();
+        foreach ($meilisearchServers as $meilisearchServer) {
+            $coreAdmin = $meilisearchServer->getAdminService();
             $coreReloaded = $coreAdmin->reloadCore()->getHttpStatus() === 200;
 
             $coreName = $coreAdmin->getPrimaryEndpoint()->getCore();

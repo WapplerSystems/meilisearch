@@ -25,7 +25,7 @@ use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 class HtmlContentExtractor
 {
     /**
-     * Unicode ranges which should get stripped before sending a document to solr.
+     * Unicode ranges which should get stripped before sending a document to meilisearch.
      * This is necessary if a document (PDF, etc.) contains unicode characters which
      * are valid in the font being used in the document but are not available in the
      * font being used for displaying results.

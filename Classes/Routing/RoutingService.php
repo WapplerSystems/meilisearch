@@ -45,7 +45,7 @@ class RoutingService implements LoggerAwareInterface
     /**
      * Default plugin namespace
      */
-    public const PLUGIN_NAMESPACE = 'tx_solr';
+    public const PLUGIN_NAMESPACE = 'tx_meilisearch';
 
     /**
      * Settings from routing configuration
@@ -60,7 +60,7 @@ class RoutingService implements LoggerAwareInterface
     /**
      * Plugin/extension namespace
      */
-    protected string $pluginNamespace = 'tx_solr';
+    protected string $pluginNamespace = 'tx_meilisearch';
 
     /**
      * List of TYPO3 core parameters, that we should ignore
@@ -426,7 +426,7 @@ class RoutingService implements LoggerAwareInterface
      * Note: this will just handle filter values
      *
      * IN:
-     * tx_solr => [
+     * tx_meilisearch => [
      *   filter => [
      *      color:red
      *      product:candy
@@ -436,7 +436,7 @@ class RoutingService implements LoggerAwareInterface
      * ]
      *
      * OUT:
-     * tx_solr => [
+     * tx_meilisearch => [
      *   filter => [
      *      color:blue,red
      *      product:candy
@@ -514,7 +514,7 @@ class RoutingService implements LoggerAwareInterface
      * Note: this will just combine filter values
      *
      * IN:
-     * tx_solr => [
+     * tx_meilisearch => [
      *   filter => [
      *      color:blue,red
      *      product:candy
@@ -523,7 +523,7 @@ class RoutingService implements LoggerAwareInterface
      * ]
      *
      * OUT:
-     * tx_solr => [
+     * tx_meilisearch => [
      *   filter => [
      *      color:red
      *      product:candy
@@ -583,7 +583,7 @@ class RoutingService implements LoggerAwareInterface
     }
 
     /**
-     * Cleanup the query parameters, to avoid empty solr arguments
+     * Cleanup the query parameters, to avoid empty meilisearch arguments
      */
     public function cleanUpQueryParameters(array $queryParams): array
     {
@@ -941,7 +941,7 @@ class RoutingService implements LoggerAwareInterface
      * Example:
      * /products/household
      *
-     * tx_solr:
+     * tx_meilisearch:
      *      filter:
      *          - type:household
      */

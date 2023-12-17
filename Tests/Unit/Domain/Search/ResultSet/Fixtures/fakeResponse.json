@@ -196,7 +196,7 @@
         "filter_queries": ["siteHash:\"23c51a0d5cf548afecc043a7068902e8f82a22a0\"",
             "{!typo3access}-1,0"],
         "parsed_filter_queries": ["siteHash:23c51a0d5cf548afecc043a7068902e8f82a22a0",
-            "ConstantScore(org.typo3.solr.search.AccessFilter@7b7c4a74)"],
+            "ConstantScore(org.typo3.meilisearch.search.AccessFilter@7b7c4a74)"],
         "timing": {
             "time": 9.0,
             "prepare": {

@@ -15,8 +15,8 @@
 
 namespace WapplerSystems\Meilisearch\Tests\Integration\Extbase;
 
-use ApacheSolrForTypo3\FakeExtension\Domain\Model\Foo;
-use ApacheSolrForTypo3\FakeExtension\Domain\Repository\FooRepository;
+use ApacheMeilisearchForTypo3\FakeExtension\Domain\Model\Foo;
+use ApacheMeilisearchForTypo3\FakeExtension\Domain\Repository\FooRepository;
 use WapplerSystems\Meilisearch\IndexQueue\Queue;
 use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use TYPO3\CMS\Core\Context\Context;
@@ -26,7 +26,7 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 class PersistenceEventListenerTest extends IntegrationTest
 {
     protected array $testExtensionsToLoad = [
-        'typo3conf/ext/solr',
+        'typo3conf/ext/meilisearch',
         '../vendor/wapplersystems/meilisearch/Tests/Integration/Fixtures/Extensions/fake_extension',
     ];
 
@@ -37,10 +37,10 @@ class PersistenceEventListenerTest extends IntegrationTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->writeDefaultSolrTestSiteConfiguration();
+        $this->writeDefaultMeilisearchTestSiteConfiguration();
         $this->addTypoScriptToTemplateRecord(1, '
-            plugin.tx_solr.index.queue.foo = 1
-            plugin.tx_solr.index.queue.foo.type = tx_fakeextension_domain_model_foo
+            plugin.tx_meilisearch.index.queue.foo = 1
+            plugin.tx_meilisearch.index.queue.foo.type = tx_fakeextension_domain_model_foo
         ');
         $this->indexQueue = GeneralUtility::makeInstance(Queue::class);
         $this->repository = GeneralUtility::makeInstance(FooRepository::class);

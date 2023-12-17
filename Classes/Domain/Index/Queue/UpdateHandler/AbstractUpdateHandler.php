@@ -154,7 +154,7 @@ abstract class AbstractUpdateHandler
      * Checks if a page update will trigger a recursive update of pages
      *
      * This can either be the case if some $changedFields are part of the RecursiveUpdateTriggerConfiguration or
-     * columns have explicitly been configured via plugin.tx_solr.index.queue.recursiveUpdateFields
+     * columns have explicitly been configured via plugin.tx_meilisearch.index.queue.recursiveUpdateFields
      *
      * @throws DBALException
      */
@@ -164,16 +164,16 @@ abstract class AbstractUpdateHandler
         $isRecursiveUpdateRequired = $this->isRecursiveUpdateRequired($pageId, $updatedFields);
         // If RecursiveUpdateTriggerConfiguration is false => check if changeFields are part of recursiveUpdateFields
         if ($isRecursiveUpdateRequired === false) {
-            $solrConfiguration = $this->frontendEnvironment->getMeilisearchConfigurationFromPageId($pageId);
+            $meilisearchConfiguration = $this->frontendEnvironment->getMeilisearchConfigurationFromPageId($pageId);
             $indexQueueConfigurationName = $this->configurationAwareRecordService->getIndexingConfigurationName(
                 'pages',
                 $pageId,
-                $solrConfiguration
+                $meilisearchConfiguration
             );
             if ($indexQueueConfigurationName === null) {
                 return false;
             }
-            $updateFields = $solrConfiguration->getIndexQueueConfigurationRecursiveUpdateFields(
+            $updateFields = $meilisearchConfiguration->getIndexQueueConfigurationRecursiveUpdateFields(
                 $indexQueueConfigurationName
             );
 

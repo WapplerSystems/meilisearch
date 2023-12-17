@@ -45,10 +45,10 @@ class ImmediateProcessingEventListenerTest extends SetUpEventListener
 
     protected function setUp(): void
     {
-        if (!class_exists('SolrUnitTestsInvalidDataUpdateEvent')) {
+        if (!class_exists('MeilisearchUnitTestsInvalidDataUpdateEvent')) {
             eval(
                 'use WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\ContentElementDeletedEvent;'
-                . 'class SolrUnitTestsInvalidDataUpdateEvent extends ContentElementDeletedEvent {}'
+                . 'class MeilisearchUnitTestsInvalidDataUpdateEvent extends ContentElementDeletedEvent {}'
             );
         }
         parent::setUp();
@@ -143,7 +143,7 @@ class ImmediateProcessingEventListenerTest extends SetUpEventListener
             [RecordDeletedEvent::class, GarbageHandler::class, [1, 'pages'], true],
             [PageMovedEvent::class, GarbageHandler::class, [1], true],
             [RecordGarbageCheckEvent::class, GarbageHandler::class, [1, 'pages', ['hidden'], false], true],
-            ['SolrUnitTestsInvalidDataUpdateEvent', DataUpdateHandler::class, [1], false],
+            ['MeilisearchUnitTestsInvalidDataUpdateEvent', DataUpdateHandler::class, [1], false],
         ];
     }
 

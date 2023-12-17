@@ -18,7 +18,7 @@ namespace WapplerSystems\Meilisearch\Tests\Unit\IndexQueue;
 use WapplerSystems\Meilisearch\ConnectionManager;
 use WapplerSystems\Meilisearch\Domain\Index\Queue\IndexQueueIndexingPropertyRepository;
 use WapplerSystems\Meilisearch\Domain\Index\Queue\QueueItemRepository;
-use WapplerSystems\Meilisearch\Domain\Search\ApacheSolrDocument\Builder;
+use WapplerSystems\Meilisearch\Domain\Search\ApacheMeilisearchDocument\Builder;
 use WapplerSystems\Meilisearch\Domain\Site\Site;
 use WapplerSystems\Meilisearch\Event\Indexing\BeforeDocumentIsProcessedForIndexingEvent;
 use WapplerSystems\Meilisearch\FrontendEnvironment;
@@ -27,10 +27,10 @@ use WapplerSystems\Meilisearch\IndexQueue\Indexer;
 use WapplerSystems\Meilisearch\IndexQueue\Item;
 use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\System\Records\Pages\PagesRepository;
-use WapplerSystems\Meilisearch\System\Solr\Document\Document;
-use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
-use WapplerSystems\Meilisearch\System\Solr\Service\SolrWriteService;
-use WapplerSystems\Meilisearch\System\Solr\SolrConnection;
+use WapplerSystems\Meilisearch\System\Meilisearch\Document\Document;
+use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Meilisearch\Service\MeilisearchWriteService;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchConnection;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use ReflectionClass;
@@ -59,7 +59,7 @@ class IndexerTest extends SetUpUnitTestCase
      */
     public function canTriggerIndexingAndIndicateIndexStatus(int $httpStatus, bool $itemIndexed): void
     {
-        $writeServiceMock = $this->createMock(SolrWriteService::class);
+        $writeServiceMock = $this->createMock(MeilisearchWriteService::class);
         $responseMock = $this->createMock(ResponseAdapter::class);
 
         $indexer = $this->getAccessibleMock(
@@ -77,12 +77,12 @@ class IndexerTest extends SetUpUnitTestCase
         $eventDispatcher->expects(self::any())->method('dispatch')->willReturnArgument(0);
         $indexer->_set('eventDispatcher', $eventDispatcher);
 
-        $solrConnectionMock = $this->createMock(SolrConnection::class);
-        $solrConnectionMock
+        $meilisearchConnectionMock = $this->createMock(MeilisearchConnection::class);
+        $meilisearchConnectionMock
             ->expects(self::atLeastOnce())
             ->method('getWriteService')
             ->willReturn($writeServiceMock);
-        $indexer->_set('currentlyUsedSolrConnection', $solrConnectionMock);
+        $indexer->_set('currentlyUsedMeilisearchConnection', $meilisearchConnectionMock);
 
         $siteMock = $this->createMock(Site::class);
         $itemMock = $this->createMock(Item::class);
@@ -241,7 +241,7 @@ class IndexerTest extends SetUpUnitTestCase
         $item->expects(self::any())->method('getIndexingConfigurationName')->willReturn('fakeIndexingConfigurationName');
 
         $frontendEnvironment = $this->createMock(FrontendEnvironment::class);
-        $frontendEnvironment->expects(self::atLeastOnce())->method('getSolrConfigurationFromPageId')->with(12, 0);
+        $frontendEnvironment->expects(self::atLeastOnce())->method('getMeilisearchConfigurationFromPageId')->with(12, 0);
 
         $indexer = $this->getMockBuilder(Indexer::class)
             ->setConstructorArgs([

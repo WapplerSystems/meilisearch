@@ -122,16 +122,16 @@ class Repository implements SingletonInterface
     protected function initializeSearch(int $pageId, int $languageId = 0): void
     {
         $connectionManager = GeneralUtility::makeInstance(ConnectionManager::class);
-        $solrConnection = $connectionManager->getConnectionByPageId($pageId, $languageId);
+        $meilisearchConnection = $connectionManager->getConnectionByPageId($pageId, $languageId);
 
-        $this->search = $this->getSearch($solrConnection);
+        $this->search = $this->getSearch($meilisearchConnection);
     }
 
     /**
      * Retrieves an instance of the Search object.
      */
-    protected function getSearch(MeilisearchConnection $solrConnection): Search
+    protected function getSearch(MeilisearchConnection $meilisearchConnection): Search
     {
-        return  GeneralUtility::makeInstance(Search::class, $solrConnection);
+        return  GeneralUtility::makeInstance(Search::class, $meilisearchConnection);
     }
 }

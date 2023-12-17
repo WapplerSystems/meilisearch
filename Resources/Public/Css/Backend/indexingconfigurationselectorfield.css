@@ -1,22 +1,22 @@
 
-table.tx_solr-TCEforms {
+table.tx_meilisearch-TCEforms {
 	background: none;
 }
 
-table.tx_solr-TCEforms a {
+table.tx_meilisearch-TCEforms a {
 	display: none;
 }
 
-table.tx_solr-TCEforms table.typo3-TCEforms-select-checkbox tbody {
+table.tx_meilisearch-TCEforms table.typo3-TCEforms-select-checkbox tbody {
 	display: table-row-group;
 }
 
 
 /* scheduler layout fixes */
-.tx_scheduler_mod1 .extra_fields_tx_solr_scheduler_ReIndexTask table.typo3-TCEforms {
+.tx_scheduler_mod1 .extra_fields_tx_meilisearch_scheduler_ReIndexTask table.typo3-TCEforms {
 	width: auto;
 }
 
-.tx_scheduler_mod1 .extra_fields_tx_solr_scheduler_ReIndexTask .tx_solr-TCEforms td {
+.tx_scheduler_mod1 .extra_fields_tx_meilisearch_scheduler_ReIndexTask .tx_meilisearch-TCEforms td {
 	padding-left: 0;
 }

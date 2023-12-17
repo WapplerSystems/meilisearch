@@ -34,7 +34,7 @@ class SiteHandlingStatusTest extends IntegrationTest
      */
     public function allStatusChecksShouldBeOkForFirstTestSite(): void
     {
-        $this->writeDefaultSolrTestSiteConfiguration();
+        $this->writeDefaultMeilisearchTestSiteConfiguration();
 
         /** @var SiteHandlingStatus $siteHandlingStatus */
         $siteHandlingStatus = GeneralUtility::makeInstance(SiteHandlingStatus::class);
@@ -51,7 +51,7 @@ class SiteHandlingStatusTest extends IntegrationTest
      */
     public function statusCheckShouldFailIfSchemeIsNotDefined(): void
     {
-        $this->writeDefaultSolrTestSiteConfiguration();
+        $this->writeDefaultMeilisearchTestSiteConfiguration();
         $this->mergeSiteConfiguration('integration_tree_one', [
             'base' => 'authorityOnly.example.com',
         ]);
@@ -75,7 +75,7 @@ class SiteHandlingStatusTest extends IntegrationTest
      */
     public function statusCheckShouldFailIfAuthorityIsNotDefined(): void
     {
-        $this->writeDefaultSolrTestSiteConfiguration();
+        $this->writeDefaultMeilisearchTestSiteConfiguration();
         $this->mergeSiteConfiguration('integration_tree_one', [
             'base' => '/',
         ]);
@@ -99,7 +99,7 @@ class SiteHandlingStatusTest extends IntegrationTest
      */
     public function statusCheckShouldFailIfBaseIsSetWrongInLanguages(): void
     {
-        $this->writeDefaultSolrTestSiteConfiguration();
+        $this->writeDefaultMeilisearchTestSiteConfiguration();
 
         // mergeSiteConfiguration() do not work recursively
         putenv('TYPO3:configPath=' . $this->instancePath . '/typo3conf/');

@@ -95,7 +95,7 @@ class GroupItemPaginateViewHelper extends AbstractMeilisearchViewHelper
         /** @var SearchResultSet $resultSet */
         $resultSet = $this->arguments['resultSet'];
         $configuration = $resultSet->getUsedSearchRequest()->getContextTypoScriptConfiguration();
-        $viewConfiguration = $configuration->getValueByPath('plugin.tx_solr.view.');
+        $viewConfiguration = $configuration->getValueByPath('plugin.tx_meilisearch.view.');
 
         $layoutRootPaths = [];
         $layoutRootPaths[] = GeneralUtility::getFileAbsFileName('EXT:meilisearch/Resources/Private/Layouts/ViewHelpers/');

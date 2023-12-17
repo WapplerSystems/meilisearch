@@ -29,8 +29,8 @@ use WapplerSystems\Meilisearch\Domain\Search\SearchRequest;
 use WapplerSystems\Meilisearch\Domain\Search\Suggest\SuggestService;
 use WapplerSystems\Meilisearch\Search;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
-use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
-use WapplerSystems\Meilisearch\System\Solr\SolrConnection;
+use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchConnection;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -63,7 +63,7 @@ class SuggestServiceTest extends SetUpUnitTestCase
         $this->queryBuilderMock->expects(self::once())->method('buildSuggestQuery')->willReturn($this->suggestQueryMock);
 
         $this->suggestService = $this->getMockBuilder(SuggestService::class)
-            ->onlyMethods(['getSolrSuggestions'])
+            ->onlyMethods(['getMeilisearchSuggestions'])
             ->setConstructorArgs([$this->tsfeMock, $this->searchResultSetServiceMock, $this->configurationMock, $this->queryBuilderMock])
             ->getMock();
         parent::setUp();
@@ -87,7 +87,7 @@ class SuggestServiceTest extends SetUpUnitTestCase
 
         $this->assertNoSearchWillBeTriggered();
 
-        $this->suggestService->expects(self::once())->method('getSolrSuggestions')->willReturn([
+        $this->suggestService->expects(self::once())->method('getMeilisearchSuggestions')->willReturn([
             'type',
             'typo',
         ]);
@@ -112,14 +112,14 @@ class SuggestServiceTest extends SetUpUnitTestCase
         $this->assertNoSearchWillBeTriggered();
         $fakeRequest = $this->getFakedSearchRequest('some');
 
-        $solrConnectionMock = $this->createMock(SolrConnection::class);
+        $meilisearchConnectionMock = $this->createMock(MeilisearchConnection::class);
         $connectionManagerMock = $this->getAccessibleMock(ConnectionManager::class, ['getConnectionByPageId'], [], '', false);
-        $connectionManagerMock->expects(self::any())->method('getConnectionByPageId')->willReturn($solrConnectionMock);
+        $connectionManagerMock->expects(self::any())->method('getConnectionByPageId')->willReturn($meilisearchConnectionMock);
         GeneralUtility::setSingletonInstance(ConnectionManager::class, $connectionManagerMock);
 
         GeneralUtility::setSingletonInstance(EventDispatcherInterface::class, new EventDispatcher($this->createMock(ListenerProviderInterface::class)));
 
-        $searchStub = new class ($this->createMock(SolrConnection::class)) extends Search implements SingletonInterface {
+        $searchStub = new class ($this->createMock(MeilisearchConnection::class)) extends Search implements SingletonInterface {
             public static SuggestServiceTest $suggestServiceTest;
             public function search(Query $query, $offset = 0, $limit = 10): ?ResponseAdapter
             {
@@ -147,14 +147,14 @@ class SuggestServiceTest extends SetUpUnitTestCase
     /**
      * @test
      */
-    public function emptyJsonIsReturnedWhenSolrHasNoSuggestions(): void
+    public function emptyJsonIsReturnedWhenMeilisearchHasNoSuggestions(): void
     {
         $this->configurationMock->expects(self::never())->method('getSuggestShowTopResults');
         $this->assertNoSearchWillBeTriggered();
 
         $fakeRequest = $this->getFakedSearchRequest('ty');
 
-        $this->suggestService->expects(self::once())->method('getSolrSuggestions')->willReturn([]);
+        $this->suggestService->expects(self::once())->method('getMeilisearchSuggestions')->willReturn([]);
         $suggestions = $this->suggestService->getSuggestions($fakeRequest, []);
 
         $expectedSuggestions = ['status' => false];
@@ -174,7 +174,7 @@ class SuggestServiceTest extends SetUpUnitTestCase
         $fakeRequest = $this->getFakedSearchRequest('type');
         $fakeRequest->expects(self::any())->method('getCopyForSubRequest')->willReturn($fakeRequest);
 
-        $this->suggestService->expects(self::once())->method('getSolrSuggestions')->willReturn([
+        $this->suggestService->expects(self::once())->method('getMeilisearchSuggestions')->willReturn([
             'type' => 25,
             'typo' => 5,
         ]);
@@ -182,8 +182,8 @@ class SuggestServiceTest extends SetUpUnitTestCase
         $fakeTopResults = $this->createMock(SearchResultSet::class);
         $fakeResultDocuments = new SearchResultCollection(
             [
-                $this->getFakedSearchResult('http://www.typo3-solr.com/a', 'pages', 'hello solr', 'my suggestions'),
-                $this->getFakedSearchResult('http://www.typo3-solr.com/b', 'news', 'what new in solr', 'new autosuggest'),
+                $this->getFakedSearchResult('http://www.typo3-meilisearch.com/a', 'pages', 'hello meilisearch', 'my suggestions'),
+                $this->getFakedSearchResult('http://www.typo3-meilisearch.com/b', 'news', 'what new in meilisearch', 'new autosuggest'),
             ]
         );
 

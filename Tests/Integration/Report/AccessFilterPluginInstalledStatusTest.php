@@ -23,7 +23,7 @@ use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Integration test for the Solr Access Filter status report
+ * Integration test for the Meilisearch Access Filter status report
  *
  * @author Timo Hund
  */
@@ -32,7 +32,7 @@ class AccessFilterPluginInstalledStatusTest extends IntegrationTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->writeDefaultSolrTestSiteConfiguration();
+        $this->writeDefaultMeilisearchTestSiteConfiguration();
     }
 
     /**
@@ -48,7 +48,7 @@ class AccessFilterPluginInstalledStatusTest extends IntegrationTest
         self::assertEquals(
             $results[0]->getSeverity(),
             ContextualFeedbackSeverity::OK,
-            'We expect to get no violations against the test Solr server '
+            'We expect to get no violations against the test Meilisearch server '
         );
     }
 }

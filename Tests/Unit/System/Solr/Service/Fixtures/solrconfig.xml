@@ -1,41 +1,41 @@
-<config name="tx_solr-9-9-9--20221020">
+<config name="tx_meilisearch-9-9-9--20221020">
 
 	<luceneMatchVersion>7.4.0</luceneMatchVersion>
 
-	<abortOnConfigurationError>${solr.abortOnConfigurationError:true}</abortOnConfigurationError>
+	<abortOnConfigurationError>${meilisearch.abortOnConfigurationError:true}</abortOnConfigurationError>
 
-	<!-- Tika / Solr Cell -->
-	<lib dir="${solr.install.dir}/dist/" regex="solr-cell-\d.*\.jar" />
-	<lib dir="${solr.install.dir}/contrib/extraction/lib" />
+	<!-- Tika / Meilisearch Cell -->
+	<lib dir="${meilisearch.install.dir}/dist/" regex="meilisearch-cell-\d.*\.jar" />
+	<lib dir="${meilisearch.install.dir}/contrib/extraction/lib" />
 
 	<!-- Clustering -->
-	<lib dir="${solr.install.dir}/dist/" regex="solr-clustering-\d.*\.jar" />
-	<lib dir="${solr.install.dir}/contrib/clustering/lib/" />
+	<lib dir="${meilisearch.install.dir}/dist/" regex="meilisearch-clustering-\d.*\.jar" />
+	<lib dir="${meilisearch.install.dir}/contrib/clustering/lib/" />
 
 	<!-- Data Import Handler -->
-	<lib dir="${solr.install.dir}/dist/" regex="solr-dataimporthandler-.*\.jar" />
-	<lib dir="${solr.install.dir}/contrib/dataimporthandler-extras/lib/" />
+	<lib dir="${meilisearch.install.dir}/dist/" regex="meilisearch-dataimporthandler-.*\.jar" />
+	<lib dir="${meilisearch.install.dir}/contrib/dataimporthandler-extras/lib/" />
 
 	<!-- Language Analysis Extras -->
-	<lib dir="${solr.install.dir}/dist/" regex="solr-analysis-extras-.*\.jar" />
-	<lib dir="${solr.install.dir}/contrib/analysis-extras/lib/" />
-	<lib dir="${solr.install.dir}/contrib/analysis-extras/lucene-libs/" />
+	<lib dir="${meilisearch.install.dir}/dist/" regex="meilisearch-analysis-extras-.*\.jar" />
+	<lib dir="${meilisearch.install.dir}/contrib/analysis-extras/lib/" />
+	<lib dir="${meilisearch.install.dir}/contrib/analysis-extras/lucene-libs/" />
 
 	<!-- Language Identification -->
-	<lib dir="${solr.install.dir}/dist/" regex="solr-langid-\d.*\.jar" />
-	<lib dir="${solr.install.dir}/contrib/langid/lib/" regex=".*\.jar" />
+	<lib dir="${meilisearch.install.dir}/dist/" regex="meilisearch-langid-\d.*\.jar" />
+	<lib dir="${meilisearch.install.dir}/contrib/langid/lib/" regex=".*\.jar" />
 
 	<!-- Velocity Template Engine -->
-	<lib dir="${solr.install.dir}/dist/" regex="solr-velocity-\d.*\.jar" />
-	<lib dir="${solr.install.dir}/contrib/velocity/lib" regex=".*\.jar" />
+	<lib dir="${meilisearch.install.dir}/dist/" regex="meilisearch-velocity-\d.*\.jar" />
+	<lib dir="${meilisearch.install.dir}/contrib/velocity/lib" regex=".*\.jar" />
 
 	<!-- TYPO3 Plugins -->
 	<lib dir="typo3lib" regex=".*\.jar" />
 
 	<directoryFactory name="DirectoryFactory"
-		class="solr.NRTCachingDirectoryFactory"/>
+		class="meilisearch.NRTCachingDirectoryFactory"/>
 
-	<codecFactory class="solr.SchemaCodecFactory"/>
+	<codecFactory class="meilisearch.SchemaCodecFactory"/>
 
 	<!--
 		TODO switch to managed schema
@@ -43,13 +43,13 @@
 		(contd.) must not move schema file out of the language specific
 		schema config directory (which it does currently)
 		Possible solution: Move/Change core instanceDir configuration option in
-			solr.xml so that /opt/solr-tomcat/solr (SOLR_HOME) is the root for
+			meilisearch.xml so that /opt/meilisearch-tomcat/meilisearch (SOLR_HOME) is the root for
 			a collection - like example collection1
 
-			Properties like language can be specified in solr.xml
-			http://wiki.apache.org/solr/Solr.xml%20%28supported%20through%204.x%29
+			Properties like language can be specified in meilisearch.xml
+			http://wiki.apache.org/meilisearch/Meilisearch.xml%20%28supported%20through%204.x%29
 
-		Also aligns with http://wiki.apache.org/solr/Solr.xml%204.4%20and%20beyond
+		Also aligns with http://wiki.apache.org/meilisearch/Meilisearch.xml%204.4%20and%20beyond
 		========================================================================
 
 		To enable dynamic schema REST APIs:
@@ -59,10 +59,10 @@
 			<str name="managedSchemaResourceName">managed-schema</str>
 		</schemaFactory>
 
-		When ManagedIndexSchemaFactory is specified, Solr will load the schema from
+		When ManagedIndexSchemaFactory is specified, Meilisearch will load the schema from
 		the resource named in 'managedSchemaResourceName', rather than from schema.xml.
 		Note that the managed schema resource CANNOT be named schema.xml.  If the managed
-		schema does not exist, Solr will create it after reading schema.xml, then rename
+		schema does not exist, Meilisearch will create it after reading schema.xml, then rename
 		'schema.xml' to 'schema.xml.bak'.
 
 		Do NOT hand edit the managed schema - external modifications will be ignored and
@@ -75,7 +75,7 @@
 	<schemaFactory class="ClassicIndexSchemaFactory"/>
 	<!--<schemaFactory class="ManagedIndexSchemaFactory">-->
 	<!--<bool name="mutable">true</bool>-->
-	<!--<str name="managedSchemaResourceName">${solr.core.language}/managed-schema</str>-->
+	<!--<str name="managedSchemaResourceName">${meilisearch.core.language}/managed-schema</str>-->
 	<!--</schemaFactory>-->
 
 	<indexConfig>
@@ -85,10 +85,10 @@
 	</indexConfig>
 
 
-	<updateHandler class="solr.DirectUpdateHandler2">
+	<updateHandler class="meilisearch.DirectUpdateHandler2">
 
 		<updateLog>
-			<str name="dir">${solr.data.dir:}</str>
+			<str name="dir">${meilisearch.data.dir:}</str>
 		</updateLog>
 
 		<autoCommit>
@@ -108,19 +108,19 @@
 		<maxBooleanClauses>1024</maxBooleanClauses>
 
 		<filterCache
-			class="solr.FastLRUCache"
+			class="meilisearch.FastLRUCache"
 			size="512"
 			initialSize="512"
 			autowarmCount="256"/>
 
 		<queryResultCache
-			class="solr.LRUCache"
+			class="meilisearch.LRUCache"
 			size="512"
 			initialSize="512"
 			autowarmCount="0"/>
 
 		<documentCache
-			class="solr.LRUCache"
+			class="meilisearch.LRUCache"
 			size="512"
 			initialSize="512"
 			autowarmCount="0"/>
@@ -132,13 +132,13 @@
 		<queryResultMaxDocsCached>200</queryResultMaxDocsCached>
 
 
-		<listener event="newSearcher" class="solr.QuerySenderListener">
+		<listener event="newSearcher" class="meilisearch.QuerySenderListener">
 			<arr name="queries">
 
 			</arr>
 		</listener>
 
-		<listener event="firstSearcher" class="solr.QuerySenderListener">
+		<listener event="firstSearcher" class="meilisearch.QuerySenderListener">
 			<arr name="queries">
 
 			</arr>
@@ -154,12 +154,12 @@
 		<!-- Make sure your system has some authentication! before using enableRemoteStreaming="true" -->
 		<requestParsers enableRemoteStreaming="true" enableStreamBody="true" multipartUploadLimitInKB="2048000" />
 
-		<httpCaching lastModifiedFrom="openTime" etagSeed="Solr" />
+		<httpCaching lastModifiedFrom="openTime" etagSeed="Meilisearch" />
 		<httpCaching never304="true"/>
 	</requestDispatcher>
 
 
-	<requestHandler name="/select" class="solr.SearchHandler">
+	<requestHandler name="/select" class="meilisearch.SearchHandler">
 		<lst name="defaults">
 			<str name="defType">edismax</str>
 			<str name="echoParams">explicit</str>
@@ -196,7 +196,7 @@
 	</requestHandler>
 
 
-	<requestHandler name="/get" class="solr.RealTimeGetHandler">
+	<requestHandler name="/get" class="meilisearch.RealTimeGetHandler">
 		<lst name="defaults">
 			<str name="omitHeader">true</str>
 			<str name="wt">json</str>
@@ -205,7 +205,7 @@
 	</requestHandler>
 
 
-	<requestHandler name="/browse" class="solr.SearchHandler">
+	<requestHandler name="/browse" class="meilisearch.SearchHandler">
 		<lst name="defaults">
 			<str name="echoParams">explicit</str>
 
@@ -214,7 +214,7 @@
 
 			<str name="v.template">browse</str>
 			<str name="v.layout">layout</str>
-			<str name="title">Solritas</str>
+			<str name="title">Meilisearchitas</str>
 
 			<str name="df">content</str>
 			<str name="defType">edismax</str>
@@ -252,7 +252,7 @@
 	</requestHandler>
 
 
-	<requestHandler name="/mlt" class="solr.MoreLikeThisHandler">
+	<requestHandler name="/mlt" class="meilisearch.MoreLikeThisHandler">
 		<lst name="defaults">
 			<str name="df">content</str>
 			<str name="mlt.qf">content^0.5 title^1.2 keywords^2.0</str>
@@ -267,19 +267,19 @@
 	</requestHandler>
 
 
-	<requestHandler name="/update" class="solr.UpdateRequestHandler" />
+	<requestHandler name="/update" class="meilisearch.UpdateRequestHandler" />
 
 
-	<requestHandler name="/update/extract" class="solr.extraction.ExtractingRequestHandler" startup="lazy" />
+	<requestHandler name="/update/extract" class="meilisearch.extraction.ExtractingRequestHandler" startup="lazy" />
 
 
-	<requestHandler name="/analysis/field" class="solr.FieldAnalysisRequestHandler" startup="lazy" />
+	<requestHandler name="/analysis/field" class="meilisearch.FieldAnalysisRequestHandler" startup="lazy" />
 
 
-	<requestHandler name="/analysis/document" class="solr.DocumentAnalysisRequestHandler" startup="lazy" />
+	<requestHandler name="/analysis/document" class="meilisearch.DocumentAnalysisRequestHandler" startup="lazy" />
 
 <!--
-	<requestHandler name="/dataimport" class="org.apache.solr.handler.dataimport.DataImportHandler">
+	<requestHandler name="/dataimport" class="org.apache.meilisearch.handler.dataimport.DataImportHandler">
 		<lst name="defaults">
 			<str name="config">data-config.xml</str>
 		</lst>
@@ -287,7 +287,7 @@
 -->
 
 
-	<requestHandler name="/terms" class="org.apache.solr.handler.component.SearchHandler" startup="lazy">
+	<requestHandler name="/terms" class="org.apache.meilisearch.handler.component.SearchHandler" startup="lazy">
 		<lst name="defaults">
 			<bool name="terms">true</bool>
 		</lst>
@@ -297,7 +297,7 @@
 	</requestHandler>
 
 
-	<requestHandler name="/elevate" class="solr.SearchHandler" startup="lazy">
+	<requestHandler name="/elevate" class="meilisearch.SearchHandler" startup="lazy">
 		<lst name="defaults">
 			<str name="echoParams">explicit</str>
 		</lst>
@@ -308,7 +308,7 @@
 
 	<requestHandler name="/admin/ping" class="PingRequestHandler">
 		<lst name="invariants">
-			<str name="q">solrpingquery</str>
+			<str name="q">meilisearchpingquery</str>
 		</lst>
 		<lst name="defaults">
 			<str name="echoParams">all</str>
@@ -317,7 +317,7 @@
 	</requestHandler>
 
 
-	<requestHandler name="/debug/dump" class="solr.DumpRequestHandler" >
+	<requestHandler name="/debug/dump" class="meilisearch.DumpRequestHandler" >
 		<lst name="defaults">
 		<str name="echoParams">explicit</str> <!-- for all params (including the default etc) use: 'all' -->
 		<str name="echoHandler">true</str>
@@ -325,10 +325,10 @@
 	</requestHandler>
 
 
-	<requestHandler name="/replication" class="solr.ReplicationHandler" startup="lazy">
+	<requestHandler name="/replication" class="meilisearch.ReplicationHandler" startup="lazy">
 		<!--
 		To enable simple primary/replica replication, uncomment one of the
-		sections below, depending on whether this solr instance should be
+		sections below, depending on whether this meilisearch instance should be
 		the "primary" or a "replica".  If this instance is a "replica" you will
 		also need to fill in the primaryUrl to point to a real machine.
 		-->
@@ -341,7 +341,7 @@
 		-->
 		<!--
 		<lst name="replica">
-				<str name="primaryUrl">http://your-primary-hostname:8983/solr</str>
+				<str name="primaryUrl">http://your-primary-hostname:8983/meilisearch</str>
 				<str name="pollInterval">00:00:60</str>
 		</lst>
 		-->
@@ -349,8 +349,8 @@
 
 
 	<requestHandler name="/clustering"
-					enable="${solr.clustering.enabled:false}"
-					class="solr.SearchHandler">
+					enable="${meilisearch.clustering.enabled:false}"
+					class="meilisearch.SearchHandler">
 
 		<lst name="defaults">
 			<bool name="clustering">true</bool>
@@ -376,8 +376,8 @@
 
 	<searchComponent
 		name="clusteringComponent"
-		enable="${solr.clustering.enabled:false}"
-		class="org.apache.solr.handler.clustering.ClusteringComponent" >
+		enable="${meilisearch.clustering.enabled:false}"
+		class="org.apache.meilisearch.handler.clustering.ClusteringComponent" >
 
 		<lst name="engine">
 			<str name="name">default</str>
@@ -392,13 +392,13 @@
 	</searchComponent>
 
 
-	<searchComponent name="spellcheck" class="solr.SpellCheckComponent">
+	<searchComponent name="spellcheck" class="meilisearch.SpellCheckComponent">
 		<str name="queryAnalyzerFieldType">textSpell</str>
 
 		<lst name="spellchecker">
 			<str name="name">default</str>
 			<str name="field">spell</str>
-			<str name="classname">solr.DirectSolrSpellChecker</str>
+			<str name="classname">meilisearch.DirectMeilisearchSpellChecker</str>
 			<str name="distanceMeasure">internal</str>
 			<float name="accuracy">0.5</float>
 			<int name="maxEdits">2</int>
@@ -411,29 +411,29 @@
 		<!-- a spellchecker that can break or combine words.  See "/spell" handler below for usage -->
 		<lst name="spellchecker">
 			<str name="name">wordbreak</str>
-			<str name="classname">solr.WordBreakSolrSpellChecker</str>
+			<str name="classname">meilisearch.WordBreakMeilisearchSpellChecker</str>
 			<str name="field">spell</str>
 		</lst>
 	</searchComponent>
 
 
-	<searchComponent name="termsComponent" class="org.apache.solr.handler.component.TermsComponent"/>
+	<searchComponent name="termsComponent" class="org.apache.meilisearch.handler.component.TermsComponent"/>
 
 
-	<searchComponent name="elevator" class="solr.QueryElevationComponent" >
+	<searchComponent name="elevator" class="meilisearch.QueryElevationComponent" >
 		<str name="queryFieldType">string</str>
 		<str name="config-file">elevate.xml</str>
 		<str name="forceElevation">true</str>
 	</searchComponent>
 
 
-	<!-- http://wiki.apache.org/solr/HighlightingParameters -->
-	<searchComponent name="highlight" class="solr.HighlightComponent">
+	<!-- http://wiki.apache.org/meilisearch/HighlightingParameters -->
+	<searchComponent name="highlight" class="meilisearch.HighlightComponent">
 		<highlighting>
 			<fragmenter
 				name="gap"
 				default="true"
-				class="solr.highlight.GapFragmenter">
+				class="meilisearch.highlight.GapFragmenter">
 
 				<lst name="defaults">
 					<int name="hl.fragsize">100</int>
@@ -441,7 +441,7 @@
 
 			</fragmenter>
 
-			<fragmenter name="regex" class="solr.highlight.RegexFragmenter">
+			<fragmenter name="regex" class="meilisearch.highlight.RegexFragmenter">
 				<lst name="defaults">
 					<int name="hl.fragsize">70</int>
 					<float name="hl.regex.slop">0.5</float>
@@ -452,7 +452,7 @@
 			<formatter
 				name="html"
 				default="true"
-				class="solr.highlight.HtmlFormatter">
+				class="meilisearch.highlight.HtmlFormatter">
 
 				<lst name="defaults">
 					<str name="hl.simple.pre"><![CDATA[<em>]]></str>
@@ -460,25 +460,25 @@
 				</lst>
 			</formatter>
 
-			<encoder name="html" class="solr.highlight.HtmlEncoder" />
+			<encoder name="html" class="meilisearch.highlight.HtmlEncoder" />
 
 			<fragListBuilder
 				name="simple"
 				default="true"
-				class="solr.highlight.SimpleFragListBuilder"/>
+				class="meilisearch.highlight.SimpleFragListBuilder"/>
 
 			<fragListBuilder
 				name="single"
-				class="solr.highlight.SingleFragListBuilder"/>
+				class="meilisearch.highlight.SingleFragListBuilder"/>
 
 			<fragmentsBuilder
 				name="default"
 				default="true"
-				class="solr.highlight.ScoreOrderFragmentsBuilder"/>
+				class="meilisearch.highlight.ScoreOrderFragmentsBuilder"/>
 
 			<fragmentsBuilder
 				name="colored"
-				class="solr.highlight.ScoreOrderFragmentsBuilder">
+				class="meilisearch.highlight.ScoreOrderFragmentsBuilder">
 
 				<lst name="defaults">
 					<str name="hl.tag.pre">
@@ -497,35 +497,35 @@
 	</searchComponent>
 
 	<updateRequestProcessorChain default="true">
-		<processor class="solr.processor.DocExpirationUpdateProcessorFactory">
+		<processor class="meilisearch.processor.DocExpirationUpdateProcessorFactory">
 			<int name="autoDeletePeriodSeconds">60</int>
 			<str name="expirationFieldName">endtime</str>
 		</processor>
-		<processor class="solr.LogUpdateProcessorFactory"/>
-		<processor class="solr.RunUpdateProcessorFactory"/>
+		<processor class="meilisearch.LogUpdateProcessorFactory"/>
+		<processor class="meilisearch.RunUpdateProcessorFactory"/>
 	</updateRequestProcessorChain>
 
 
-	<queryResponseWriter name="json" class="solr.JSONResponseWriter" default="true"/>
-	<queryResponseWriter name="php" class="org.apache.solr.response.PHPResponseWriter"/>
-	<queryResponseWriter name="phps" class="org.apache.solr.response.PHPSerializedResponseWriter"/>
-	<queryResponseWriter name="velocity" class="solr.VelocityResponseWriter" startup="lazy"/>
-	<queryResponseWriter name="xslt" class="org.apache.solr.response.XSLTResponseWriter">
+	<queryResponseWriter name="json" class="meilisearch.JSONResponseWriter" default="true"/>
+	<queryResponseWriter name="php" class="org.apache.meilisearch.response.PHPResponseWriter"/>
+	<queryResponseWriter name="phps" class="org.apache.meilisearch.response.PHPSerializedResponseWriter"/>
+	<queryResponseWriter name="velocity" class="meilisearch.VelocityResponseWriter" startup="lazy"/>
+	<queryResponseWriter name="xslt" class="org.apache.meilisearch.response.XSLTResponseWriter">
 		<int name="xsltCacheLifetimeSeconds">5</int>
 	</queryResponseWriter>
-	<queryResponseWriter name="javabin" class="org.apache.solr.response.BinaryResponseWriter"/>
+	<queryResponseWriter name="javabin" class="org.apache.meilisearch.response.BinaryResponseWriter"/>
 
-	<!-- http://wiki.apache.org/solr/DocTransformers -->
+	<!-- http://wiki.apache.org/meilisearch/DocTransformers -->
 	<!-- Document Transformer to mark elevated documents -->
-	<transformer name="elevated" class="org.apache.solr.response.transform.ElevatedMarkerFactory"/>
+	<transformer name="elevated" class="org.apache.meilisearch.response.transform.ElevatedMarkerFactory"/>
 
 	<!-- Document Transformer to add scoring explaination in HTML to show score analysis -->
-	<transformer name="explain" class="org.apache.solr.response.transform.ExplainAugmenterFactory">
+	<transformer name="explain" class="org.apache.meilisearch.response.transform.ExplainAugmenterFactory">
 		<str name="args">html</str>
 	</transformer>
 
 	<!-- TYPO3 specific plugins, request handlers -->
-	<queryParser name="typo3access" class="org.typo3.solr.search.AccessFilterQParserPlugin"/>
+	<queryParser name="typo3access" class="org.typo3.meilisearch.search.AccessFilterQParserPlugin"/>
 
 
 	<admin>

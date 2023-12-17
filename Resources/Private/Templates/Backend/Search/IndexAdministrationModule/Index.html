@@ -1,13 +1,13 @@
-{namespace solr=WapplerSystems\Meilisearch\ViewHelpers}
+{namespace meilisearch=WapplerSystems\Meilisearch\ViewHelpers}
 <f:layout name="Backend/WithPageTree"/>
 
 <f:section name="Main">
-	<f:be.pageRenderer includeRequireJsModules="{0:'TYPO3/CMS/Solr/FormModal'}"/>
+	<f:be.pageRenderer includeRequireJsModules="{0:'TYPO3/CMS/Meilisearch/FormModal'}"/>
 
 	<div class="row">
 		<div class="col-xs-12">
-			<h1>{f:translate(key: 'solr.backend.index_administration.label', default: 'Index Administration')}</h1>
-			<p class="lead"><f:translate key="solr.backend.index_administration.description" /></p>
+			<h1>{f:translate(key: 'meilisearch.backend.index_administration.label', default: 'Index Administration')}</h1>
+			<p class="lead"><f:translate key="meilisearch.backend.index_administration.description" /></p>
 		</div>
 	</div>
 
@@ -20,10 +20,10 @@
 		</div>
 		<div class="col-xs-9 action-description">
 			<p>
-			A core in Solr is what holds your index. When changing core/index configuration
+			A core in Meilisearch is what holds your index. When changing core/index configuration
 			such as synonyms, stop words, or protected words you need to reload the core
 			to make the changes become active. To reload configuration you can either restart
-			the whole Solr server or simply reload a specific core.
+			the whole Meilisearch server or simply reload a specific core.
 			Here you can reload the site's cores/indexes.
 			</p>
 		</div>
@@ -34,7 +34,7 @@
 		<div class="col-xs-3">
 			<f:form action="emptyIndex" method="POST">
 				<f:form.submit class="btn btn-sm btn-default btn-danger t3js-modal-formsubmit-trigger"
-							   data="{title: 'Please confirm', content: 'Are you sure you want to clear the index? All Solr documents will be removed.', severity: 'warning'}"
+							   data="{title: 'Please confirm', content: 'Are you sure you want to clear the index? All Meilisearch documents will be removed.', severity: 'warning'}"
 							   value="Empty Index"/>
 
 			</f:form>
@@ -50,14 +50,14 @@
 	</div>
 
 	<h3>
-		<f:translate key="solr.backend.index_queue_module.button.clear_index_queue"/>
+		<f:translate key="meilisearch.backend.index_queue_module.button.clear_index_queue"/>
 	</h3>
 	<div class="row">
 		<div class="col-xs-3">
 			<f:form action="clearIndexQueue" method="POST">
 				<f:form.submit class="btn btn-sm btn-default btn-danger t3js-modal-formsubmit-trigger"
 							   data="{title: 'Please confirm', content: 'Are you sure you want to clear the Index Queue?', severity: 'warning'}"
-							   value="{f:translate(key:'solr.backend.index_queue_module.button.clear_index_queue')}"/>
+							   value="{f:translate(key:'meilisearch.backend.index_queue_module.button.clear_index_queue')}"/>
 			</f:form>
 		</div>
 		<div class="col-xs-9 action-description">

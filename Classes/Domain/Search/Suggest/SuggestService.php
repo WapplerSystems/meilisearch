@@ -83,15 +83,15 @@ class SuggestService
         $frontendUserGroupIds = Util::getFrontendUserGroups();
 
         $suggestQuery = $this->queryBuilder->buildSuggestQuery($searchRequest->getRawUserQuery(), $additionalFilters, $requestId, $frontendUserGroupIds);
-        $solrSuggestions = $this->getMeilisearchSuggestions($suggestQuery, $searchRequest);
+        $meilisearchSuggestions = $this->getMeilisearchSuggestions($suggestQuery, $searchRequest);
 
-        if ($solrSuggestions === []) {
+        if ($meilisearchSuggestions === []) {
             return ['status' => false];
         }
 
         $maxSuggestions = $this->typoScriptConfiguration->getSuggestNumberOfSuggestions();
         $showTopResults = $this->typoScriptConfiguration->getSuggestShowTopResults();
-        $suggestions    = $this->getSuggestionArray($suggestQuery, $solrSuggestions, $maxSuggestions);
+        $suggestions    = $this->getSuggestionArray($suggestQuery, $meilisearchSuggestions, $maxSuggestions);
 
         if (!$showTopResults) {
             return $this->getResultArray($searchRequest, $suggestions, [], false);
@@ -143,7 +143,7 @@ class SuggestService
     }
 
     /**
-     * Retrieves the suggestions from the solr server.
+     * Retrieves the suggestions from the meilisearch server.
      *
      * @throws NoMeilisearchConnectionFoundException
      * @throws DBALException
@@ -152,8 +152,8 @@ class SuggestService
     {
         $pageId = $this->tsfe->getRequestedId();
         $languageId = $this->tsfe->getLanguage()->getLanguageId();
-        $solr = GeneralUtility::makeInstance(ConnectionManager::class)->getConnectionByPageId($pageId, $languageId);
-        $search = GeneralUtility::makeInstance(Search::class, $solr);
+        $meilisearch = GeneralUtility::makeInstance(ConnectionManager::class)->getConnectionByPageId($pageId, $languageId);
+        $search = GeneralUtility::makeInstance(Search::class, $meilisearch);
 
         $event = new AfterSuggestQueryHasBeenPreparedEvent($suggestQuery, $searchRequest, $search, $this->typoScriptConfiguration);
         $event = GeneralUtility::makeInstance(EventDispatcherInterface::class)->dispatch($event);
@@ -166,23 +166,23 @@ class SuggestService
             return [];
         }
         $results = json_decode($rawResponse);
-        $suggestConfig = $this->typoScriptConfiguration->getObjectByPath('plugin.tx_solr.suggest.');
+        $suggestConfig = $this->typoScriptConfiguration->getObjectByPath('plugin.tx_meilisearch.suggest.');
         $facetSuggestions = isset($suggestConfig['suggestField']) ? $results->facet_counts->facet_fields->{$suggestConfig['suggestField']} ?? [] : [];
         return ParsingUtil::getMapArrayFromFlatArray($facetSuggestions);
     }
 
     /**
-     * Extracts the suggestions from solr as array.
+     * Extracts the suggestions from meilisearch as array.
      */
     protected function getSuggestionArray(
         SuggestQuery $suggestQuery,
-        array $solrSuggestions,
+        array $meilisearchSuggestions,
         int $maxSuggestions
     ): array {
         $queryString = $suggestQuery->getQuery();
         $suggestionCount = 0;
         $suggestions = [];
-        foreach ($solrSuggestions as $string => $count) {
+        foreach ($meilisearchSuggestions as $string => $count) {
             $suggestion = trim($queryString . ' ' . $string);
             $suggestions[$suggestion] = $count;
             $suggestionCount++;

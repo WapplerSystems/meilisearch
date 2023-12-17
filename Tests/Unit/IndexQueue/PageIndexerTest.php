@@ -18,7 +18,7 @@ namespace WapplerSystems\Meilisearch\Tests\Unit\IndexQueue;
 use WapplerSystems\Meilisearch\Access\Rootline;
 use WapplerSystems\Meilisearch\ConnectionManager;
 use WapplerSystems\Meilisearch\Domain\Index\PageIndexer\PageUriBuilder;
-use WapplerSystems\Meilisearch\Domain\Search\ApacheSolrDocument\Builder;
+use WapplerSystems\Meilisearch\Domain\Search\ApacheMeilisearchDocument\Builder;
 use WapplerSystems\Meilisearch\Domain\Site\Site;
 use WapplerSystems\Meilisearch\FrontendEnvironment;
 use WapplerSystems\Meilisearch\IndexQueue\Item;
@@ -36,7 +36,7 @@ class PageIndexerTest extends SetUpUnitTestCase
     protected PageIndexer|MockObject $pageIndexer;
     protected PagesRepository|MockObject $pagesRepositoryMock;
     protected Builder|MockObject $documentBuilderMock;
-    protected MeilisearchLogManager|MockObject $solrLogManagerMock;
+    protected MeilisearchLogManager|MockObject $meilisearchLogManagerMock;
     protected ConnectionManager|MockObject $connectionManagerMock;
     protected PageIndexerRequest|MockObject $pageIndexerRequestMock;
     protected PageUriBuilder|MockObject $uriBuilderMock;
@@ -46,7 +46,7 @@ class PageIndexerTest extends SetUpUnitTestCase
     {
         $this->pagesRepositoryMock = $this->createMock(PagesRepository::class);
         $this->documentBuilderMock = $this->createMock(Builder::class);
-        $this->solrLogManagerMock = $this->createMock(MeilisearchLogManager::class);
+        $this->meilisearchLogManagerMock = $this->createMock(MeilisearchLogManager::class);
         $this->connectionManagerMock = $this->createMock(ConnectionManager::class);
         $this->pageIndexerRequestMock = $this->createMock(PageIndexerRequest::class);
         $this->uriBuilderMock = $this->createMock(PageUriBuilder::class);
@@ -64,7 +64,7 @@ class PageIndexerTest extends SetUpUnitTestCase
                     $this->documentBuilderMock,
                     $this->connectionManagerMock,
                     $this->frontendEnvironmentMock,
-                    $this->solrLogManagerMock,
+                    $this->meilisearchLogManagerMock,
                     $this->createMock(EventDispatcherInterface::class),
                 ]
             )
@@ -82,7 +82,7 @@ class PageIndexerTest extends SetUpUnitTestCase
     {
         $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['meilisearch'] = [];
         $siteMock = $this->createMock(Site::class);
-        $siteMock->expects(self::once())->method('getAllSolrConnectionConfigurations')->willReturn([
+        $siteMock->expects(self::once())->method('getAllMeilisearchConnectionConfigurations')->willReturn([
             ['rootPageUid' => 88, 'language' => 0],
         ]);
 

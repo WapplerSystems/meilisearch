@@ -65,8 +65,8 @@ class SiteUtility
      *
      * In addition, every property can be defined for the ```read``` and ```write``` scope.
      *
-     * The convention for property keys is "solr_{propertyName}_{scope}". With the configuration "solr_host_read" you define the host
-     * for the solr read connection.
+     * The convention for property keys is "meilisearch_{propertyName}_{scope}". With the configuration "meilisearch_host_read" you define the host
+     * for the meilisearch read connection.
      */
     public static function getConnectionProperty(
         CoreSite $typo3Site,
@@ -89,10 +89,10 @@ class SiteUtility
         CoreSite $typo3Site,
         int $languageUid,
     ): ?array {
-        $solrEnabled = self::getConnectionProperty($typo3Site, 'enabled', $languageUid, 'read', true);
-        $solrReadCore = self::getConnectionProperty($typo3Site, 'core', $languageUid, 'read');
-        $solrWriteCore = self::getConnectionProperty($typo3Site, 'core', $languageUid, 'write');
-        if (!$solrEnabled || empty($solrReadCore) || empty($solrWriteCore)) {
+        $meilisearchEnabled = self::getConnectionProperty($typo3Site, 'enabled', $languageUid, 'read', true);
+        $meilisearchReadCore = self::getConnectionProperty($typo3Site, 'core', $languageUid, 'read');
+        $meilisearchWriteCore = self::getConnectionProperty($typo3Site, 'core', $languageUid, 'write');
+        if (!$meilisearchEnabled || empty($meilisearchReadCore) || empty($meilisearchWriteCore)) {
             return null;
         }
 
@@ -105,7 +105,7 @@ class SiteUtility
                 'host' => self::getConnectionProperty($typo3Site, 'host', $languageUid, 'read', 'localhost'),
                 'port' => (int)self::getConnectionProperty($typo3Site, 'port', $languageUid, 'read', 8983),
                 'path' => self::getConnectionProperty($typo3Site, 'path', $languageUid, 'read', ''),
-                'core' => $solrReadCore,
+                'core' => $meilisearchReadCore,
                 'username' => self::getConnectionProperty($typo3Site, 'username', $languageUid, 'read', ''),
                 'password' => self::getConnectionProperty($typo3Site, 'password', $languageUid, 'read', ''),
             ],
@@ -114,7 +114,7 @@ class SiteUtility
                 'host' => self::getConnectionProperty($typo3Site, 'host', $languageUid, 'write', 'localhost'),
                 'port' => (int)self::getConnectionProperty($typo3Site, 'port', $languageUid, 'write', 8983),
                 'path' => self::getConnectionProperty($typo3Site, 'path', $languageUid, 'write', ''),
-                'core' => $solrWriteCore,
+                'core' => $meilisearchWriteCore,
                 'username' => self::getConnectionProperty($typo3Site, 'username', $languageUid, 'write', ''),
                 'password' => self::getConnectionProperty($typo3Site, 'password', $languageUid, 'write', ''),
             ],
@@ -154,11 +154,11 @@ class SiteUtility
             $scope = 'read';
         }
 
-        // convention key solr_$property_$scope
-        $keyToCheck = 'solr_' . $property . '_' . $scope;
+        // convention key meilisearch_$property_$scope
+        $keyToCheck = 'meilisearch_' . $property . '_' . $scope;
 
-        // convention fallback key solr_$property_read
-        $fallbackKey = 'solr_' . $property . '_read';
+        // convention fallback key meilisearch_$property_read
+        $fallbackKey = 'meilisearch_' . $property . '_read';
 
         // try to find language specific setting if found return it
         $rootPageUid = $typo3Site->getRootPageId();
@@ -187,13 +187,13 @@ class SiteUtility
         if (!isset(self::$languages[$rootPageUid][$languageId])) {
             self::$languages[$rootPageUid][$languageId] = $typo3Site->getLanguageById($languageId)->toArray();
         }
-        $value = self::getValueOrFallback(self::$languages[$rootPageUid][$languageId], 'solr_use_write_connection', 'solr_use_write_connection');
+        $value = self::getValueOrFallback(self::$languages[$rootPageUid][$languageId], 'meilisearch_use_write_connection', 'meilisearch_use_write_connection');
         if ($value !== null) {
             return $value;
         }
 
         $siteBaseConfiguration = $typo3Site->getConfiguration();
-        $value = self::getValueOrFallback($siteBaseConfiguration, 'solr_use_write_connection', 'solr_use_write_connection');
+        $value = self::getValueOrFallback($siteBaseConfiguration, 'meilisearch_use_write_connection', 'meilisearch_use_write_connection');
         if ($value !== null) {
             return $value;
         }

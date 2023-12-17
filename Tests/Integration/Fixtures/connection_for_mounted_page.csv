@@ -37,7 +37,7 @@ page = PAGE
 page.typeNum = 0
 config.index_enable = 1
 
-plugin.tx_solr {
+plugin.tx_meilisearch {
     enabled = 1
 
     index {
@@ -49,7 +49,7 @@ plugin.tx_solr {
         }
 
         queue {
-            // mapping tableName.fields.SolrFieldName => TableFieldName (+ cObj processing)
+            // mapping tableName.fields.MeilisearchFieldName => TableFieldName (+ cObj processing)
             pages = 1
             pages {
                 initialization = WapplerSystems\Meilisearch\IndexQueue\Initializer\Page

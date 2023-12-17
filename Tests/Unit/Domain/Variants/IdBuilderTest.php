@@ -20,7 +20,7 @@ namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Variants;
 use WapplerSystems\Meilisearch\Domain\Site\Site;
 use WapplerSystems\Meilisearch\Domain\Variants\IdBuilder;
 use WapplerSystems\Meilisearch\Event\Variants\AfterVariantIdWasBuiltEvent;
-use WapplerSystems\Meilisearch\System\Solr\Document\Document;
+use WapplerSystems\Meilisearch\System\Meilisearch\Document\Document;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use TYPO3\CMS\Core\EventDispatcher\NoopEventDispatcher;
 use TYPO3\CMS\Core\Tests\Unit\Fixtures\EventDispatcher\MockEventDispatcher;

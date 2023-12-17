@@ -2,18 +2,18 @@
 <!--
 	The schema name property is constructed as follows
 
-	tx_solr		- The extension key
+	tx_meilisearch		- The extension key
 	x-y-z		- The extension version this schema is meant to work with
 	YYYYMMDD	- The date the schema file was changed the last time
 
 	When changing the schema the name property must be updated. There is a
-	status report - tx_solr_report_SchemaStatus - checking against this
+	status report - tx_meilisearch_report_SchemaStatus - checking against this
 	name property, that status check must be updated as well.
 -->
-<schema name="tx_solr-12-0-0--20230602" version="1.6">
+<schema name="tx_meilisearch-12-0-0--20230602" version="1.6">
 	<!-- attribute "name" is the name of this schema and is only used for display purposes.
 		Applications should change this to reflect the nature of the search collection.
-		version="1.4" is Solr's version number for the schema syntax and semantics.  It should
+		version="1.4" is Meilisearch's version number for the schema syntax and semantics.  It should
 		not normally be changed by applications.
 		1.0: multiValued attribute did not exist, all fields are multiValued by nature
 		1.1: multiValued attribute introduced, false by default
@@ -33,7 +33,7 @@
 	<xi:include href="../general_schema_fields.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
 
 	<!-- Language-sensitive string field allowing proper sorting -->
-	<fieldType name="string_collated" class="solr.ICUCollationField" locale="pl" strength="primary" />
+	<fieldType name="string_collated" class="meilisearch.ICUCollationField" locale="pl" strength="primary" />
 
 	<!-- A text field that uses WordDelimiterFilter to enable splitting and matching of
 		words on case-change, alpha numeric boundaries, and non-alphanumeric chars,
@@ -42,11 +42,11 @@
 		Duplicate tokens at the same position (which may result from Stemmed Synonyms or
 		WordDelim parts) are removed.
 	-->
-	<fieldType name="text" class="solr.TextField" positionIncrementGap="100">
+	<fieldType name="text" class="meilisearch.TextField" positionIncrementGap="100">
 		<analyzer type="index">
-			<tokenizer class="solr.WhitespaceTokenizerFactory"/>
+			<tokenizer class="meilisearch.WhitespaceTokenizerFactory"/>
 
-			<filter class="solr.WordDelimiterGraphFilterFactory"
+			<filter class="meilisearch.WordDelimiterGraphFilterFactory"
 				generateWordParts="1"
 				generateNumberParts="1"
 				catenateWords="1"
@@ -56,20 +56,20 @@
 				preserveOriginal="1"
 				protected="polish/protwords.txt"/>
 
-			<filter class="solr.LowerCaseFilterFactory"/>
+			<filter class="meilisearch.LowerCaseFilterFactory"/>
 
-			<filter class="solr.ManagedSynonymGraphFilterFactory" managed="${solr.core.name}" />
-			<filter class="solr.FlattenGraphFilterFactory"/>
-			<filter class="solr.ManagedStopFilterFactory" managed="${solr.core.name}"/>
+			<filter class="meilisearch.ManagedSynonymGraphFilterFactory" managed="${meilisearch.core.name}" />
+			<filter class="meilisearch.FlattenGraphFilterFactory"/>
+			<filter class="meilisearch.ManagedStopFilterFactory" managed="${meilisearch.core.name}"/>
 
-			<filter class="solr.StempelPolishStemFilterFactory"/>
-			<filter class="solr.ASCIIFoldingFilterFactory"/>
-			<filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
+			<filter class="meilisearch.StempelPolishStemFilterFactory"/>
+			<filter class="meilisearch.ASCIIFoldingFilterFactory"/>
+			<filter class="meilisearch.RemoveDuplicatesTokenFilterFactory"/>
 		</analyzer>
 		<analyzer type="query">
-			<tokenizer class="solr.WhitespaceTokenizerFactory"/>
+			<tokenizer class="meilisearch.WhitespaceTokenizerFactory"/>
 
-			<filter class="solr.WordDelimiterGraphFilterFactory"
+			<filter class="meilisearch.WordDelimiterGraphFilterFactory"
 				generateWordParts="1"
 				generateNumberParts="1"
 				catenateWords="0"
@@ -80,31 +80,31 @@
 				protected="polish/protwords.txt"
 			/>
 
-			<filter class="solr.LowerCaseFilterFactory"/>
+			<filter class="meilisearch.LowerCaseFilterFactory"/>
 
-			<filter class="solr.ManagedSynonymGraphFilterFactory" managed="${solr.core.name}" />
-			<filter class="solr.ManagedStopFilterFactory" managed="${solr.core.name}"/>
+			<filter class="meilisearch.ManagedSynonymGraphFilterFactory" managed="${meilisearch.core.name}" />
+			<filter class="meilisearch.ManagedStopFilterFactory" managed="${meilisearch.core.name}"/>
 
-			<filter class="solr.StempelPolishStemFilterFactory"/>
-			<filter class="solr.ASCIIFoldingFilterFactory"/>
-			<filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
+			<filter class="meilisearch.StempelPolishStemFilterFactory"/>
+			<filter class="meilisearch.ASCIIFoldingFilterFactory"/>
+			<filter class="meilisearch.RemoveDuplicatesTokenFilterFactory"/>
 		</analyzer>
 	</fieldType>
 
 
 	<!-- Less flexible matching, but less false matches.	Probably not ideal for product names,
 		but may be good for SKUs.	Can insert dashes in the wrong place and still match. -->
-	<fieldType name="textTight" class="solr.TextField" positionIncrementGap="100" >
+	<fieldType name="textTight" class="meilisearch.TextField" positionIncrementGap="100" >
 		<analyzer type="index">
-			<tokenizer class="solr.WhitespaceTokenizerFactory"/>
+			<tokenizer class="meilisearch.WhitespaceTokenizerFactory"/>
 
-			<filter class="solr.LowerCaseFilterFactory"/>
+			<filter class="meilisearch.LowerCaseFilterFactory"/>
 
-			<filter class="solr.ManagedSynonymGraphFilterFactory" managed="${solr.core.name}" />
-			<filter class="solr.FlattenGraphFilterFactory"/>
-			<filter class="solr.ManagedStopFilterFactory" managed="${solr.core.name}"/>
+			<filter class="meilisearch.ManagedSynonymGraphFilterFactory" managed="${meilisearch.core.name}" />
+			<filter class="meilisearch.FlattenGraphFilterFactory"/>
+			<filter class="meilisearch.ManagedStopFilterFactory" managed="${meilisearch.core.name}"/>
 
-			<filter class="solr.WordDelimiterGraphFilterFactory"
+			<filter class="meilisearch.WordDelimiterGraphFilterFactory"
 				generateWordParts="0"
 				generateNumberParts="0"
 				catenateWords="1"
@@ -113,21 +113,21 @@
 				preserveOriginal="1"
 				protected="polish/protwords.txt"
 			/>
-			<filter class="solr.FlattenGraphFilterFactory"/>
+			<filter class="meilisearch.FlattenGraphFilterFactory"/>
 
-			<filter class="solr.StempelPolishStemFilterFactory"/>
-			<filter class="solr.ASCIIFoldingFilterFactory"/>
-			<filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
+			<filter class="meilisearch.StempelPolishStemFilterFactory"/>
+			<filter class="meilisearch.ASCIIFoldingFilterFactory"/>
+			<filter class="meilisearch.RemoveDuplicatesTokenFilterFactory"/>
 		</analyzer>
 		<analyzer type="query">
-			<tokenizer class="solr.WhitespaceTokenizerFactory"/>
+			<tokenizer class="meilisearch.WhitespaceTokenizerFactory"/>
 
-			<filter class="solr.LowerCaseFilterFactory"/>
+			<filter class="meilisearch.LowerCaseFilterFactory"/>
 
-			<filter class="solr.ManagedSynonymGraphFilterFactory" managed="${solr.core.name}" />
-			<filter class="solr.ManagedStopFilterFactory" managed="${solr.core.name}"/>
+			<filter class="meilisearch.ManagedSynonymGraphFilterFactory" managed="${meilisearch.core.name}" />
+			<filter class="meilisearch.ManagedStopFilterFactory" managed="${meilisearch.core.name}"/>
 
-			<filter class="solr.WordDelimiterGraphFilterFactory"
+			<filter class="meilisearch.WordDelimiterGraphFilterFactory"
 					generateWordParts="0"
 					generateNumberParts="0"
 					catenateWords="1"
@@ -136,89 +136,89 @@
 					preserveOriginal="1"
 					protected="polish/protwords.txt"
 			/>
-			<filter class="solr.StempelPolishStemFilterFactory"/>
-			<filter class="solr.ASCIIFoldingFilterFactory"/>
-			<filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
+			<filter class="meilisearch.StempelPolishStemFilterFactory"/>
+			<filter class="meilisearch.ASCIIFoldingFilterFactory"/>
+			<filter class="meilisearch.RemoveDuplicatesTokenFilterFactory"/>
 		</analyzer>
 	</fieldType>
 
 	<!-- Exact matching of words like textWhiteSpaceTokenized,
 		but with enabled Synonym and Stop Filter
 	 -->
-	<fieldType name="textExact" class="solr.TextField" positionIncrementGap="100" >
+	<fieldType name="textExact" class="meilisearch.TextField" positionIncrementGap="100" >
 		<analyzer type="index">
-			<tokenizer class="solr.WhitespaceTokenizerFactory"/>
+			<tokenizer class="meilisearch.WhitespaceTokenizerFactory"/>
 
-			<filter class="solr.LowerCaseFilterFactory"/>
-			<filter class="solr.ManagedSynonymGraphFilterFactory" managed="${solr.core.name}" />
-			<filter class="solr.FlattenGraphFilterFactory"/>
-			<filter class="solr.ManagedStopFilterFactory" managed="${solr.core.name}"/>
-			<filter class="solr.ASCIIFoldingFilterFactory"/>
-			<filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
+			<filter class="meilisearch.LowerCaseFilterFactory"/>
+			<filter class="meilisearch.ManagedSynonymGraphFilterFactory" managed="${meilisearch.core.name}" />
+			<filter class="meilisearch.FlattenGraphFilterFactory"/>
+			<filter class="meilisearch.ManagedStopFilterFactory" managed="${meilisearch.core.name}"/>
+			<filter class="meilisearch.ASCIIFoldingFilterFactory"/>
+			<filter class="meilisearch.RemoveDuplicatesTokenFilterFactory"/>
 		</analyzer>
 		<analyzer type="query">
-			<tokenizer class="solr.WhitespaceTokenizerFactory"/>
+			<tokenizer class="meilisearch.WhitespaceTokenizerFactory"/>
 
-			<filter class="solr.LowerCaseFilterFactory"/>
-			<filter class="solr.ManagedSynonymGraphFilterFactory" managed="${solr.core.name}" />
-			<filter class="solr.FlattenGraphFilterFactory"/>
-			<filter class="solr.ManagedStopFilterFactory" managed="${solr.core.name}"/>
-			<filter class="solr.ASCIIFoldingFilterFactory"/>
-			<filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
+			<filter class="meilisearch.LowerCaseFilterFactory"/>
+			<filter class="meilisearch.ManagedSynonymGraphFilterFactory" managed="${meilisearch.core.name}" />
+			<filter class="meilisearch.FlattenGraphFilterFactory"/>
+			<filter class="meilisearch.ManagedStopFilterFactory" managed="${meilisearch.core.name}"/>
+			<filter class="meilisearch.ASCIIFoldingFilterFactory"/>
+			<filter class="meilisearch.RemoveDuplicatesTokenFilterFactory"/>
 		</analyzer>
 	</fieldType>
 
 	<!-- Setup simple analysis for spell checking -->
-	<fieldType name="textSpell" class="solr.TextField" positionIncrementGap="100" omitNorms="true">
+	<fieldType name="textSpell" class="meilisearch.TextField" positionIncrementGap="100" omitNorms="true">
 		<analyzer type="index">
-			<tokenizer class="solr.StandardTokenizerFactory"/>
+			<tokenizer class="meilisearch.StandardTokenizerFactory"/>
 
-			<filter class="solr.LowerCaseFilterFactory"/>
+			<filter class="meilisearch.LowerCaseFilterFactory"/>
 
-			<filter class="solr.ManagedStopFilterFactory" managed="${solr.core.name}"/>
+			<filter class="meilisearch.ManagedStopFilterFactory" managed="${meilisearch.core.name}"/>
 
-			<filter class="solr.StempelPolishStemFilterFactory"/>
-			<filter class="solr.ASCIIFoldingFilterFactory" preserveOriginal="true"/>
-			<filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
+			<filter class="meilisearch.StempelPolishStemFilterFactory"/>
+			<filter class="meilisearch.ASCIIFoldingFilterFactory" preserveOriginal="true"/>
+			<filter class="meilisearch.RemoveDuplicatesTokenFilterFactory"/>
 		</analyzer>
 		<analyzer type="query">
-			<tokenizer class="solr.StandardTokenizerFactory" />
+			<tokenizer class="meilisearch.StandardTokenizerFactory" />
 
-			<filter class="solr.LowerCaseFilterFactory"/>
+			<filter class="meilisearch.LowerCaseFilterFactory"/>
 
-			<filter class="solr.ManagedSynonymGraphFilterFactory" managed="${solr.core.name}" />
-			<filter class="solr.FlattenGraphFilterFactory"/>
-			<filter class="solr.ManagedStopFilterFactory" managed="${solr.core.name}"/>
-			<filter class="solr.ASCIIFoldingFilterFactory" preserveOriginal="true"/>
+			<filter class="meilisearch.ManagedSynonymGraphFilterFactory" managed="${meilisearch.core.name}" />
+			<filter class="meilisearch.FlattenGraphFilterFactory"/>
+			<filter class="meilisearch.ManagedStopFilterFactory" managed="${meilisearch.core.name}"/>
+			<filter class="meilisearch.ASCIIFoldingFilterFactory" preserveOriginal="true"/>
 
-			<filter class="solr.StempelPolishStemFilterFactory"/>
-			<filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
+			<filter class="meilisearch.StempelPolishStemFilterFactory"/>
+			<filter class="meilisearch.RemoveDuplicatesTokenFilterFactory"/>
 		</analyzer>
 	</fieldType>
 
 	<!-- Setup simple analysis for more exact spell checking, considers non-ascii charaters as they are -->
-	<fieldType name="textSpellExact" class="solr.TextField" positionIncrementGap="100" omitNorms="true">
+	<fieldType name="textSpellExact" class="meilisearch.TextField" positionIncrementGap="100" omitNorms="true">
 		<analyzer type="index">
-			<tokenizer class="solr.StandardTokenizerFactory"/>
+			<tokenizer class="meilisearch.StandardTokenizerFactory"/>
 
-			<filter class="solr.LowerCaseFilterFactory"/>
+			<filter class="meilisearch.LowerCaseFilterFactory"/>
 
-			<filter class="solr.ManagedStopFilterFactory" managed="${solr.core.name}"/>
+			<filter class="meilisearch.ManagedStopFilterFactory" managed="${meilisearch.core.name}"/>
 
-			<filter class="solr.StempelPolishStemFilterFactory"/>
-			<filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
+			<filter class="meilisearch.StempelPolishStemFilterFactory"/>
+			<filter class="meilisearch.RemoveDuplicatesTokenFilterFactory"/>
 		</analyzer>
 		<analyzer type="query">
-			<tokenizer class="solr.StandardTokenizerFactory" />
+			<tokenizer class="meilisearch.StandardTokenizerFactory" />
 
-			<filter class="solr.LowerCaseFilterFactory"/>
+			<filter class="meilisearch.LowerCaseFilterFactory"/>
 
-			<filter class="solr.ManagedSynonymGraphFilterFactory" managed="${solr.core.name}" />
-			<filter class="solr.FlattenGraphFilterFactory"/>
-			<filter class="solr.ManagedStopFilterFactory" managed="${solr.core.name}"/>
+			<filter class="meilisearch.ManagedSynonymGraphFilterFactory" managed="${meilisearch.core.name}" />
+			<filter class="meilisearch.FlattenGraphFilterFactory"/>
+			<filter class="meilisearch.ManagedStopFilterFactory" managed="${meilisearch.core.name}"/>
 
-			<filter class="solr.StempelPolishStemFilterFactory"/>
-			<filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
+			<filter class="meilisearch.StempelPolishStemFilterFactory"/>
+			<filter class="meilisearch.RemoveDuplicatesTokenFilterFactory"/>
 		</analyzer>
 	</fieldType>
 </schema>

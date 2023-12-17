@@ -68,9 +68,9 @@ class GroupingComponent
 
         $grouping = new GroupingParameter(true);
 
-        $groupingConfiguration = $searchRequest->getContextTypoScriptConfiguration()->getObjectByPathOrDefault('plugin.tx_solr.search.grouping.');
+        $groupingConfiguration = $searchRequest->getContextTypoScriptConfiguration()->getObjectByPathOrDefault('plugin.tx_meilisearch.search.grouping.');
 
-        // since apache solr does not support to set the offset per group we calculate the results perGroup value here to
+        // since apache meilisearch does not support to set the offset per group we calculate the results perGroup value here to
         // cover the last document
         $highestGroupPage = $searchRequest->getHighestGroupPage();
         $highestLimit = $searchRequest->getContextTypoScriptConfiguration()->getSearchGroupingHighestGroupResultsLimit();

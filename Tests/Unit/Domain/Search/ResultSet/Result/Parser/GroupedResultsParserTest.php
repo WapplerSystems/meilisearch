@@ -20,7 +20,7 @@ use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Result\Parser\GroupedResu
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSet;
 use WapplerSystems\Meilisearch\Domain\Search\SearchRequest;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
-use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 
 /**
@@ -47,7 +47,7 @@ class GroupedResultsParserTest extends SetUpUnitTestCase
         ]);
         $configurationMock->expects(self::any())->method('getSearchGroupingResultLimit')->willReturn(5);
 
-        $resultSet = $this->getSearchResultSetMockFromConfigurationAndFixtureFileName($configurationMock, 'fake_solr_response_group_on_queries.json');
+        $resultSet = $this->getSearchResultSetMockFromConfigurationAndFixtureFileName($configurationMock, 'fake_meilisearch_response_group_on_queries.json');
 
         $parser = new GroupedResultParser();
         $searchResultsSet = $parser->parse($resultSet);
@@ -77,7 +77,7 @@ class GroupedResultsParserTest extends SetUpUnitTestCase
         ]);
         $configurationMock->expects(self::any())->method('getSearchGroupingResultLimit')->willReturn(5);
 
-        $resultSet = $this->getSearchResultSetMockFromConfigurationAndFixtureFileName($configurationMock, 'fake_solr_response_group_on_fields.json');
+        $resultSet = $this->getSearchResultSetMockFromConfigurationAndFixtureFileName($configurationMock, 'fake_meilisearch_response_group_on_fields.json');
 
         $parser = new GroupedResultParser();
         $searchResultsSet = $parser->parse($resultSet);
@@ -110,12 +110,12 @@ class GroupedResultsParserTest extends SetUpUnitTestCase
         $searchRequestMock->expects(self::any())->method('getContextTypoScriptConfiguration')->willReturn($configurationMock);
         $resultSet = $this->getMockBuilder(SearchResultSet::class)->setMethods(['getUsedSearchRequest', 'getResponse'])->getMock();
         $resultSet->expects(self::any())->method('getUsedSearchRequest')->willReturn($searchRequestMock);
-        $resultSet->expects(self::any())->method('getResponse')->willReturn($this->getFakeApacheSolrResponse($fixtureName));
+        $resultSet->expects(self::any())->method('getResponse')->willReturn($this->getFakeApacheMeilisearchResponse($fixtureName));
 
         return $resultSet;
     }
 
-    protected function getFakeApacheSolrResponse(string $fixtureFile): ResponseAdapter
+    protected function getFakeApacheMeilisearchResponse(string $fixtureFile): ResponseAdapter
     {
         $fakeResponseJson = $this->getFixtureContentByName($fixtureFile);
         return new ResponseAdapter($fakeResponseJson);

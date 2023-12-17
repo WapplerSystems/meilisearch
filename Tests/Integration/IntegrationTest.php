@@ -58,10 +58,10 @@ abstract class IntegrationTest extends FunctionalTestCase
     ];
 
     protected array $testExtensionsToLoad = [
-        'typo3conf/ext/solr',
+        'typo3conf/ext/meilisearch',
     ];
 
-    protected array $testSolrCores = [
+    protected array $testMeilisearchCores = [
         'core_en',
         'core_de',
         'core_dk',
@@ -84,26 +84,26 @@ abstract class IntegrationTest extends FunctionalTestCase
         //this is needed by the TYPO3 core.
         chdir(Environment::getPublicPath() . '/');
         $this->instancePath = $this->getInstancePath();
-        $this->failWhenSolrDeprecationIsCreated();
+        $this->failWhenMeilisearchDeprecationIsCreated();
     }
 
     /**
      * @param string|null $coreName
      */
-    protected function cleanUpSolrServerAndAssertEmpty(?string $coreName = 'core_en'): void
+    protected function cleanUpMeilisearchServerAndAssertEmpty(?string $coreName = 'core_en'): void
     {
         $this->validateTestCoreName($coreName);
 
-        // cleanup the solr server
-        $result = file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/' . $coreName . '/update?stream.body=<delete><query>*:*</query></delete>&commit=true');
+        // cleanup the meilisearch server
+        $result = file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/' . $coreName . '/update?stream.body=<delete><query>*:*</query></delete>&commit=true');
         if (!str_contains($result, '<int name="QTime">')) {
-            self::fail('Could not empty solr test index');
+            self::fail('Could not empty meilisearch test index');
         }
 
-        // we wait to make sure the document will be deleted in solr
-        $this->waitToBeVisibleInSolr();
+        // we wait to make sure the document will be deleted in meilisearch
+        $this->waitToBeVisibleInMeilisearch();
 
-        $this->assertSolrIsEmpty();
+        $this->assertMeilisearchIsEmpty();
     }
 
     /**
@@ -111,35 +111,35 @@ abstract class IntegrationTest extends FunctionalTestCase
      *
      * @return array|false
      */
-    protected function waitToBeVisibleInSolr(?string $coreName = 'core_en'): array|false
+    protected function waitToBeVisibleInMeilisearch(?string $coreName = 'core_en'): array|false
     {
         $this->validateTestCoreName($coreName);
-        $url = $this->getSolrConnectionUriAuthority() . '/solr/' . $coreName . '/update?softCommit=true';
+        $url = $this->getMeilisearchConnectionUriAuthority() . '/meilisearch/' . $coreName . '/update?softCommit=true';
         return get_headers($url);
     }
 
     protected function validateTestCoreName(string $coreName): void
     {
-        if (!in_array($coreName, $this->testSolrCores, true)) {
+        if (!in_array($coreName, $this->testMeilisearchCores, true)) {
             throw new InvalidArgumentException('No valid test core passed');
         }
     }
 
     /**
-     * Assertion to check if the solr server is empty.
+     * Assertion to check if the meilisearch server is empty.
      */
-    protected function assertSolrIsEmpty(): void
+    protected function assertMeilisearchIsEmpty(): void
     {
-        $this->assertSolrContainsDocumentCount(0);
+        $this->assertMeilisearchContainsDocumentCount(0);
     }
 
     /**
-     * Assertion to check if the solr server contains an expected count of documents.
+     * Assertion to check if the meilisearch server contains an expected count of documents.
      */
-    protected function assertSolrContainsDocumentCount(int $documentCount): void
+    protected function assertMeilisearchContainsDocumentCount(int $documentCount): void
     {
-        $solrContent = file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/core_en/select?q=*:*');
-        self::assertStringContainsString('"numFound":' . $documentCount, $solrContent, 'Solr contains unexpected amount of documents');
+        $meilisearchContent = file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/core_en/select?q=*:*');
+        self::assertStringContainsString('"numFound":' . $documentCount, $meilisearchContent, 'Meilisearch contains unexpected amount of documents');
     }
 
     /**
@@ -152,15 +152,15 @@ abstract class IntegrationTest extends FunctionalTestCase
      * * {@link addTypoScriptToTemplateRecord()}
      * * {@link setUpFrontendRootPage()}
      */
-    protected function writeDefaultSolrTestSiteConfiguration(): void
+    protected function writeDefaultMeilisearchTestSiteConfiguration(): void
     {
-        $solrConnectionInfo = $this->getSolrConnectionInfo();
-        $this->writeDefaultSolrTestSiteConfigurationForHostAndPort($solrConnectionInfo['scheme'], $solrConnectionInfo['host'], $solrConnectionInfo['port']);
+        $meilisearchConnectionInfo = $this->getMeilisearchConnectionInfo();
+        $this->writeDefaultMeilisearchTestSiteConfigurationForHostAndPort($meilisearchConnectionInfo['scheme'], $meilisearchConnectionInfo['host'], $meilisearchConnectionInfo['port']);
     }
 
     protected static string $lastSiteCreated = '';
 
-    protected function writeDefaultSolrTestSiteConfigurationForHostAndPort(
+    protected function writeDefaultMeilisearchTestSiteConfigurationForHostAndPort(
         ?string $scheme = 'http',
         ?string $host = 'localhost',
         ?int $port = 8999,
@@ -172,17 +172,17 @@ abstract class IntegrationTest extends FunctionalTestCase
         }
 
         $defaultLanguage = $this->buildDefaultLanguageConfiguration('EN', '/en/');
-        $defaultLanguage['solr_core_read'] = 'core_en';
+        $defaultLanguage['meilisearch_core_read'] = 'core_en';
 
         if ($disableDefaultLanguage === true) {
             $defaultLanguage['enabled'] = 0;
         }
 
         $german = $this->buildLanguageConfiguration('DE', '/de/', ['EN'], 'fallback');
-        $german['solr_core_read'] = 'core_de';
+        $german['meilisearch_core_read'] = 'core_de';
 
         $danish = $this->buildLanguageConfiguration('DA', '/da/');
-        $danish['solr_core_read'] = 'core_da';
+        $danish['meilisearch_core_read'] = 'core_da';
 
         $this->writeSiteConfiguration(
             'integration_tree_one',
@@ -208,18 +208,18 @@ abstract class IntegrationTest extends FunctionalTestCase
             [$defaultLanguage]
         );
 
-        $globalSolrSettings = [
-            'solr_scheme_read' => $scheme,
-            'solr_host_read' => $host,
-            'solr_port_read' => $port,
-            'solr_timeout_read' => 20,
-            'solr_path_read' => '/',
-            'solr_use_write_connection' => false,
+        $globalMeilisearchSettings = [
+            'meilisearch_scheme_read' => $scheme,
+            'meilisearch_host_read' => $host,
+            'meilisearch_port_read' => $port,
+            'meilisearch_timeout_read' => 20,
+            'meilisearch_path_read' => '/',
+            'meilisearch_use_write_connection' => false,
         ];
-        $this->mergeSiteConfiguration('integration_tree_one', $globalSolrSettings);
-        $this->mergeSiteConfiguration('integration_tree_two', $globalSolrSettings);
-        // disable solr for site three
-        $this->mergeSiteConfiguration('integration_tree_three', ['solr_enabled_read' => false]);
+        $this->mergeSiteConfiguration('integration_tree_one', $globalMeilisearchSettings);
+        $this->mergeSiteConfiguration('integration_tree_two', $globalMeilisearchSettings);
+        // disable meilisearch for site three
+        $this->mergeSiteConfiguration('integration_tree_three', ['meilisearch_enabled_read' => false]);
 
         $this->importRootPagesAndTemplatesForConfiguredSites();
 
@@ -247,20 +247,20 @@ abstract class IntegrationTest extends FunctionalTestCase
 
     /**
      * This method registers an error handler that fails the testcase when an E_USER_DEPRECATED error
-     * is thrown with the prefix solr:deprecation
+     * is thrown with the prefix meilisearch:deprecation
      */
-    protected function failWhenSolrDeprecationIsCreated(): void
+    protected function failWhenMeilisearchDeprecationIsCreated(): void
     {
         error_reporting(error_reporting() & ~E_USER_DEPRECATED);
         set_error_handler(function (int $id, string $msg, string $file, int $line): bool {
-            if ($id === E_USER_DEPRECATED && str_starts_with($msg, 'solr:deprecation: ')) {
+            if ($id === E_USER_DEPRECATED && str_starts_with($msg, 'meilisearch:deprecation: ')) {
                 $this->fail('Executed deprecated EXT:meilisearch code: ' . $msg);
             }
             return true;
         });
     }
 
-    protected function getSolrConnectionInfo(): array
+    protected function getMeilisearchConnectionInfo(): array
     {
         return [
             'scheme' => getenv('TESTING_SOLR_SCHEME') ?: 'http',
@@ -270,13 +270,13 @@ abstract class IntegrationTest extends FunctionalTestCase
     }
 
     /**
-     * Returns solr connection URI authority as string as
+     * Returns meilisearch connection URI authority as string as
      * scheme://host:port
      */
-    protected function getSolrConnectionUriAuthority(): string
+    protected function getMeilisearchConnectionUriAuthority(): string
     {
-        $solrConnectionInfo = $this->getSolrConnectionInfo();
-        return $solrConnectionInfo['scheme'] . '://' . $solrConnectionInfo['host'] . ':' . $solrConnectionInfo['port'];
+        $meilisearchConnectionInfo = $this->getMeilisearchConnectionInfo();
+        return $meilisearchConnectionInfo['scheme'] . '://' . $meilisearchConnectionInfo['host'] . ':' . $meilisearchConnectionInfo['port'];
     }
 
     /**
@@ -351,11 +351,11 @@ abstract class IntegrationTest extends FunctionalTestCase
             $frontendUrl = $site->getRouter()->generateUri($importPageId);
             $this->executePageIndexer($frontendUrl, $queueItem, $frontendUserId);
         }
-        $this->waitToBeVisibleInSolr();
+        $this->waitToBeVisibleInMeilisearch();
     }
 
     /**
-     * Adds a page to the queue (into DB table tx_solr_indexqueue_item) so it can
+     * Adds a page to the queue (into DB table tx_meilisearch_indexqueue_item) so it can
      * be fetched via a frontend subrequest
      */
     protected function addPageToIndexQueue(int $pageId, Site $site): Item
@@ -366,16 +366,16 @@ abstract class IntegrationTest extends FunctionalTestCase
             'item_uid' => $pageId,
             'indexing_configuration' => 'pages',
         ];
-        $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('tx_solr_indexqueue_item');
+        $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('tx_meilisearch_indexqueue_item');
         // Check if item (type + Page ID) is already in index, if so update it
-        $row = $connection->select(['*'], 'tx_solr_indexqueue_item', $queueItem)->fetchAssociative();
+        $row = $connection->select(['*'], 'tx_meilisearch_indexqueue_item', $queueItem)->fetchAssociative();
         if (is_array($row)) {
-            $connection->update('tx_solr_indexqueue_item', $queueItem + ['errors' => ''], ['uid' => $row['uid']]);
+            $connection->update('tx_meilisearch_indexqueue_item', $queueItem + ['errors' => ''], ['uid' => $row['uid']]);
             $queueItem['uid'] = $row['uid'];
         } else {
-            $connection->insert('tx_solr_indexqueue_item', $queueItem + ['errors' => '']);
+            $connection->insert('tx_meilisearch_indexqueue_item', $queueItem + ['errors' => '']);
             $queueItem['uid'] = (int)$connection->lastInsertId();
-            $queueItem = $connection->select(['*'], 'tx_solr_indexqueue_item', ['uid' => $queueItem['uid']])->fetchAssociative();
+            $queueItem = $connection->select(['*'], 'tx_meilisearch_indexqueue_item', ['uid' => $queueItem['uid']])->fetchAssociative();
         }
         return new Item($queueItem);
     }
@@ -385,8 +385,8 @@ abstract class IntegrationTest extends FunctionalTestCase
      */
     protected function getIndexQueueItem(int $itemUid): Item
     {
-        $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('tx_solr_indexqueue_item');
-        $itemData = $connection->select(['*'], 'tx_solr_indexqueue_item', ['uid' => $itemUid])->fetchAssociative();
+        $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('tx_meilisearch_indexqueue_item');
+        $itemData = $connection->select(['*'], 'tx_meilisearch_indexqueue_item', ['uid' => $itemUid])->fetchAssociative();
         return new Item($itemData);
     }
 

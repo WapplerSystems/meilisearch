@@ -17,13 +17,13 @@ class TsfeTest extends IntegrationTest
     {
         self::markTestSkipped('Since TSFE is isolated/capsuled, no exceptions are thrown or delegated to else where.
         Other scenario is wanted for:
-        https://github.com/TYPO3-Solr/ext-solr/issues/2914
-        https://github.com/TYPO3-Solr/ext-solr/pull/2915/files');
+        https://github.com/TYPO3-Meilisearch/ext-meilisearch/issues/2914
+        https://github.com/TYPO3-Meilisearch/ext-meilisearch/pull/2915/files');
         $this->expectException(RuntimeException::class);
         $this->importCSVDataSet(__DIR__ . '/Fixtures/initialize_tsfe_with_no_default_page_and_page_error_handler_do_not_throw_an_error.csv');
 
         $defaultLanguage = $this->buildDefaultLanguageConfiguration('EN', '/en/');
-        $defaultLanguage['solr_core_read'] = 'core_en';
+        $defaultLanguage['meilisearch_core_read'] = 'core_en';
 
         $this->writeSiteConfiguration(
             'integration_tree_one',
@@ -37,15 +37,15 @@ class TsfeTest extends IntegrationTest
         $scheme = 'http';
         $host = 'localhost';
         $port = 8999;
-        $globalSolrSettings = [
-            'solr_scheme_read' => $scheme,
-            'solr_host_read' => $host,
-            'solr_port_read' => $port,
-            'solr_timeout_read' => 20,
-            'solr_path_read' => '/solr/',
-            'solr_use_write_connection' => false,
+        $globalMeilisearchSettings = [
+            'meilisearch_scheme_read' => $scheme,
+            'meilisearch_host_read' => $host,
+            'meilisearch_port_read' => $port,
+            'meilisearch_timeout_read' => 20,
+            'meilisearch_path_read' => '/meilisearch/',
+            'meilisearch_use_write_connection' => false,
         ];
-        $this->mergeSiteConfiguration('integration_tree_one', $globalSolrSettings);
+        $this->mergeSiteConfiguration('integration_tree_one', $globalMeilisearchSettings);
         clearstatcache();
         usleep(500);
         $siteCreatedHash = md5($scheme . $host . $port . '0-PageErrorHandler');
@@ -60,7 +60,7 @@ class TsfeTest extends IntegrationTest
      */
     public function canInitializeTsfeForPageWithDifferentFeGroupsSettings()
     {
-        $this->writeDefaultSolrTestSiteConfiguration();
+        $this->writeDefaultMeilisearchTestSiteConfiguration();
         $this->importCSVDataSet(__DIR__ . '/Fixtures/can_initialize_tsfe_for_page_with_different_fe_groups_settings.csv');
 
         $tsfeNotRestricted = GeneralUtility::makeInstance(Tsfe::class)->getTsfeByPageIdIgnoringLanguage(1);

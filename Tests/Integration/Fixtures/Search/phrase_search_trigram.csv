@@ -19,7 +19,7 @@
 ,14,1,0,1,0,"/match-trigram-only","This is some dump sentence to match Trigram only"
 ,15,1,0,1,0,"/match-awesome-only","This is some dump sentence to match Awesome only"
 ,16,1,0,1,0,"/trigram-gag-gag-gag-gag-phrase","Trigram gag gag gag gag Phrase gag gag gag gag Search is fascinating feature."
-"tx_solr_indexqueue_item",
+"tx_meilisearch_indexqueue_item",
 ,"uid","root","item_type","item_uid","indexing_configuration","changed","indexed","has_indexing_properties","indexing_priority","indexed","errors"
 ,2,1,"pages",2,"pages",1449151778,0,0,0,0,0
 ,3,1,"pages",3,"pages",1449151778,0,0,0,0,0

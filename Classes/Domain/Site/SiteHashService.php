@@ -40,8 +40,8 @@ class SiteHashService
     /**
      * Resolves magic keywords in allowed sites configuration.
      * Supported keywords:
-     *   __solr_current_site - The domain of the site the query has been started from
-     *   __current_site - Same as __solr_current_site
+     *   __meilisearch_current_site - The domain of the site the query has been started from
+     *   __current_site - Same as __meilisearch_current_site
      *   __all - Adds all domains as allowed sites
      *   * - Means all sites are allowed, same as no siteHash
      *
@@ -59,8 +59,8 @@ class SiteHashService
         if ($allowedSitesConfiguration === '*') {
             return '*';
         }
-        // we thread empty allowed site configurations as __solr_current_site since this is the default behaviour
-        $allowedSitesConfiguration = empty($allowedSitesConfiguration) ? '__solr_current_site' : $allowedSitesConfiguration;
+        // we thread empty allowed site configurations as __meilisearch_current_site since this is the default behaviour
+        $allowedSitesConfiguration = empty($allowedSitesConfiguration) ? '__meilisearch_current_site' : $allowedSitesConfiguration;
         return $this->getDomainByPageIdAndReplaceMarkers($pageId, $allowedSitesConfiguration);
     }
 
@@ -74,7 +74,7 @@ class SiteHashService
             return $siteHashes[$domain];
         }
 
-        $siteHashes[$domain] = sha1($domain . $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey'] . 'tx_solr');
+        $siteHashes[$domain] = sha1($domain . $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey'] . 'tx_meilisearch');
         return $siteHashes[$domain];
     }
 
@@ -96,7 +96,7 @@ class SiteHashService
     }
 
     /**
-     * Retrieves the domain of the site that belongs to the passed pageId and replaces their markers __solr_current_site
+     * Retrieves the domain of the site that belongs to the passed pageId and replaces their markers __meilisearch_current_site
      * and __current_site.
      */
     protected function getDomainByPageIdAndReplaceMarkers(int $pageId, string $allowedSitesConfiguration): string
@@ -108,7 +108,7 @@ class SiteHashService
             return '';
         }
 
-        $allowedSites = str_replace(['__solr_current_site', '__current_site'], $domainOfPage, $allowedSitesConfiguration);
+        $allowedSites = str_replace(['__meilisearch_current_site', '__current_site'], $domainOfPage, $allowedSitesConfiguration);
         return (string)$allowedSites;
     }
 }

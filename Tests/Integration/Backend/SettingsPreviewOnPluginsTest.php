@@ -65,7 +65,7 @@ class SettingsPreviewOnPluginsTest extends IntegrationTest
     /**
      * @test
      */
-    public function printsPreviewOnExtSolrPluginsCorrectly()
+    public function printsPreviewOnExtMeilisearchPluginsCorrectly()
     {
         $settingsPreviewOnPlugins = new SettingsPreviewOnPlugins(
             $this->getMockOfFlexFormService($this->flexFormArray)
@@ -75,7 +75,7 @@ class SettingsPreviewOnPluginsTest extends IntegrationTest
             [
                 'pid' => 11,
                 'pi_flexform' => 'provided via mock return value $this->flexFormArray',
-                'list_type' => 'solr_pi_results',
+                'list_type' => 'meilisearch_pi_results',
                 'hidden' => 0,
             ]
         );

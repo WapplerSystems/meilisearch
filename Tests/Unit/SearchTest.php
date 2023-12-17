@@ -19,22 +19,22 @@ namespace WapplerSystems\Meilisearch\Tests\Unit;
 
 use WapplerSystems\Meilisearch\Domain\Search\Query\SearchQuery;
 use WapplerSystems\Meilisearch\Search;
-use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
-use WapplerSystems\Meilisearch\System\Solr\Service\SolrReadService;
-use WapplerSystems\Meilisearch\System\Solr\SolrConnection;
+use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Meilisearch\Service\MeilisearchReadService;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchConnection;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class SearchTest extends SetUpUnitTestCase
 {
     /**
-     * @var SolrConnection
+     * @var MeilisearchConnection
      */
-    protected SolrConnection|MockObject $solrConnectionMock;
+    protected MeilisearchConnection|MockObject $meilisearchConnectionMock;
 
     /**
-     * @var SolrReadService|MockObject
+     * @var MeilisearchReadService|MockObject
      */
-    protected SolrReadService|MockObject $solrReadServiceMock;
+    protected MeilisearchReadService|MockObject $meilisearchReadServiceMock;
 
     /**
      * @var Search
@@ -43,15 +43,15 @@ class SearchTest extends SetUpUnitTestCase
 
     protected function setUp(): void
     {
-        //        $this->solrReadServiceMock = $this->createMock(SolrReadService::class);
-        $this->solrReadServiceMock = $this->getMockBuilder(SolrReadService::class)
+        //        $this->meilisearchReadServiceMock = $this->createMock(MeilisearchReadService::class);
+        $this->meilisearchReadServiceMock = $this->getMockBuilder(MeilisearchReadService::class)
             ->disableOriginalConstructor()
             ->onlyMethods(['search'])
             ->getMock();
 
-        $this->solrConnectionMock = $this->createMock(SolrConnection::class);
-        $this->solrConnectionMock->expects(self::any())->method('getReadService')->willReturn($this->solrReadServiceMock);
-        $this->search = new Search($this->solrConnectionMock);
+        $this->meilisearchConnectionMock = $this->createMock(MeilisearchConnection::class);
+        $this->meilisearchConnectionMock->expects(self::any())->method('getReadService')->willReturn($this->meilisearchReadServiceMock);
+        $this->search = new Search($this->meilisearchConnectionMock);
         parent::setUp();
     }
 
@@ -62,7 +62,7 @@ class SearchTest extends SetUpUnitTestCase
     {
         $query = new SearchQuery();
         $limit = 99;
-        $this->solrReadServiceMock->expects(self::once())->method('search')->willReturnCallback(
+        $this->meilisearchReadServiceMock->expects(self::once())->method('search')->willReturnCallback(
             function ($query) use ($limit) {
                 $this->assertSame($limit, $query->getRows(), 'Unexpected limit was passed');
                 return $this->createMock(ResponseAdapter::class);
@@ -81,7 +81,7 @@ class SearchTest extends SetUpUnitTestCase
         $limit = 99;
         $query->setRows($limit);
 
-        $this->solrReadServiceMock->expects(self::once())->method('search')->willReturnCallback(
+        $this->meilisearchReadServiceMock->expects(self::once())->method('search')->willReturnCallback(
             function ($query) use ($limit) {
                 $this->assertSame($limit, $query->getRows(), 'Unexpected limit was passed');
                 return $this->createMock(ResponseAdapter::class);

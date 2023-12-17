@@ -37,11 +37,11 @@ class AuthorizationService extends AbstractAuthenticationService
     /**
      * Gets a fake frontend user record to allow access to protected pages.
      *
-     * @return ?array An array representing a frontend user if a authenticated solr request is available.
+     * @return ?array An array representing a frontend user if a authenticated meilisearch request is available.
      */
     public function getUser(): ?array
     {
-        if (!$this->authInfo['request']->getAttribute('solr.pageIndexingInstructions')) {
+        if (!$this->authInfo['request']->getAttribute('meilisearch.pageIndexingInstructions')) {
             return null;
         }
         return [
@@ -66,7 +66,7 @@ class AuthorizationService extends AbstractAuthenticationService
      */
     public function authUser(array $user): int
     {
-        if (!$this->authInfo['request']->getAttribute('solr.pageIndexingInstructions')) {
+        if (!$this->authInfo['request']->getAttribute('meilisearch.pageIndexingInstructions')) {
             return 100;
         }
         // shouldn't happen, but in case we get a regular user we just

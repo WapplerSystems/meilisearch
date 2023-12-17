@@ -13,39 +13,39 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace WapplerSystems\Meilisearch\Tests\Integration\Domain\Search\ApacheSolrDocument;
+namespace WapplerSystems\Meilisearch\Tests\Integration\Domain\Search\ApacheMeilisearchDocument;
 
-use WapplerSystems\Meilisearch\Domain\Search\ApacheSolrDocument\Repository;
-use WapplerSystems\Meilisearch\System\Solr\Document\Document;
+use WapplerSystems\Meilisearch\Domain\Search\ApacheMeilisearchDocument\Repository;
+use WapplerSystems\Meilisearch\System\Meilisearch\Document\Document;
 use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class ApacheSolrDocumentRepositoryTest extends IntegrationTest
+class ApacheMeilisearchDocumentRepositoryTest extends IntegrationTest
 {
     /**
      * @var Repository|null
      */
-    protected ?Repository $apacheSolrDocumentRepository = null;
+    protected ?Repository $apacheMeilisearchDocumentRepository = null;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->writeDefaultSolrTestSiteConfiguration();
+        $this->writeDefaultMeilisearchTestSiteConfiguration();
         // trigger an index
         $this->importCSVDataSet(__DIR__ . '/../../../Controller/Fixtures/indexing_data.csv');
         $this->addTypoScriptToTemplateRecord(1, 'config.index_enable = 1');
         $this->indexPages([1, 2, 3, 4, 5]);
 
-        $this->apacheSolrDocumentRepository = GeneralUtility::makeInstance(Repository::class);
+        $this->apacheMeilisearchDocumentRepository = GeneralUtility::makeInstance(Repository::class);
     }
 
     /**
-     * Executed after each test. Empties solr and checks if the index is empty
+     * Executed after each test. Empties meilisearch and checks if the index is empty
      */
     protected function tearDown(): void
     {
-        $this->cleanUpSolrServerAndAssertEmpty();
-        unset($this->apacheSolrDocumentRepository);
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
+        unset($this->apacheMeilisearchDocumentRepository);
         parent::tearDown();
     }
 
@@ -54,19 +54,19 @@ class ApacheSolrDocumentRepositoryTest extends IntegrationTest
      */
     public function canFindByPageIdAndByLanguageId()
     {
-        $apacheSolrDocumentsCollection = $this->apacheSolrDocumentRepository->findByPageIdAndByLanguageId(3, 0);
+        $apacheMeilisearchDocumentsCollection = $this->apacheMeilisearchDocumentRepository->findByPageIdAndByLanguageId(3, 0);
 
-        self::assertIsArray($apacheSolrDocumentsCollection, 'Repository did not get Document collection from pageId 3.');
-        self::assertNotEmpty($apacheSolrDocumentsCollection, 'Repository did not get apache solr documents from pageId 3.');
-        self::assertInstanceOf(Document::class, $apacheSolrDocumentsCollection[0], 'ApacheSolrDocumentRepository returned not an array of type Document.');
+        self::assertIsArray($apacheMeilisearchDocumentsCollection, 'Repository did not get Document collection from pageId 3.');
+        self::assertNotEmpty($apacheMeilisearchDocumentsCollection, 'Repository did not get apache meilisearch documents from pageId 3.');
+        self::assertInstanceOf(Document::class, $apacheMeilisearchDocumentsCollection[0], 'ApacheMeilisearchDocumentRepository returned not an array of type Document.');
     }
 
     /**
      * @test
      */
-    public function canReturnEmptyCollectionIfNoConnectionToSolrServerIsEstablished()
+    public function canReturnEmptyCollectionIfNoConnectionToMeilisearchServerIsEstablished()
     {
-        $apacheSolrDocumentsCollection = $this->apacheSolrDocumentRepository->findByPageIdAndByLanguageId(3, 777);
-        self::assertEmpty($apacheSolrDocumentsCollection, 'ApacheSolrDocumentRepository does not return empty collection if no connection to core can be established.');
+        $apacheMeilisearchDocumentsCollection = $this->apacheMeilisearchDocumentRepository->findByPageIdAndByLanguageId(3, 777);
+        self::assertEmpty($apacheMeilisearchDocumentsCollection, 'ApacheMeilisearchDocumentRepository does not return empty collection if no connection to core can be established.');
     }
 }

@@ -14,9 +14,9 @@ tx_meilisearch_ajaxPage {
   10 = USER
   10 {
     userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
-    extensionName = Solr
+    extensionName = Meilisearch
     pluginName = pi_results
-    vendorName = ApacheSolrForTypo3
+    vendorName = ApacheMeilisearchForTypo3
     controller = Search
     action = results
     switchableControllerActions {

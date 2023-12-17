@@ -7,4 +7,4 @@
 page = PAGE
 page.typeNum = 0
 config.index_enable = 1
-plugin.tx_solr.enabled = 1"
+plugin.tx_meilisearch.enabled = 1"

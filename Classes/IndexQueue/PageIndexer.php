@@ -108,33 +108,33 @@ class PageIndexer extends Indexer
      */
     protected function getMeilisearchConnectionsByItem(Item $item): array
     {
-        $solrConnections = parent::getMeilisearchConnectionsByItem($item);
+        $meilisearchConnections = parent::getMeilisearchConnectionsByItem($item);
 
         $page = $item->getRecord();
         if ((new PageTranslationVisibility((int)($page['l18n_cfg'] ?? 0)))->shouldBeHiddenInDefaultLanguage()) {
             // page is configured to hide the default translation -> remove Meilisearch connection for default language
-            unset($solrConnections[0]);
+            unset($meilisearchConnections[0]);
         }
 
         if ((new PageTranslationVisibility((int)($page['l18n_cfg'] ?? 0)))->shouldHideTranslationIfNoTranslatedRecordExists()) {
             $accessibleMeilisearchConnections = [];
-            if (isset($solrConnections[0])) {
-                $accessibleMeilisearchConnections[0] = $solrConnections[0];
+            if (isset($meilisearchConnections[0])) {
+                $accessibleMeilisearchConnections[0] = $meilisearchConnections[0];
             }
 
             $translationOverlays = $this->pagesRepository->findTranslationOverlaysByPageId((int)$page['uid']);
 
             foreach ($translationOverlays as $overlay) {
                 $languageId = $overlay['sys_language_uid'];
-                if (array_key_exists($languageId, $solrConnections)) {
-                    $accessibleMeilisearchConnections[$languageId] = $solrConnections[$languageId];
+                if (array_key_exists($languageId, $meilisearchConnections)) {
+                    $accessibleMeilisearchConnections[$languageId] = $meilisearchConnections[$languageId];
                 }
             }
 
-            $solrConnections = $accessibleMeilisearchConnections;
+            $meilisearchConnections = $accessibleMeilisearchConnections;
         }
 
-        return $solrConnections;
+        return $meilisearchConnections;
     }
 
     /**

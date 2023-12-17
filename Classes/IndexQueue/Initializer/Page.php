@@ -107,8 +107,8 @@ class Page extends AbstractInitializer
         }
 
         $databaseConnection = $this->queueItemRepository->getConnectionForAllInTransactionInvolvedTables(
-            'tx_solr_indexqueue_item',
-            'tx_solr_indexqueue_indexing_property'
+            'tx_meilisearch_indexqueue_item',
+            'tx_meilisearch_indexqueue_indexing_property'
         );
 
         foreach ($mountPoints as $mountPoint) {
@@ -233,10 +233,10 @@ class Page extends AbstractInitializer
         }
 
         /** @var Connection $connection */
-        $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('tx_solr_indexqueue_item');
+        $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('tx_meilisearch_indexqueue_item');
 
         $mountIdentifier = $this->getMountPointIdentifier($mountProperties);
-        $initializationQuery = 'INSERT INTO tx_solr_indexqueue_item (root, item_type, item_uid, indexing_configuration, indexing_priority, changed, has_indexing_properties, pages_mountidentifier, errors) '
+        $initializationQuery = 'INSERT INTO tx_meilisearch_indexqueue_item (root, item_type, item_uid, indexing_configuration, indexing_priority, changed, has_indexing_properties, pages_mountidentifier, errors) '
             . $this->buildSelectStatement() . ', 1, ' . $connection->quote($mountIdentifier, PDO::PARAM_STR) . ',""'
             . 'FROM pages '
             . 'WHERE '

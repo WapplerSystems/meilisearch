@@ -18,6 +18,6 @@ declare(strict_types=1);
 namespace WapplerSystems\Meilisearch\System\Meilisearch;
 
 /**
- * This exception is used when the solr server is unavailable.
+ * This exception is used when the meilisearch server is unavailable.
  */
 class MeilisearchUnavailableException extends MeilisearchCommunicationException {}

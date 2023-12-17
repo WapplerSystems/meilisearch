@@ -26,7 +26,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class ModuleDataStorageService implements SingletonInterface
 {
-    public const KEY = 'tx_solr';
+    public const KEY = 'tx_meilisearch';
 
     /**
      * Loads module data for user settings or returns a fresh object initially

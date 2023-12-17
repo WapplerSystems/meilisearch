@@ -52,15 +52,15 @@ class EventQueueWorkerTaskAdditionalFieldProvider extends AbstractAdditionalFiel
             return $additionalFields;
         }
         if ($schedulerModule->getCurrentAction()->equals(Action::ADD)) {
-            $taskInfo['solr_eventqueueworkertask_limit'] = EventQueueWorkerTask::DEFAULT_PROCESSING_LIMIT;
+            $taskInfo['meilisearch_eventqueueworkertask_limit'] = EventQueueWorkerTask::DEFAULT_PROCESSING_LIMIT;
         }
 
         if ($schedulerModule->getCurrentAction()->equals(Action::EDIT)) {
-            $taskInfo['solr_eventqueueworkertask_limit'] = $task->getLimit();
+            $taskInfo['meilisearch_eventqueueworkertask_limit'] = $task->getLimit();
         }
 
         $additionalFields['limit'] = [
-            'code' => '<input type="number" class="form-control" name="tx_scheduler[solr_eventqueueworkertask_limit]" value="' . (int)$taskInfo['solr_eventqueueworkertask_limit'] . '" />',
+            'code' => '<input type="number" class="form-control" name="tx_scheduler[meilisearch_eventqueueworkertask_limit]" value="' . (int)$taskInfo['meilisearch_eventqueueworkertask_limit'] . '" />',
             'label' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_be.xlf:task.eventQueueWorkerTask.limit',
         ];
 
@@ -78,8 +78,8 @@ class EventQueueWorkerTaskAdditionalFieldProvider extends AbstractAdditionalFiel
         array &$submittedData,
         SchedulerModuleController $schedulerModule
     ): bool {
-        $submittedData['solr_eventqueueworkertask_limit'] = max(
-            (int)($submittedData['solr_eventqueueworkertask_limit'] ?? EventQueueWorkerTask::DEFAULT_PROCESSING_LIMIT),
+        $submittedData['meilisearch_eventqueueworkertask_limit'] = max(
+            (int)($submittedData['meilisearch_eventqueueworkertask_limit'] ?? EventQueueWorkerTask::DEFAULT_PROCESSING_LIMIT),
             1
         );
         return true;
@@ -98,6 +98,6 @@ class EventQueueWorkerTaskAdditionalFieldProvider extends AbstractAdditionalFiel
             return;
         }
 
-        $task->setLimit((int)$submittedData['solr_eventqueueworkertask_limit']);
+        $task->setLimit((int)$submittedData['meilisearch_eventqueueworkertask_limit']);
     }
 }

@@ -1,4 +1,4 @@
-{namespace solr=WapplerSystems\Meilisearch\ViewHelpers\Backend}
+{namespace meilisearch=WapplerSystems\Meilisearch\ViewHelpers\Backend}
 
 <f:if condition="{document}">
     <div class="panel panel-default">
@@ -27,7 +27,7 @@
     <f:for each="{tableRows}" key="tableRowFiledName" as="tableRowValue" >
         <tr>
             <th scope="row">{tableRowFiledName}</th>
-            <solr:isString value="{tableRowValue}">
+            <meilisearch:isString value="{tableRowValue}">
                 <f:then>
                     <td>{tableRowValue}</td>
                 </f:then>
@@ -36,7 +36,7 @@
                         <f:render section="SubTable" arguments="{tableRows: tableRowValue}"/>
                     </td>
                 </f:else>
-            </solr:isString>
+            </meilisearch:isString>
         </tr>
     </f:for>
 </f:section>

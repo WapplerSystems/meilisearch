@@ -36,7 +36,7 @@ class SiteRepositoryTest extends IntegrationTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->writeDefaultSolrTestSiteConfiguration();
+        $this->writeDefaultMeilisearchTestSiteConfiguration();
         $this->siteRepository = GeneralUtility::makeInstance(SiteRepository::class);
     }
 

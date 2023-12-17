@@ -34,11 +34,11 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Class QueueItemRepository
- * Handles all CRUD operations to tx_solr_indexqueue_item table
+ * Handles all CRUD operations to tx_meilisearch_indexqueue_item table
  */
 class QueueItemRepository extends AbstractRepository
 {
-    protected string $table = 'tx_solr_indexqueue_item';
+    protected string $table = 'tx_meilisearch_indexqueue_item';
 
     protected MeilisearchLogManager $logger;
     protected EventDispatcherInterface $eventDispatcher;
@@ -473,7 +473,7 @@ class QueueItemRepository extends AbstractRepository
         $queryBuilderForSelectingProperties = $queryBuilderForDeletingItems->getConnection()->createQueryBuilder();
         $queryBuilderForSelectingProperties
             ->select('items.uid')
-            ->from('tx_solr_indexqueue_indexing_property', 'properties')
+            ->from('tx_meilisearch_indexqueue_indexing_property', 'properties')
             ->innerJoin(
                 'properties',
                 $this->table,
@@ -504,7 +504,7 @@ class QueueItemRepository extends AbstractRepository
             $propertyEntriesToDelete = '0';
         }
 
-        $queryBuilderForDeletingProperties->delete('tx_solr_indexqueue_indexing_property')->where(
+        $queryBuilderForDeletingProperties->delete('tx_meilisearch_indexqueue_indexing_property')->where(
             $queryBuilderForDeletingProperties->expr()->in('item_id', $propertyEntriesToDelete)
         );
 

@@ -74,7 +74,7 @@
             "docs": [
               {
                 "id": "ab1836b799d615f95624eb0db4d63418cd011bd7/pages/80/0/0/0",
-                "site": "solr-ddev-site.ddev.site",
+                "site": "meilisearch-ddev-site.ddev.site",
                 "siteHash": "ab1836b799d615f95624eb0db4d63418cd011bd7",
                 "type": "pages",
                 "uid": 80,
@@ -118,7 +118,7 @@
             "docs": [
               {
                 "id": "ab1836b799d615f95624eb0db4d63418cd011bd7/pages/46/0/0/0",
-                "site": "solr-ddev-site.ddev.site",
+                "site": "meilisearch-ddev-site.ddev.site",
                 "siteHash": "ab1836b799d615f95624eb0db4d63418cd011bd7",
                 "type": "pages",
                 "uid": 46,
@@ -151,7 +151,7 @@
               },
               {
                 "id": "ab1836b799d615f95624eb0db4d63418cd011bd7/pages/54/0/0/0",
-                "site": "solr-ddev-site.ddev.site",
+                "site": "meilisearch-ddev-site.ddev.site",
                 "siteHash": "ab1836b799d615f95624eb0db4d63418cd011bd7",
                 "type": "pages",
                 "uid": 54,
@@ -447,7 +447,7 @@
     "filter_queries":["siteHash:\"9e9d76a598c63d4ff578fea5c5254c27d9554fc6\"",
       "{!typo3access}-1,0"],
     "parsed_filter_queries":["siteHash:9e9d76a598c63d4ff578fea5c5254c27d9554fc6",
-      "AccessFilter(org.typo3.solr.search.AccessFilter - access: -1,0)"],
+      "AccessFilter(org.typo3.meilisearch.search.AccessFilter - access: -1,0)"],
     "timing":{
       "time":10.0,
       "prepare":{

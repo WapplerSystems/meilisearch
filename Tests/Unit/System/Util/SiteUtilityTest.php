@@ -38,7 +38,7 @@ class SiteUtilityTest extends SetUpUnitTestCase
      */
     public function canFallbackToLanguageSpecificReadProperty()
     {
-        $languageConfiguration = ['solr_core_read' => 'readcore'];
+        $languageConfiguration = ['meilisearch_core_read' => 'readcore'];
         $languageMock = $this->createMock(SiteLanguage::class);
         $languageMock->expects(self::any())->method('toArray')->willReturn($languageConfiguration);
 
@@ -54,11 +54,11 @@ class SiteUtilityTest extends SetUpUnitTestCase
      */
     public function canFallbackToGlobalPropertyWhenLanguageSpecificPropertyIsNotSet()
     {
-        $languageConfiguration = ['solr_core_read' => 'readcore'];
+        $languageConfiguration = ['meilisearch_core_read' => 'readcore'];
         $languageMock = $this->createMock(SiteLanguage::class);
         $languageMock->expects(self::any())->method('toArray')->willReturn($languageConfiguration);
 
-        $globalConfiguration = ['solr_host_read' => 'readhost'];
+        $globalConfiguration = ['meilisearch_host_read' => 'readhost'];
         $siteMock = $this->createMock(Site::class);
         $siteMock->expects(self::any())->method('getLanguageById')->willReturn($languageMock);
         $siteMock->expects(self::any())->method('getConfiguration')->willReturn($globalConfiguration);
@@ -73,49 +73,49 @@ class SiteUtilityTest extends SetUpUnitTestCase
     public function writeConnectionTestsDataProvider(): array
     {
         return [
-            [ // enabling solr_use_write_connection, resolves to specified write host
-                'expectedSolrHost' => 'writehost',
+            [ // enabling meilisearch_use_write_connection, resolves to specified write host
+                'expectedMeilisearchHost' => 'writehost',
                 'expectedSiteMockConfiguration' => [
-                    'solr_host_read' => 'readhost',
-                    'solr_use_write_connection' => true,
-                    'solr_host_write' => 'writehost',
+                    'meilisearch_host_read' => 'readhost',
+                    'meilisearch_use_write_connection' => true,
+                    'meilisearch_host_write' => 'writehost',
                 ],
             ],
-            [ // enabling solr_use_write_connection but not specifying write host, falls back to specified read host
-                'expectedSolrHost' => 'readhost',
+            [ // enabling meilisearch_use_write_connection but not specifying write host, falls back to specified read host
+                'expectedMeilisearchHost' => 'readhost',
                 'expectedSiteMockConfiguration' => [
-                    'solr_host_read' => 'readhost',
-                    'solr_use_write_connection' => true,
+                    'meilisearch_host_read' => 'readhost',
+                    'meilisearch_use_write_connection' => true,
                 ],
             ],
-            [ // disabling solr_use_write_connection and specifying write host, falls back to specified read host
-                'expectedSolrHost' => 'readhost',
+            [ // disabling meilisearch_use_write_connection and specifying write host, falls back to specified read host
+                'expectedMeilisearchHost' => 'readhost',
                 'expectedSiteMockConfiguration' => [
-                    'solr_host_read' => 'readhost',
-                    'solr_use_write_connection' => false,
-                    'solr_host_write' => 'writehost',
+                    'meilisearch_host_read' => 'readhost',
+                    'meilisearch_use_write_connection' => false,
+                    'meilisearch_host_write' => 'writehost',
                 ],
             ],
         ];
     }
 
     /**
-     * solr_use_write_connection is functional
+     * meilisearch_use_write_connection is functional
      *
      * @dataProvider writeConnectionTestsDataProvider
      * @test
      */
-    public function solr_use_write_connectionSiteSettingInfluencesTheWriteConnection(string $expectedSolrHost, array $expectedSiteMockConfiguration)
+    public function meilisearch_use_write_connectionSiteSettingInfluencesTheWriteConnection(string $expectedMeilisearchHost, array $expectedSiteMockConfiguration)
     {
         $siteMock = $this->createMock(Site::class);
         $siteMock->expects(self::any())->method('getConfiguration')->willReturn($expectedSiteMockConfiguration);
         $property = SiteUtility::getConnectionProperty($siteMock, 'host', 0, 'write');
 
         self::assertEquals(
-            $expectedSolrHost,
+            $expectedMeilisearchHost,
             $property,
-            'The setting "solr_use_write_connection" from sites config.yaml has no influence on system.' .
-            'The setting "solr_use_write_connection=true/false" must enable or disable the write connection respectively.'
+            'The setting "meilisearch_use_write_connection" from sites config.yaml has no influence on system.' .
+            'The setting "meilisearch_use_write_connection=true/false" must enable or disable the write connection respectively.'
         );
     }
 
@@ -124,11 +124,11 @@ class SiteUtilityTest extends SetUpUnitTestCase
      */
     public function canLanguageSpecificConfigurationOverwriteGlobalConfiguration()
     {
-        $languageConfiguration = ['solr_host_read' => 'readhost.local.de'];
+        $languageConfiguration = ['meilisearch_host_read' => 'readhost.local.de'];
         $languageMock = $this->createMock(SiteLanguage::class);
         $languageMock->expects(self::any())->method('toArray')->willReturn($languageConfiguration);
 
-        $globalConfiguration = ['solr_host_read' => 'readhost.global.de'];
+        $globalConfiguration = ['meilisearch_host_read' => 'readhost.global.de'];
         $siteMock = $this->createMock(Site::class);
         $siteMock->expects(self::any())->method('getLanguageById')->willReturn($languageMock);
         $siteMock->expects(self::any())->method('getConfiguration')->willReturn($globalConfiguration);
@@ -158,103 +158,103 @@ class SiteUtilityTest extends SetUpUnitTestCase
     public function siteConfigurationValueHandlingDataProvider(): array
     {
         return [
-            [ // directly set boolean value (true) for solr_enabled_read
+            [ // directly set boolean value (true) for meilisearch_enabled_read
                 'fakeConfiguration' => [
-                    'solr_enabled_read' => true,
+                    'meilisearch_enabled_read' => true,
                 ],
                 'property' => 'enabled',
                 'scope' => 'read',
                 'expectedConfigurationValue' => true,
             ],
-            [ // directly set boolean value (false) for solr_enabled_read
+            [ // directly set boolean value (false) for meilisearch_enabled_read
                 'fakeConfiguration' => [
-                    'solr_enabled_read' => false,
+                    'meilisearch_enabled_read' => false,
                 ],
                 'property' => 'enabled',
                 'scope' => 'read',
                 'expectedConfigurationValue' => false,
             ],
-            [ // boolean value (true) set via environment variable for solr_enabled_read
+            [ // boolean value (true) set via environment variable for meilisearch_enabled_read
                 'fakeConfiguration' => [
-                    'solr_enabled_read' => 'true',
+                    'meilisearch_enabled_read' => 'true',
                 ],
                 'property' => 'enabled',
                 'scope' => 'read',
                 'expectedConfigurationValue' => true,
             ],
-            [ // boolean value (false) set via environment variable for solr_enabled_read
+            [ // boolean value (false) set via environment variable for meilisearch_enabled_read
                 'fakeConfiguration' => [
-                    'solr_enabled_read' => 'false',
+                    'meilisearch_enabled_read' => 'false',
                 ],
                 'property' => 'enabled',
                 'scope' => 'read',
                 'expectedConfigurationValue' => false,
             ],
-            [ // string '0' for solr_enabled_read
+            [ // string '0' for meilisearch_enabled_read
                 'fakeConfiguration' => [
-                    'solr_enabled_read' => '0',
+                    'meilisearch_enabled_read' => '0',
                 ],
                 'property' => 'enabled',
                 'scope' => 'read',
                 'expectedConfigurationValue' => '0',
             ],
-            [ // int 0 value for solr_enabled_read
+            [ // int 0 value for meilisearch_enabled_read
                 'fakeConfiguration' => [
-                    'solr_enabled_read' => 0,
+                    'meilisearch_enabled_read' => 0,
                 ],
                 'property' => 'enabled',
                 'scope' => 'read',
                 'expectedConfigurationValue' => 0,
             ],
-            [ // int 0 value for solr_enabled_read
+            [ // int 0 value for meilisearch_enabled_read
                 'fakeConfiguration' => [
-                    'solr_enabled_read' => 0,
+                    'meilisearch_enabled_read' => 0,
                 ],
                 'property' => 'enabled',
                 'scope' => 'read',
                 'expectedConfigurationValue' => 0,
             ],
-            [ // int 8080 value for solr_port_read
+            [ // int 8080 value for meilisearch_port_read
                 'fakeConfiguration' => [
-                    'solr_port_read' => 8080,
+                    'meilisearch_port_read' => 8080,
                 ],
                 'property' => 'port',
                 'scope' => 'read',
                 'expectedConfigurationValue' => 8080,
             ],
-            [ // core_en value for solr_core_read
+            [ // core_en value for meilisearch_core_read
                 'fakeConfiguration' => [
-                    'solr_core_read' => 'core_en',
-                    'solr_core_write' => 'core_en_write',
+                    'meilisearch_core_read' => 'core_en',
+                    'meilisearch_core_write' => 'core_en_write',
                 ],
                 'property' => 'core',
                 'scope' => 'read',
                 'expectedConfigurationValue' => 'core_en',
             ],
-            [ // core_en_write value for solr_core_write, use right scope
+            [ // core_en_write value for meilisearch_core_write, use right scope
                 'fakeConfiguration' => [
-                    'solr_use_write_connection' => 1,
-                    'solr_core_read' => 'core_en',
-                    'solr_core_write' => 'core_en_write',
+                    'meilisearch_use_write_connection' => 1,
+                    'meilisearch_core_read' => 'core_en',
+                    'meilisearch_core_write' => 'core_en_write',
                 ],
                 'property' => 'core',
                 'scope' => 'write',
                 'expectedConfigurationValue' => 'core_en_write',
             ],
-            [ // core_en value for solr_core_read, tests fallback to read
+            [ // core_en value for meilisearch_core_read, tests fallback to read
                 'fakeConfiguration' => [
-                    'solr_use_write_connection' => 1,
-                    'solr_core_read' => 'core_en',
+                    'meilisearch_use_write_connection' => 1,
+                    'meilisearch_core_read' => 'core_en',
                 ],
                 'property' => 'core',
                 'scope' => 'write',
                 'expectedConfigurationValue' => 'core_en',
             ],
-            [ // disabled write connection via int 0 for solr_enabled_write, use right scope
+            [ // disabled write connection via int 0 for meilisearch_enabled_write, use right scope
                 'fakeConfiguration' => [
-                    'solr_use_write_connection' => 1,
-                    'solr_enabled_read' => '1',
-                    'solr_enabled_write' => '0',
+                    'meilisearch_use_write_connection' => 1,
+                    'meilisearch_enabled_read' => '1',
+                    'meilisearch_enabled_write' => '0',
                 ],
                 'property' => 'enabled',
                 'scope' => 'write',

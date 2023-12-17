@@ -22,7 +22,7 @@ use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * The Highlighting ParameterProvider is responsible to build the solr query parameters
+ * The Highlighting ParameterProvider is responsible to build the meilisearch query parameters
  * that are needed for the highlighting.
  */
 class Highlighting extends AbstractDeactivatable implements ParameterBuilderInterface
@@ -97,16 +97,16 @@ class Highlighting extends AbstractDeactivatable implements ParameterBuilderInte
         return $this->fragmentSize >= 18;
     }
 
-    public static function fromTypoScriptConfiguration(TypoScriptConfiguration $solrConfiguration): Highlighting
+    public static function fromTypoScriptConfiguration(TypoScriptConfiguration $meilisearchConfiguration): Highlighting
     {
-        $isEnabled = $solrConfiguration->getIsSearchResultsHighlightingEnabled();
+        $isEnabled = $meilisearchConfiguration->getIsSearchResultsHighlightingEnabled();
         if (!$isEnabled) {
             return new Highlighting(false);
         }
 
-        $fragmentSize = $solrConfiguration->getSearchResultsHighlightingFragmentSize();
-        $highlightingFields = $solrConfiguration->getSearchResultsHighlightingFields();
-        $wrap = explode('|', $solrConfiguration->getSearchResultsHighlightingWrap());
+        $fragmentSize = $meilisearchConfiguration->getSearchResultsHighlightingFragmentSize();
+        $highlightingFields = $meilisearchConfiguration->getSearchResultsHighlightingFields();
+        $wrap = explode('|', $meilisearchConfiguration->getSearchResultsHighlightingWrap());
         $prefix = $wrap[0] ?? '';
         $postfix = $wrap[1] ?? '';
 

@@ -2,7 +2,7 @@
 # customcategory=Routes=LLL:EXT:meilisearch/Resources/Private/Language/locallang_be.xlf:extConf.category.routeEnhancer
 
 # cat=basic/enable/a0; type=string; label=LLL:EXT:meilisearch/Resources/Private/Language/locallang_be.xlf:extConf.pluginNamespaces
-pluginNamespaces = tx_solr
+pluginNamespaces = tx_meilisearch
 
 # cat=basic/enable/a1; type=boolean; label=LLL:EXT:meilisearch/Resources/Private/Language/locallang_be.xlf:extConf.includeGlobalQParameterInCacheHash
 includeGlobalQParameterInCacheHash = 0

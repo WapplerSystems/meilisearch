@@ -139,7 +139,7 @@ class ReIndexTaskAdditionalFieldProvider extends AbstractAdditionalFieldProvider
     protected function getIndexingConfigurationSelector(): string
     {
         $selectorMarkup = 'Please select a site first.';
-        $this->getPageRenderer()->addCssFile('../typo3conf/ext/solr/Resources/Css/Backend/indexingconfigurationselectorfield.css');
+        $this->getPageRenderer()->addCssFile('../typo3conf/ext/meilisearch/Resources/Css/Backend/indexingconfigurationselectorfield.css');
 
         if (is_null($this->site)) {
             return $selectorMarkup;

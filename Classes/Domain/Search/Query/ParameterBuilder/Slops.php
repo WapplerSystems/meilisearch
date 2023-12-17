@@ -21,7 +21,7 @@ use WapplerSystems\Meilisearch\Domain\Search\Query\AbstractQueryBuilder;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 
 /**
- * The Slops ParameterProvider is responsible to build the solr query parameters
+ * The Slops ParameterProvider is responsible to build the meilisearch query parameters
  * that are needed for the several slop arguments.
  */
 class Slops implements ParameterBuilderInterface
@@ -30,25 +30,25 @@ class Slops implements ParameterBuilderInterface
 
     /**
      * Represents the Apache Meilisearch parameter: qs
-     * See: https://solr.apache.org/guide/solr/latest/query-guide/dismax-query-parser.html#qs-query-phrase-slop-parameter
+     * See: https://meilisearch.apache.org/guide/meilisearch/latest/query-guide/dismax-query-parser.html#qs-query-phrase-slop-parameter
      */
     protected ?int $querySlop = self::NO_SLOP;
 
     /**
      * Represents the Apache Meilisearch parameter: ps
-     * See: https://solr.apache.org/guide/solr/latest/query-guide/edismax-query-parser.html
+     * See: https://meilisearch.apache.org/guide/meilisearch/latest/query-guide/edismax-query-parser.html
      */
     protected ?int $phraseSlop = self::NO_SLOP;
 
     /**
      * Represents the Apache Meilisearch parameter: ps2
-     * See: https://solr.apache.org/guide/solr/latest/query-guide/edismax-query-parser.html
+     * See: https://meilisearch.apache.org/guide/meilisearch/latest/query-guide/edismax-query-parser.html
      */
     protected ?int $bigramPhraseSlop = self::NO_SLOP;
 
     /**
      * Represents the Apache Meilisearch parameter: ps3
-     * See: https://solr.apache.org/guide/solr/latest/query-guide/edismax-query-parser.html
+     * See: https://meilisearch.apache.org/guide/meilisearch/latest/query-guide/edismax-query-parser.html
      */
     protected ?int $trigramPhraseSlop = self::NO_SLOP;
 
@@ -127,9 +127,9 @@ class Slops implements ParameterBuilderInterface
     /**
      * Instantiates Slops from TypoScript configuration.
      */
-    public static function fromTypoScriptConfiguration(TypoScriptConfiguration $solrConfiguration): Slops
+    public static function fromTypoScriptConfiguration(TypoScriptConfiguration $meilisearchConfiguration): Slops
     {
-        $searchConfiguration = $solrConfiguration->getSearchConfiguration();
+        $searchConfiguration = $meilisearchConfiguration->getSearchConfiguration();
         $querySlop = static::getQuerySlopFromConfiguration($searchConfiguration);
         $phraseSlop = static::getPhraseSlopFromConfiguration($searchConfiguration);
         $bigramPhraseSlop = static::getBigramPhraseSlopFromConfiguration($searchConfiguration);

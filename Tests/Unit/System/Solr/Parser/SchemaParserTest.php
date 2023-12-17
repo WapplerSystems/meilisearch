@@ -13,10 +13,10 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace WapplerSystems\Meilisearch\Tests\Unit\System\Solr\Parser;
+namespace WapplerSystems\Meilisearch\Tests\Unit\System\Meilisearch\Parser;
 
-use WapplerSystems\Meilisearch\System\Solr\Parser\SchemaParser;
-use WapplerSystems\Meilisearch\System\Solr\Schema\Schema;
+use WapplerSystems\Meilisearch\System\Meilisearch\Parser\SchemaParser;
+use WapplerSystems\Meilisearch\System\Meilisearch\Schema\Schema;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 
 /**
@@ -43,7 +43,7 @@ class SchemaParserTest extends SetUpUnitTestCase
     {
         $parser = new SchemaParser();
         $schema = $parser->parseJson($this->getFixtureContentByName('schema.json'));
-        self::assertSame('tx_solr-6-0-0--20161122', $schema->getName(), 'Could not parser name from schema response');
+        self::assertSame('tx_meilisearch-6-0-0--20161122', $schema->getName(), 'Could not parser name from schema response');
     }
 
     /**

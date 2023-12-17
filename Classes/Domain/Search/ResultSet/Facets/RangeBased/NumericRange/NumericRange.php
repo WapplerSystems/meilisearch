@@ -78,7 +78,7 @@ class NumericRange extends AbstractRangeFacetItem
     }
 
     /**
-     * Retrieves the end date that was received from solr for this facet.
+     * Retrieves the end date that was received from meilisearch for this facet.
      */
     public function getEndInResponse(): ?float
     {
@@ -86,7 +86,7 @@ class NumericRange extends AbstractRangeFacetItem
     }
 
     /**
-     * Retrieves the start date that was received from solr for this facet.
+     * Retrieves the start date that was received from meilisearch for this facet.
      */
     public function getStartInResponse(): ?float
     {

@@ -26,7 +26,7 @@ use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Builds the SearchResult objects from the solr response and assigns the created child SearchResult objects (the variants)
+ * Builds the SearchResult objects from the meilisearch response and assigns the created child SearchResult objects (the variants)
  * to the parent search result object.
  */
 class VariantsProcessor implements SearchResultSetProcessor

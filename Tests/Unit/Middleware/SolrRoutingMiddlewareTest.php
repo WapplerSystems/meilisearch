@@ -17,7 +17,7 @@ declare(strict_types=1);
 namespace WapplerSystems\Meilisearch\Tests\Unit\Middleware;
 
 use WapplerSystems\Meilisearch\IndexQueue\PageIndexerRequest;
-use WapplerSystems\Meilisearch\Middleware\SolrRoutingMiddleware;
+use WapplerSystems\Meilisearch\Middleware\MeilisearchRoutingMiddleware;
 use WapplerSystems\Meilisearch\Routing\RoutingService;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use GuzzleHttp\Psr7\ServerRequest;
@@ -39,7 +39,7 @@ use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
  *
  * @author Lars Tode <lars.tode@dkd.de>
  */
-class SolrRoutingMiddlewareTest extends SetUpUnitTestCase
+class MeilisearchRoutingMiddlewareTest extends SetUpUnitTestCase
 {
     protected RoutingService|MockObject $routingServiceMock;
     protected $responseOutputHandler;
@@ -74,7 +74,7 @@ class SolrRoutingMiddlewareTest extends SetUpUnitTestCase
 
     /**
      * @test
-     * @covers \WapplerSystems\Meilisearch\Middleware\SolrRoutingMiddleware::process
+     * @covers \WapplerSystems\Meilisearch\Middleware\MeilisearchRoutingMiddleware::process
      */
     public function missingEnhancerHasNoEffectTest(): void
     {
@@ -114,10 +114,10 @@ class SolrRoutingMiddlewareTest extends SetUpUnitTestCase
             ->method('fetchEnhancerInSiteConfigurationByPageUid')
             ->willReturn([]);
 
-        $solrRoutingMiddleware = new SolrRoutingMiddleware();
-        $solrRoutingMiddleware->setLogger(new NullLogger());
-        $solrRoutingMiddleware->injectRoutingService($this->routingServiceMock);
-        $solrRoutingMiddleware->process(
+        $meilisearchRoutingMiddleware = new MeilisearchRoutingMiddleware();
+        $meilisearchRoutingMiddleware->setLogger(new NullLogger());
+        $meilisearchRoutingMiddleware->injectRoutingService($this->routingServiceMock);
+        $meilisearchRoutingMiddleware->process(
             $serverRequest,
             $this->responseOutputHandler
         );
@@ -132,7 +132,7 @@ class SolrRoutingMiddlewareTest extends SetUpUnitTestCase
 
     /**
      * @test
-     * @covers \WapplerSystems\Meilisearch\Middleware\SolrRoutingMiddleware::process
+     * @covers \WapplerSystems\Meilisearch\Middleware\MeilisearchRoutingMiddleware::process
      */
     public function enhancerInactiveDuringIndexingTest(): void
     {
@@ -145,10 +145,10 @@ class SolrRoutingMiddlewareTest extends SetUpUnitTestCase
         );
 
         $this->routingServiceMock->expects(self::never())->method('getSiteMatcher');
-        $solrRoutingMiddleware = new SolrRoutingMiddleware();
-        $solrRoutingMiddleware->setLogger(new NullLogger());
-        $solrRoutingMiddleware->injectRoutingService($this->routingServiceMock);
-        $solrRoutingMiddleware->process(
+        $meilisearchRoutingMiddleware = new MeilisearchRoutingMiddleware();
+        $meilisearchRoutingMiddleware->setLogger(new NullLogger());
+        $meilisearchRoutingMiddleware->injectRoutingService($this->routingServiceMock);
+        $meilisearchRoutingMiddleware->process(
             $serverRequest,
             $this->responseOutputHandler
         );

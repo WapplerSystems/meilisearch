@@ -12,13 +12,13 @@ function OptionFacetController() {
 
     this.initToggle = function () {
 
-        jQuery('.tx-solr-facet-hidden').hide();
-        jQuery('a.tx-solr-facet-show-all').click(function() {
-            if (jQuery(this).parent().siblings('.tx-solr-facet-hidden:visible').length == 0) {
-                jQuery(this).parent().siblings('.tx-solr-facet-hidden').show();
+        jQuery('.tx-meilisearch-facet-hidden').hide();
+        jQuery('a.tx-meilisearch-facet-show-all').click(function() {
+            if (jQuery(this).parent().siblings('.tx-meilisearch-facet-hidden:visible').length == 0) {
+                jQuery(this).parent().siblings('.tx-meilisearch-facet-hidden').show();
                 jQuery(this).text(jQuery(this).data('label-less'));
             } else {
-                jQuery(this).parent().siblings('.tx-solr-facet-hidden').hide();
+                jQuery(this).parent().siblings('.tx-meilisearch-facet-hidden').hide();
                 jQuery(this).text(jQuery(this).data('label-more'));
             }
 
@@ -48,7 +48,7 @@ jQuery(document).ready(function () {
     var optionsController = new OptionFacetController();
     optionsController.init();
 
-    jQuery("body").on("tx_solr_updated", function() {
+    jQuery("body").on("tx_meilisearch_updated", function() {
         optionsController.init();
     });
 });

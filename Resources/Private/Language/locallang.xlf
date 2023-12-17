@@ -7,19 +7,19 @@
 		<body>
 
 		<!-- Index Administration -->
-			<trans-unit id="solr.backend.index_administration.description" xml:space="preserve">
-				<source>The Index Administration Module is responsible for emptying the cores(deleting documents) on Solr Server and index queues in TYPO3 CMS. </source>
+			<trans-unit id="meilisearch.backend.index_administration.description" xml:space="preserve">
+				<source>The Index Administration Module is responsible for emptying the cores(deleting documents) on Meilisearch Server and index queues in TYPO3 CMS. </source>
 			</trans-unit>
 
-			<trans-unit id="solr.backend.index_administration.index_emptied_all" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_administration.index_emptied_all" xml:space="preserve">
 				<source>Index emptied for Site "%s" (%s).</source>
 			</trans-unit>
 
-			<trans-unit id="solr.backend.index_administration.success.queue_emptied" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_administration.success.queue_emptied" xml:space="preserve">
 				<source>Index Queue emptied for Site "%s".</source>
 			</trans-unit>
 
-			<trans-unit id="solr.backend.index_administration.error.on_empty_index" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_administration.error.on_empty_index" xml:space="preserve">
 				<source>An error occurred while trying to delete documents from the index: %s</source>
 			</trans-unit>
 		<!-- End: Index Maintenance -->
@@ -62,10 +62,10 @@
 
 			<!-- From ModuleAdministration/locallang.xlf //-->
 			<trans-unit id="mlang_labels_tablabel" xml:space="preserve">
-				<source>Apache Solr Search Administration</source>
+				<source>Apache Meilisearch Search Administration</source>
 			</trans-unit>
 			<trans-unit id="mlang_labels_tabdescr" xml:space="preserve">
-				<source>Allows you to manage Apache Solr from TYPO3.&lt;br /&gt;&lt;em&gt;Access for 'admin' users only!&lt;/em&gt;</source>
+				<source>Allows you to manage Apache Meilisearch from TYPO3.&lt;br /&gt;&lt;em&gt;Access for 'admin' users only!&lt;/em&gt;</source>
 			</trans-unit>
 			<trans-unit id="mlang_tabs_tab" xml:space="preserve">
 				<source>Search</source>
@@ -73,16 +73,16 @@
 
 			<!-- From ModuleReports/locallang.xlf //-->
 			<trans-unit id="index_title" xml:space="preserve">
-				<source>Apache Solr Index</source>
+				<source>Apache Meilisearch Index</source>
 			</trans-unit>
 			<trans-unit id="index_description" xml:space="preserve">
 				<source>View the number of documents and fields in your index</source>
 			</trans-unit>
 			<trans-unit id="statistics_title" xml:space="preserve">
-				<source>Apache Solr Statistics</source>
+				<source>Apache Meilisearch Statistics</source>
 			</trans-unit>
 			<trans-unit id="statistics_description" xml:space="preserve">
-				<source>Provides several Solr usage statistics</source>
+				<source>Provides several Meilisearch usage statistics</source>
 			</trans-unit>
 
 			<!-- From ModuleScheduler/locallang.xlf //-->
@@ -96,13 +96,13 @@
 				<source>Force Re-Indexing of a site</source>
 			</trans-unit>
 			<trans-unit id="reindex_description" xml:space="preserve">
-				<source>Purges the Solr Index and initializes the Index Queue of a site.</source>
+				<source>Purges the Meilisearch Index and initializes the Index Queue of a site.</source>
 			</trans-unit>
 			<trans-unit id="indexqueueworker_title" xml:space="preserve">
 				<source>Index Queue Worker</source>
 			</trans-unit>
 			<trans-unit id="indexqueueworker_description" xml:space="preserve">
-				<source>Processes the items in the Index Queue and sends them to Solr.</source>
+				<source>Processes the items in the Index Queue and sends them to Meilisearch.</source>
 			</trans-unit>
 			<trans-unit id="indexqueueworker_field_documentsToIndexLimit" xml:space="preserve">
 				<source>Number of documents to index</source>
@@ -111,16 +111,16 @@
 				<source>Forced webroot (only needed when webroot is not PATH_site)</source>
 			</trans-unit>
 			<trans-unit id="field_host" xml:space="preserve">
-				<source>Solr Host</source>
+				<source>Meilisearch Host</source>
 			</trans-unit>
 			<trans-unit id="field_port" xml:space="preserve">
-				<source>Solr Port</source>
+				<source>Meilisearch Port</source>
 			</trans-unit>
 			<trans-unit id="field_path" xml:space="preserve">
-				<source>Solr Path</source>
+				<source>Meilisearch Path</source>
 			</trans-unit>
 			<trans-unit id="field_server" xml:space="preserve">
-				<source>Solr Server</source>
+				<source>Meilisearch Server</source>
 			</trans-unit>
 			<trans-unit id="field_site" xml:space="preserve">
 				<source>Site</source>
@@ -237,104 +237,104 @@
 				<source>Top Results</source>
 			</trans-unit>
 			<!-- From locallang.xlf -->
-			<trans-unit id="solr.backend.index_queue_module.description" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.description" xml:space="preserve">
 				<source>The Index Queue manages content indexing. Content enters the Index Queue by initialization below or when new content is created based on configuration. Items in the Index Queue are indexed newest changes first until all items in the queue have been indexed.</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.errors.reset_button" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.errors.reset_button" xml:space="preserve">
 				<source>Reset errors</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.errors.headline" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.errors.headline" xml:space="preserve">
 				<source>Indexing Errors</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.errors.id" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.errors.id" xml:space="preserve">
 				<source>ID</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.errors.item_type" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.errors.item_type" xml:space="preserve">
 				<source>Item Type</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.errors.item_uid" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.errors.item_uid" xml:space="preserve">
 				<source>Item UID</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.errors.show_button" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.errors.show_button" xml:space="preserve">
 				<source>Show error</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.flashmessage.error.index_manual" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.flashmessage.error.index_manual" xml:space="preserve">
 				<source>An error occurred while indexing manual from the backend.</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.flashmessage.error.reset_errors" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.flashmessage.error.reset_errors" xml:space="preserve">
 				<source>An error occurred while resetting the error log in the index queue.</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.flashmessage.error.single_item_not_requeued" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.flashmessage.error.single_item_not_requeued" xml:space="preserve">
 				<source>Single item was not requeued.</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.flashmessage.initialize.no_selection" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.flashmessage.initialize.no_selection" xml:space="preserve">
 				<source>No indexing configurations selected.</source>
 			</trans-unit>
 
-			<trans-unit id="solr.backend.index_queue_module.flashmessage.initialize.success" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.flashmessage.initialize.success" xml:space="preserve">
 				<source>Initialized indexing configurations: %s</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.flashmessage.initialize.title" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.flashmessage.initialize.title" xml:space="preserve">
 				<source>Index Queue initialized</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.flashmessage.initialize_failure.title" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.flashmessage.initialize_failure.title" xml:space="preserve">
 				<source>Error occured while initializing</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.flashmessage.initialize_failure" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.flashmessage.initialize_failure" xml:space="preserve">
 				<source>An error occurred while initializing the index queue: %1$s [%2$d]</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.flashmessage.not_initialized.title" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.flashmessage.not_initialized.title" xml:space="preserve">
 				<source>Index Queue not initialized</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.flashmessage.success.reset_errors" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.flashmessage.success.reset_errors" xml:space="preserve">
 				<source>All errors have been reset.</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.flashmessage.success.index_manual" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.flashmessage.success.index_manual" xml:space="preserve">
 				<source>Indexing from the backend was successfully finished.</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.flashmessage.success.single_item_was_requeued" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.flashmessage.success.single_item_was_requeued" xml:space="preserve">
 				<source>Single item was successfully marked for reindexing.</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.flashmessage.title" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.flashmessage.title" xml:space="preserve">
 				<source>Index Queue</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.flashmessage.index_manual" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.flashmessage.index_manual" xml:space="preserve">
 				<source>Manual Indexing</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.help" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.help" xml:space="preserve">
 				<source>Initializing the Index Queue is the most complete way to force re-indexing, or to build the Index Queue for the first time. The Index Queue Worker scheduler task will then index the items listed in the Index Queue.</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.status.errors" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.status.errors" xml:space="preserve">
 				<source> Errors</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.status.header" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.status.header" xml:space="preserve">
 				<source>Indexing Progress</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.status.indexed" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.status.indexed" xml:space="preserve">
 				<source> Indexed</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.status.pending" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.status.pending" xml:space="preserve">
 				<source> Pending</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.header_init" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.header_init" xml:space="preserve">
 				<source>Index Queue Initialization</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.header_status" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.header_status" xml:space="preserve">
 				<source>Index Queue Status</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.button.clear_index_queue" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.button.clear_index_queue" xml:space="preserve">
 				<source>Clear Index Queue</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.back" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.back" xml:space="preserve">
 				<source>Go back</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.flashmessage.error.no_queue_item_for_queue_error" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.flashmessage.error.no_queue_item_for_queue_error" xml:space="preserve">
 				<source>No valid queue item passed to show the error information!</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.error_details" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.error_details" xml:space="preserve">
 				<source>Error details for queue item</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.index_queue_module.index_now" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.index_queue_module.index_now" xml:space="preserve">
 				<source>Index now</source>
 			</trans-unit>
 
@@ -349,28 +349,28 @@
 				<source>Search: Form only</source>
 			</trans-unit>
 
-			<trans-unit id="solr.backend.search_statistics_module.item_phrase" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.search_statistics_module.item_phrase" xml:space="preserve">
 				<source>Phrase</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.search_statistics_module.item_count" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.search_statistics_module.item_count" xml:space="preserve">
 				<source>Number of Queries</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.search_statistics_module.results" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.search_statistics_module.results" xml:space="preserve">
 				<source>Number of Results (Average)</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.search_statistics_module.percentage" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.search_statistics_module.percentage" xml:space="preserve">
 				<source>Percentage</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.search_statistics_module.no_records_found" xml:space="preserve">
-				<source>No records found. Did you enabled 'plugin.tx_solr.statistics = 1' in the typoscript configuration of your site?</source>
+			<trans-unit id="meilisearch.backend.search_statistics_module.no_records_found" xml:space="preserve">
+				<source>No records found. Did you enabled 'plugin.tx_meilisearch.statistics = 1' in the typoscript configuration of your site?</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.search_statistics_module.top_search_phrases" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.search_statistics_module.top_search_phrases" xml:space="preserve">
 				<source>Top %d Search Phrases</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.search_statistics_module.top_search_phrases_without_hits" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.search_statistics_module.top_search_phrases_without_hits" xml:space="preserve">
 				<source>Top %d Search Phrases Without Hits</source>
 			</trans-unit>
-			<trans-unit id="solr.backend.search_statistics_module.search_phrases_header" xml:space="preserve">
+			<trans-unit id="meilisearch.backend.search_statistics_module.search_phrases_header" xml:space="preserve">
 				<source>Search Phrase Statistics</source>
 			</trans-unit>
 

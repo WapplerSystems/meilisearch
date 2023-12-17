@@ -20,7 +20,7 @@ use ReflectionException;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
- * Base class for all unit tests in the solr project
+ * Base class for all unit tests in the meilisearch project
  *
  * @author Timo Hund
  */

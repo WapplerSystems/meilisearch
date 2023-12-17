@@ -19,7 +19,7 @@
 ,14,1,0,1,0,"/match-bigram-only","This is some dump sentence to match Bigram only"
 ,15,1,0,1,0,"/implicit-bigram-phrase-pf2","Implicit Bigram gag gag gag gag Phrase gag gag gag gag searches in pf2 fields."
 ,16,1,0,1,0,"/bigram-gag-gag-gag-gag-phrase","Bigram gag gag gag gag Phrase gag gag gag gag Search is fascinating feature."
-"tx_solr_indexqueue_item",
+"tx_meilisearch_indexqueue_item",
 ,"uid","root","item_type","item_uid","indexing_configuration","changed","indexed","has_indexing_properties","indexing_priority","indexed","errors"
 ,2,1,"pages",2,"pages",1449151778,0,0,0,0,0
 ,3,1,"pages",3,"pages",1449151778,0,0,0,0,0

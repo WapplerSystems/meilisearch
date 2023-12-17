@@ -45,8 +45,8 @@ class DefaultFacetQueryBuilderTest extends SetUpUnitTestCase
     public function testWhenKeepAllOptionsOnSelectionIsNotConfiguredNoExcludeTagIsAdded()
     {
         $fakeConfigurationArray = [];
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting'] = 1;
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting.']['facets.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting.']['facets.'] = [
             'type.' => [
                 'field' => 'type',
             ],

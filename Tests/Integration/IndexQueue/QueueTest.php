@@ -42,7 +42,7 @@ class QueueTest extends IntegrationTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->writeDefaultSolrTestSiteConfiguration();
+        $this->writeDefaultMeilisearchTestSiteConfiguration();
         $this->indexQueue = GeneralUtility::makeInstance(Queue::class);
         $this->indexQueue->setQueueInitializationService(GeneralUtility::makeInstance(QueueInitializationService::class));
         $this->siteRepository = GeneralUtility::makeInstance(SiteRepository::class);
@@ -171,7 +171,7 @@ class QueueTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_solr.index.queue {
+            plugin.tx_meilisearch.index.queue {
                 custom_page_type = 1
                 custom_page_type {
                     initialization = WapplerSystems\Meilisearch\IndexQueue\Initializer\Page

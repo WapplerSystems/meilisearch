@@ -71,7 +71,7 @@ class MeilisearchConfigurationStatus extends AbstractMeilisearchStatus
      */
     public function getLabel(): string
     {
-        return 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_reports.xlf:status_solr_configuration';
+        return 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_reports.xlf:status_meilisearch_configuration';
     }
 
     /**
@@ -147,8 +147,8 @@ class MeilisearchConfigurationStatus extends AbstractMeilisearchStatus
 
         foreach ($rootPages as $rootPage) {
             try {
-                $solrIsEnabledAndIndexingDisabled = $this->getIsMeilisearchEnabled($rootPage['uid']) && !$this->getIsIndexingEnabled($rootPage['uid']);
-                if ($solrIsEnabledAndIndexingDisabled) {
+                $meilisearchIsEnabledAndIndexingDisabled = $this->getIsMeilisearchEnabled($rootPage['uid']) && !$this->getIsIndexingEnabled($rootPage['uid']);
+                if ($meilisearchIsEnabledAndIndexingDisabled) {
                     $rootPagesWithIndexingOff[] = $rootPage;
                 }
                 /** @phpstan-ignore-next-line */
@@ -189,7 +189,7 @@ class MeilisearchConfigurationStatus extends AbstractMeilisearchStatus
     }
 
     /**
-     * Checks if the solr plugin is enabled with plugin.tx_solr.enabled.
+     * Checks if the meilisearch plugin is enabled with plugin.tx_meilisearch.enabled.
      *
      * @throws DBALException
      */

@@ -31,13 +31,13 @@ use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
 class PageIndexerTest extends IntegrationTest
 {
     protected array $testExtensionsToLoad = [
-        'typo3conf/ext/solr',
+        'typo3conf/ext/meilisearch',
     ];
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->writeDefaultSolrTestSiteConfiguration();
+        $this->writeDefaultMeilisearchTestSiteConfiguration();
 
         $this->addSimpleFrontendRenderingToTypoScriptRendering(
             1,
@@ -51,11 +51,11 @@ class PageIndexerTest extends IntegrationTest
     }
 
     /**
-     * Executed after each test. Emptys solr and checks if the index is empty
+     * Executed after each test. Emptys meilisearch and checks if the index is empty
      */
     protected function tearDown(): void
     {
-        $this->cleanUpSolrServerAndAssertEmpty();
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
         parent::tearDown();
     }
 
@@ -66,16 +66,16 @@ class PageIndexerTest extends IntegrationTest
      * @param array $expectedContents
      *
      * @test
-     * @dataProvider canIndexPageWithAccessProtectedContentIntoSolrDataProvider
+     * @dataProvider canIndexPageWithAccessProtectedContentIntoMeilisearchDataProvider
      */
-    public function canIndexPageWithAccessProtectedContentIntoSolr(
+    public function canIndexPageWithAccessProtectedContentIntoMeilisearch(
         string $fixture,
         int $expectedNumFound,
         array $expectedAccessFieldValues,
         array $expectedContents,
         string $core = 'core_en'
     ): void {
-        $this->cleanUpSolrServerAndAssertEmpty($core);
+        $this->cleanUpMeilisearchServerAndAssertEmpty($core);
         $this->importCSVDataSet(__DIR__ . '/Fixtures/' . $fixture . '.csv');
 
         $createPageIndexerMock = function (): PageIndexerRequest {
@@ -98,35 +98,35 @@ class PageIndexerTest extends IntegrationTest
         $item = $this->getIndexQueueItem(4711);
         $pageIndexer->index($item);
 
-        // we wait to make sure the document will be available in solr
-        $this->waitToBeVisibleInSolr($core);
+        // we wait to make sure the document will be available in meilisearch
+        $this->waitToBeVisibleInMeilisearch($core);
 
-        $solrContent = json_decode(
-            file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/' . $core . '/select?q=*:*&sort=access%20asc'),
+        $meilisearchContent = json_decode(
+            file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/' . $core . '/select?q=*:*&sort=access%20asc'),
             true
         );
 
-        self::assertEquals($expectedNumFound, $solrContent['response']['numFound'] ?? 0, 'Could not index documents into Solr');
+        self::assertEquals($expectedNumFound, $meilisearchContent['response']['numFound'] ?? 0, 'Could not index documents into Meilisearch');
         foreach ($expectedAccessFieldValues as $index => $expectedAccessFieldValue) {
             self::assertEquals(
                 $expectedAccessFieldValue,
-                $solrContent['response']['docs'][$index]['access'][0] ?? '',
+                $meilisearchContent['response']['docs'][$index]['access'][0] ?? '',
                 'Wrong access settings document ' . ($index + 1)
             );
         }
         foreach ($expectedContents as $index => $expectedContent) {
             self::assertEquals(
                 $expectedContent,
-                $solrContent['response']['docs'][$index]['content'] ?? '',
+                $meilisearchContent['response']['docs'][$index]['content'] ?? '',
                 'Wrong content in document ' . ($index + 1)
             );
         }
     }
 
     /**
-     * Data provider for canIndexPageWithAccessProtectedContentIntoSolr
+     * Data provider for canIndexPageWithAccessProtectedContentIntoMeilisearch
      */
-    public function canIndexPageWithAccessProtectedContentIntoSolrDataProvider(): Traversable
+    public function canIndexPageWithAccessProtectedContentIntoMeilisearchDataProvider(): Traversable
     {
         yield 'protected page' => [
             'can_index_access_protected_page',

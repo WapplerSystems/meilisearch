@@ -285,7 +285,7 @@ class CoreOptimizationModuleController extends AbstractModuleController
     }
 
     /**
-     * Delete complete synonym list form solr
+     * Delete complete synonym list form meilisearch
      */
     protected function deleteAllSynonyms(): bool
     {

@@ -31,7 +31,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class SearchRequest
 {
-    public const DEFAULT_PLUGIN_NAMESPACE = 'tx_solr';
+    public const DEFAULT_PLUGIN_NAMESPACE = 'tx_meilisearch';
 
     protected string $id;
 
@@ -45,10 +45,10 @@ class SearchRequest
      * Default values, overwritten in the constructor with the namespaced arguments
      */
     protected array $persistentArgumentsPaths = [
-        'tx_solr:q',
-        'tx_solr:filter',
-        'tx_solr:sort',
-        'tx_solr:groupPage',
+        'tx_meilisearch:q',
+        'tx_meilisearch:filter',
+        'tx_meilisearch:sort',
+        'tx_meilisearch:groupPage',
     ];
 
     protected bool $stateChanged = false;

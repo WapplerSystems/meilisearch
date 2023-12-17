@@ -3,26 +3,26 @@
     "status":0,
     "QTime":0},
   "schema":{
-    "name":"tx_solr-6-0-0--20161122",
+    "name":"tx_meilisearch-6-0-0--20161122",
     "version":1.6,
     "uniqueKey":"id",
     "fieldTypes":[{
         "name":"binary",
-        "class":"solr.BinaryField"},
+        "class":"meilisearch.BinaryField"},
       {
         "name":"boolean",
-        "class":"solr.BoolField",
+        "class":"meilisearch.BoolField",
         "omitNorms":true,
         "sortMissingLast":true},
       {
         "name":"currency",
-        "class":"solr.CurrencyField",
+        "class":"meilisearch.CurrencyField",
         "currencyConfig":"currency.xml",
         "defaultCurrency":"USD",
         "precisionStep":"8"},
       {
         "name":"date",
-        "class":"solr.TrieDateField",
+        "class":"meilisearch.TrieDateField",
         "omitNorms":true,
         "useDocValuesAsStored":false,
         "positionIncrementGap":"0",
@@ -30,83 +30,83 @@
         "precisionStep":"0"},
       {
         "name":"double",
-        "class":"solr.TrieDoubleField",
+        "class":"meilisearch.TrieDoubleField",
         "omitNorms":true,
         "useDocValuesAsStored":false,
         "positionIncrementGap":"0",
         "precisionStep":"0"},
       {
         "name":"float",
-        "class":"solr.TrieFloatField",
+        "class":"meilisearch.TrieFloatField",
         "omitNorms":true,
         "useDocValuesAsStored":false,
         "positionIncrementGap":"0",
         "precisionStep":"0"},
       {
         "name":"ignored",
-        "class":"solr.StrField",
+        "class":"meilisearch.StrField",
         "indexed":false,
         "stored":false},
       {
         "name":"integer",
-        "class":"solr.TrieIntField",
+        "class":"meilisearch.TrieIntField",
         "omitNorms":true,
         "useDocValuesAsStored":false,
         "positionIncrementGap":"0",
         "precisionStep":"0"},
       {
         "name":"location",
-        "class":"solr.LatLonType",
+        "class":"meilisearch.LatLonType",
         "subFieldSuffix":"_coordinate"},
       {
         "name":"locationRpt",
-        "class":"solr.SpatialRecursivePrefixTreeFieldType",
+        "class":"meilisearch.SpatialRecursivePrefixTreeFieldType",
         "geo":"true",
         "maxDistErr":"0.000009",
         "distErrPct":"0.025",
         "distanceUnits":"degrees"},
       {
         "name":"long",
-        "class":"solr.TrieLongField",
+        "class":"meilisearch.TrieLongField",
         "omitNorms":true,
         "useDocValuesAsStored":false,
         "positionIncrementGap":"0",
         "precisionStep":"0"},
       {
         "name":"phonetic",
-        "class":"solr.TextField",
+        "class":"meilisearch.TextField",
         "indexed":true,
         "stored":false,
         "analyzer":{
           "tokenizer":{
-            "class":"solr.StandardTokenizerFactory"},
+            "class":"meilisearch.StandardTokenizerFactory"},
           "filters":[{
-              "class":"solr.DoubleMetaphoneFilterFactory",
+              "class":"meilisearch.DoubleMetaphoneFilterFactory",
               "inject":"false"}]}},
       {
         "name":"point",
-        "class":"solr.PointType",
+        "class":"meilisearch.PointType",
         "subFieldSuffix":"_doubleS",
         "dimension":"2"},
       {
         "name":"random",
-        "class":"solr.RandomSortField",
+        "class":"meilisearch.RandomSortField",
         "indexed":true},
       {
         "name":"string",
-        "class":"solr.StrField",
+        "class":"meilisearch.StrField",
         "omitNorms":true,
         "useDocValuesAsStored":false,
         "sortMissingLast":true},
       {
         "name":"tdate",
-        "class":"solr.TrieDateField",
+        "class":"meilisearch.TrieDateField",
         "omitNorms":true,
         "positionIncrementGap":"0",
         "precisionStep":"6"},
       {
         "name":"tdouble",
-        "class":"solr.TrieDoubleField",
+        "class":"meilisearch.TrieDoubleField",
         "omitNorms":true,
         "indexed":true,
         "stored":false,
@@ -115,7 +115,7 @@
         "precisionStep":"8"},
       {
         "name":"tdouble4",
-        "class":"solr.TrieDoubleField",
+        "class":"meilisearch.TrieDoubleField",
         "omitNorms":true,
         "indexed":true,
         "stored":false,
@@ -124,13 +124,13 @@
         "precisionStep":"4"},
       {
         "name":"text",
-        "class":"solr.TextField",
+        "class":"meilisearch.TextField",
         "positionIncrementGap":"100",
         "indexAnalyzer":{
           "tokenizer":{
-            "class":"solr.WhitespaceTokenizerFactory"},
+            "class":"meilisearch.WhitespaceTokenizerFactory"},
           "filters":[{
-              "class":"solr.WordDelimiterFilterFactory",
+              "class":"meilisearch.WordDelimiterFilterFactory",
               "catenateNumbers":"1",
               "generateNumberParts":"1",
               "protected":"german/protwords.txt",
@@ -140,26 +140,26 @@
               "catenateAll":"0",
               "catenateWords":"1"},
             {
-              "class":"solr.LowerCaseFilterFactory"},
+              "class":"meilisearch.LowerCaseFilterFactory"},
             {
-              "class":"solr.ManagedSynonymGraphFilterFactory",
+              "class":"meilisearch.ManagedSynonymGraphFilterFactory",
               "managed":"german"},
             {
-              "class":"solr.ManagedStopFilterFactory",
+              "class":"meilisearch.ManagedStopFilterFactory",
               "managed":"german"},
             {
-              "class":"solr.GermanPossessiveFilterFactory"},
+              "class":"meilisearch.GermanPossessiveFilterFactory"},
             {
-              "class":"solr.SnowballPorterFilterFactory",
+              "class":"meilisearch.SnowballPorterFilterFactory",
               "language":"German",
               "protected":"german/protwords.txt"},
             {
-              "class":"solr.RemoveDuplicatesTokenFilterFactory"}]},
+              "class":"meilisearch.RemoveDuplicatesTokenFilterFactory"}]},
         "queryAnalyzer":{
           "tokenizer":{
-            "class":"solr.WhitespaceTokenizerFactory"},
+            "class":"meilisearch.WhitespaceTokenizerFactory"},
           "filters":[{
-              "class":"solr.WordDelimiterFilterFactory",
+              "class":"meilisearch.WordDelimiterFilterFactory",
               "catenateNumbers":"0",
               "generateNumberParts":"1",
               "protected":"german/protwords.txt",
@@ -169,77 +169,77 @@
               "catenateAll":"0",
               "catenateWords":"0"},
             {
-              "class":"solr.LowerCaseFilterFactory"},
+              "class":"meilisearch.LowerCaseFilterFactory"},
             {
-              "class":"solr.ManagedSynonymGraphFilterFactory",
+              "class":"meilisearch.ManagedSynonymGraphFilterFactory",
               "managed":"core_de"},
             {
-              "class":"solr.ManagedStopFilterFactory",
+              "class":"meilisearch.ManagedStopFilterFactory",
               "managed":"core_de"},
             {
-              "class":"solr.SnowballPorterFilterFactory",
+              "class":"meilisearch.SnowballPorterFilterFactory",
               "language":"German",
               "protected":"german/protwords.txt"},
             {
-              "class":"solr.RemoveDuplicatesTokenFilterFactory"}]}},
+              "class":"meilisearch.RemoveDuplicatesTokenFilterFactory"}]}},
       {
         "name":"textPath",
-        "class":"solr.TextField",
+        "class":"meilisearch.TextField",
         "positionIncrementGap":"100",
         "analyzer":{
           "tokenizer":{
-            "class":"solr.PathHierarchyTokenizerFactory"}}},
+            "class":"meilisearch.PathHierarchyTokenizerFactory"}}},
       {
         "name":"textSort",
-        "class":"solr.TextField",
+        "class":"meilisearch.TextField",
         "omitNorms":true,
         "sortMissingLast":true,
         "analyzer":{
           "tokenizer":{
-            "class":"solr.KeywordTokenizerFactory"},
+            "class":"meilisearch.KeywordTokenizerFactory"},
           "filters":[{
-              "class":"solr.TrimFilterFactory"}]}},
+              "class":"meilisearch.TrimFilterFactory"}]}},
       {
         "name":"textSpell",
-        "class":"solr.TextField",
+        "class":"meilisearch.TextField",
         "omitNorms":true,
         "positionIncrementGap":"100",
         "indexAnalyzer":{
           "tokenizer":{
-            "class":"solr.StandardTokenizerFactory"},
+            "class":"meilisearch.StandardTokenizerFactory"},
           "filters":[{
-              "class":"solr.LowerCaseFilterFactory"},
+              "class":"meilisearch.LowerCaseFilterFactory"},
             {
-              "class":"solr.ManagedStopFilterFactory",
+              "class":"meilisearch.ManagedStopFilterFactory",
               "managed":"core_de"},
             {
-              "class":"solr.StandardFilterFactory"},
+              "class":"meilisearch.StandardFilterFactory"},
             {
-              "class":"solr.RemoveDuplicatesTokenFilterFactory"}]},
+              "class":"meilisearch.RemoveDuplicatesTokenFilterFactory"}]},
         "queryAnalyzer":{
           "tokenizer":{
-            "class":"solr.StandardTokenizerFactory"},
+            "class":"meilisearch.StandardTokenizerFactory"},
           "filters":[{
-              "class":"solr.LowerCaseFilterFactory"},
+              "class":"meilisearch.LowerCaseFilterFactory"},
             {
-              "class":"solr.ManagedSynonymGraphFilterFactory",
+              "class":"meilisearch.ManagedSynonymGraphFilterFactory",
               "managed":"core_de"},
             {
-              "class":"solr.ManagedStopFilterFactory",
+              "class":"meilisearch.ManagedStopFilterFactory",
               "managed":"core_de"},
             {
-              "class":"solr.StandardFilterFactory"},
+              "class":"meilisearch.StandardFilterFactory"},
             {
-              "class":"solr.RemoveDuplicatesTokenFilterFactory"}]}},
+              "class":"meilisearch.RemoveDuplicatesTokenFilterFactory"}]}},
       {
         "name":"textTight",
-        "class":"solr.TextField",
+        "class":"meilisearch.TextField",
         "positionIncrementGap":"100",
         "analyzer":{
           "tokenizer":{
-            "class":"solr.WhitespaceTokenizerFactory"},
+            "class":"meilisearch.WhitespaceTokenizerFactory"},
           "filters":[{
-              "class":"solr.WordDelimiterFilterFactory",
+              "class":"meilisearch.WordDelimiterFilterFactory",
               "catenateNumbers":"1",
               "generateNumberParts":"0",
               "protected":"german/protwords.txt",
@@ -248,35 +248,35 @@
               "catenateAll":"0",
               "catenateWords":"1"},
             {
-              "class":"solr.LowerCaseFilterFactory"},
+              "class":"meilisearch.LowerCaseFilterFactory"},
             {
-              "class":"solr.ManagedSynonymGraphFilterFactory",
+              "class":"meilisearch.ManagedSynonymGraphFilterFactory",
               "managed":"core_de"},
             {
-              "class":"solr.ManagedStopFilterFactory",
+              "class":"meilisearch.ManagedStopFilterFactory",
               "managed":"core_de"},
             {
-              "class":"solr.GermanPossessiveFilterFactory"},
+              "class":"meilisearch.GermanPossessiveFilterFactory"},
             {
-              "class":"solr.SnowballPorterFilterFactory",
+              "class":"meilisearch.SnowballPorterFilterFactory",
               "language":"German",
               "protected":"german/protwords.txt"},
             {
-              "class":"solr.RemoveDuplicatesTokenFilterFactory"}]}},
+              "class":"meilisearch.RemoveDuplicatesTokenFilterFactory"}]}},
       {
         "name":"textWhiteSpaceTokenized",
-        "class":"solr.TextField",
+        "class":"meilisearch.TextField",
         "positionIncrementGap":"100",
         "analyzer":{
           "tokenizer":{
-            "class":"solr.WhitespaceTokenizerFactory"},
+            "class":"meilisearch.WhitespaceTokenizerFactory"},
           "filters":[{
-              "class":"solr.LowerCaseFilterFactory"},
+              "class":"meilisearch.LowerCaseFilterFactory"},
             {
-              "class":"solr.RemoveDuplicatesTokenFilterFactory"}]}},
+              "class":"meilisearch.RemoveDuplicatesTokenFilterFactory"}]}},
       {
         "name":"tfloat",
-        "class":"solr.TrieFloatField",
+        "class":"meilisearch.TrieFloatField",
         "omitNorms":true,
         "indexed":true,
         "stored":false,
@@ -285,7 +285,7 @@
         "precisionStep":"8"},
       {
         "name":"tint",
-        "class":"solr.TrieIntField",
+        "class":"meilisearch.TrieIntField",
         "omitNorms":true,
         "indexed":true,
         "stored":false,
@@ -294,7 +294,7 @@
         "precisionStep":"8"},
       {
         "name":"tlong",
-        "class":"solr.TrieLongField",
+        "class":"meilisearch.TrieLongField",
         "omitNorms":true,
         "indexed":true,
         "stored":false,

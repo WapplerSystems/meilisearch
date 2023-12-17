@@ -78,7 +78,7 @@
     },
     "facet_fields": {
       "type": [
-        "tx_solr_file", 3
+        "tx_meilisearch_file", 3
       ],
       "category_stringM": [
         "Huisartsen", 2,

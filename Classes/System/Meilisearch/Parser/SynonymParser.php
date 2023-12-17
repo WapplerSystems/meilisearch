@@ -16,14 +16,14 @@
 namespace WapplerSystems\Meilisearch\System\Meilisearch\Parser;
 
 /**
- * Class to parse the synonyms from a solr response.
+ * Class to parse the synonyms from a meilisearch response.
  *
  * @author Timo Hund <timo.hund@dkd.de>
  */
 class SynonymParser
 {
     /**
-     * Parse the solr synonyms response from a json string to an array.
+     * Parse the meilisearch synonyms response from a json string to an array.
      */
     public function parseJson(string $baseWord, string $jsonString): array
     {

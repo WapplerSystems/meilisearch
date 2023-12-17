@@ -13,9 +13,9 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace WapplerSystems\Meilisearch\Tests\Integration\System\Solr\Service;
+namespace WapplerSystems\Meilisearch\Tests\Integration\System\Meilisearch\Service;
 
-use WapplerSystems\Meilisearch\System\Solr\Service\SolrAdminService;
+use WapplerSystems\Meilisearch\System\Meilisearch\Service\MeilisearchAdminService;
 use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use Solarium\Client;
 use Solarium\Core\Client\Adapter\Curl;
@@ -23,16 +23,16 @@ use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Testcase to check if the solr admin service is working as expected.
+ * Testcase to check if the meilisearch admin service is working as expected.
  *
  * @author Timo Hund
  */
-class SolrAdminServiceTest extends IntegrationTest
+class MeilisearchAdminServiceTest extends IntegrationTest
 {
     /**
-     * @var SolrAdminService
+     * @var MeilisearchAdminService
      */
-    protected $solrAdminService;
+    protected $meilisearchAdminService;
 
     protected function setUp(): void
     {
@@ -45,10 +45,10 @@ class SolrAdminServiceTest extends IntegrationTest
             $eventDispatcher
         );
         $client->clearEndpoints();
-        $solrConnectionInfo = $this->getSolrConnectionInfo();
-        $client->createEndpoint(['host' => $solrConnectionInfo['host'], 'port' => $solrConnectionInfo['port'], 'path' => '/', 'core' => 'core_en', 'key' => 'admin'], true);
+        $meilisearchConnectionInfo = $this->getMeilisearchConnectionInfo();
+        $client->createEndpoint(['host' => $meilisearchConnectionInfo['host'], 'port' => $meilisearchConnectionInfo['port'], 'path' => '/', 'core' => 'core_en', 'key' => 'admin'], true);
 
-        $this->solrAdminService = GeneralUtility::makeInstance(SolrAdminService::class, $client);
+        $this->meilisearchAdminService = GeneralUtility::makeInstance(MeilisearchAdminService::class, $client);
     }
 
     /**
@@ -77,23 +77,23 @@ class SolrAdminServiceTest extends IntegrationTest
      */
     public function canAddAndDeleteSynonym($baseWord, $synonyms = [])
     {
-        $this->solrAdminService->deleteSynonym($baseWord);
-        $this->solrAdminService->reloadCore();
+        $this->meilisearchAdminService->deleteSynonym($baseWord);
+        $this->meilisearchAdminService->reloadCore();
 
-        $synonymsBeforeAdd = $this->solrAdminService->getSynonyms($baseWord);
+        $synonymsBeforeAdd = $this->meilisearchAdminService->getSynonyms($baseWord);
         self::assertEquals([], $synonymsBeforeAdd, 'Synonyms was not empty');
 
-        $this->solrAdminService->addSynonym($baseWord, $synonyms);
-        $this->solrAdminService->reloadCore();
+        $this->meilisearchAdminService->addSynonym($baseWord, $synonyms);
+        $this->meilisearchAdminService->reloadCore();
 
-        $synonymsAfterAdd = $this->solrAdminService->getSynonyms($baseWord);
+        $synonymsAfterAdd = $this->meilisearchAdminService->getSynonyms($baseWord);
 
         self::assertEquals($synonyms, $synonymsAfterAdd, 'Could not retrieve synonym after adding');
 
-        $this->solrAdminService->deleteSynonym($baseWord);
-        $this->solrAdminService->reloadCore();
+        $this->meilisearchAdminService->deleteSynonym($baseWord);
+        $this->meilisearchAdminService->reloadCore();
 
-        $synonymsAfterRemove = $this->solrAdminService->getSynonyms($baseWord);
+        $synonymsAfterRemove = $this->meilisearchAdminService->getSynonyms($baseWord);
         self::assertEquals([], $synonymsAfterRemove, 'Synonym was not removed');
     }
 
@@ -114,33 +114,33 @@ class SolrAdminServiceTest extends IntegrationTest
      */
     public function canAddStopWord($stopWord)
     {
-        $stopWords = $this->solrAdminService->getStopWords();
+        $stopWords = $this->meilisearchAdminService->getStopWords();
 
         self::assertNotContains($stopWord, $stopWords, 'Stopwords are not empty after initializing');
 
-        $this->solrAdminService->addStopWords($stopWord);
-        $this->solrAdminService->reloadCore();
+        $this->meilisearchAdminService->addStopWords($stopWord);
+        $this->meilisearchAdminService->reloadCore();
 
-        $stopWordsAfterAdd = $this->solrAdminService->getStopWords();
+        $stopWordsAfterAdd = $this->meilisearchAdminService->getStopWords();
 
         self::assertContains($stopWord, $stopWordsAfterAdd, 'Stopword was not added');
 
-        $this->solrAdminService->deleteStopWord($stopWord);
-        $this->solrAdminService->reloadCore();
+        $this->meilisearchAdminService->deleteStopWord($stopWord);
+        $this->meilisearchAdminService->reloadCore();
 
-        $stopWordsAfterDelete = $this->solrAdminService->getStopWords();
+        $stopWordsAfterDelete = $this->meilisearchAdminService->getStopWords();
         self::assertNotContains($stopWord, $stopWordsAfterDelete, 'Stopwords are not empty after removing');
     }
 
     /**
-     * Check if the default stopswords are stored in the solr server.
+     * Check if the default stopswords are stored in the meilisearch server.
      *
      * @test
      */
     public function containsDefaultStopWord()
     {
-        $stopWordsInSolr = $this->solrAdminService->getStopWords();
-        self::assertContains('and', $stopWordsInSolr, 'Default stopword and was not present');
+        $stopWordsInMeilisearch = $this->meilisearchAdminService->getStopWords();
+        self::assertContains('and', $stopWordsInMeilisearch, 'Default stopword and was not present');
     }
 
     /**
@@ -148,8 +148,8 @@ class SolrAdminServiceTest extends IntegrationTest
      */
     public function canGetSystemInformation()
     {
-        $informationResponse = $this->solrAdminService->getSystemInformation();
-        self::assertSame(200, $informationResponse->getHttpStatus(), 'Could not get information response from solr server');
+        $informationResponse = $this->meilisearchAdminService->getSystemInformation();
+        self::assertSame(200, $informationResponse->getHttpStatus(), 'Could not get information response from meilisearch server');
     }
 
     /**
@@ -157,7 +157,7 @@ class SolrAdminServiceTest extends IntegrationTest
      */
     public function canGetPingRoundtrimRunTime()
     {
-        $pingRuntime = $this->solrAdminService->getPingRoundTripRuntime();
+        $pingRuntime = $this->meilisearchAdminService->getPingRoundTripRuntime();
         self::assertGreaterThan(0, $pingRuntime, 'Ping runtime should be larger then 0');
         self::assertTrue(is_float($pingRuntime), 'Ping runtime should be an integer');
     }
@@ -165,10 +165,10 @@ class SolrAdminServiceTest extends IntegrationTest
     /**
      * @test
      */
-    public function canGetSolrServiceVersion()
+    public function canGetMeilisearchServiceVersion()
     {
-        $solrServerVersion = $this->solrAdminService->getSolrServerVersion();
-        $isVersionHigherSix = version_compare('6.0.0', $solrServerVersion, '<');
+        $meilisearchServerVersion = $this->meilisearchAdminService->getMeilisearchServerVersion();
+        $isVersionHigherSix = version_compare('6.0.0', $meilisearchServerVersion, '<');
         self::assertTrue($isVersionHigherSix, 'Expecting to run on version larger then 6.0.0');
     }
 
@@ -177,7 +177,7 @@ class SolrAdminServiceTest extends IntegrationTest
      */
     public function canReloadCore()
     {
-        $result = $this->solrAdminService->reloadCore();
+        $result = $this->meilisearchAdminService->reloadCore();
         self::assertSame(200, $result->getHttpStatus(), 'Reload core did not responde with a 200 ok status');
     }
 
@@ -186,7 +186,7 @@ class SolrAdminServiceTest extends IntegrationTest
      */
     public function canGetPluginsInformation()
     {
-        $result = $this->solrAdminService->getPluginsInformation();
+        $result = $this->meilisearchAdminService->getPluginsInformation();
         self::assertSame(0, $result->responseHeader->status);
         self::assertSame(2, count($result));
     }
@@ -204,10 +204,10 @@ class SolrAdminServiceTest extends IntegrationTest
             $eventDispatcher
         );
         $client->clearEndpoints();
-        $solrConnectionInfo = $this->getSolrConnectionInfo();
-        $client->createEndpoint(['host' => $solrConnectionInfo['host'], 'port' => $solrConnectionInfo['port'], 'path' => '/', 'core' => 'core_de', 'key' => 'admin'], true);
+        $meilisearchConnectionInfo = $this->getMeilisearchConnectionInfo();
+        $client->createEndpoint(['host' => $meilisearchConnectionInfo['host'], 'port' => $meilisearchConnectionInfo['port'], 'path' => '/', 'core' => 'core_de', 'key' => 'admin'], true);
 
-        $this->solrAdminService = GeneralUtility::makeInstance(SolrAdminService::class, $client);
-        self::assertSame('core_de', $this->solrAdminService->getSchema()->getManagedResourceId(), 'Could not get the id of managed resources from core.');
+        $this->meilisearchAdminService = GeneralUtility::makeInstance(MeilisearchAdminService::class, $client);
+        self::assertSame('core_de', $this->meilisearchAdminService->getSchema()->getManagedResourceId(), 'Could not get the id of managed resources from core.');
     }
 }

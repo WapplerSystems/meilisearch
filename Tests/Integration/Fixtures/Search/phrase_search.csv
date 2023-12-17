@@ -8,14 +8,14 @@
 ,7,1,0,1,0,"/bigram-phrases","Bigraming phrases strip down the sentence to the two-word combinations."
 ,8,1,0,1,0,"/trigram-phrases","Trigraming phrases strip down the sentence to triplets phrases"
 ,9,1,0,1,0,"/difference-to-bi-is-tri","Difference to bi is tri, which means building of triplets phrases."
-,10,1,0,1,0,"/hello-solr-wolrd","Hello Solr Wolrd"
+,10,1,0,1,0,"/hello-meilisearch-wolrd","Hello Meilisearch Wolrd"
 ,11,1,0,1,0,"/hello-test-wolrd","Hello Test Wolrd"
-,12,1,0,1,0,"/test-hello-solr-world","Test Hello Solr World"
+,12,1,0,1,0,"/test-hello-meilisearch-world","Test Hello Meilisearch World"
 ,13,1,0,1,0,"/test-hello-search-world","Test Hello Search World"
 ,14,1,0,1,0,"/hello-the-test-search-world","Hello the Test Search World"
 ,15,1,0,1,0,"/hello-world-for-phrase-searching","Hello World for phrase searching"
-,16,1,0,1,0,"/about","Solr is blazing-fast and open source enterprise search platform built on Apache Lucene"
-"tx_solr_indexqueue_item",
+,16,1,0,1,0,"/about","Meilisearch is blazing-fast and open source enterprise search platform built on Apache Lucene"
+"tx_meilisearch_indexqueue_item",
 ,"uid","root","item_type","item_uid","indexing_configuration","changed","indexed","has_indexing_properties","indexing_priority","indexed","errors"
 ,2,1,"pages",2,"pages",1449151778,0,0,0,0,0
 ,3,1,"pages",3,"pages",1449151778,0,0,0,0,0

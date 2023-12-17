@@ -49,7 +49,7 @@ class PageUriBuilderTest extends SetUpUnitTestCase
 
         $uriBuilder = GeneralUtility::makeInstance(PageUriBuilder::class, $loggerMock, $siteFinderMock, new NoopEventDispatcher());
         $uri = $uriBuilder->getPageIndexingUriFromPageItemAndLanguageId($itemMock, 2, 'foo', ['frontendDataHelper.' => ['host' => 'www.secondsite.de']]);
-        self::assertSame('http://www.secondsite.de/en/test', $uri, 'Solr site strategy generated unexpected uri');
+        self::assertSame('http://www.secondsite.de/en/test', $uri, 'Meilisearch site strategy generated unexpected uri');
     }
 
     /**
@@ -67,7 +67,7 @@ class PageUriBuilderTest extends SetUpUnitTestCase
 
         $uriBuilder = GeneralUtility::makeInstance(PageUriBuilder::class, $loggerMock, $siteFinderMock, new NoopEventDispatcher());
         $uri = $uriBuilder->getPageIndexingUriFromPageItemAndLanguageId($itemMock, 2, 'foo', ['frontendDataHelper.' => ['scheme' => 'https']]);
-        self::assertSame('https://www.site.de/en/test', $uri, 'Solr site strategy generated unexpected uri');
+        self::assertSame('https://www.site.de/en/test', $uri, 'Meilisearch site strategy generated unexpected uri');
     }
 
     protected function getSiteFinderMock(array $pageRecord = []): SiteFinder

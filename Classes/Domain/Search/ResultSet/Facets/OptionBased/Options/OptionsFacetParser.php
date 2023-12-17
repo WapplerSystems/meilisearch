@@ -93,7 +93,7 @@ class OptionsFacetParser extends AbstractFacetParser
         }
 
         // after all options have been created we apply a manualSortOrder if configured
-        // the sortBy (lex,..) is done by the solr server and triggered by the query, therefore it does not
+        // the sortBy (lex,..) is done by the meilisearch server and triggered by the query, therefore it does not
         // need to be handled in the frontend.
         $this->applyManualSortOrder($facet, $facetConfiguration);
         $this->applyReverseOrder($facet, $facetConfiguration);

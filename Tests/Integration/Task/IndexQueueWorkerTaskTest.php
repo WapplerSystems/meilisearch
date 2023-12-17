@@ -22,7 +22,7 @@ use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * TestCase to check if we can index from index queue worker task into a solr server
+ * TestCase to check if we can index from index queue worker task into a meilisearch server
  *
  * @author Timo Schmidt
  */
@@ -44,7 +44,7 @@ class IndexQueueWorkerTaskTest extends IntegrationTest
     {
         parent::setUp();
         $this->indexQueue = GeneralUtility::makeInstance(Queue::class);
-        $this->writeDefaultSolrTestSiteConfiguration();
+        $this->writeDefaultMeilisearchTestSiteConfiguration();
     }
 
     /**

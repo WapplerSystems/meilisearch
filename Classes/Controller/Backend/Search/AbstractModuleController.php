@@ -64,7 +64,7 @@ abstract class AbstractModuleController extends ActionController
         protected readonly ModuleDataStorageService $moduleDataStorageService,
         protected readonly SiteRepository $siteRepository,
         protected readonly SiteFinder $siteFinder,
-        protected readonly ConnectionManager $solrConnectionManager,
+        protected readonly ConnectionManager $meilisearchConnectionManager,
         protected QueueInterface $indexQueue,
         protected ?int $selectedPageUID = null,
     ) {
@@ -124,9 +124,9 @@ abstract class AbstractModuleController extends ActionController
      */
     protected function autoSelectFirstSiteAndRootPageWhenOnlyOneSiteIsAvailable(): bool
     {
-        $solrConfiguredSites = $this->siteRepository->getAvailableSites();
+        $meilisearchConfiguredSites = $this->siteRepository->getAvailableSites();
         $availableSites = $this->siteFinder->getAllSites();
-        if (count($solrConfiguredSites) === 1 && count($availableSites) === 1) {
+        if (count($meilisearchConfiguredSites) === 1 && count($availableSites) === 1) {
             $this->selectedSite = $this->siteRepository->getFirstAvailableSite();
 
             // we only overwrite the selected pageUid when no id was passed
@@ -195,7 +195,7 @@ abstract class AbstractModuleController extends ActionController
         }
 
         $this->initializeSelectedMeilisearchCoreConnection();
-        $cores = $this->solrConnectionManager->getConnectionsBySite($site);
+        $cores = $this->meilisearchConnectionManager->getConnectionsBySite($site);
         foreach ($cores as $core) {
             $coreAdmin = $core->getAdminService();
             $menuItem = $this->coreSelectorMenu->makeMenuItem();
@@ -230,7 +230,7 @@ abstract class AbstractModuleController extends ActionController
         $this->indexQueue->deleteItemsBySite($this->selectedSite);
         $this->addFlashMessage(
             LocalizationUtility::translate(
-                'solr.backend.index_administration.success.queue_emptied',
+                'meilisearch.backend.index_administration.success.queue_emptied',
                 'Meilisearch',
                 [$this->selectedSite->getLabel()]
             )
@@ -266,40 +266,40 @@ abstract class AbstractModuleController extends ActionController
     }
 
     /**
-     * Initializes the solr core connection considerately to the components state.
+     * Initializes the meilisearch core connection considerately to the components state.
      * Uses and persists default core connection if persisted core in Site does not exist.
      */
     private function initializeSelectedMeilisearchCoreConnection(): void
     {
         $moduleData = $this->moduleDataStorageService->loadModuleData();
 
-        $solrCoreConnections = $this->solrConnectionManager->getConnectionsBySite($this->selectedSite);
+        $meilisearchCoreConnections = $this->meilisearchConnectionManager->getConnectionsBySite($this->selectedSite);
         $currentMeilisearchCorePath = $moduleData->getCore();
         if (empty($currentMeilisearchCorePath)) {
-            $this->initializeFirstAvailableMeilisearchCoreConnection($solrCoreConnections, $moduleData);
+            $this->initializeFirstAvailableMeilisearchCoreConnection($meilisearchCoreConnections, $moduleData);
             return;
         }
-        foreach ($solrCoreConnections as $solrCoreConnection) {
-            if ($solrCoreConnection->getAdminService()->getCorePath() == $currentMeilisearchCorePath) {
-                $this->selectedMeilisearchCoreConnection = $solrCoreConnection;
+        foreach ($meilisearchCoreConnections as $meilisearchCoreConnection) {
+            if ($meilisearchCoreConnection->getAdminService()->getCorePath() == $currentMeilisearchCorePath) {
+                $this->selectedMeilisearchCoreConnection = $meilisearchCoreConnection;
             }
         }
-        if (!$this->selectedMeilisearchCoreConnection instanceof MeilisearchCoreConnection && count($solrCoreConnections) > 0) {
-            $this->initializeFirstAvailableMeilisearchCoreConnection($solrCoreConnections, $moduleData);
+        if (!$this->selectedMeilisearchCoreConnection instanceof MeilisearchCoreConnection && count($meilisearchCoreConnections) > 0) {
+            $this->initializeFirstAvailableMeilisearchCoreConnection($meilisearchCoreConnections, $moduleData);
             $message = LocalizationUtility::translate('coreselector_switched_to_default_core', 'meilisearch', [$currentMeilisearchCorePath, $this->selectedSite->getLabel(), $this->selectedMeilisearchCoreConnection->getAdminService()->getCorePath()]);
             $this->addFlashMessage($message, '', ContextualFeedbackSeverity::NOTICE);
         }
     }
 
     /**
-     * @param MeilisearchCoreConnection[] $solrCoreConnections
+     * @param MeilisearchCoreConnection[] $meilisearchCoreConnections
      */
-    private function initializeFirstAvailableMeilisearchCoreConnection(array $solrCoreConnections, $moduleData): void
+    private function initializeFirstAvailableMeilisearchCoreConnection(array $meilisearchCoreConnections, $moduleData): void
     {
-        if (empty($solrCoreConnections)) {
+        if (empty($meilisearchCoreConnections)) {
             return;
         }
-        $this->selectedMeilisearchCoreConnection = array_shift($solrCoreConnections);
+        $this->selectedMeilisearchCoreConnection = array_shift($meilisearchCoreConnections);
         $moduleData->setCore($this->selectedMeilisearchCoreConnection->getAdminService()->getCorePath());
         $this->moduleDataStorageService->persistModuleData($moduleData);
     }

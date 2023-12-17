@@ -28,7 +28,7 @@ class RequirementsService
     /**
      * Checks if facet meets all requirements.
      *
-     * Evaluates configuration in "plugin.tx_solr.search.faceting.facets.[facetName].requirements",
+     * Evaluates configuration in "plugin.tx_meilisearch.search.faceting.facets.[facetName].requirements",
      */
     public function getAllRequirementsMet(AbstractFacet $facet): bool
     {

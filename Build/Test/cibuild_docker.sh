@@ -5,17 +5,17 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
 
-## DEFAULT VOLUME EXPORT from original Solr Dockerfile:
-# see Dockerfile in desired version https://github.com/docker-solr/docker-solr/blob/abb53a7/8.5/Dockerfile
-DEFAULT_IMAGE_VOLUME_EXPORT_PATH="/var/solr"
+## DEFAULT VOLUME EXPORT from original Meilisearch Dockerfile:
+# see Dockerfile in desired version https://github.com/docker-meilisearch/docker-meilisearch/blob/abb53a7/8.5/Dockerfile
+DEFAULT_IMAGE_VOLUME_EXPORT_PATH="/var/meilisearch"
 
 ## Local docker things.
-LOCAL_VOLUME_PATH=${HOME}"/solrcivolume"
-LOCAL_VOLUME_NAME="solrci-volume"
-LOCAL_IMAGE_NAME="solrci-image:latest"
-LOCAL_CONTAINER_NAME="solrci-container"
+LOCAL_VOLUME_PATH=${HOME}"/meilisearchcivolume"
+LOCAL_VOLUME_NAME="meilisearchci-volume"
+LOCAL_IMAGE_NAME="meilisearchci-image:latest"
+LOCAL_CONTAINER_NAME="meilisearchci-container"
 
-## In Schema configuration available solr cores
+## In Schema configuration available meilisearch cores
 AVAILABLE_CORES=(
   "core_de"
   "core_en"
@@ -93,7 +93,7 @@ isHTTP200 ()
   return 1
 }
 
-isPathOwnedBySolr ()
+isPathOwnedByMeilisearch ()
 {
   local status=0
   for path in "$@"
@@ -111,13 +111,13 @@ run_container ()
   echo -n "Creating testvolume"
   prettyPrintOrExitOnError $? "$(mkdir -p "$LOCAL_VOLUME_PATH" 2>&1)"
 
-  echo -n "Add permissions to solr group"
+  echo -n "Add permissions to meilisearch group"
   prettyPrintOrExitOnError $? "$(sudo chmod g+w "$LOCAL_VOLUME_PATH" 2>&1)"
 
-  echo -n "Changing group of volume to solr user"
+  echo -n "Changing group of volume to meilisearch user"
   prettyPrintOrExitOnError $? "$(sudo chown 8983:8983 "$LOCAL_VOLUME_PATH" 2>&1)"
 
-  echo -n "Create named volume inside of ~/solrcivolume"
+  echo -n "Create named volume inside of ~/meilisearchcivolume"
   prettyPrintOrExitOnError $? "$(docker volume create --name "$LOCAL_VOLUME_NAME" --opt type=none --opt device="$LOCAL_VOLUME_PATH" --opt o=bind 2>&1)"
 
   echo -n "Starting container"
@@ -148,8 +148,8 @@ cleanUp ()
 
 isCoreAvailable ()
 {
-  isHTTP200 "http://localhost:8998/solr/${1}/select" || { return 1; }
-  isHTTP200 "http://localhost:8998/solr/${1}/mlt?q=*" || { return 1; }
+  isHTTP200 "http://localhost:8998/meilisearch/${1}/select" || { return 1; }
+  isHTTP200 "http://localhost:8998/meilisearch/${1}/mlt?q=*" || { return 1; }
   return 0;
 }
 
@@ -164,7 +164,7 @@ isCoreUnavailable ()
 pingCore ()
 {
   # shellcheck disable=SC2015
-  isHTTP200 "http://localhost:8998/solr/${1}/admin/ping" && { return 0; } || { return 1; }
+  isHTTP200 "http://localhost:8998/meilisearch/${1}/admin/ping" && { return 0; } || { return 1; }
 }
 
 getExpandedListOfPathsAsSudo ()
@@ -177,7 +177,7 @@ getExpandedListOfPathsAsSudo ()
   local paths=(
     "${1}"/data
     "${1}"/data/data
-    "${1}"/data/configsets/ext_solr_*/conf/
+    "${1}"/data/configsets/ext_meilisearch_*/conf/
     "${1}"/data/configsets/*/conf/_schema_analysis*.json
   )
   echo "${paths[@]}"
@@ -195,7 +195,7 @@ assertVolumeExportHasNotBeenChanged ()
   fi
 }
 
-assertDataPathIsCreatedByApacheSolr ()
+assertDataPathIsCreatedByApacheMeilisearch ()
 {
   local DATA_PATH
   DATA_PATH="$LOCAL_VOLUME_PATH""/data/data"
@@ -204,7 +204,7 @@ assertDataPathIsCreatedByApacheSolr ()
     ((iteration++))
     # wait 10 seconds(80 times 0.125s)
     if [[ $iteration -gt 80 ]] ; then
-      echo -ne "${RED}"'\nTimeout by awaiting of data directory.\nApache Solr would normally have to do this.\n\n'"${NC}"
+      echo -ne "${RED}"'\nTimeout by awaiting of data directory.\nApache Meilisearch would normally have to do this.\n\n'"${NC}"
       cleanUp
       exit 1;
     fi
@@ -260,14 +260,14 @@ assertAllCoresAreQueriable ()
   done
 }
 
-assertNecessaryPathsAreOwnedBySolr ()
+assertNecessaryPathsAreOwnedByMeilisearch ()
 {
-  echo -e "\nCheck paths are owned by solr(8983):"
+  echo -e "\nCheck paths are owned by meilisearch(8983):"
   local paths
   # shellcheck disable=SC2207
   paths=($(sudo /bin/bash -c "$(declare -f getExpandedListOfPathsAsSudo); getExpandedListOfPathsAsSudo $LOCAL_VOLUME_PATH"))
 
-  isPathOwnedBySolr "${paths[@]}" || { echo -e "${RED}"'\nThe image has files, which are not owned by solr(8983) user.\n Please fix this issue.'"${NC}"; cleanUp; exit 1; }
+  isPathOwnedByMeilisearch "${paths[@]}" || { echo -e "${RED}"'\nThe image has files, which are not owned by meilisearch(8983) user.\n Please fix this issue.'"${NC}"; cleanUp; exit 1; }
 }
 
 assertCoresAreSwitchableViaEnvVar ()
@@ -323,8 +323,8 @@ assertAllCoresAreUp
 
 assertAllCoresAreQueriable
 
-assertDataPathIsCreatedByApacheSolr
-assertNecessaryPathsAreOwnedBySolr
+assertDataPathIsCreatedByApacheMeilisearch
+assertNecessaryPathsAreOwnedByMeilisearch
 
 assertCoresAreSwitchableViaEnvVar
 

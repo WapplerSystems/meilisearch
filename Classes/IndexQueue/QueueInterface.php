@@ -203,7 +203,7 @@ interface QueueInterface
      *
      * @param Site $site TYPO3 site
      * @param int $limit Number of items to get from the queue
-     * @return ItemInterface[] Items to index to the given solr server
+     * @return ItemInterface[] Items to index to the given meilisearch server
      */
     public function getItemsToIndex(Site $site, int $limit = 50): array;
 

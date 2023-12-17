@@ -1,5 +1,5 @@
 plugin.tx_meilisearch {
-  # cat=meilisearch: basic/10/enable; type=boolean; label=Enable/disable Solr extension: EXT:meilisearch should only be enabled for relevant sys_languages, to avoid unnecessary connections and overwritten contents.
+  # cat=meilisearch: basic/10/enable; type=boolean; label=Enable/disable Meilisearch extension: EXT:meilisearch should only be enabled for relevant sys_languages, to avoid unnecessary connections and overwritten contents.
   enabled = 1
 
   view {

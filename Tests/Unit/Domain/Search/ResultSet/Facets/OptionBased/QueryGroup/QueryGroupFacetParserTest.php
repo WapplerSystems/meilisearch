@@ -21,7 +21,7 @@ use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\UrlFacetContainer;
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSet;
 use WapplerSystems\Meilisearch\Domain\Search\SearchRequest;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
-use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
 use WapplerSystems\Meilisearch\System\Util\ArrayAccessor;
 use WapplerSystems\Meilisearch\Tests\Unit\Domain\Search\ResultSet\Facets\SetUpFacetParser;
 
@@ -44,14 +44,14 @@ class QueryGroupFacetParserTest extends SetUpFacetParser
         $searchResultSet->setResponse($fakeResponse);
 
         $configuration = [];
-        $configuration['plugin.']['tx_solr.']['search.']['faceting.']['facets.'] = $facetConfiguration;
+        $configuration['plugin.']['tx_meilisearch.']['search.']['faceting.']['facets.'] = $facetConfiguration;
         $typoScriptConfiguration = new TypoScriptConfiguration($configuration);
         $searchRequestMock->expects(self::any())
             ->method('getContextTypoScriptConfiguration')
             ->willReturn($typoScriptConfiguration);
 
         $activeUrlFacets = new UrlFacetContainer(
-            new ArrayAccessor([ 'tx_solr' => ['filter' => $activeFilters] ])
+            new ArrayAccessor([ 'tx_meilisearch' => ['filter' => $activeFilters] ])
         );
 
         $searchRequestMock->expects(self::any())
@@ -90,7 +90,7 @@ class QueryGroupFacetParserTest extends SetUpFacetParser
         ];
 
         $searchResultSet = $this->initializeSearchResultSetFromFakeResponse(
-            'fake_solr_response_with_query_fields_facets_and_used_facet.json',
+            'fake_meilisearch_response_with_query_fields_facets_and_used_facet.json',
             $facetConfiguration
         );
         $parser = $this->getInitializedParser(QueryGroupFacetParser::class);
@@ -120,7 +120,7 @@ class QueryGroupFacetParserTest extends SetUpFacetParser
         ];
 
         $searchResultSet = $this->initializeSearchResultSetFromFakeResponse(
-            'fake_solr_response_with_query_fields_facets_and_used_facet.json',
+            'fake_meilisearch_response_with_query_fields_facets_and_used_facet.json',
             $facetConfiguration
         );
 
@@ -151,7 +151,7 @@ class QueryGroupFacetParserTest extends SetUpFacetParser
         ];
 
         $searchResultSet = $this->initializeSearchResultSetFromFakeResponse(
-            'fake_solr_response_with_query_fields_facets_and_used_facet.json',
+            'fake_meilisearch_response_with_query_fields_facets_and_used_facet.json',
             $facetConfiguration,
             ['age:week']
         );
@@ -182,7 +182,7 @@ class QueryGroupFacetParserTest extends SetUpFacetParser
         ];
 
         $searchResultSet = $this->initializeSearchResultSetFromFakeResponse(
-            'fake_solr_response_with_query_fields_facets_and_used_facet.json',
+            'fake_meilisearch_response_with_query_fields_facets_and_used_facet.json',
             $facetConfiguration,
             ['age:week']
         );

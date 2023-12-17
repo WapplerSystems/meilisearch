@@ -1,6 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en"
 	xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
-	xmlns:s="http://typo3.org/ns/ApacheSolrForTypo3/Solr/ViewHelpers"
+	xmlns:s="http://typo3.org/ns/ApacheMeilisearchForTypo3/Meilisearch/ViewHelpers"
 	data-namespace-typo3-fluid="true"
 >
 
@@ -35,7 +35,7 @@
 							<ul class="list-group list-group-flush facet-option-list">
 								<f:for each="{filteredOptions}" as="option">
 									<li class="list-group-item d-flex justify-content-between">
-										<a class="facet solr-ajaxified" href="{s:uri.facet.addFacetItem(facet: facet, facetItem: option)}">{option.label}</a>
+										<a class="facet meilisearch-ajaxified" href="{s:uri.facet.addFacetItem(facet: facet, facetItem: option)}">{option.label}</a>
 										<span class="facet-result-count badge bg-info">{option.documentCount}</span>
 									</li>
 								</f:for>

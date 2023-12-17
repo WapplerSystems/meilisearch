@@ -55,7 +55,7 @@ abstract class AbstractModuleController extends SetUpUnitTestCase
                     'moduleDataStorageService' => $this->createMock(ModuleDataStorageService::class),
                     'siteRepository' => $this->createMock(SiteRepository::class),
                     'siteFinder' => $this->createMock(SiteFinder::class),
-                    'solrConnectionManager' => $this->connectionManagerMock = $this->createMock(ConnectionManager::class),
+                    'meilisearchConnectionManager' => $this->connectionManagerMock = $this->createMock(ConnectionManager::class),
                     'indexQueue' => $this->createMock(Queue::class),
                 ]
             )

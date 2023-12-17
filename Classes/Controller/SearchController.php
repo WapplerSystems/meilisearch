@@ -114,7 +114,7 @@ class SearchController extends AbstractBaseController
 
             $currentPage = $this->request->hasArgument('page') ? (int)$this->request->getArgument('page') : 1;
 
-            // prevent currentPage < 1 (i.e for GET request like &tx_solr[page]=0)
+            // prevent currentPage < 1 (i.e for GET request like &tx_meilisearch[page]=0)
             if ($currentPage < 1) {
                 $currentPage = 1;
             }
@@ -215,7 +215,7 @@ class SearchController extends AbstractBaseController
     }
 
     /**
-     * This action allows to render a detailView with data from solr.
+     * This action allows to render a detailView with data from meilisearch.
      *
      * @noinspection PhpUnused Is used by plugin.
      */
@@ -239,19 +239,19 @@ class SearchController extends AbstractBaseController
      *
      * @noinspection PhpUnused Is used by {@link self::handleMeilisearchUnavailable()}
      */
-    public function solrNotAvailableAction(): ResponseInterface
+    public function meilisearchNotAvailableAction(): ResponseInterface
     {
         return $this->htmlResponse()
             ->withStatus(503, self::STATUS_503_MESSAGE);
     }
 
     /**
-     * Called when the solr server is unavailable.
+     * Called when the meilisearch server is unavailable.
      */
     protected function handleMeilisearchUnavailable(): ResponseInterface
     {
         parent::logMeilisearchUnavailable();
-        return new ForwardResponse('solrNotAvailable');
+        return new ForwardResponse('meilisearchNotAvailable');
     }
 
     /**

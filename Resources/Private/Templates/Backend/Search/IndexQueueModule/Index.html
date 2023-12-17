@@ -1,11 +1,11 @@
-{namespace solr=WapplerSystems\Meilisearch\ViewHelpers}
+{namespace meilisearch=WapplerSystems\Meilisearch\ViewHelpers}
 <f:layout name="Backend/WithPageTree"/>
 
 <f:section name="Main">
-	<f:be.pageRenderer includeCssFiles="{0: 'EXT:meilisearch/Resources/Public/StyleSheets/Backend/IndexQueueModule.css'}" includeRequireJsModules="{0:'TYPO3/CMS/Solr/FormModal'}"/>
+	<f:be.pageRenderer includeCssFiles="{0: 'EXT:meilisearch/Resources/Public/StyleSheets/Backend/IndexQueueModule.css'}" includeRequireJsModules="{0:'TYPO3/CMS/Meilisearch/FormModal'}"/>
 
 	<h1>Index Queue</h1>
-	<p class="lead"><f:translate key="solr.backend.index_queue_module.description" /></p>
+	<p class="lead"><f:translate key="meilisearch.backend.index_queue_module.description" /></p>
 
 	<hr class="section-divider" />
 
@@ -13,7 +13,7 @@
 		<div class="row section-with-header">
 			<div class="col-md-12">
 				<h2>
-					<f:translate key="solr.backend.index_queue_module.header_status"/>
+					<f:translate key="meilisearch.backend.index_queue_module.header_status"/>
 				</h2>
 
 				<div class="row">
@@ -22,34 +22,34 @@
 							<f:if condition="{indexqueue_statistics.successCount} > 0">
 								<div class="progress-bar bg-success"
 									 style="width: {indexqueue_statistics.successPercentage}%"
-									 title="{f:translate(key:'solr.backend.index_queue_module.status.indexed')}: {indexqueue_statistics.successCount}/{indexqueue_statistics.totalCount} ({indexqueue_statistics.successPercentage}%)">
+									 title="{f:translate(key:'meilisearch.backend.index_queue_module.status.indexed')}: {indexqueue_statistics.successCount}/{indexqueue_statistics.totalCount} ({indexqueue_statistics.successPercentage}%)">
 
-									<f:translate key="solr.backend.index_queue_module.status.indexed"/>
+									<f:translate key="meilisearch.backend.index_queue_module.status.indexed"/>
 								</div>
 							</f:if>
 
 							<f:if condition="{indexqueue_statistics.pendingCount} > 0">
 								<div class="progress-bar bg-warning"
 									 style="width: {indexqueue_statistics.pendingPercentage}%"
-									 title="{f:translate(key:'solr.backend.index_queue_module.status.pending')}: {indexqueue_statistics.pendingCount}/{indexqueue_statistics.totalCount} ({indexqueue_statistics.pendingPercentage}%)">
+									 title="{f:translate(key:'meilisearch.backend.index_queue_module.status.pending')}: {indexqueue_statistics.pendingCount}/{indexqueue_statistics.totalCount} ({indexqueue_statistics.pendingPercentage}%)">
 
-									<f:translate key="solr.backend.index_queue_module.status.pending"/>
+									<f:translate key="meilisearch.backend.index_queue_module.status.pending"/>
 								</div>
 							</f:if>
 
 							<f:if condition="{indexqueue_statistics.failedCount} > 0">
 								<div class="progress-bar bg-danger"
 									 style="width: {indexqueue_statistics.failedPercentage}%"
-									 title="{f:translate(key:'solr.backend.index_queue_module.status.errors')}: {indexqueue_statistics.failedCount}/{indexqueue_statistics.totalCount} ({indexqueue_statistics.failedPercentage}%)">
+									 title="{f:translate(key:'meilisearch.backend.index_queue_module.status.errors')}: {indexqueue_statistics.failedCount}/{indexqueue_statistics.totalCount} ({indexqueue_statistics.failedPercentage}%)">
 
-									<f:translate key="solr.backend.index_queue_module.status.errors"/>
+									<f:translate key="meilisearch.backend.index_queue_module.status.errors"/>
 								</div>
 							</f:if>
 
 						</div>
 						<f:form action="doIndexingRun" method="POST">
 							<f:form.submit class="btn btn-sm btn-default"
-										   value="{f:translate(key:'solr.backend.index_queue_module.index_now')}"/>
+										   value="{f:translate(key:'meilisearch.backend.index_queue_module.index_now')}"/>
 						</f:form>
 					</div>
 				</div>
@@ -59,19 +59,19 @@
 					<div class="row">
 						<div class="col-md-12">
 							<h2>
-								<f:translate key="solr.backend.index_queue_module.errors.headline"/>
+								<f:translate key="meilisearch.backend.index_queue_module.errors.headline"/>
 							</h2>
 
 							<table class="table table-condensed table-hover table-striped">
 								<tr>
 									<th>
-										<f:translate key="solr.backend.index_queue_module.errors.id"/>
+										<f:translate key="meilisearch.backend.index_queue_module.errors.id"/>
 									</th>
 									<th>
-										<f:translate key="solr.backend.index_queue_module.errors.item_type"/>
+										<f:translate key="meilisearch.backend.index_queue_module.errors.item_type"/>
 									</th>
 									<th>
-										<f:translate key="solr.backend.index_queue_module.errors.item_uid"/>
+										<f:translate key="meilisearch.backend.index_queue_module.errors.item_uid"/>
 									</th>
 									<th></th>
 								</tr>
@@ -83,7 +83,7 @@
 										<td>{item.item_uid}</td>
 										<td>
 											<f:link.action action="showError" arguments="{indexQueueItemId: item.uid}">
-												<f:translate key="solr.backend.index_queue_module.errors.show_button"/>
+												<f:translate key="meilisearch.backend.index_queue_module.errors.show_button"/>
 											</f:link.action>
 										</td>
 									</tr>
@@ -92,7 +92,7 @@
 
 							<f:form action="resetLogErrors" method="POST">
 								<f:form.submit class="btn btn-sm btn-default"
-											   value="{f:translate(key:'solr.backend.index_queue_module.errors.reset_button')}"/>
+											   value="{f:translate(key:'meilisearch.backend.index_queue_module.errors.reset_button')}"/>
 							</f:form>
 
 						</div>
@@ -107,7 +107,7 @@
 	<div class="row section-with-header">
 		<div class="col-md-12">
 			<h2>
-				<f:translate key="solr.backend.index_queue_module.header_init" />
+				<f:translate key="meilisearch.backend.index_queue_module.header_init" />
 			</h2>
 
 			<f:form name="editform" action="initializeIndexQueue">
@@ -116,13 +116,13 @@
 					<f:format.raw>{indexQueueInitializationSelector}</f:format.raw>
 				</div>
 				<f:form.submit name="initializeIndexQueue" value="Queue Selected Content for Indexing" class="btn btn-sm btn-default"/>
-				<div class="help">{f:translate(key:'solr.backend.index_queue_module.help')}</div>
+				<div class="help">{f:translate(key:'meilisearch.backend.index_queue_module.help')}</div>
 			</f:form>
 		</div>
 	</div>
 
 	<f:comment><!-- Show this button only if module indexadministration is allowed for be user/group --></f:comment>
-	<solr:backend.security.ifHasAccessToModule extension="Solr" main="searchbackend" sub="indexadministration">
+	<meilisearch:backend.security.ifHasAccessToModule extension="Meilisearch" main="searchbackend" sub="indexadministration">
 		<f:then>
 			<hr class="section-divider" />
 
@@ -132,13 +132,13 @@
                     <f:form action="clearIndexQueue" additionalParams="{id: '{pageUID}'}">
 						<f:form.submit class="btn btn-sm btn-default btn-danger t3js-modal-formsubmit-trigger"
 									   data="{title: 'Please confirm', content: 'Are you sure you want to clear the Index Queue?', severity: 'warning'}"
-									   value="{f:translate(key:'solr.backend.index_queue_module.button.clear_index_queue')}"/>
+									   value="{f:translate(key:'meilisearch.backend.index_queue_module.button.clear_index_queue')}"/>
 					</f:form>
 
 				</div>
 				<div class="col-md-9 action-description">
 					<h3>
-						<f:translate key="solr.backend.index_queue_module.button.clear_index_queue"/>
+						<f:translate key="meilisearch.backend.index_queue_module.button.clear_index_queue"/>
 					</h3>
 
 					<p>
@@ -149,5 +149,5 @@
 				</div>
 			</div>
 		</f:then>
-	</solr:backend.security.ifHasAccessToModule>
+	</meilisearch:backend.security.ifHasAccessToModule>
 </f:section>

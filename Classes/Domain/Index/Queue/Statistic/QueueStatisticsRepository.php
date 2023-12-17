@@ -28,7 +28,7 @@ use TYPO3\CMS\Extbase\Persistence\Generic\Exception\UnsupportedMethodException;
  */
 class QueueStatisticsRepository extends AbstractRepository
 {
-    protected string $table = 'tx_solr_indexqueue_item';
+    protected string $table = 'tx_meilisearch_indexqueue_item';
     protected string $columnIndexed = 'indexed';
     protected string $columnIndexingConfiguration = 'indexing_configuration';
     protected string $columnChanged = 'changed';

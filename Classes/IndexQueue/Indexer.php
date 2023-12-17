@@ -119,9 +119,9 @@ class Indexer extends AbstractIndexer
         $this->type = $item->getType();
         $this->setLogging($item);
 
-        $solrConnections = $this->getMeilisearchConnectionsByItem($item);
-        foreach ($solrConnections as $systemLanguageUid => $solrConnection) {
-            $this->currentlyUsedMeilisearchConnection = $solrConnection;
+        $meilisearchConnections = $this->getMeilisearchConnectionsByItem($item);
+        foreach ($meilisearchConnections as $systemLanguageUid => $meilisearchConnection) {
+            $this->currentlyUsedMeilisearchConnection = $meilisearchConnection;
 
             if (!$this->indexItem($item, (int)$systemLanguageUid)) {
                 /*
@@ -217,7 +217,7 @@ class Indexer extends AbstractIndexer
         $itemRecord = $this->getItemRecordOverlayed($item, $language);
 
         if (!is_null($itemRecord)) {
-            $itemRecord['__solr_index_language'] = $language;
+            $itemRecord['__meilisearch_index_language'] = $language;
         }
 
         return $itemRecord;
@@ -316,8 +316,8 @@ class Indexer extends AbstractIndexer
     {
         try {
             $pageId = $this->getPageIdOfItem($item);
-            $solrConfiguration = $this->frontendEnvironment->getMeilisearchConfigurationFromPageId($pageId, $language, $item->getRootPageUid());
-            return $solrConfiguration->getIndexQueueFieldsConfigurationByConfigurationName($indexConfigurationName);
+            $meilisearchConfiguration = $this->frontendEnvironment->getMeilisearchConfigurationFromPageId($pageId, $language, $item->getRootPageUid());
+            return $meilisearchConfiguration->getIndexQueueFieldsConfigurationByConfigurationName($indexConfigurationName);
         } catch (Throwable) {
             return [];
         }
@@ -338,9 +338,9 @@ class Indexer extends AbstractIndexer
      */
     protected function getFieldConfigurationFromItemRootPage(Item $item, int $language, string $indexConfigurationName): array
     {
-        $solrConfiguration = $this->frontendEnvironment->getMeilisearchConfigurationFromPageId($item->getRootPageUid(), $language);
+        $meilisearchConfiguration = $this->frontendEnvironment->getMeilisearchConfigurationFromPageId($item->getRootPageUid(), $language);
 
-        return $solrConfiguration->getIndexQueueFieldsConfigurationByConfigurationName($indexConfigurationName);
+        return $meilisearchConfiguration->getIndexQueueFieldsConfigurationByConfigurationName($indexConfigurationName);
     }
 
     /**
@@ -481,11 +481,11 @@ class Indexer extends AbstractIndexer
     protected function processDocuments(Item $item, array $documents): array
     {
         //        // needs to respect the TS settings for the page the item is on, conditions may apply
-        //        $solrConfiguration = $this->frontendEnvironment->getMeilisearchConfigurationFromPageId($item->getRootPageUid());
+        //        $meilisearchConfiguration = $this->frontendEnvironment->getMeilisearchConfigurationFromPageId($item->getRootPageUid());
 
         $siteRepository = GeneralUtility::makeInstance(SiteRepository::class);
-        $solrConfiguration = $siteRepository->getSiteByPageId($item->getRootPageUid())->getMeilisearchConfiguration();
-        $fieldProcessingInstructions = $solrConfiguration->getIndexFieldProcessingInstructionsConfiguration();
+        $meilisearchConfiguration = $siteRepository->getSiteByPageId($item->getRootPageUid())->getMeilisearchConfiguration();
+        $fieldProcessingInstructions = $meilisearchConfiguration->getIndexFieldProcessingInstructionsConfiguration();
 
         // same as in the FE indexer
         if (is_array($fieldProcessingInstructions)) {
@@ -511,7 +511,7 @@ class Indexer extends AbstractIndexer
      */
     protected function getMeilisearchConnectionsByItem(Item $item): array
     {
-        $solrConnections = [];
+        $meilisearchConnections = [];
 
         $rootPageId = $item->getRootPageUid();
         if ($item->getType() === 'pages') {
@@ -522,10 +522,10 @@ class Indexer extends AbstractIndexer
 
         // Meilisearch configurations possible for this item
         $site = $item->getSite();
-        $solrConfigurationsBySite = $site->getAllMeilisearchConnectionConfigurations();
+        $meilisearchConfigurationsBySite = $site->getAllMeilisearchConnectionConfigurations();
         $siteLanguages = [];
-        foreach ($solrConfigurationsBySite as $solrConfiguration) {
-            $siteLanguages[] = $solrConfiguration['language'];
+        foreach ($meilisearchConfigurationsBySite as $meilisearchConfiguration) {
+            $siteLanguages[] = $meilisearchConfiguration['language'];
         }
 
         $defaultLanguageUid = $this->getDefaultLanguageUid($item, $site->getRootPageRecord(), $siteLanguages);
@@ -541,13 +541,13 @@ class Indexer extends AbstractIndexer
         $translationConnections = $this->getConnectionsForIndexableLanguages($translationOverlays, $rootPageId);
 
         if ($defaultLanguageUid == 0) {
-            $solrConnections[0] = $defaultConnection;
+            $meilisearchConnections[0] = $defaultConnection;
         }
 
-        foreach ($translationConnections as $systemLanguageUid => $solrConnection) {
-            $solrConnections[$systemLanguageUid] = $solrConnection;
+        foreach ($translationConnections as $systemLanguageUid => $meilisearchConnection) {
+            $meilisearchConnections[$systemLanguageUid] = $meilisearchConnection;
         }
-        return $solrConnections;
+        return $meilisearchConnections;
     }
 
     /**
@@ -667,8 +667,8 @@ class Indexer extends AbstractIndexer
      */
     protected function setLogging(Item $item): void
     {
-        $solrConfiguration = $this->frontendEnvironment->getMeilisearchConfigurationFromPageId($item->getRootPageUid());
-        $this->loggingEnabled = $solrConfiguration->getLoggingIndexingQueueOperationsByConfigurationNameWithFallBack(
+        $meilisearchConfiguration = $this->frontendEnvironment->getMeilisearchConfigurationFromPageId($item->getRootPageUid());
+        $this->loggingEnabled = $meilisearchConfiguration->getLoggingIndexingQueueOperationsByConfigurationNameWithFallBack(
             $item->getIndexingConfigurationName()
         );
     }

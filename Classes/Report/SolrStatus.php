@@ -74,8 +74,8 @@ class MeilisearchStatus extends AbstractMeilisearchStatus
     {
         $reports = [];
         foreach ($this->siteRepository->getAvailableSites() as $site) {
-            foreach ($site->getAllMeilisearchConnectionConfigurations() as $solrConfiguration) {
-                $reports[] = $this->getConnectionStatus($site, $solrConfiguration);
+            foreach ($site->getAllMeilisearchConnectionConfigurations() as $meilisearchConfiguration) {
+                $reports[] = $this->getConnectionStatus($site, $meilisearchConfiguration);
             }
         }
 
@@ -97,30 +97,30 @@ class MeilisearchStatus extends AbstractMeilisearchStatus
      */
     public function getLabel(): string
     {
-        return 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_reports.xlf:status_solr_connectionstatus';
+        return 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_reports.xlf:status_meilisearch_connectionstatus';
     }
 
     /**
      * Checks whether a Meilisearch server is available and provides some information.
      *
      * @param Site $site
-     * @param array $solrConnection Meilisearch connection parameters
+     * @param array $meilisearchConnection Meilisearch connection parameters
      * @return Status Status of the Meilisearch connection
      */
-    protected function getConnectionStatus(Site $site, array $solrConnection): Status
+    protected function getConnectionStatus(Site $site, array $meilisearchConnection): Status
     {
         $header = 'Your site has contacted the Apache Meilisearch server.';
         $this->responseStatus = ContextualFeedbackSeverity::OK;
 
-        $solrAdmin = $this->connectionManager
-            ->getMeilisearchConnectionForEndpoints($solrConnection['read'], $solrConnection['write'])
+        $meilisearchAdmin = $this->connectionManager
+            ->getMeilisearchConnectionForEndpoints($meilisearchConnection['read'], $meilisearchConnection['write'])
             ->getAdminService();
 
-        $solrVersion = $this->checkMeilisearchVersion($solrAdmin);
-        $accessFilter = $this->checkAccessFilter($solrAdmin);
-        $pingTime = $this->checkPingTime($solrAdmin);
-        $configName = $this->checkMeilisearchConfigName($solrAdmin);
-        $schemaName = $this->checkMeilisearchSchemaName($solrAdmin);
+        $meilisearchVersion = $this->checkMeilisearchVersion($meilisearchAdmin);
+        $accessFilter = $this->checkAccessFilter($meilisearchAdmin);
+        $pingTime = $this->checkPingTime($meilisearchAdmin);
+        $configName = $this->checkMeilisearchConfigName($meilisearchAdmin);
+        $schemaName = $this->checkMeilisearchSchemaName($meilisearchAdmin);
 
         /** @phpstan-ignore-next-line */
         if ($this->responseStatus !== ContextualFeedbackSeverity::OK) {
@@ -129,10 +129,10 @@ class MeilisearchStatus extends AbstractMeilisearchStatus
 
         $variables = [
             'site' => $site->getLabel(),
-            'siteLanguage' => $site->getTypo3SiteObject()->getLanguageById($solrConnection['language']),
-            'connection' => $solrConnection,
-            'meilisearch' => $solrAdmin,
-            'solrVersion' => $solrVersion,
+            'siteLanguage' => $site->getTypo3SiteObject()->getLanguageById($meilisearchConnection['language']),
+            'connection' => $meilisearchConnection,
+            'meilisearch' => $meilisearchAdmin,
+            'meilisearchVersion' => $meilisearchVersion,
             'pingTime' => $pingTime,
             'configName' => $configName,
             'schemaName' => $schemaName,
@@ -150,30 +150,30 @@ class MeilisearchStatus extends AbstractMeilisearchStatus
     }
 
     /**
-     * Checks the solr version and adds it to the report.
+     * Checks the meilisearch version and adds it to the report.
      *
-     * @return string solr version
+     * @return string meilisearch version
      */
-    protected function checkMeilisearchVersion(MeilisearchAdminService $solr): string
+    protected function checkMeilisearchVersion(MeilisearchAdminService $meilisearch): string
     {
         try {
-            $solrVersion = $this->formatMeilisearchVersion($solr->getMeilisearchServerVersion());
+            $meilisearchVersion = $this->formatMeilisearchVersion($meilisearch->getMeilisearchServerVersion());
         } catch (Throwable $e) {
             $this->responseStatus = ContextualFeedbackSeverity::ERROR;
-            $solrVersion = 'Error getting solr version: ' . $e->getMessage();
+            $meilisearchVersion = 'Error getting meilisearch version: ' . $e->getMessage();
         }
 
-        return $solrVersion;
+        return $meilisearchVersion;
     }
 
     /**
      * Checks the access filter setup and adds it to the report.
      */
-    protected function checkAccessFilter(MeilisearchAdminService $solrAdminService): string
+    protected function checkAccessFilter(MeilisearchAdminService $meilisearchAdminService): string
     {
         try {
             $accessFilterPluginStatus = GeneralUtility::makeInstance(AccessFilterPluginInstalledStatus::class);
-            $accessFilterPluginVersion = $accessFilterPluginStatus->getInstalledPluginVersion($solrAdminService);
+            $accessFilterPluginVersion = $accessFilterPluginStatus->getInstalledPluginVersion($meilisearchAdminService);
             $accessFilterMessage = $accessFilterPluginVersion;
         } catch (Throwable $e) {
             $this->responseStatus = ContextualFeedbackSeverity::ERROR;
@@ -185,10 +185,10 @@ class MeilisearchStatus extends AbstractMeilisearchStatus
     /**
      * Checks the ping time and adds it to the report.
      */
-    protected function checkPingTime(MeilisearchAdminService $solrAdminService): string
+    protected function checkPingTime(MeilisearchAdminService $meilisearchAdminService): string
     {
         try {
-            $pingQueryTime = $solrAdminService->getPingRoundTripRuntime();
+            $pingQueryTime = $meilisearchAdminService->getPingRoundTripRuntime();
             $pingMessage = (int)$pingQueryTime . ' ms';
         } catch (PingFailedException $e) {
             $this->responseStatus = ContextualFeedbackSeverity::ERROR;
@@ -198,33 +198,33 @@ class MeilisearchStatus extends AbstractMeilisearchStatus
     }
 
     /**
-     * Checks the solr config name and adds it to the report.
+     * Checks the meilisearch config name and adds it to the report.
      */
-    protected function checkMeilisearchConfigName(MeilisearchAdminService $solrAdminService): string
+    protected function checkMeilisearchConfigName(MeilisearchAdminService $meilisearchAdminService): string
     {
         try {
-            $solrConfigMessage = $solrAdminService->getMeilisearchconfigName();
+            $meilisearchConfigMessage = $meilisearchAdminService->getMeilisearchconfigName();
         } catch (Throwable $e) {
             $this->responseStatus = ContextualFeedbackSeverity::ERROR;
-            $solrConfigMessage = 'Error determining solr config: ' . $e->getMessage();
+            $meilisearchConfigMessage = 'Error determining meilisearch config: ' . $e->getMessage();
         }
 
-        return $solrConfigMessage;
+        return $meilisearchConfigMessage;
     }
 
     /**
-     * Checks the solr schema name and adds it to the report.
+     * Checks the meilisearch schema name and adds it to the report.
      */
-    protected function checkMeilisearchSchemaName(MeilisearchAdminService $solrAdminService): string
+    protected function checkMeilisearchSchemaName(MeilisearchAdminService $meilisearchAdminService): string
     {
         try {
-            $solrSchemaMessage = $solrAdminService->getSchema()->getName();
+            $meilisearchSchemaMessage = $meilisearchAdminService->getSchema()->getName();
         } catch (Throwable $e) {
             $this->responseStatus = ContextualFeedbackSeverity::ERROR;
-            $solrSchemaMessage = 'Error determining schema name: ' . $e->getMessage();
+            $meilisearchSchemaMessage = 'Error determining schema name: ' . $e->getMessage();
         }
 
-        return $solrSchemaMessage;
+        return $meilisearchSchemaMessage;
     }
 
     /**
@@ -233,12 +233,12 @@ class MeilisearchStatus extends AbstractMeilisearchStatus
      * more information though, in case of custom-builds, their complete
      * version will be added, too.
      *
-     * @param string $solrVersion Unformatted Apache Meilisearch version number a provided by Meilisearch.
+     * @param string $meilisearchVersion Unformatted Apache Meilisearch version number a provided by Meilisearch.
      * @return string formatted short version number, in case of custom-builds followed by the complete version number
      */
-    protected function formatMeilisearchVersion(string $solrVersion): string
+    protected function formatMeilisearchVersion(string $meilisearchVersion): string
     {
-        $explodedMeilisearchVersion = explode('.', $solrVersion);
+        $explodedMeilisearchVersion = explode('.', $meilisearchVersion);
 
         $shortMeilisearchVersion = $explodedMeilisearchVersion[0]
             . '.' . $explodedMeilisearchVersion[1]
@@ -246,8 +246,8 @@ class MeilisearchStatus extends AbstractMeilisearchStatus
 
         $formattedMeilisearchVersion = $shortMeilisearchVersion;
 
-        if ($solrVersion != $shortMeilisearchVersion) {
-            $formattedMeilisearchVersion .= ' (' . $solrVersion . ')';
+        if ($meilisearchVersion != $shortMeilisearchVersion) {
+            $formattedMeilisearchVersion .= ' (' . $meilisearchVersion . ')';
         }
 
         return $formattedMeilisearchVersion;

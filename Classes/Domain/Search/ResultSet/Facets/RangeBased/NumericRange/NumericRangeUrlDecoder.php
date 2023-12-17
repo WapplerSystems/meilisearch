@@ -21,7 +21,7 @@ use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\FacetUrlDecoderInt
 use WapplerSystems\Meilisearch\Exception\InvalidArgumentException;
 
 /**
- * Parser to build Meilisearch range queries from tx_solr[filter]
+ * Parser to build Meilisearch range queries from tx_meilisearch[filter]
  *
  * @author Markus Goldbach <markus.goldbach@dkd.de>
  * @author Ingo Renner <ingo@typo3.org>

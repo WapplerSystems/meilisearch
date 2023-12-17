@@ -50,7 +50,7 @@ class DocumentScoreAnalyzerViewHelper extends AbstractMeilisearchFrontendViewHel
     public function initializeArguments(): void
     {
         parent::initializeArguments();
-        $this->registerArgument('document', SearchResult::class, 'The solr document', true);
+        $this->registerArgument('document', SearchResult::class, 'The meilisearch document', true);
     }
 
     /**

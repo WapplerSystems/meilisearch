@@ -33,7 +33,7 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use TYPO3\CMS\Frontend\Event\AfterCacheableContentIsGeneratedEvent;
 
 /**
- * Test class to perform a search on a real solr server
+ * Test class to perform a search on a real meilisearch server
  *
  * @author Timo Schmidt
  */
@@ -44,14 +44,14 @@ class SearchTest extends IntegrationTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->writeDefaultSolrTestSiteConfiguration();
+        $this->writeDefaultMeilisearchTestSiteConfiguration();
         $this->queryBuilder = new QueryBuilder(new TypoScriptConfiguration([]));
     }
 
     protected function tearDown(): void
     {
         parent::tearDown();
-        $this->cleanUpSolrServerAndAssertEmpty();
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
     }
 
     /**
@@ -59,7 +59,7 @@ class SearchTest extends IntegrationTest
      */
     public function canSearchForADocument(): void
     {
-        $this->cleanUpSolrServerAndAssertEmpty();
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
         $this->importCSVDataSet(__DIR__ . '/Fixtures/Search/can_search.csv');
         $this->addTypoScriptToTemplateRecord(1, 'config.index_enable = 1');
 
@@ -73,8 +73,8 @@ class SearchTest extends IntegrationTest
 
         $searchResponse = $searchInstance->search($query);
         $rawResponse = $searchResponse->getRawResponse();
-        self::assertStringContainsString('"numFound":1', $rawResponse, 'Could not index document into solr');
-        self::assertStringContainsString('"title":"Hello Search Test"', $rawResponse, 'Could not index document into solr');
+        self::assertStringContainsString('"numFound":1', $rawResponse, 'Could not index document into meilisearch');
+        self::assertStringContainsString('"title":"Hello Search Test"', $rawResponse, 'Could not index document into meilisearch');
     }
 
     /**
@@ -90,7 +90,7 @@ class SearchTest extends IntegrationTest
         // fragmentSize 50 => fastVector
         $typoScriptConfiguration = new TypoScriptConfiguration([
             'plugin.' => [
-                'tx_solr.' => [
+                'tx_meilisearch.' => [
                     'search.' => [
                         'query.' => ['queryFields' => 'content,title'],
                         'results.' => [
@@ -110,7 +110,7 @@ class SearchTest extends IntegrationTest
         $highlightString = current((array)$parsedData->highlighting)?->title[0];
 
         // fragmentSize 20 => fastVector
-        $typoScriptConfiguration->mergeSolrConfiguration([
+        $typoScriptConfiguration->mergeMeilisearchConfiguration([
             'search.' => [
                 'results.' => [
                     'resultsHighlighting.' => [
@@ -124,7 +124,7 @@ class SearchTest extends IntegrationTest
         $highlightString2 = current((array)$parsedData->highlighting)?->title[0];
 
         // fragmentSize 10 => original
-        $typoScriptConfiguration->mergeSolrConfiguration([
+        $typoScriptConfiguration->mergeMeilisearchConfiguration([
             'search.' => [
                 'results.' => [
                     'resultsHighlighting.' => [
@@ -163,7 +163,7 @@ class SearchTest extends IntegrationTest
         $parsedData = $searchResponse->getParsedData();
         // document with "Hello World for phrase serchin" is not on first place!
         // @extensionScannerIgnoreLine
-        self::assertGreaterThan(0, $parsedData->response->numFound, 'Could not index document into solr');
+        self::assertGreaterThan(0, $parsedData->response->numFound, 'Could not index document into meilisearch');
         // @extensionScannerIgnoreLine
         self::assertNotEquals('Hello World for phrase serching', $parsedData->response->docs[0]->getTitle(), 'Unexpected score calculation. Expected Document shouldn\'t be at first place.');
 
@@ -173,7 +173,7 @@ class SearchTest extends IntegrationTest
         $parsedData = $searchResponse->getParsedData();
 
         // @extensionScannerIgnoreLine
-        self::assertGreaterThan(0, $parsedData->response->numFound, 'Could not index document into solr');
+        self::assertGreaterThan(0, $parsedData->response->numFound, 'Could not index document into meilisearch');
         // @extensionScannerIgnoreLine
         self::assertSame('Hello World for phrase searching', $parsedData->response->docs[0]->getTitle(), 'Unexpected score calculation. Document');
     }
@@ -236,7 +236,7 @@ class SearchTest extends IntegrationTest
         // @extensionScannerIgnoreLine
         self::assertTrue($parsedDatasByPhraseSlop[0]->response->docs[0]->getUid() === $parsedDatasByPhraseSlop[1]->response->docs[0]->getUid()
             // @extensionScannerIgnoreLine
-                && $parsedDatasByPhraseSlop[0]->response->docs[0]->getUid() === $parsedDatasByPhraseSlop[2]->response->docs[0]->getUid(), 'Phrase search does not work properly. Solr should position the document independent from slop value at first position.');
+                && $parsedDatasByPhraseSlop[0]->response->docs[0]->getUid() === $parsedDatasByPhraseSlop[2]->response->docs[0]->getUid(), 'Phrase search does not work properly. Meilisearch should position the document independent from slop value at first position.');
         // the slop value of 1 moves doc UID = 11 to the second position
         // @extensionScannerIgnoreLine
         self::assertSame(12, $parsedDatasByPhraseSlop[1]->response->docs[1]->getUid(), 'Phrase slop setting does not work as expected.');
@@ -263,7 +263,7 @@ class SearchTest extends IntegrationTest
 
         $this->switchPhraseSearchFeature('bigramPhrase', 1);
 
-        $this->getSearchQueryForSolr();
+        $this->getSearchQueryForMeilisearch();
         $this->queryBuilder->useQueryString('Bigram Phrase Search');
 
         // Boost the document with query to make it first.
@@ -309,7 +309,7 @@ class SearchTest extends IntegrationTest
         // @extensionScannerIgnoreLine
         self::assertTrue($parsedDatasByPhraseSlop[0]->response->docs[0]->getUid() === $parsedDatasByPhraseSlop[1]->response->docs[0]->getUid()
             // @extensionScannerIgnoreLine
-            && $parsedDatasByPhraseSlop[0]->response->docs[0]->getUid() === $parsedDatasByPhraseSlop[2]->response->docs[0]->getUid(), 'Bigram Phrase search does not work properly. Solr should position the documents independent from slop value at first position.');
+            && $parsedDatasByPhraseSlop[0]->response->docs[0]->getUid() === $parsedDatasByPhraseSlop[2]->response->docs[0]->getUid(), 'Bigram Phrase search does not work properly. Meilisearch should position the documents independent from slop value at first position.');
 
         // slop = 1
         // the slop value of 1 moves doc UID = 5 to the fourth(key 3) position
@@ -349,7 +349,7 @@ class SearchTest extends IntegrationTest
 
         $this->switchPhraseSearchFeature('trigramPhrase', 1);
 
-        $this->getSearchQueryForSolr();
+        $this->getSearchQueryForMeilisearch();
         $this->queryBuilder
             ->useQueryString('Awesome Trigram Phrase Search')
             // Boost the document with query to make it first.
@@ -394,7 +394,7 @@ class SearchTest extends IntegrationTest
         // @extensionScannerIgnoreLine
         self::assertTrue($parsedDatasByPhraseSlop[0]->response->docs[0]->getUid() === $parsedDatasByPhraseSlop[1]->response->docs[0]->getUid()
             // @extensionScannerIgnoreLine
-            && $parsedDatasByPhraseSlop[0]->response->docs[0]->getUid() === $parsedDatasByPhraseSlop[2]->response->docs[0]->getUid(), 'Trigram Phrase search does not work properly. Solr should position the documents independent from slop value at first position.');
+            && $parsedDatasByPhraseSlop[0]->response->docs[0]->getUid() === $parsedDatasByPhraseSlop[2]->response->docs[0]->getUid(), 'Trigram Phrase search does not work properly. Meilisearch should position the documents independent from slop value at first position.');
 
         // slop = 1
         // the slop value of 1 moves doc UID = 4 to the fourth(key 3) position
@@ -429,14 +429,14 @@ class SearchTest extends IntegrationTest
         /** @var \WapplerSystems\Meilisearch\Search $searchInstance */
         $searchInstance = GeneralUtility::makeInstance(Search::class);
 
-        $query = $this->getSearchQueryForSolr();
+        $query = $this->getSearchQueryForMeilisearch();
         $this->queryBuilder->startFrom($query)->useQueryString('"Hello World"');
         $searchResponse = $searchInstance->search($this->queryBuilder->getQuery());
         $parsedData = $searchResponse->getParsedData();
 
         // document with "Hello World for phrase searching" is not on first place!
         // @extensionScannerIgnoreLine
-        self::assertSame(1, $parsedData->response->numFound, 'Could not index documents into solr to test boosts on explicit phrase searches.');
+        self::assertSame(1, $parsedData->response->numFound, 'Could not index documents into meilisearch to test boosts on explicit phrase searches.');
         // @extensionScannerIgnoreLine
         self::assertSame('Hello World for phrase searching', $parsedData->response->docs[0]->getTitle(), 'Document containing "Hello World for phrase searching" should be found on explicit(surrounded with double quotes) phrase searching.');
     }
@@ -452,7 +452,7 @@ class SearchTest extends IntegrationTest
 
         $searchInstance = GeneralUtility::makeInstance(Search::class);
 
-        $query = $this->getSearchQueryForSolr();
+        $query = $this->getSearchQueryForMeilisearch();
         $this->queryBuilder->useQueryString('"Hello World"');
 
         $searchResponse = $searchInstance->search($query);
@@ -460,7 +460,7 @@ class SearchTest extends IntegrationTest
 
         // document with "Hello World for phrase serchin" is not on first place!
         // @extensionScannerIgnoreLine
-        self::assertSame(1, $parsedData->response->numFound, 'Could not index document into solr');
+        self::assertSame(1, $parsedData->response->numFound, 'Could not index document into meilisearch');
         // @extensionScannerIgnoreLine
         self::assertSame('Hello World for phrase searching', $parsedData->response->docs[0]->getTitle(), 'Document containing "Hello World for phrase serching" should be found');
 
@@ -471,7 +471,7 @@ class SearchTest extends IntegrationTest
         $searchResponse = $searchInstance->search($query);
         $parsedData = $searchResponse->getParsedData();
         // @extensionScannerIgnoreLine
-        self::assertSame(3, $parsedData->response->numFound, 'Could not index document into solr');
+        self::assertSame(3, $parsedData->response->numFound, 'Could not index document into meilisearch');
 
         // simulate Lucenes "Hello World"~2
         $slops->setQuerySlop(2);
@@ -491,17 +491,17 @@ class SearchTest extends IntegrationTest
             $serverRequest = new ServerRequest();
             $pageIndexerRequest = GeneralUtility::makeInstance(PageIndexerRequest::class);
             $pageIndexerRequest->setParameter('item', $i);
-            $serverRequest = $serverRequest->withAttribute('solr.pageIndexingInstructions', $pageIndexerRequest);
+            $serverRequest = $serverRequest->withAttribute('meilisearch.pageIndexingInstructions', $pageIndexerRequest);
             $event = new AfterCacheableContentIsGeneratedEvent($serverRequest, $tsfe, 'cache-identifier', true);
 
             $pageIndexer = GeneralUtility::makeInstance(PageIndexer::class);
             $pageIndexer->activate();
             $pageIndexer($event);
         }
-        $this->waitToBeVisibleInSolr();
+        $this->waitToBeVisibleInMeilisearch();
     }
 
-    protected function getSearchQueryForSolr(): Query
+    protected function getSearchQueryForMeilisearch(): Query
     {
         return $this->queryBuilder
             ->newSearchQuery('')
@@ -515,7 +515,7 @@ class SearchTest extends IntegrationTest
         $overwriteConfiguration['search.']['query.'][$feature] = $state;
 
         $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
-        $configurationManager->getTypoScriptConfiguration()->mergeSolrConfiguration($overwriteConfiguration);
+        $configurationManager->getTypoScriptConfiguration()->mergeMeilisearchConfiguration($overwriteConfiguration);
     }
 
     /**

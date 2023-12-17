@@ -63,7 +63,7 @@ class DateRangeTest extends SetUpUnitTestCase
         } catch (Error $error) {
             self::fail(
                 'Can\'t handle half open date ranges.' . PHP_EOL .
-                ' Please see: https://github.com/TYPO3-Solr/ext-solr/issues/2942 and error: ' . PHP_EOL .
+                ' Please see: https://github.com/TYPO3-Meilisearch/ext-meilisearch/issues/2942 and error: ' . PHP_EOL .
                 $error->getMessage() . ' in ' . $error->getFile() . ':' . $error->getLine()
             );
         }

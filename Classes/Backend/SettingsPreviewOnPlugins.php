@@ -45,7 +45,7 @@ class SettingsPreviewOnPlugins
         $this->pluginsTtContentRecord = $event->getRecord();
         if (
             $event->getTable() !== 'tt_content'
-            || !str_starts_with($this->pluginsTtContentRecord['list_type'], 'solr_pi_')
+            || !str_starts_with($this->pluginsTtContentRecord['list_type'], 'meilisearch_pi_')
         ) {
             return;
         }

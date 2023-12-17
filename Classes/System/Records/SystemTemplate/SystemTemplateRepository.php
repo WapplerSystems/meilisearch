@@ -21,7 +21,7 @@ use WapplerSystems\Meilisearch\System\Records\AbstractRepository;
 use Doctrine\DBAL\Exception as DBALException;
 
 /**
- * SystemTemplateRepository to encapsulate the database access for records used in solr.
+ * SystemTemplateRepository to encapsulate the database access for records used in meilisearch.
  */
 class SystemTemplateRepository extends AbstractRepository
 {

@@ -57,7 +57,7 @@ jQuery(document).ready(function () {
     var numericRangeFacetController = new NumericRangeFacetController();
     numericRangeFacetController.init();
 
-    jQuery("body").on("tx_solr_updated", function() {
+    jQuery("body").on("tx_meilisearch_updated", function() {
         numericRangeFacetController.init();
     });
 });

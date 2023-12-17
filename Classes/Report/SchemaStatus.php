@@ -35,13 +35,13 @@ class SchemaStatus extends AbstractMeilisearchStatus
     /**
      * The schema name property is constructed as follows:
      *
-     * tx_solr  - The extension key
+     * tx_meilisearch  - The extension key
      * x-y-z    - The extension version this schema is meant to work with
      * YYYYMMDD - The date the schema file was changed the last time
      *
      * Must be updated when changing the schema.
      */
-    public const RECOMMENDED_SCHEMA_VERSION = 'tx_solr-12-0-0--20230602';
+    public const RECOMMENDED_SCHEMA_VERSION = 'tx_meilisearch-12-0-0--20230602';
 
     /**
      * Compiles a collection of schema version checks against each configured
@@ -55,9 +55,9 @@ class SchemaStatus extends AbstractMeilisearchStatus
         $reports = [];
         /** @var ConnectionManager $connectionManager */
         $connectionManager = GeneralUtility::makeInstance(ConnectionManager::class);
-        $solrConnections = $connectionManager->getAllConnections();
+        $meilisearchConnections = $connectionManager->getAllConnections();
 
-        if (empty($solrConnections)) {
+        if (empty($meilisearchConnections)) {
             $reports[] = GeneralUtility::makeInstance(
                 Status::class,
                 'Apache Meilisearch Version / Schema Version',
@@ -69,12 +69,12 @@ class SchemaStatus extends AbstractMeilisearchStatus
             return $reports;
         }
 
-        foreach ($solrConnections as $solrConnection) {
-            $adminService = $solrConnection->getAdminService();
-            /** @var MeilisearchConnection $solrConnection */
+        foreach ($meilisearchConnections as $meilisearchConnection) {
+            $adminService = $meilisearchConnection->getAdminService();
+            /** @var MeilisearchConnection $meilisearchConnection */
             if (!$adminService->ping()) {
                 $url = $adminService->__toString();
-                $pingFailedMsg = 'Could not ping solr server, can not check version ' . $url;
+                $pingFailedMsg = 'Could not ping meilisearch server, can not check version ' . $url;
                 $status = GeneralUtility::makeInstance(
                     Status::class,
                     'Apache Meilisearch Version',
@@ -119,6 +119,6 @@ class SchemaStatus extends AbstractMeilisearchStatus
      */
     public function getLabel(): string
     {
-        return 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_reports.xlf:status_solr_schema';
+        return 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_reports.xlf:status_meilisearch_schema';
     }
 }

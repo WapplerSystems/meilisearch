@@ -27,7 +27,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @todo Move this to an Index Queue frontend helper
  *
  * Adds page document fields as configured in
- * plugin.tx_solr.index.additionalFields.
+ * plugin.tx_meilisearch.index.additionalFields.
  *
  * @author Ingo Renner <ingo@typo3.org>
  */

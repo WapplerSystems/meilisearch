@@ -34,15 +34,15 @@ class SearchResultSetServiceTest extends IntegrationTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->writeDefaultSolrTestSiteConfiguration();
+        $this->writeDefaultMeilisearchTestSiteConfiguration();
     }
 
     /**
-     * Executed after each test. Emptys solr and checks if the index is empty
+     * Executed after each test. Emptys meilisearch and checks if the index is empty
      */
     protected function tearDown(): void
     {
-        $this->cleanUpSolrServerAndAssertEmpty();
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
         parent::tearDown();
     }
 
@@ -56,18 +56,18 @@ class SearchResultSetServiceTest extends IntegrationTest
         $this->addSimpleFrontendRenderingToTypoScriptRendering(1);
         $this->indexPages([1, 2, 3, 4, 5]);
 
-        $solrContent = file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/core_en/select?q=*:*');
-        self::assertStringContainsString('002de2729efa650191f82900ea02a0a3189dfabb/pages/1/0/0/0', $solrContent);
+        $meilisearchContent = file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/core_en/select?q=*:*');
+        self::assertStringContainsString('002de2729efa650191f82900ea02a0a3189dfabb/pages/1/0/0/0', $meilisearchContent);
 
-        $solrConnection = GeneralUtility::makeInstance(ConnectionManager::class)->getConnectionByPageId(1);
+        $meilisearchConnection = GeneralUtility::makeInstance(ConnectionManager::class)->getConnectionByPageId(1);
 
-        $typoScriptConfiguration = Util::getSolrConfiguration();
+        $typoScriptConfiguration = Util::getMeilisearchConfiguration();
 
-        $search = GeneralUtility::makeInstance(Search::class, $solrConnection);
+        $search = GeneralUtility::makeInstance(Search::class, $meilisearchConnection);
         $searchResultsSetService = GeneralUtility::makeInstance(SearchResultSetService::class, $typoScriptConfiguration, $search);
         $document = $searchResultsSetService->getDocumentById('002de2729efa650191f82900ea02a0a3189dfabb/pages/1/0/0/0');
 
-        self::assertSame($document->getTitle(), 'Root of Testpage testone.site aka integration_tree_one', 'Could not get document from solr by id');
+        self::assertSame($document->getTitle(), 'Root of Testpage testone.site aka integration_tree_one', 'Could not get document from meilisearch by id');
     }
 
     /**
@@ -80,8 +80,8 @@ class SearchResultSetServiceTest extends IntegrationTest
         $this->addSimpleFrontendRenderingToTypoScriptRendering(1);
         $this->indexPages([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 
-        $typoScriptConfiguration = Util::getSolrConfiguration();
-        $typoScriptConfiguration->mergeSolrConfiguration([
+        $typoScriptConfiguration = Util::getMeilisearchConfiguration();
+        $typoScriptConfiguration->mergeMeilisearchConfiguration([
            'search.' => [
                'variants' => 1,
                'variants.' => [
@@ -128,8 +128,8 @@ class SearchResultSetServiceTest extends IntegrationTest
         $this->addSimpleFrontendRenderingToTypoScriptRendering(1);
         $this->indexPages([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
 
-        $typoScriptConfiguration = Util::getSolrConfiguration();
-        $typoScriptConfiguration->mergeSolrConfiguration([
+        $typoScriptConfiguration = Util::getMeilisearchConfiguration();
+        $typoScriptConfiguration->mergeMeilisearchConfiguration([
             'search.' => [
                 'variants' => 1,
                 'variants.' => [
@@ -194,8 +194,8 @@ class SearchResultSetServiceTest extends IntegrationTest
         $this->importCSVDataSet(__DIR__ . '/../../../Controller/Fixtures/indexing_data.csv');
         $this->importCSVDataSet(__DIR__ . '/Fixtures/can_get_searchResultSet.csv');
 
-        $typoScriptConfiguration = Util::getSolrConfiguration();
-        $typoScriptConfiguration->mergeSolrConfiguration([
+        $typoScriptConfiguration = Util::getMeilisearchConfiguration();
+        $typoScriptConfiguration->mergeMeilisearchConfiguration([
             'search.' => [
                 'variants' => 1,
                 'variants.' => [
@@ -217,7 +217,7 @@ class SearchResultSetServiceTest extends IntegrationTest
     {
         $this->importFrontendRestrictedPageScenario();
 
-        $typoScriptConfiguration = Util::getSolrConfiguration();
+        $typoScriptConfiguration = Util::getMeilisearchConfiguration();
 
         // only the default group
         $this->simulateFrontedUserGroups([0]);
@@ -233,7 +233,7 @@ class SearchResultSetServiceTest extends IntegrationTest
     {
         $this->importFrontendRestrictedPageScenario();
 
-        $typoScriptConfiguration = Util::getSolrConfiguration();
+        $typoScriptConfiguration = Util::getMeilisearchConfiguration();
 
         // user group 0 and 1 should see all elements
         $this->simulateFrontedUserGroups([0, 1]);
@@ -250,14 +250,14 @@ class SearchResultSetServiceTest extends IntegrationTest
         $this->importCSVDataSet(__DIR__ . '/Fixtures/fe_user_page.csv');
         $this->addSimpleFrontendRenderingToTypoScriptRendering(1);
         $this->indexPages([1, 2, 3], 1);
-        $solrContent = file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/core_en/select?q=*:*');
-        self::assertStringContainsString('"numFound":3', $solrContent);
+        $meilisearchContent = file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/core_en/select?q=*:*');
+        self::assertStringContainsString('"numFound":3', $meilisearchContent);
     }
 
     protected function doSearchWithResultSetService(TypoScriptConfiguration $typoScriptConfiguration, string $queryString = '*'): SearchResultCollection
     {
-        $solrConnection = GeneralUtility::makeInstance(ConnectionManager::class)->getConnectionByPageId(1);
-        $search = GeneralUtility::makeInstance(Search::class, $solrConnection);
+        $meilisearchConnection = GeneralUtility::makeInstance(ConnectionManager::class)->getConnectionByPageId(1);
+        $search = GeneralUtility::makeInstance(Search::class, $meilisearchConnection);
 
         $searchResultSetService = GeneralUtility::makeInstance(
             SearchResultSetService::class,

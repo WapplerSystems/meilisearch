@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" target-language="pl" datatype="plaintext" original="messages" date="2015-12-23T10:35:41Z" product-name="solr">
+	<file source-language="en" target-language="pl" datatype="plaintext" original="messages" date="2015-12-23T10:35:41Z" product-name="meilisearch">
 		<header/>
 		<body>
 	 		<!-- From PluginResults|PluginSearch|PluginFrequentSearches/pl.locallang.xlf -->

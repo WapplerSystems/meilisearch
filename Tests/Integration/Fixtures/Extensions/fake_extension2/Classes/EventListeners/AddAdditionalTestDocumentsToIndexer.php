@@ -18,7 +18,7 @@ declare(strict_types=1);
 namespace WapplerSystems\MeilisearchFakeExtension2\EventListeners;
 
 use WapplerSystems\Meilisearch\Event\Indexing\BeforeDocumentIsProcessedForIndexingEvent;
-use WapplerSystems\Meilisearch\System\Solr\Document\Document;
+use WapplerSystems\Meilisearch\System\Meilisearch\Document\Document;
 
 final class AddAdditionalTestDocumentsToIndexer
 {

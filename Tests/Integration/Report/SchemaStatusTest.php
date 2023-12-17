@@ -32,7 +32,7 @@ class SchemaStatusTest extends IntegrationTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->writeDefaultSolrTestSiteConfiguration();
+        $this->writeDefaultMeilisearchTestSiteConfiguration();
     }
 
     /**
@@ -48,7 +48,7 @@ class SchemaStatusTest extends IntegrationTest
         self::assertEquals(
             $results[0]->getSeverity(),
             ContextualFeedbackSeverity::OK,
-            'We expect to get no violations against the test Solr server '
+            'We expect to get no violations against the test Meilisearch server '
         );
     }
 }

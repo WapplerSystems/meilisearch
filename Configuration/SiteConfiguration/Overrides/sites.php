@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Global Solr Connection Settings
+ * Global Meilisearch Connection Settings
  */
 $GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_enabled_read'] = [
-    'label' => 'Enable Solr for this site',
+    'label' => 'Enable Meilisearch for this site',
     'onChange' => 'reload',
     'config' => [
         'type' => 'check',
@@ -59,7 +59,7 @@ $GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_port_read'] = [
 ];
 
 $GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_path_read'] = [
-    'label' => 'URL path to Apache Solr server',
+    'label' => 'URL path to Apache Meilisearch server',
     'description' => 'Must not contain "/meilisearch/"! Unless you have an additional "meilisearch" segment in your path like "http://localhost:8983/meilisearch/meilisearch/core_en".',
     'config' => [
         'type' => 'input',
@@ -106,7 +106,7 @@ $GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_path_write']['disp
 $GLOBALS['SiteConfiguration']['site']['palettes']['meilisearch_read']['showitem'] = 'meilisearch_scheme_read, meilisearch_port_read, --linebreak--, meilisearch_host_read, meilisearch_path_read';
 $GLOBALS['SiteConfiguration']['site']['palettes']['meilisearch_write']['showitem'] = 'meilisearch_scheme_write, meilisearch_port_write, --linebreak--, meilisearch_host_write, meilisearch_path_write';
 
-$GLOBALS['SiteConfiguration']['site']['types']['0']['showitem'] .= ',--div--;Solr,meilisearch_enabled_read,--palette--;;meilisearch_read, meilisearch_use_write_connection,--palette--;;meilisearch_write';
+$GLOBALS['SiteConfiguration']['site']['types']['0']['showitem'] .= ',--div--;Meilisearch,meilisearch_enabled_read,--palette--;;meilisearch_read, meilisearch_use_write_connection,--palette--;;meilisearch_write';
 
 /**
  * Language specific core configuration

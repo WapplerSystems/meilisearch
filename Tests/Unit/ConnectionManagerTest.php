@@ -94,7 +94,7 @@ class ConnectionManagerTest extends SetUpUnitTestCase
             'path' => '' ,
             'core' => 'core_de',
             'expectsException' => false,
-            'expectedConnectionString' => 'https://127.0.0.1:8181/solr/core_de/',
+            'expectedConnectionString' => 'https://127.0.0.1:8181/meilisearch/core_de/',
         ];
 
         yield 'valid with slash in path' => [
@@ -104,7 +104,7 @@ class ConnectionManagerTest extends SetUpUnitTestCase
             'path' => '/' ,
             'core' => 'core_de',
             'expectsException' => false,
-            'expectedConnectionString' => 'https://127.0.0.1:8181/solr/core_de/',
+            'expectedConnectionString' => 'https://127.0.0.1:8181/meilisearch/core_de/',
         ];
 
         yield 'valid connection with path' => [
@@ -114,7 +114,7 @@ class ConnectionManagerTest extends SetUpUnitTestCase
             'path' => '/production/' ,
             'core' => 'core_de',
             'expectsException' => false,
-            'expectedConnectionString' => 'https://127.0.0.1:8181/production/solr/core_de/',
+            'expectedConnectionString' => 'https://127.0.0.1:8181/production/meilisearch/core_de/',
         ];
     }
 
@@ -140,8 +140,8 @@ class ConnectionManagerTest extends SetUpUnitTestCase
             ];
             $configuration['write'] = $configuration['read'];
 
-            $solrService = $this->connectionManager->getConnectionFromConfiguration($configuration);
-            self::assertEquals($expectedConnectionString, $solrService->getReadService()->__toString());
+            $meilisearchService = $this->connectionManager->getConnectionFromConfiguration($configuration);
+            self::assertEquals($expectedConnectionString, $meilisearchService->getReadService()->__toString());
         } catch (InvalidConnectionException $exception) {
             $exceptionOccurred = true;
         }

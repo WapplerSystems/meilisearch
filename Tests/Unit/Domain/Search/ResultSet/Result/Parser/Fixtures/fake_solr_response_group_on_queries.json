@@ -534,7 +534,7 @@
         "val":"pages",
         "count":40},
         {
-          "val":"tx_solr_file",
+          "val":"tx_meilisearch_file",
           "count":3}]}},
   "highlighting":{
     "3c4b368197294fa9305d495a52b6fbfe1c8e6066/pages/53/0/0/0":{
@@ -625,7 +625,7 @@
       "{!typo3access}-1,0",
       "{!collapse field=variantId}"],
     "parsed_filter_queries":["siteHash:3c4b368197294fa9305d495a52b6fbfe1c8e6066",
-      "AccessFilter(org.typo3.solr.search.AccessFilter - access: -1,0)",
+      "AccessFilter(org.typo3.meilisearch.search.AccessFilter - access: -1,0)",
       "CollapsingPostFilter()"],
     "timing":{
       "time":9.0,

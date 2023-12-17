@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-	<file source-language="en" datatype="plaintext" original="EXT:meilisearch/Resources/Private/Language/locallang_reports.xlf" date="2023-06-01T10:07:00Z" product-name="solr">
+	<file source-language="en" datatype="plaintext" original="EXT:meilisearch/Resources/Private/Language/locallang_reports.xlf" date="2023-06-01T10:07:00Z" product-name="meilisearch">
 		<header/>
 		<body>
-			<trans-unit id="status_solr_access-filter" resname="status_solr_access-filter">
-				<source>Solr Access Filter Plugin</source>
+			<trans-unit id="status_meilisearch_access-filter" resname="status_meilisearch_access-filter">
+				<source>Meilisearch Access Filter Plugin</source>
 			</trans-unit>
-			<trans-unit id="status_solr_allow-url-open" resname="status_solr_allow-url-open">
+			<trans-unit id="status_meilisearch_allow-url-open" resname="status_meilisearch_allow-url-open">
 				<source>URL-aware fopen wrappers</source>
 			</trans-unit>
-			<trans-unit id="status_solr_connectionstatus" resname="status_solr_connectionstatus">
-				<source>Solr Connection Status</source>
+			<trans-unit id="status_meilisearch_connectionstatus" resname="status_meilisearch_connectionstatus">
+				<source>Meilisearch Connection Status</source>
 			</trans-unit>
-			<trans-unit id="status_solr_configuration" resname="status_solr_configuration">
-				<source>Solr Configuration</source>
+			<trans-unit id="status_meilisearch_configuration" resname="status_meilisearch_configuration">
+				<source>Meilisearch Configuration</source>
 			</trans-unit>
-			<trans-unit id="status_solr_schema" resname="status_solr_schema">
-				<source>Solr Schema Version</source>
+			<trans-unit id="status_meilisearch_schema" resname="status_meilisearch_schema">
+				<source>Meilisearch Schema Version</source>
 			</trans-unit>
-			<trans-unit id="status_solr_site-handling" resname="status_solr_site-handling">
-				<source>Solr Site Handling Status</source>
+			<trans-unit id="status_meilisearch_site-handling" resname="status_meilisearch_site-handling">
+				<source>Meilisearch Site Handling Status</source>
 			</trans-unit>
-			<trans-unit id="status_solr_solrconfig" resname="status_solr_solrconfig">
-				<source>Solrconfig Version</source>
+			<trans-unit id="status_meilisearch_meilisearchconfig" resname="status_meilisearch_meilisearchconfig">
+				<source>Meilisearchconfig Version</source>
 			</trans-unit>
-			<trans-unit id="status_solr_solrversion" resname="status_solr_solrversion">
-				<source>Solr Version</source>
+			<trans-unit id="status_meilisearch_meilisearchversion" resname="status_meilisearch_meilisearchversion">
+				<source>Meilisearch Version</source>
 			</trans-unit>
 		</body>
 	</file>

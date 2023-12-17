@@ -33,7 +33,7 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 class RelationTest extends IntegrationTest
 {
     protected array $testExtensionsToLoad = [
-        'typo3conf/ext/solr',
+        'typo3conf/ext/meilisearch',
         '../vendor/wapplersystems/meilisearch/Tests/Integration/Fixtures/Extensions/fake_extension',
     ];
 
@@ -44,8 +44,8 @@ class RelationTest extends IntegrationTest
     public function canFallbackToPagesTableIfPagesLanguageOverlayTCAHasNoDefinitionForLocalColumn(string $fixtureName): void
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/' . $fixtureName);
-        $solrRelation = $this->getSolrRelation('pages', 7);
-        $actual = $solrRelation->render(['localField' => 'categories']);
+        $meilisearchRelation = $this->getMeilisearchRelation('pages', 7);
+        $actual = $meilisearchRelation->render(['localField' => 'categories']);
 
         self::assertSame('Some Category', $actual, 'Can not fallback to table "pages" on non existent column configuration in TCA for table "pages_language_overlay".');
     }
@@ -56,9 +56,9 @@ class RelationTest extends IntegrationTest
     public function fixturesProviderForFallbackToPagesTableIfPagesLanguageOverlayTCAHasNoDefinitionForLocalColumn(): Traversable
     {
         yield 'Can fallback to pages if no TCA for local field'
-            => ['solr_relation_can_fallback_to_pages_table_if_no_tca_for_local_field.csv'];
+            => ['meilisearch_relation_can_fallback_to_pages_table_if_no_tca_for_local_field.csv'];
         yield 'Can get related items using original uid if overlay has no TCA'
-            => ['solr_relation_can_get_related_items_using_original_uid_if_sys_lang_overlay_has_no_tca.csv'];
+            => ['meilisearch_relation_can_get_related_items_using_original_uid_if_sys_lang_overlay_has_no_tca.csv'];
     }
 
     /**
@@ -67,10 +67,10 @@ class RelationTest extends IntegrationTest
      */
     public function canResolveOneToOneRelation(string $expected, array $config): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/solr_relation_can_resolve_one_to_one_relations.csv');
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/meilisearch_relation_can_resolve_one_to_one_relations.csv');
 
-        $solrRelation = $this->getSolrRelation('tx_fakeextension_domain_model_foo', 1);
-        self::assertEquals($expected, $solrRelation->render($config));
+        $meilisearchRelation = $this->getMeilisearchRelation('tx_fakeextension_domain_model_foo', 1);
+        self::assertEquals($expected, $meilisearchRelation->render($config));
     }
 
     /**
@@ -115,10 +115,10 @@ class RelationTest extends IntegrationTest
      */
     public function canResolveMToNRelation(string $expected, string $table, int $recordUid, array $config): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/solr_relation_can_resolve_m_to_n_relations.csv');
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/meilisearch_relation_can_resolve_m_to_n_relations.csv');
 
-        $solrRelation = $this->getSolrRelation($table, $recordUid);
-        $result = $solrRelation->render($config);
+        $meilisearchRelation = $this->getMeilisearchRelation($table, $recordUid);
+        $result = $meilisearchRelation->render($config);
         self::assertEquals($expected, $result);
     }
 
@@ -225,10 +225,10 @@ class RelationTest extends IntegrationTest
      */
     public function canResolveOneToNRelation(string $expected, string $table, int $recordUid, array $config): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/solr_relation_can_resolve_one_to_n_relations.csv');
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/meilisearch_relation_can_resolve_one_to_n_relations.csv');
 
-        $solrRelation = $this->getSolrRelation($table, $recordUid);
-        $result = $solrRelation->render($config);
+        $meilisearchRelation = $this->getMeilisearchRelation($table, $recordUid);
+        $result = $meilisearchRelation->render($config);
         self::assertEquals($expected, $result);
     }
 
@@ -290,7 +290,7 @@ class RelationTest extends IntegrationTest
     /**
      * Prepares and returns the Relation to test
      */
-    protected function getSolrRelation(string $table, int $uid): Relation
+    protected function getMeilisearchRelation(string $table, int $uid): Relation
     {
         $tsfeMock = $this->createMock(TypoScriptFrontendController::class);
         $contentObjectRenderer = GeneralUtility::makeInstance(ContentObjectRenderer::class, $tsfeMock);

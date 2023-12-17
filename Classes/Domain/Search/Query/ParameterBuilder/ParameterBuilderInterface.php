@@ -19,7 +19,7 @@ use WapplerSystems\Meilisearch\Domain\Search\Query\AbstractQueryBuilder;
 
 /**
  * The implementation of ParameterBuilder is responsible to build an array with
- * the query parameter that are needed for solr
+ * the query parameter that are needed for meilisearch
  *
  * Interface ParameterProvider
  */

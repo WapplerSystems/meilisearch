@@ -39,7 +39,7 @@ class FrontendGroupsModifier
      */
     public function __invoke(ModifyResolvedFrontendGroupsEvent $event): void
     {
-        $pageIndexerRequest = $event->getRequest()->getAttribute('solr.pageIndexingInstructions');
+        $pageIndexerRequest = $event->getRequest()->getAttribute('meilisearch.pageIndexingInstructions');
         if (!$pageIndexerRequest instanceof PageIndexerRequest
             || (
                 (int)$pageIndexerRequest->getParameter('userGroup') === 0

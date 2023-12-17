@@ -1,6 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en"
 	xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
-	xmlns:s="http://typo3.org/ns/ApacheSolrForTypo3/Solr/ViewHelpers"
+	xmlns:s="http://typo3.org/ns/ApacheMeilisearchForTypo3/Meilisearch/ViewHelpers"
 	data-namespace-typo3-fluid="true"
 >
 
@@ -12,7 +12,7 @@
 			data-document-url="{document.url}"
 		>
 		<f:if condition="{document.isElevated}">
-			<div class="results-elevated-label"><f:translate key="sponsored" extensionName="solr"/></div>
+			<div class="results-elevated-label"><f:translate key="sponsored" extensionName="meilisearch"/></div>
 		</f:if>
 
 		<div class="row">
@@ -26,10 +26,10 @@
 
 		<div class="results-teaser">
 			<p class="result-content">{s:document.highlightResult(resultSet:resultSet, document:document, fieldName:'content')}</p>
-			<f:if condition="{document.type} == 'tx_solr_file'">
+			<f:if condition="{document.type} == 'tx_meilisearch_file'">
 				<p>
-					<f:translate key="file_mimetype" extensionName="solr"/>: {document.fileMimeType}<br />
-					<f:translate key="file_referenced" extensionName="solr"/>:
+					<f:translate key="file_mimetype" extensionName="meilisearch"/>: {document.fileMimeType}<br />
+					<f:translate key="file_referenced" extensionName="meilisearch"/>:
 
 					<ul class="references">
 						<f:if condition="{document.fileReferenceUrl}">

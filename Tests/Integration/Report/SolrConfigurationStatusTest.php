@@ -17,17 +17,17 @@ declare(strict_types=1);
 
 namespace WapplerSystems\Meilisearch\Tests\Integration\Report;
 
-use WapplerSystems\Meilisearch\Report\SolrConfigurationStatus;
+use WapplerSystems\Meilisearch\Report\MeilisearchConfigurationStatus;
 use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Integration test for the Solr configuration status report
+ * Integration test for the Meilisearch configuration status report
  *
  * @author Timo Schmidt
  */
-class SolrConfigurationStatusTest extends IntegrationTest
+class MeilisearchConfigurationStatusTest extends IntegrationTest
 {
     /**
      * @inheritdoc
@@ -38,7 +38,7 @@ class SolrConfigurationStatusTest extends IntegrationTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->writeDefaultSolrTestSiteConfiguration();
+        $this->writeDefaultMeilisearchTestSiteConfiguration();
     }
 
     /**
@@ -46,11 +46,11 @@ class SolrConfigurationStatusTest extends IntegrationTest
      */
     public function canGetGreenReportAgainstTestServer(): void
     {
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/can_get_green_solr_configuration_status_report.csv');
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/can_get_green_meilisearch_configuration_status_report.csv');
 
-        /** @var SolrConfigurationStatus $solrConfigurationStatus */
-        $solrConfigurationStatus = GeneralUtility::makeInstance(SolrConfigurationStatus::class);
-        $results = $solrConfigurationStatus->getStatus();
+        /** @var MeilisearchConfigurationStatus $meilisearchConfigurationStatus */
+        $meilisearchConfigurationStatus = GeneralUtility::makeInstance(MeilisearchConfigurationStatus::class);
+        $results = $meilisearchConfigurationStatus->getStatus();
         self::assertCount(2, $results);
         self::assertEquals(
             $results[0]->getSeverity(),
@@ -71,9 +71,9 @@ class SolrConfigurationStatusTest extends IntegrationTest
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/can_detect_missing_rootpage.csv');
 
-        /** @var SolrConfigurationStatus $solrConfigurationStatus */
-        $solrConfigurationStatus = GeneralUtility::makeInstance(SolrConfigurationStatus::class);
-        $results = $solrConfigurationStatus->getStatus();
+        /** @var MeilisearchConfigurationStatus $meilisearchConfigurationStatus */
+        $meilisearchConfigurationStatus = GeneralUtility::makeInstance(MeilisearchConfigurationStatus::class);
+        $results = $meilisearchConfigurationStatus->getStatus();
 
         self::assertCount(1, $results);
 
@@ -88,9 +88,9 @@ class SolrConfigurationStatusTest extends IntegrationTest
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/can_detect_indexing_disabled.csv');
 
-        /** @var SolrConfigurationStatus $solrConfigurationStatus   */
-        $solrConfigurationStatus = GeneralUtility::makeInstance(SolrConfigurationStatus::class);
-        $results = $solrConfigurationStatus->getStatus();
+        /** @var MeilisearchConfigurationStatus $meilisearchConfigurationStatus   */
+        $meilisearchConfigurationStatus = GeneralUtility::makeInstance(MeilisearchConfigurationStatus::class);
+        $results = $meilisearchConfigurationStatus->getStatus();
 
         self::assertCount(2, $results, 'Two test status are expected to be returned.');
         self::assertEquals(

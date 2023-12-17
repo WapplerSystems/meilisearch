@@ -13,10 +13,10 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace WapplerSystems\Meilisearch\Tests\Unit\System\Solr\Service;
+namespace WapplerSystems\Meilisearch\Tests\Unit\System\Meilisearch\Service;
 
-use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
-use WapplerSystems\Meilisearch\System\Solr\Service\SolrAdminService;
+use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Meilisearch\Service\MeilisearchAdminService;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Solarium\Client;
@@ -26,13 +26,13 @@ use stdClass;
 use function json_encode;
 
 /**
- * Tests the SolrAdminService class
+ * Tests the MeilisearchAdminService class
  *
  * @author Timo Hund <timo.hund@dkd.de>
  */
-class SolrAdminServiceTest extends SetUpUnitTestCase
+class MeilisearchAdminServiceTest extends SetUpUnitTestCase
 {
-    protected SolrAdminService|MockObject $adminService;
+    protected MeilisearchAdminService|MockObject $adminService;
     protected Client|MockObject $clientMock;
     protected Endpoint|MockObject $endpointMock;
 
@@ -42,13 +42,13 @@ class SolrAdminServiceTest extends SetUpUnitTestCase
         $this->endpointMock->expects(self::any())->method('getScheme')->willReturn('http');
         $this->endpointMock->expects(self::any())->method('getHost')->willReturn('localhost');
         $this->endpointMock->expects(self::any())->method('getPort')->willReturn(8983);
-        $this->endpointMock->expects(self::any())->method('getPath')->willReturn('/solr');
+        $this->endpointMock->expects(self::any())->method('getPath')->willReturn('/meilisearch');
         $this->endpointMock->expects(self::any())->method('getCore')->willReturn('core_en');
-        $this->endpointMock->expects(self::any())->method('getCoreBaseUri')->willReturn('http://localhost:8983/solr/core_en/');
+        $this->endpointMock->expects(self::any())->method('getCoreBaseUri')->willReturn('http://localhost:8983/meilisearch/core_en/');
 
         $this->clientMock = $this->createMock(Client::class);
         $this->clientMock->expects(self::any())->method('getEndpoint')->willReturn($this->endpointMock);
-        $this->adminService = $this->getMockBuilder(SolrAdminService::class)->setConstructorArgs([$this->clientMock])->onlyMethods(['_sendRawGet'])->getMock();
+        $this->adminService = $this->getMockBuilder(MeilisearchAdminService::class)->setConstructorArgs([$this->clientMock])->onlyMethods(['_sendRawGet'])->getMock();
         parent::setUp();
     }
     /**
@@ -57,7 +57,7 @@ class SolrAdminServiceTest extends SetUpUnitTestCase
     public function getLukeMetaDataIsSendingRequestToExpectedUrl(): void
     {
         $fakedLukeResponse = $this->createMock(ResponseAdapter::class);
-        $this->assertGetRequestIsTriggered('http://localhost:8983/solr/core_en/admin/luke?numTerms=50&wt=json&fl=%2A', $fakedLukeResponse);
+        $this->assertGetRequestIsTriggered('http://localhost:8983/meilisearch/core_en/admin/luke?numTerms=50&wt=json&fl=%2A', $fakedLukeResponse);
         $result = $this->adminService->getLukeMetaData(50);
 
         self::assertSame($fakedLukeResponse, $result, 'Could not get expected result from getLukeMetaData');
@@ -69,7 +69,7 @@ class SolrAdminServiceTest extends SetUpUnitTestCase
     public function getPluginsInformation(): void
     {
         $fakePluginsResponse = $this->createMock(ResponseAdapter::class);
-        $this->assertGetRequestIsTriggered('http://localhost:8983/solr/core_en/admin/plugins?wt=json', $fakePluginsResponse);
+        $this->assertGetRequestIsTriggered('http://localhost:8983/meilisearch/core_en/admin/plugins?wt=json', $fakePluginsResponse);
         $result = $this->adminService->getPluginsInformation();
         self::assertSame($fakePluginsResponse, $result, 'Could not get expected result from getPluginsInformation');
     }
@@ -80,7 +80,7 @@ class SolrAdminServiceTest extends SetUpUnitTestCase
     public function getSystemInformation(): void
     {
         $fakeSystemInformationResponse = $this->createMock(ResponseAdapter::class);
-        $this->assertGetRequestIsTriggered('http://localhost:8983/solr/core_en/admin/system?wt=json', $fakeSystemInformationResponse);
+        $this->assertGetRequestIsTriggered('http://localhost:8983/meilisearch/core_en/admin/system?wt=json', $fakeSystemInformationResponse);
         $result = $this->adminService->getSystemInformation();
         self::assertSame($fakeSystemInformationResponse, $result, 'Could not get expected result from getSystemInformation');
     }
@@ -88,32 +88,32 @@ class SolrAdminServiceTest extends SetUpUnitTestCase
     /**
      * @test
      */
-    public function getSolrServerVersion(): void
+    public function getMeilisearchServerVersion(): void
     {
         $fakeRawResponse = new stdClass();
         $fakeRawResponse->lucene = new stdClass();
-        $fakeRawResponse->lucene->{'solr-spec-version'} = '6.2.1';
+        $fakeRawResponse->lucene->{'meilisearch-spec-version'} = '6.2.1';
         $fakeSystemInformationResponse = new ResponseAdapter(
             json_encode($fakeRawResponse),
             200,
         );
-        $this->assertGetRequestIsTriggered('http://localhost:8983/solr/core_en/admin/system?wt=json', $fakeSystemInformationResponse);
-        $result = $this->adminService->getSolrServerVersion();
-        self::assertSame('6.2.1', $result, 'Can not get solr version from faked response');
+        $this->assertGetRequestIsTriggered('http://localhost:8983/meilisearch/core_en/admin/system?wt=json', $fakeSystemInformationResponse);
+        $result = $this->adminService->getMeilisearchServerVersion();
+        self::assertSame('6.2.1', $result, 'Can not get meilisearch version from faked response');
     }
 
     /**
      * @test
      */
-    public function canGetSolrConfigNameFromFakedXmlResponse(): void
+    public function canGetMeilisearchConfigNameFromFakedXmlResponse(): void
     {
-        $fakeTestSchema = $this->getFixtureContentByName('solrconfig.xml');
-        $fakedSolrConfigResponse = $this->createMock(ResponseAdapter::class);
-        $fakedSolrConfigResponse->expects(self::once())->method('getRawResponse')->willReturn($fakeTestSchema);
+        $fakeTestSchema = $this->getFixtureContentByName('meilisearchconfig.xml');
+        $fakedMeilisearchConfigResponse = $this->createMock(ResponseAdapter::class);
+        $fakedMeilisearchConfigResponse->expects(self::once())->method('getRawResponse')->willReturn($fakeTestSchema);
 
-        $this->assertGetRequestIsTriggered('http://localhost:8983/solr/core_en/admin/file?file=solrconfig.xml', $fakedSolrConfigResponse);
-        $expectedSchemaVersion = 'tx_solr-9-9-9--20221020';
-        self::assertSame($expectedSchemaVersion, $this->adminService->getSolrconfigName(), 'SolrAdminService could not parse the solrconfig version as expected');
+        $this->assertGetRequestIsTriggered('http://localhost:8983/meilisearch/core_en/admin/file?file=meilisearchconfig.xml', $fakedMeilisearchConfigResponse);
+        $expectedSchemaVersion = 'tx_meilisearch-9-9-9--20221020';
+        self::assertSame($expectedSchemaVersion, $this->adminService->getMeilisearchconfigName(), 'MeilisearchAdminService could not parse the meilisearchconfig version as expected');
     }
 
     protected function assertGetRequestIsTriggered(string $url, mixed $fakeResponse): void

@@ -77,7 +77,7 @@ abstract class AbstractInitializer implements IndexQueueInitializer
     ) {
         $this->logger = GeneralUtility::makeInstance(MeilisearchLogManager::class, __CLASS__);
         $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
-        $this->flashMessageQueue = $flashMessageService->getMessageQueueByIdentifier('solr.queue.initializer');
+        $this->flashMessageQueue = $flashMessageService->getMessageQueueByIdentifier('meilisearch.queue.initializer');
         $this->queueItemRepository = $queueItemRepository ?? GeneralUtility::makeInstance(QueueItemRepository::class);
         $this->pagesRepository = $pagesRepository ?? GeneralUtility::makeInstance(PagesRepository::class);
     }
@@ -143,9 +143,9 @@ abstract class AbstractInitializer implements IndexQueueInitializer
             . $this->buildUserWhereClause();
 
         try {
-            if ($connectionPool->getConnectionForTable($this->type)->getParams() === $connectionPool->getConnectionForTable('tx_solr_indexqueue_item')->getParams()) {
+            if ($connectionPool->getConnectionForTable($this->type)->getParams() === $connectionPool->getConnectionForTable('tx_meilisearch_indexqueue_item')->getParams()) {
                 // If both tables are in the same DB, send only one query to copy all datas from one table to the other
-                $initializationQuery = 'INSERT INTO tx_solr_indexqueue_item (root, item_type, item_uid, indexing_configuration, indexing_priority, changed, errors) ' . $fetchItemsQuery;
+                $initializationQuery = 'INSERT INTO tx_meilisearch_indexqueue_item (root, item_type, item_uid, indexing_configuration, indexing_priority, changed, errors) ' . $fetchItemsQuery;
                 $logData = ['query' => $initializationQuery];
                 $logData['rows'] = $this->queueItemRepository->initializeByNativeSQLStatement($initializationQuery);
             } else {
@@ -157,8 +157,8 @@ abstract class AbstractInitializer implements IndexQueueInitializer
                 if (count($items)) {
                     // Add items to the queue (if any)
                     $logData['rows'] = $connectionPool
-                        ->getConnectionForTable('tx_solr_indexqueue_item')
-                        ->bulkInsert('tx_solr_indexqueue_item', $items, array_keys($items[0]));
+                        ->getConnectionForTable('tx_meilisearch_indexqueue_item')
+                        ->bulkInsert('tx_meilisearch_indexqueue_item', $items, array_keys($items[0]));
                 }
             }
         } catch (DBALException $DBALException) {

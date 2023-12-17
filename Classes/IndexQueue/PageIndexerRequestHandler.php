@@ -26,7 +26,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * Checks for Index Queue page indexer requests and handles the actions
  * requested by them.
  *
- * This is added in the PSR-7 Frontend Request as "solr.pageIndexingInstructions" attribute
+ * This is added in the PSR-7 Frontend Request as "meilisearch.pageIndexingInstructions" attribute
  *
  * @author Ingo Renner <ingo@typo3.org>
  */

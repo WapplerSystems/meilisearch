@@ -85,7 +85,7 @@ class LastSearchesService
                 break;
             default:
                 throw new UnexpectedValueException(
-                    'Unknown mode for plugin.tx_solr.search.lastSearches.mode, valid modes are "user" or "global".',
+                    'Unknown mode for plugin.tx_meilisearch.search.lastSearches.mode, valid modes are "user" or "global".',
                     1342456570
                 );
         }

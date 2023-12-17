@@ -16,7 +16,7 @@
 namespace WapplerSystems\Meilisearch\Tests\Unit\FieldProcessor;
 
 use WapplerSystems\Meilisearch\FieldProcessor\Service;
-use WapplerSystems\Meilisearch\System\Solr\Document\Document;
+use WapplerSystems\Meilisearch\System\Meilisearch\Document\Document;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 
 /**

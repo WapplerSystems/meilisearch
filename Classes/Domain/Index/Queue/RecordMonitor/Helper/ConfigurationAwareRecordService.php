@@ -39,12 +39,12 @@ class ConfigurationAwareRecordService
     public function getIndexingConfigurationName(
         string $recordTable,
         int $recordUid,
-        TypoScriptConfiguration $solrConfiguration
+        TypoScriptConfiguration $meilisearchConfiguration
     ): ?string {
         $name = null;
-        $indexingConfigurations = $solrConfiguration->getEnabledIndexQueueConfigurationNames();
+        $indexingConfigurations = $meilisearchConfiguration->getEnabledIndexQueueConfigurationNames();
         foreach ($indexingConfigurations as $indexingConfigurationName) {
-            if (!$solrConfiguration->getIndexQueueConfigurationIsEnabled($indexingConfigurationName)) {
+            if (!$meilisearchConfiguration->getIndexQueueConfigurationIsEnabled($indexingConfigurationName)) {
                 // ignore disabled indexing configurations
                 continue;
             }
@@ -53,7 +53,7 @@ class ConfigurationAwareRecordService
                 $recordTable,
                 $recordUid,
                 $indexingConfigurationName,
-                $solrConfiguration
+                $meilisearchConfiguration
             );
             if (!empty($record)) {
                 $name = $indexingConfigurationName;
@@ -77,16 +77,16 @@ class ConfigurationAwareRecordService
     public function getRecord(
         string $recordTable,
         int $recordUid,
-        TypoScriptConfiguration $solrConfiguration
+        TypoScriptConfiguration $meilisearchConfiguration
     ): array {
         $record = [];
-        $indexingConfigurations = $solrConfiguration->getEnabledIndexQueueConfigurationNames();
+        $indexingConfigurations = $meilisearchConfiguration->getEnabledIndexQueueConfigurationNames();
         foreach ($indexingConfigurations as $indexingConfigurationName) {
             $record = $this->getRecordIfIndexConfigurationIsValid(
                 $recordTable,
                 $recordUid,
                 $indexingConfigurationName,
-                $solrConfiguration
+                $meilisearchConfiguration
             );
             if (!empty($record)) {
                 // if we found a record which matches the conditions, we can continue
@@ -104,13 +104,13 @@ class ConfigurationAwareRecordService
         string $recordTable,
         int $recordUid,
         string $indexingConfigurationName,
-        TypoScriptConfiguration $solrConfiguration
+        TypoScriptConfiguration $meilisearchConfiguration
     ): array {
-        if (!$this->isValidTableForIndexConfigurationName($recordTable, $indexingConfigurationName, $solrConfiguration)) {
+        if (!$this->isValidTableForIndexConfigurationName($recordTable, $indexingConfigurationName, $meilisearchConfiguration)) {
             return [];
         }
 
-        $recordWhereClause = $solrConfiguration->getIndexQueueAdditionalWhereClauseByConfigurationName($indexingConfigurationName);
+        $recordWhereClause = $meilisearchConfiguration->getIndexQueueAdditionalWhereClauseByConfigurationName($indexingConfigurationName);
 
         return $this->getRecordForIndexConfigurationIsValid($recordTable, $recordUid, $recordWhereClause);
     }
@@ -144,9 +144,9 @@ class ConfigurationAwareRecordService
     protected function isValidTableForIndexConfigurationName(
         string $recordTable,
         string $indexingConfigurationName,
-        TypoScriptConfiguration $solrConfiguration
+        TypoScriptConfiguration $meilisearchConfiguration
     ): bool {
-        $tableToIndex = $solrConfiguration->getIndexQueueTypeOrFallbackToConfigurationName($indexingConfigurationName);
+        $tableToIndex = $meilisearchConfiguration->getIndexQueueTypeOrFallbackToConfigurationName($indexingConfigurationName);
 
         $isMatchingTable = ($tableToIndex === $recordTable);
 

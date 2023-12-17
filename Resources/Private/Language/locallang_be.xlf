@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-	<file source-language="en" datatype="plaintext" original="EXT:meilisearch/Resources/Private/Language/locallang_be.xlf" date="2021-12-15T13:10:00Z" product-name="solr">
+	<file source-language="en" datatype="plaintext" original="EXT:meilisearch/Resources/Private/Language/locallang_be.xlf" date="2021-12-15T13:10:00Z" product-name="meilisearch">
 		<header/>
 		<body>
 			<trans-unit id="extConf.category.monitoring" resname="extConf.category.monitoring">
@@ -13,7 +13,7 @@
 				<source>Allow self signed certificates</source>
 			</trans-unit>
 			<trans-unit id="extConf.enableRouteEnhancer" resname="extConf.enableRouteEnhancer">
-				<source>Enable route enhancer: If you want to use speaking URLs for Solr facets, you have to enable this option, otherwise the required Middleware is not active and the route enhancer has no effect.</source>
+				<source>Enable route enhancer: If you want to use speaking URLs for Meilisearch facets, you have to enable this option, otherwise the required Middleware is not active and the route enhancer has no effect.</source>
 			</trans-unit>
 			<trans-unit id="extConf.includeGlobalQParameterInCacheHash" resname="extConf.includeGlobalQParameterInCacheHash">
 				<source>Include/Exclude global q parameter in/from cacheHash.</source>

@@ -124,7 +124,7 @@ class MeilisearchWriteService extends AbstractMeilisearchService
     }
 
     /**
-     * Optimize the solr index
+     * Optimize the meilisearch index
      */
     public function optimizeIndex(): Result
     {

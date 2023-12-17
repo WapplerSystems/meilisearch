@@ -15,30 +15,30 @@
 
 namespace WapplerSystems\Meilisearch\Tests\Unit\Report;
 
-use WapplerSystems\Meilisearch\Report\SolrConfigurationStatus;
+use WapplerSystems\Meilisearch\Report\MeilisearchConfigurationStatus;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Reports\Status;
 
 /**
- * Testcase for the SolrConfigurationStatus class.
+ * Testcase for the MeilisearchConfigurationStatus class.
  *
  * @author Timo Hund <timo.hund@dkd.de>
  */
-class SolrConfigurationStatusTest extends SetUpUnitTestCase
+class MeilisearchConfigurationStatusTest extends SetUpUnitTestCase
 {
-    protected SolrConfigurationStatus|MockObject $report;
+    protected MeilisearchConfigurationStatus|MockObject $report;
 
     protected function setUp(): void
     {
         $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['meilisearch'] = [];
         // we mock the methods to external dependencies.
 
-        $this->report = $this->getMockBuilder(SolrConfigurationStatus::class)->onlyMethods(
+        $this->report = $this->getMockBuilder(MeilisearchConfigurationStatus::class)->onlyMethods(
             [
                 'getRootPages',
-                'getIsSolrEnabled',
+                'getIsMeilisearchEnabled',
                 'getIsIndexingEnabled',
                 'getRenderedReport',
             ]
@@ -55,7 +55,7 @@ class SolrConfigurationStatusTest extends SetUpUnitTestCase
 
         $this->report->expects(self::any())->method('getRootPages')->willReturn($fakedRootPages);
 
-        $this->report->expects(self::any())->method('getIsSolrEnabled')->willReturn(false);
+        $this->report->expects(self::any())->method('getIsMeilisearchEnabled')->willReturn(false);
         $this->report->expects(self::any())->method('getIsIndexingEnabled')->willReturn(false);
 
         // everything should be ok, so no report should be rendered
@@ -67,18 +67,18 @@ class SolrConfigurationStatusTest extends SetUpUnitTestCase
     /**
      * @test
      */
-    public function canGetViolationWhenSolrIsEnabledButIndexingNot(): void
+    public function canGetViolationWhenMeilisearchIsEnabledButIndexingNot(): void
     {
         $fakedRootPages =  [1 => ['uid' => 1, 'title' => 'My Siteroot']];
 
         $this->report->expects(self::any())->method('getRootPages')->willReturn($fakedRootPages);
 
-        $this->report->expects(self::any())->method('getIsSolrEnabled')->willReturn(true);
+        $this->report->expects(self::any())->method('getIsMeilisearchEnabled')->willReturn(true);
         $this->report->expects(self::any())->method('getIsIndexingEnabled')->willReturn(false);
 
-        // one report should be rendered because solr is enabled but indexing not
+        // one report should be rendered because meilisearch is enabled but indexing not
         $this->report->expects(self::once())->method('getRenderedReport')->with(
-            'SolrConfigurationStatusIndexing.html',
+            'MeilisearchConfigurationStatusIndexing.html',
             ['pages' => [$fakedRootPages[1]]]
         )->willReturn('faked report output');
 

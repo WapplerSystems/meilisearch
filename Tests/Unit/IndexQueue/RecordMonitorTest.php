@@ -198,7 +198,7 @@ class RecordMonitorTest extends SetUpUnitTestCase
 
     /**
      * @test
-     * For more infos, please refer https://github.com/TYPO3-Solr/ext-solr/pull/2836
+     * For more infos, please refer https://github.com/TYPO3-Meilisearch/ext-meilisearch/pull/2836
      */
     public function processDatamap_afterDatabaseOperationsUsesAlreadyResolvedNextAutoIncrementValueForNewStatus(): void
     {
@@ -220,7 +220,7 @@ class RecordMonitorTest extends SetUpUnitTestCase
 
     /**
      * @test
-     * For more infos, please refer https://github.com/TYPO3-Solr/ext-solr/pull/2836
+     * For more infos, please refer https://github.com/TYPO3-Meilisearch/ext-meilisearch/pull/2836
      */
     public function processDatamap_afterDatabaseOperationsUsesNotYetResolvedNextAutoIncrementValueForNewStatus(): void
     {

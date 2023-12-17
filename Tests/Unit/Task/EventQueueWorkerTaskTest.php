@@ -111,8 +111,8 @@ class EventQueueWorkerTaskTest extends SetUpUnitTestCase
         GeneralUtility::setSingletonInstance(EventQueueItemRepository::class, $eventQueueItemRepositoryMock);
         $eventDispatcherMock = $this->createMock(EventDispatcherInterface::class);
         GeneralUtility::addInstance(EventDispatcherInterface::class, $eventDispatcherMock);
-        $solrLogManagerMock = $this->createMock(MeilisearchLogManager::class);
-        GeneralUtility::addInstance(MeilisearchLogManager::class, $solrLogManagerMock);
+        $meilisearchLogManagerMock = $this->createMock(MeilisearchLogManager::class);
+        GeneralUtility::addInstance(MeilisearchLogManager::class, $meilisearchLogManagerMock);
 
         $event = new RecordUpdatedEvent(123, 'tx_foo_bar');
         $serializedEvent = serialize($event);
@@ -134,7 +134,7 @@ class EventQueueWorkerTaskTest extends SetUpUnitTestCase
             ->method('dispatch')
             ->willThrowException(new \Exception('', 1641889238));
 
-        $solrLogManagerMock
+        $meilisearchLogManagerMock
             ->expects(self::once())
             ->method('error')
             ->with(self::anything(), self::anything());

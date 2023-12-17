@@ -30,7 +30,7 @@ class UrlFacetContainerTest extends SetUpUnitTestCase
      * Test data for index based url parameters
      */
     protected array $indexParameters = [
-        'tx_solr' => [
+        'tx_meilisearch' => [
             'filter' => [
                 'type:pages',
                 'type:example',
@@ -43,7 +43,7 @@ class UrlFacetContainerTest extends SetUpUnitTestCase
      * Test data for assoc based url parameters
      */
     protected array $assocParameters = [
-        'tx_solr' => [
+        'tx_meilisearch' => [
             'filter' => [
                 'type:pages' => 1,
                 'type:example' => 1,
@@ -70,7 +70,7 @@ class UrlFacetContainerTest extends SetUpUnitTestCase
     {
         $urlFacetBack = new UrlFacetContainer(
             new ArrayAccessor($this->assocParameters),
-            'tx_solr',
+            'tx_meilisearch',
             'assoc'
         );
         self::assertEquals(['example', 'news', 'pages'], $urlFacetBack->getActiveFacetValuesByName('type'));
@@ -94,7 +94,7 @@ class UrlFacetContainerTest extends SetUpUnitTestCase
     {
         $urlFacetBack = new UrlFacetContainer(
             new ArrayAccessor($this->assocParameters),
-            'tx_solr',
+            'tx_meilisearch',
             'assoc'
         );
         self::assertEquals(4, $urlFacetBack->count());
@@ -120,7 +120,7 @@ class UrlFacetContainerTest extends SetUpUnitTestCase
     {
         $urlFacetBack = new UrlFacetContainer(
             new ArrayAccessor($this->assocParameters),
-            'tx_solr',
+            'tx_meilisearch',
             'assoc'
         );
         self::assertEquals(4, $urlFacetBack->count());
@@ -146,7 +146,7 @@ class UrlFacetContainerTest extends SetUpUnitTestCase
     {
         $urlFacetBack = new UrlFacetContainer(
             new ArrayAccessor($this->assocParameters),
-            'tx_solr',
+            'tx_meilisearch',
             'assoc'
         );
         $urlFacetBack->removeFacetValue('type', 'example');
@@ -179,7 +179,7 @@ class UrlFacetContainerTest extends SetUpUnitTestCase
     {
         $urlFacetBack = new UrlFacetContainer(
             new ArrayAccessor($this->assocParameters),
-            'tx_solr',
+            'tx_meilisearch',
             'assoc'
         );
         self::assertNotEquals(
@@ -195,7 +195,7 @@ class UrlFacetContainerTest extends SetUpUnitTestCase
     {
         $urlFacetBack = new UrlFacetContainer(
             new ArrayAccessor($this->assocParameters),
-            'tx_solr',
+            'tx_meilisearch',
             'assoc'
         );
         self::assertEquals(['example', 'news', 'pages'], $urlFacetBack->getActiveFacetValuesByName('type'));

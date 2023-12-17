@@ -33,14 +33,14 @@ class BigramPhraseFields extends AbstractFieldList implements ParameterBuilderIn
         return self::initializeFromString($fieldListString, $delimiter);
     }
 
-    public static function fromTypoScriptConfiguration(TypoScriptConfiguration $solrConfiguration): BigramPhraseFields
+    public static function fromTypoScriptConfiguration(TypoScriptConfiguration $meilisearchConfiguration): BigramPhraseFields
     {
-        $isEnabled = $solrConfiguration->getBigramPhraseSearchIsEnabled();
+        $isEnabled = $meilisearchConfiguration->getBigramPhraseSearchIsEnabled();
         if (!$isEnabled) {
             return new BigramPhraseFields(false);
         }
 
-        return self::fromString($solrConfiguration->getSearchQueryBigramPhraseFields());
+        return self::fromString($meilisearchConfiguration->getSearchQueryBigramPhraseFields());
     }
 
     /**

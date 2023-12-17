@@ -26,12 +26,12 @@ class FlexFormUserFunctionsTest extends SetUpUnitTestCase
     /**
      * @test
      */
-    public function whenNoFacetsAreConfiguredAllSolrFieldsShouldBeAvailableAsFilter()
+    public function whenNoFacetsAreConfiguredAllMeilisearchFieldsShouldBeAvailableAsFilter()
     {
         $userFunc = $this->getMockBuilder(FlexFormUserFunctions::class)
-            ->onlyMethods(['getFieldNamesFromSolrMetaDataForPage', 'getConfiguredFacetsForPage'])->getMock();
+            ->onlyMethods(['getFieldNamesFromMeilisearchMetaDataForPage', 'getConfiguredFacetsForPage'])->getMock();
 
-        $userFunc->expects(self::once())->method('getFieldNamesFromSolrMetaDataForPage')->willReturn(['type', 'pid', 'uid']);
+        $userFunc->expects(self::once())->method('getFieldNamesFromMeilisearchMetaDataForPage')->willReturn(['type', 'pid', 'uid']);
         $userFunc->expects(self::once())->method('getConfiguredFacetsForPage')->willReturn([]);
 
         $parentInformation = [
@@ -51,9 +51,9 @@ class FlexFormUserFunctionsTest extends SetUpUnitTestCase
     public function labelIsUsedFromFacetWhenTheFacetIsConfiguredInTypoScript()
     {
         $userFunc = $this->getMockBuilder(FlexFormUserFunctions::class)
-            ->onlyMethods(['getFieldNamesFromSolrMetaDataForPage', 'getConfiguredFacetsForPage'])->getMock();
+            ->onlyMethods(['getFieldNamesFromMeilisearchMetaDataForPage', 'getConfiguredFacetsForPage'])->getMock();
 
-        $userFunc->expects(self::once())->method('getFieldNamesFromSolrMetaDataForPage')->willReturn(['type', 'pid', 'uid']);
+        $userFunc->expects(self::once())->method('getFieldNamesFromMeilisearchMetaDataForPage')->willReturn(['type', 'pid', 'uid']);
         $userFunc->expects(self::once())->method('getConfiguredFacetsForPage')->willReturn([
             'myType.' => [
                 'field' => 'type',
@@ -78,8 +78,8 @@ class FlexFormUserFunctionsTest extends SetUpUnitTestCase
     public function duplicateFacetLabelDoesNotMakeFieldsDisappearingInFlexForms()
     {
         $flexFormUserFunctionsMock = $this->getMockBuilder(FlexFormUserFunctions::class)
-            ->onlyMethods(['getFieldNamesFromSolrMetaDataForPage', 'getConfiguredFacetsForPage'])->getMock();
-        $flexFormUserFunctionsMock->expects(self::once())->method('getFieldNamesFromSolrMetaDataForPage')
+            ->onlyMethods(['getFieldNamesFromMeilisearchMetaDataForPage', 'getConfiguredFacetsForPage'])->getMock();
+        $flexFormUserFunctionsMock->expects(self::once())->method('getFieldNamesFromMeilisearchMetaDataForPage')
             ->willReturn(
                 ['some_field', 'someOther_field']
             );
@@ -111,8 +111,8 @@ class FlexFormUserFunctionsTest extends SetUpUnitTestCase
     public function facetLabelIsShownTranslatedInBracketsSignsInFlexFormsIfTranslationIsAvailable()
     {
         $flexFormUserFunctionsMock = $this->getMockBuilder(FlexFormUserFunctions::class)
-            ->onlyMethods(['getFieldNamesFromSolrMetaDataForPage', 'getConfiguredFacetsForPage', 'getTranslation'])->getMock();
-        $flexFormUserFunctionsMock->expects(self::once())->method('getFieldNamesFromSolrMetaDataForPage')
+            ->onlyMethods(['getFieldNamesFromMeilisearchMetaDataForPage', 'getConfiguredFacetsForPage', 'getTranslation'])->getMock();
+        $flexFormUserFunctionsMock->expects(self::once())->method('getFieldNamesFromMeilisearchMetaDataForPage')
             ->willReturn(['some_field', 'someOther_field', 'someQuiteOther_field', 'uid', 'pid']);
 
         $flexFormUserFunctionsMock->expects(self::once())->method('getConfiguredFacetsForPage')
@@ -160,8 +160,8 @@ class FlexFormUserFunctionsTest extends SetUpUnitTestCase
     public function cObjectPathIsShownInBracketsSignsInFlexFormsIfcObjectIsUsed()
     {
         $flexFormUserFunctionsMock = $this->getMockBuilder(FlexFormUserFunctions::class)
-            ->onlyMethods(['getFieldNamesFromSolrMetaDataForPage', 'getConfiguredFacetsForPage'])->getMock();
-        $flexFormUserFunctionsMock->expects(self::once())->method('getFieldNamesFromSolrMetaDataForPage')
+            ->onlyMethods(['getFieldNamesFromMeilisearchMetaDataForPage', 'getConfiguredFacetsForPage'])->getMock();
+        $flexFormUserFunctionsMock->expects(self::once())->method('getFieldNamesFromMeilisearchMetaDataForPage')
             ->willReturn(['some_field', 'someOther_field', 'someQuiteOther_field']);
 
         $flexFormUserFunctionsMock->expects(self::once())->method('getConfiguredFacetsForPage')

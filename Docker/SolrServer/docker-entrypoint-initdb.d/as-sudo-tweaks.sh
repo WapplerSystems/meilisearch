@@ -2,7 +2,7 @@
 
 set -e
 
-# execute files in /docker-entrypoint-initdb.d/as-sudo/*.sh before starting solr
+# execute files in /docker-entrypoint-initdb.d/as-sudo/*.sh before starting meilisearch
 while read -r f; do
     case "$f" in
         *.sh)     echo "$0: running 'sudo $f'"; sudo "$f" ;;

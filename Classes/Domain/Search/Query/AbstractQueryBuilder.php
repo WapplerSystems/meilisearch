@@ -35,7 +35,7 @@ use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\TrigramPhras
 use Closure;
 
 /**
- * The AbstractQueryBuilder contains all logic to initialize solr queries independent of TYPO3.
+ * The AbstractQueryBuilder contains all logic to initialize meilisearch queries independent of TYPO3.
  */
 abstract class AbstractQueryBuilder
 {
@@ -257,7 +257,7 @@ abstract class AbstractQueryBuilder
     }
 
     /**
-     * Can be used to use a specific filter string in the solr query.
+     * Can be used to use a specific filter string in the meilisearch query.
      * @return static
      */
     public function useFilter(string $filterString, string $filterName = ''): self

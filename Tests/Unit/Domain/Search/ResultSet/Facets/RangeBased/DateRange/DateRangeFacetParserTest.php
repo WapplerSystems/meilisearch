@@ -40,7 +40,7 @@ class DateRangeFacetParserTest extends SetUpFacetParser
         ];
 
         $searchResultSet = $this->initializeSearchResultSetFromFakeResponse(
-            'fake_solr_response_with_dateRange_facet.json',
+            'fake_meilisearch_response_with_dateRange_facet.json',
             $facetConfiguration,
             ['myCreated:201506020000-201706020000']
         );

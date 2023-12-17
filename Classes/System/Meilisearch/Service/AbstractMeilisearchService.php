@@ -51,7 +51,7 @@ abstract class AbstractMeilisearchService
     }
 
     /**
-     * Returns the path to the core solr path + core path.
+     * Returns the path to the core meilisearch path + core path.
      */
     public function getCorePath(): string
     {
@@ -197,24 +197,24 @@ abstract class AbstractMeilisearchService
         string $logSeverity,
         string $message,
         string $url,
-        ?ResponseAdapter $solrResponse,
+        ?ResponseAdapter $meilisearchResponse,
         Throwable $exception = null,
         string $contentSend = ''
     ): void {
-        $logData = $this->buildLogDataFromResponse($solrResponse, $exception, $url, $contentSend);
+        $logData = $this->buildLogDataFromResponse($meilisearchResponse, $exception, $url, $contentSend);
         $this->logger->log($logSeverity, $message, $logData);
     }
 
     /**
-     * Parses the solr information to build data for the logger.
+     * Parses the meilisearch information to build data for the logger.
      */
     protected function buildLogDataFromResponse(
-        ResponseAdapter $solrResponse,
+        ResponseAdapter $meilisearchResponse,
         Throwable $e = null,
         string $url = '',
         string $contentSend = ''
     ): array {
-        $logData = ['query url' => $url, 'response' => (array)$solrResponse];
+        $logData = ['query url' => $url, 'response' => (array)$meilisearchResponse];
 
         if ($contentSend !== '') {
             $logData['content'] = $contentSend;
@@ -227,8 +227,8 @@ abstract class AbstractMeilisearchService
         // trigger data parsing
         /** @noinspection PhpExpressionResultUnusedInspection */
         /** @phpstan-ignore-next-line */
-        $solrResponse->response;
-        $logData['response data'] = print_r($solrResponse, true);
+        $meilisearchResponse->response;
+        $logData['response data'] = print_r($meilisearchResponse, true);
         return $logData;
     }
 

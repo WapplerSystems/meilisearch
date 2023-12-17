@@ -37,7 +37,7 @@ class IndexServiceTest extends IntegrationTest
     protected bool $skipImportRootPagesAndTemplatesForConfiguredSites = true;
 
     protected array $testExtensionsToLoad = [
-        'typo3conf/ext/solr',
+        'typo3conf/ext/meilisearch',
         '../vendor/wapplersystems/meilisearch/Tests/Integration/Fixtures/Extensions/fake_extension2',
     ];
 
@@ -47,7 +47,7 @@ class IndexServiceTest extends IntegrationTest
     {
         parent::setUp();
 
-        $this->writeDefaultSolrTestSiteConfiguration();
+        $this->writeDefaultMeilisearchTestSiteConfiguration();
         $this->indexQueue = GeneralUtility::makeInstance(Queue::class);
     }
 
@@ -73,7 +73,7 @@ class IndexServiceTest extends IntegrationTest
      */
     public function canResolveBaseAsPrefix(string $absRefPrefix, string $expectedUrl)
     {
-        $this->cleanUpSolrServerAndAssertEmpty();
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
 
         $this->importCSVDataSet(__DIR__ . '/Fixtures/can_index_custom_record_withBasePrefix_' . $absRefPrefix . '.csv');
 
@@ -95,10 +95,10 @@ class IndexServiceTest extends IntegrationTest
         $cliEnvironment->restore();
 
         // do we have the record in the index with the value from the mm relation?
-        $this->waitToBeVisibleInSolr();
-        $solrContent = file_get_contents($this->getSolrConnectionUriAuthority() . '/solr/core_en/select?q=*:*');
-        self::assertStringContainsString('"numFound":1', $solrContent, 'Could not index document into solr');
-        self::assertStringContainsString('"url":"' . $expectedUrl, $solrContent, 'Generated unexpected url with absRefPrefix = auto');
-        $this->cleanUpSolrServerAndAssertEmpty();
+        $this->waitToBeVisibleInMeilisearch();
+        $meilisearchContent = file_get_contents($this->getMeilisearchConnectionUriAuthority() . '/meilisearch/core_en/select?q=*:*');
+        self::assertStringContainsString('"numFound":1', $meilisearchContent, 'Could not index document into meilisearch');
+        self::assertStringContainsString('"url":"' . $expectedUrl, $meilisearchContent, 'Generated unexpected url with absRefPrefix = auto');
+        $this->cleanUpMeilisearchServerAndAssertEmpty();
     }
 }

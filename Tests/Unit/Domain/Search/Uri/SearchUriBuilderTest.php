@@ -59,10 +59,10 @@ class SearchUriBuilderTest extends SetUpUnitTestCase
     public function addFacetLinkIsCalledWithSubstitutedArguments(): void
     {
         $configurationMock = $this->createMock(TypoScriptConfiguration::class);
-        $configurationMock->expects(self::any())->method('getSearchPluginNamespace')->willReturn('tx_solr');
+        $configurationMock->expects(self::any())->method('getSearchPluginNamespace')->willReturn('tx_meilisearch');
         $configurationMock->expects(self::once())->method('getSearchFacetingFacetLinkUrlParametersAsArray')->willReturn([]);
         $configurationMock->expects(self::once())->method('getSearchTargetPage')->willReturn(1);
-        $expectedArguments = ['tx_solr' => ['filter' => ['###tx_solr:filter:0:foo###']]];
+        $expectedArguments = ['tx_meilisearch' => ['filter' => ['###tx_meilisearch:filter:0:foo###']]];
 
         $this->extBaseUriBuilderMock->expects(self::once())->method('setArguments')->with($expectedArguments)->willReturn($this->extBaseUriBuilderMock);
         $this->extBaseUriBuilderMock->expects(self::once())->method('reset')->with()->willReturn($this->extBaseUriBuilderMock);
@@ -76,8 +76,8 @@ class SearchUriBuilderTest extends SetUpUnitTestCase
      */
     public function addFacetLinkWillAddAdditionalConfiguredArguments(): void
     {
-        $expectedArguments = ['tx_solr' => ['filter' => ['###tx_solr:filter:0:option###']], 'foo' => '###foo###'];
-        $linkBuilderResult = '/index.php?id=1&filter=' . urlencode('###tx_solr:filter:0:option###') . '&foo=' . urlencode('###foo###');
+        $expectedArguments = ['tx_meilisearch' => ['filter' => ['###tx_meilisearch:filter:0:option###']], 'foo' => '###foo###'];
+        $linkBuilderResult = '/index.php?id=1&filter=' . urlencode('###tx_meilisearch:filter:0:option###') . '&foo=' . urlencode('###foo###');
 
         $this->extBaseUriBuilderMock->expects(self::once())
             ->method('setArguments')
@@ -94,7 +94,7 @@ class SearchUriBuilderTest extends SetUpUnitTestCase
         $configurationMock = $this->createMock(TypoScriptConfiguration::class);
         $configurationMock->expects(self::any())
             ->method('getSearchPluginNamespace')
-            ->willReturn('tx_solr');
+            ->willReturn('tx_meilisearch');
         $configurationMock->expects(self::once())
             ->method('getSearchFacetingFacetLinkUrlParametersAsArray')
             ->willReturn(['foo' => 'bar']);
@@ -111,7 +111,7 @@ class SearchUriBuilderTest extends SetUpUnitTestCase
          */
         $this->routingServiceMock->expects(self::any())
             ->method('reviseFilterVariables')
-            ->willReturn(['###tx_solr:filter:0:option###' => 'option%3Avalue', '###foo###' => 'bar']);
+            ->willReturn(['###tx_meilisearch:filter:0:option###' => 'option%3Avalue', '###foo###' => 'bar']);
         $configurationMock->expects(self::once())
             ->method('getSearchTargetPage')
             ->willReturn(1);
@@ -130,14 +130,14 @@ class SearchUriBuilderTest extends SetUpUnitTestCase
     public function setArgumentsIsOnlyCalledOnceEvenWhenMultipleFacetsGetRendered(): void
     {
         $configurationMock = $this->createMock(TypoScriptConfiguration::class);
-        $configurationMock->expects(self::any())->method('getSearchPluginNamespace')->willReturn('tx_solr');
+        $configurationMock->expects(self::any())->method('getSearchPluginNamespace')->willReturn('tx_meilisearch');
         $configurationMock->expects(self::once())->method('getSearchFacetingFacetLinkUrlParametersAsArray')->willReturn([]);
         $configurationMock->expects(self::any())->method('getSearchTargetPage')->willReturn(1);
 
-        $expectedArguments = ['tx_solr' => ['filter' => ['###tx_solr:filter:0:color###']]];
+        $expectedArguments = ['tx_meilisearch' => ['filter' => ['###tx_meilisearch:filter:0:color###']]];
         $this->extBaseUriBuilderMock->expects(self::once())->method('setArguments')->with($expectedArguments)->willReturn($this->extBaseUriBuilderMock);
         $this->extBaseUriBuilderMock->expects(self::once())->method('reset')->with()->willReturn($this->extBaseUriBuilderMock);
-        $this->extBaseUriBuilderMock->expects(self::once())->method('build')->willReturn(urlencode('/index.php?id=1&tx_solr[filter][0]=###tx_solr:filter:0###'));
+        $this->extBaseUriBuilderMock->expects(self::once())->method('build')->willReturn(urlencode('/index.php?id=1&tx_meilisearch[filter][0]=###tx_meilisearch:filter:0###'));
 
         $previousRequest =  new SearchRequest([], 0, 0, $configurationMock);
         $previousRequest->removeAllFacets();
@@ -155,12 +155,12 @@ class SearchUriBuilderTest extends SetUpUnitTestCase
      */
     public function targetPageUidIsPassedWhenSortingIsAdded(): void
     {
-        $expectedArguments = ['tx_solr' => ['sort' => '###tx_solr:sort###']];
-        $linkBuilderResult = '/index.php?id=1&' . urlencode('tx_solr[sort]') . '=' . urlencode('###tx_solr:sort###');
+        $expectedArguments = ['tx_meilisearch' => ['sort' => '###tx_meilisearch:sort###']];
+        $linkBuilderResult = '/index.php?id=1&' . urlencode('tx_meilisearch[sort]') . '=' . urlencode('###tx_meilisearch:sort###');
 
         $configurationMock = $this->createMock(TypoScriptConfiguration::class);
         $configurationMock->expects(self::once())->method('getSearchTargetPage')->willReturn(4711);
-        $configurationMock->expects(self::any())->method('getSearchPluginNamespace')->willReturn('tx_solr');
+        $configurationMock->expects(self::any())->method('getSearchPluginNamespace')->willReturn('tx_meilisearch');
         $configurationMock->expects(self::once())->method('getSearchTargetPage')->willReturn(1);
 
         /*
@@ -176,7 +176,7 @@ class SearchUriBuilderTest extends SetUpUnitTestCase
          */
         $this->routingServiceMock->expects(self::any())
             ->method('reviseFilterVariables')
-            ->willReturn(['###tx_solr:sort###' => 'title+desc']);
+            ->willReturn(['###tx_meilisearch:sort###' => 'title+desc']);
 
         $previousRequest =  new SearchRequest([], 0, 0, $configurationMock);
 
@@ -186,7 +186,7 @@ class SearchUriBuilderTest extends SetUpUnitTestCase
         $this->extBaseUriBuilderMock->expects(self::once())->method('reset')->with()->willReturn($this->extBaseUriBuilderMock);
         $this->extBaseUriBuilderMock->expects(self::once())->method('build')->willReturn($linkBuilderResult);
         $result = $this->searchUrlBuilder->getSetSortingUri($previousRequest, 'title', 'desc');
-        self::assertEquals('/index.php?id=1&' . urlencode('tx_solr[sort]') . '=' . urlencode('title desc'), $result);
+        self::assertEquals('/index.php?id=1&' . urlencode('tx_meilisearch[sort]') . '=' . urlencode('title desc'), $result);
     }
 
     /**
@@ -195,12 +195,12 @@ class SearchUriBuilderTest extends SetUpUnitTestCase
     public function canGetRemoveFacetOptionUri(): void
     {
         $configurationMock = $this->createMock(TypoScriptConfiguration::class);
-        $configurationMock->expects(self::any())->method('getSearchPluginNamespace')->willReturn('tx_solr');
+        $configurationMock->expects(self::any())->method('getSearchPluginNamespace')->willReturn('tx_meilisearch');
         $configurationMock->expects(self::once())->method('getSearchTargetPage')->willReturn(1);
 
         $previousRequest =  new SearchRequest(
             [
-                    'tx_solr' => [
+                    'tx_meilisearch' => [
                         'filter' => [
                             'type:pages',
                         ],
@@ -212,7 +212,7 @@ class SearchUriBuilderTest extends SetUpUnitTestCase
         );
 
         // we expect that the filters are empty after remove
-        $expectedArguments = ['tx_solr' => ['filter' => []]];
+        $expectedArguments = ['tx_meilisearch' => ['filter' => []]];
         $this->extBaseUriBuilderMock->expects(self::once())->method('setArguments')->with($expectedArguments)->willReturn($this->extBaseUriBuilderMock);
         $this->extBaseUriBuilderMock->expects(self::once())->method('reset')->with()->willReturn($this->extBaseUriBuilderMock);
         $this->searchUrlBuilder->getRemoveFacetValueUri($previousRequest, 'type', 'pages');
@@ -224,12 +224,12 @@ class SearchUriBuilderTest extends SetUpUnitTestCase
     public function canGetRemoveFacetUri(): void
     {
         $configurationMock = $this->createMock(TypoScriptConfiguration::class);
-        $configurationMock->expects(self::any())->method('getSearchPluginNamespace')->willReturn('tx_solr');
+        $configurationMock->expects(self::any())->method('getSearchPluginNamespace')->willReturn('tx_meilisearch');
         $configurationMock->expects(self::once())->method('getSearchTargetPage')->willReturn(1);
 
         $previousRequest =  new SearchRequest(
             [
-                    'tx_solr' => [
+                    'tx_meilisearch' => [
                         'filter' => [
                             'type:pages',
                             'type:tt_news',
@@ -242,8 +242,8 @@ class SearchUriBuilderTest extends SetUpUnitTestCase
         );
 
         // we expect that the filters are empty after remove
-        //@todo we need to refactor the request in ext:solr to cleanup empty arguments completely to assert  $expectedArguments = []
-        $expectedArguments = ['tx_solr' => ['filter' => []]];
+        //@todo we need to refactor the request in ext:meilisearch to cleanup empty arguments completely to assert  $expectedArguments = []
+        $expectedArguments = ['tx_meilisearch' => ['filter' => []]];
         $this->extBaseUriBuilderMock->expects(self::once())->method('setArguments')->with($expectedArguments)->willReturn($this->extBaseUriBuilderMock);
         $this->extBaseUriBuilderMock->expects(self::once())->method('reset')->with()->willReturn($this->extBaseUriBuilderMock);
         $this->searchUrlBuilder->getRemoveFacetUri($previousRequest, 'type');
@@ -259,7 +259,7 @@ class SearchUriBuilderTest extends SetUpUnitTestCase
         $configurationMock = $this->createMock(TypoScriptConfiguration::class);
         $configurationMock->expects(self::any())
             ->method('getSearchPluginNamespace')
-            ->willReturn('tx_solr');
+            ->willReturn('tx_meilisearch');
         $configurationMock->expects(self::once())
             ->method('getSearchTargetPage')
             ->willReturn(1);
@@ -269,7 +269,7 @@ class SearchUriBuilderTest extends SetUpUnitTestCase
 
         $previousRequest =  new SearchRequest(
             [
-                'tx_solr' => [
+                'tx_meilisearch' => [
                     'groupPage' => [
                         'typeGroup' => [
                             'pages' => 4,
@@ -284,10 +284,10 @@ class SearchUriBuilderTest extends SetUpUnitTestCase
 
         $this->extBaseUriBuilderMock->expects(self::any())->method('setArguments')->willReturn($this->extBaseUriBuilderMock);
         $this->extBaseUriBuilderMock->expects(self::once())->method('reset')->with()->willReturn($this->extBaseUriBuilderMock);
-        $this->extBaseUriBuilderMock->expects(self::any())->method('build')->willReturn('/index.php?id=1&tx_solr[filter][0]=type:pages');
+        $this->extBaseUriBuilderMock->expects(self::any())->method('build')->willReturn('/index.php?id=1&tx_meilisearch[filter][0]=type:pages');
 
         $uri = $this->searchUrlBuilder->getAddFacetValueUri($previousRequest, 'type', 'pages');
-        self::assertSame('/index.php?id=1&tx_solr[filter][0]=type:pages', urldecode($uri), 'Unexpected uri generated');
+        self::assertSame('/index.php?id=1&tx_meilisearch[filter][0]=type:pages', urldecode($uri), 'Unexpected uri generated');
     }
 
     /**
@@ -296,20 +296,20 @@ class SearchUriBuilderTest extends SetUpUnitTestCase
     public function canSetGroupPageForQueryGroup(): void
     {
         $expectedArguments = [
-            'tx_solr' => [
+            'tx_meilisearch' => [
                 'groupPage' => [
                     'smallPidRange' => [
-                        'pid0to5' => '###tx_solr:groupPage:smallPidRange:pid0to5###',
+                        'pid0to5' => '###tx_meilisearch:groupPage:smallPidRange:pid0to5###',
                     ],
                 ],
             ],
         ];
         $givenTemplate = [
             'id' => 1,
-            'tx_solr' => [
+            'tx_meilisearch' => [
                 'groupPage' => [
                     'smallPidRange' => [
-                        'pid0to5' => '###tx_solr:groupPage:smallPidRange:pid0to5###',
+                        'pid0to5' => '###tx_meilisearch:groupPage:smallPidRange:pid0to5###',
                     ],
                 ],
             ],
@@ -317,7 +317,7 @@ class SearchUriBuilderTest extends SetUpUnitTestCase
         $linkBuilderResult = '/index.php?' . http_build_query($givenTemplate);
 
         $configurationMock = $this->createMock(TypoScriptConfiguration::class);
-        $configurationMock->expects(self::any())->method('getSearchPluginNamespace')->willReturn('tx_solr');
+        $configurationMock->expects(self::any())->method('getSearchPluginNamespace')->willReturn('tx_meilisearch');
         $configurationMock->expects(self::once())->method('getSearchTargetPage')->willReturn(1);
 
         $previousRequest =  new SearchRequest([], 0, 0, $configurationMock);
@@ -349,9 +349,9 @@ class SearchUriBuilderTest extends SetUpUnitTestCase
          */
         $this->routingServiceMock->expects(self::any())
             ->method('reviseFilterVariables')
-            ->willReturn(['###tx_solr:groupPage:smallPidRange:pid0to5###' => '5']);
+            ->willReturn(['###tx_meilisearch:groupPage:smallPidRange:pid0to5###' => '5']);
         $uri = $this->searchUrlBuilder->getResultGroupItemPageUri($previousRequest, $groupItem, 5);
-        self::assertStringContainsString(urlencode('tx_solr[groupPage][smallPidRange][pid0to5]') . '=5', $uri, 'Uri did not contain link segment for query group');
+        self::assertStringContainsString(urlencode('tx_meilisearch[groupPage][smallPidRange][pid0to5]') . '=5', $uri, 'Uri did not contain link segment for query group');
     }
 
     /*
@@ -369,7 +369,7 @@ class SearchUriBuilderTest extends SetUpUnitTestCase
             ->method('fetchEnhancerByPageUid')
             ->willReturn($configuration['routeEnhancers']['example']);
         $queryParameters = [
-            'tx_solr' => [
+            'tx_meilisearch' => [
                 'filter' => [
                     'type:pages',
                     'color:green',
@@ -383,16 +383,16 @@ class SearchUriBuilderTest extends SetUpUnitTestCase
             ],
         ];
         $expectedQueryParameters = [
-            'tx_solr' => [
+            'tx_meilisearch' => [
                 'filter' => [
-                    '###tx_solr:filter:0:type###',
-                    '###tx_solr:filter:1:color###',
-                    '###tx_solr:filter:2:color###',
-                    '###tx_solr:filter:3:color###',
-                    '###tx_solr:filter:4:taste###',
-                    '###tx_solr:filter:5:taste###',
-                    '###tx_solr:filter:6:product###',
-                    '###tx_solr:filter:7:product###',
+                    '###tx_meilisearch:filter:0:type###',
+                    '###tx_meilisearch:filter:1:color###',
+                    '###tx_meilisearch:filter:2:color###',
+                    '###tx_meilisearch:filter:3:color###',
+                    '###tx_meilisearch:filter:4:taste###',
+                    '###tx_meilisearch:filter:5:taste###',
+                    '###tx_meilisearch:filter:6:product###',
+                    '###tx_meilisearch:filter:7:product###',
                 ],
             ],
         ];
@@ -400,7 +400,7 @@ class SearchUriBuilderTest extends SetUpUnitTestCase
             '&taste=' . urlencode('matcha,sour') .
             '&product=' . urlencode('candy,sweets');
         $configurationMock = $this->createMock(TypoScriptConfiguration::class);
-        $configurationMock->expects(self::any())->method('getSearchPluginNamespace')->willReturn('tx_solr');
+        $configurationMock->expects(self::any())->method('getSearchPluginNamespace')->willReturn('tx_meilisearch');
         $configurationMock->expects(self::once())->method('getSearchTargetPage')->willReturn(42);
 
         $previousRequest =  new SearchRequest($queryParameters, 42, 0, $configurationMock);
@@ -424,7 +424,7 @@ class SearchUriBuilderTest extends SetUpUnitTestCase
             ->method('fetchEnhancerByPageUid')
             ->willReturn($configuration['routeEnhancers']['example']);
         $queryParameters = [
-            'tx_solr' => [
+            'tx_meilisearch' => [
                 'filter' => [
                     'type:pages',
                     'color:green',
@@ -439,26 +439,26 @@ class SearchUriBuilderTest extends SetUpUnitTestCase
             ],
         ];
         $expectedQueryParameters = [
-            'tx_solr' => [
+            'tx_meilisearch' => [
                 'filter' => [
-                    '###tx_solr:filter:0:type###',
-                    '###tx_solr:filter:1:color###',
-                    '###tx_solr:filter:2:color###',
-                    '###tx_solr:filter:3:color###',
-                    '###tx_solr:filter:4:taste###',
-                    '###tx_solr:filter:5:taste###',
-                    '###tx_solr:filter:6:product###',
-                    '###tx_solr:filter:7:product###',
-                    '###tx_solr:filter:8:quantity###',
+                    '###tx_meilisearch:filter:0:type###',
+                    '###tx_meilisearch:filter:1:color###',
+                    '###tx_meilisearch:filter:2:color###',
+                    '###tx_meilisearch:filter:3:color###',
+                    '###tx_meilisearch:filter:4:taste###',
+                    '###tx_meilisearch:filter:5:taste###',
+                    '###tx_meilisearch:filter:6:product###',
+                    '###tx_meilisearch:filter:7:product###',
+                    '###tx_meilisearch:filter:8:quantity###',
                 ],
             ],
         ];
         $linkBuilderResult = '/index.php?id=42&color=' . urlencode('green,red,yellow') .
             '&taste=' . urlencode('matcha,sour') .
             '&product=' . urlencode('candy,sweets') .
-            '&' . urlencode('tx_solr[filter][0]') . '=' . urlencode('quantity:20');
+            '&' . urlencode('tx_meilisearch[filter][0]') . '=' . urlencode('quantity:20');
         $configurationMock = $this->createMock(TypoScriptConfiguration::class);
-        $configurationMock->expects(self::any())->method('getSearchPluginNamespace')->willReturn('tx_solr');
+        $configurationMock->expects(self::any())->method('getSearchPluginNamespace')->willReturn('tx_meilisearch');
         $configurationMock->expects(self::once())->method('getSearchTargetPage')->willReturn(42);
 
         $previousRequest =  new SearchRequest($queryParameters, 42, 0, $configurationMock);
@@ -482,7 +482,7 @@ class SearchUriBuilderTest extends SetUpUnitTestCase
             ->method('fetchEnhancerByPageUid')
             ->willReturn($configuration['routeEnhancers']['example']);
         $queryParameters = [
-            'tx_solr' => [
+            'tx_meilisearch' => [
                 'filter' => [
                     'type:pages',
                     'color:green',
@@ -497,26 +497,26 @@ class SearchUriBuilderTest extends SetUpUnitTestCase
             ],
         ];
         $subsitutedQueryParameters = [
-            'tx_solr' => [
+            'tx_meilisearch' => [
                 'filter' => [
-                    '###tx_solr:filter:0:type###',
-                    '###tx_solr:filter:1:color###',
-                    '###tx_solr:filter:2:color###',
-                    '###tx_solr:filter:3:color###',
-                    '###tx_solr:filter:4:taste###',
-                    '###tx_solr:filter:5:taste###',
-                    '###tx_solr:filter:6:product###',
-                    '###tx_solr:filter:7:product###',
-                    '###tx_solr:filter:8:quantity###',
+                    '###tx_meilisearch:filter:0:type###',
+                    '###tx_meilisearch:filter:1:color###',
+                    '###tx_meilisearch:filter:2:color###',
+                    '###tx_meilisearch:filter:3:color###',
+                    '###tx_meilisearch:filter:4:taste###',
+                    '###tx_meilisearch:filter:5:taste###',
+                    '###tx_meilisearch:filter:6:product###',
+                    '###tx_meilisearch:filter:7:product###',
+                    '###tx_meilisearch:filter:8:quantity###',
                 ],
             ],
         ];
         $linkBuilderResult = '/index.php?id=42&color=' . urlencode('green,red,yellow') .
             '&taste=' . urlencode('matcha,sour') .
             '&product=' . urlencode('candy,sweets') .
-            '&' . urlencode('tx_solr[filter][0]') . '=' . urlencode('quantity:20');
+            '&' . urlencode('tx_meilisearch[filter][0]') . '=' . urlencode('quantity:20');
         $configurationMock = $this->createMock(TypoScriptConfiguration::class);
-        $configurationMock->expects(self::any())->method('getSearchPluginNamespace')->willReturn('tx_solr');
+        $configurationMock->expects(self::any())->method('getSearchPluginNamespace')->willReturn('tx_meilisearch');
         $configurationMock->expects(self::once())->method('getSearchTargetPage')->willReturn(42);
 
         $previousRequest =  new SearchRequest($queryParameters, 42, 0, $configurationMock);

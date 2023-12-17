@@ -27,7 +27,7 @@ use WapplerSystems\Meilisearch\Domain\Search\SearchRequest;
 use WapplerSystems\Meilisearch\Search;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
-use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -89,7 +89,7 @@ class SearchResultSetServiceTest extends SetUpUnitTestCase
      */
     public function canCreateGroups(): void
     {
-        // source: http://solr-ddev-site.ddev.site:8983/solr/core_en/select
+        // source: http://meilisearch-ddev-site.ddev.site:8983/meilisearch/core_en/select
         //  ?fl=*%2Cscore
         //  &fq=siteHash%3A%229e9d76a598c63d4ff578fea5c5254c27d9554fc6%22
         //  &fq={!typo3access}-1%2C0
@@ -127,13 +127,13 @@ class SearchResultSetServiceTest extends SetUpUnitTestCase
         //  &q=*
         //  &start=0
         //  &rows=5
-        $fakeResponse = $this->getFakeApacheSolrResponse('fake_solr_response_group_on_type_field.json');
+        $fakeResponse = $this->getFakeApacheMeilisearchResponse('fake_meilisearch_response_group_on_type_field.json');
 
         $searchMock = $this->createMock(Search::class);
 
         $configurationArray = [
             'plugin.' => [
-                'tx_solr.' => [
+                'tx_meilisearch.' => [
                     'search.' => [
                         'grouping' => 1,
                         'grouping.' => [
@@ -249,7 +249,7 @@ class SearchResultSetServiceTest extends SetUpUnitTestCase
         $this->configurationMock->expects(self::any())->method('getSearchShowResultsOfInitialQuery')->willReturn(false);
     }
 
-    protected function getFakeApacheSolrResponse(string $fixtureFile): ResponseAdapter
+    protected function getFakeApacheMeilisearchResponse(string $fixtureFile): ResponseAdapter
     {
         $fakeResponseJson = $this->getFixtureContentByName($fixtureFile);
         return new ResponseAdapter($fakeResponseJson);

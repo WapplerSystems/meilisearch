@@ -20,7 +20,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * The ReturnFields class is responsible to hold a list of field names that should be returned from
- * solr.
+ * meilisearch.
  */
 class ReturnFields implements ParameterBuilderInterface
 {

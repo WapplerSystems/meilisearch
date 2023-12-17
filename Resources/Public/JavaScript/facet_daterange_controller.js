@@ -8,10 +8,10 @@ function DateRangeFacetController() {
     this.init = function() {
         dateSelector = jQuery(".dateselector");
         dateSelector.datepicker();
-        dateSelector.change(function(){ _this.solrRequest("created"); });
+        dateSelector.change(function(){ _this.meilisearchRequest("created"); });
     };
 
-    this.solrRequest = function(facetName) {
+    this.meilisearchRequest = function(facetName) {
         startDate = jQuery('#start_date_'+facetName);
         endDate = jQuery('#end_date_'+facetName);
         if (startDate.val() !== '' &&  endDate.val() !== '' ) {
@@ -35,7 +35,7 @@ jQuery(document).ready(function() {
     var dateRangeFacetController = new DateRangeFacetController();
     dateRangeFacetController.init();
 
-    jQuery("body").on("tx_solr_updated", function() {
+    jQuery("body").on("tx_meilisearch_updated", function() {
         dateRangeFacetController.init();
     });
 });

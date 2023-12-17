@@ -1,4 +1,4 @@
-base: 'https://solr-ddev-site.ddev.site/'
+base: 'https://meilisearch-ddev-site.ddev.site/'
 #baseVariants:
 #  -
 #    base: staging.ddev.site
@@ -17,7 +17,7 @@ languages:
     hreflang: en-US
     direction: ''
     flag: us
-    solr_core_read: core_en
+    meilisearch_core_read: core_en
   -
     title: German
     enabled: true
@@ -32,7 +32,7 @@ languages:
     fallbackType: fallback
     fallbacks: '0'
     flag: de
-    solr_core_read: core_de
+    meilisearch_core_read: core_de
   -
     title: Dansk
     enabled: true
@@ -47,7 +47,7 @@ languages:
     fallbackType: fallback
     fallbacks: '0'
     flag: dk
-    solr_core_read: core_da
+    meilisearch_core_read: core_da
   -
     title: 日本語
     enabled: true
@@ -62,44 +62,44 @@ languages:
     fallbackType: fallback
     fallbacks: '0'
     flag: jp
-    solr_core_read: core_ja
+    meilisearch_core_read: core_ja
 rootPageId: 1
 routeEnhancers:
   example:
-    type: SolrFacetMaskAndCombineEnhancer
+    type: MeilisearchFacetMaskAndCombineEnhancer
     limitToPages:
       - 42
-    extensionKey: tx_solr
+    extensionKey: tx_meilisearch
     routePath: '/{type}'
-    solr:
+    meilisearch:
       ignoreUrlKeys: []
       keepUrlKeys: ['type']
       replaceCharacters:
         ' ': '_'
       query:
-        # You can tell Solr to mask query facets. This feature require the map below
+        # You can tell Meilisearch to mask query facets. This feature require the map below
         #
         # For example you have following filter:
-        #   tx_solr[filter][0]=color:red&tx_solr[filter][1]=color:green&tx_solr[filter][2]=color:yellow
+        #   tx_meilisearch[filter][0]=color:red&tx_meilisearch[filter][1]=color:green&tx_meilisearch[filter][2]=color:yellow
         # Mask will:
         # 1. implode all values into a single string and sort it -> green,red,yellow
-        # 2. replace tx_solr[filter][]=color: with color=
+        # 2. replace tx_meilisearch[filter][]=color: with color=
         #
         # As a result the query will modified into:
         # color=green,red,yellow
         #
         mask: true
 
-        # To reduce the amount of parameters you can force Solr to concat the values.
+        # To reduce the amount of parameters you can force Meilisearch to concat the values.
         # For example you have following filter:
-        #   tx_solr[filter][0]=color:red&tx_solr[filter][1]=color:green&tx_solr[filter][2]=color:yellow
+        #   tx_meilisearch[filter][0]=color:red&tx_meilisearch[filter][1]=color:green&tx_meilisearch[filter][2]=color:yellow
         # Concat will:
         # 1. collect all filters of the same type
         # 2. will sort all filter values alpha numeric
         # 3. join the values together
         #
         # As a result the query will modified into:
-        # tx_solr[filter][0]=color=green,red,yellow
+        # tx_meilisearch[filter][0]=color=green,red,yellow
         #
         # Note: If you active the mask option, the concat feature turn on automatically
         #
@@ -118,8 +118,8 @@ routeEnhancers:
           color: color
           taste: taste
           product: product
-    # Note: All arguments inside of namespace tx_solr. See -> extensionKey
-    # Example: Argument 'type' define as 'filter-type' will convert into 'tx_solr/filter-type'
+    # Note: All arguments inside of namespace tx_meilisearch. See -> extensionKey
+    # Example: Argument 'type' define as 'filter-type' will convert into 'tx_meilisearch/filter-type'
     _arguments:
       type: filter-type
     requirements:

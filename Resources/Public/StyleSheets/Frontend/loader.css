@@ -1,5 +1,5 @@
 
-.tx-solr-loader {
+.tx-meilisearch-loader {
     position: fixed;
     left: calc(50% - 50px);
     top: 35%;

@@ -56,7 +56,7 @@ class FrontendUserSessionTest extends SetUpUnitTestCase
     public function sessionDataWillBeRetrievedFromSessionForLastSearches(): void
     {
         $fakeSessionData = ['foo', 'bar'];
-        $this->feUserMock->expects(self::once())->method('getKey')->with('ses', 'tx_solr_lastSearches')->willReturn($fakeSessionData);
+        $this->feUserMock->expects(self::once())->method('getKey')->with('ses', 'tx_meilisearch_lastSearches')->willReturn($fakeSessionData);
         self::assertSame($fakeSessionData, $this->session->getLastSearches(), 'Session data from fe_user was not returned from session');
     }
 
@@ -66,7 +66,7 @@ class FrontendUserSessionTest extends SetUpUnitTestCase
     public function canSetLastSearchesInSession(): void
     {
         $lastSearches = ['TYPO3', 'meilisearch'];
-        $this->feUserMock->expects(self::once())->method('setKey')->with('ses', 'tx_solr_lastSearches', $lastSearches);
+        $this->feUserMock->expects(self::once())->method('setKey')->with('ses', 'tx_meilisearch_lastSearches', $lastSearches);
         $this->session->setLastSearches($lastSearches);
     }
 
@@ -92,7 +92,7 @@ class FrontendUserSessionTest extends SetUpUnitTestCase
     public function getPerPageFromSessionData(): void
     {
         $fakeSessionData = 12;
-        $this->feUserMock->expects(self::once())->method('getKey')->with('ses', 'tx_solr_resultsPerPage')->willReturn($fakeSessionData);
+        $this->feUserMock->expects(self::once())->method('getKey')->with('ses', 'tx_meilisearch_resultsPerPage')->willReturn($fakeSessionData);
         self::assertSame(12, $this->session->getPerPage(), 'Could not get per page from session data');
     }
 
@@ -102,7 +102,7 @@ class FrontendUserSessionTest extends SetUpUnitTestCase
     public function canSetPerPageInSessionData(): void
     {
         $lastSearches = 45;
-        $this->feUserMock->expects(self::once())->method('setKey')->with('ses', 'tx_solr_resultsPerPage', $lastSearches);
+        $this->feUserMock->expects(self::once())->method('setKey')->with('ses', 'tx_meilisearch_resultsPerPage', $lastSearches);
         $this->session->setPerPage($lastSearches);
     }
 }

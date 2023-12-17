@@ -35,8 +35,8 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
     protected function setUp(): void
     {
         $fakeConfigurationArray = [];
-        $fakeConfigurationArray['plugin.']['tx_solr.']['index.']['queue.']['tt_news.']['fields.']['content'] = 'SOLR_CONTENT';
-        $fakeConfigurationArray['plugin.']['tx_solr.']['index.']['queue.']['tt_news.']['fields.']['content.']['field'] = 'bodytext';
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['index.']['queue.']['tt_news.']['fields.']['content'] = 'SOLR_CONTENT';
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['index.']['queue.']['tt_news.']['fields.']['content.']['field'] = 'bodytext';
         $this->configuration = new TypoScriptConfiguration($fakeConfigurationArray);
         parent::setUp();
     }
@@ -46,7 +46,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function canGetValueByPath()
     {
-        $testPath = 'plugin.tx_solr.index.queue.tt_news.fields.content';
+        $testPath = 'plugin.tx_meilisearch.index.queue.tt_news.fields.content';
         self::assertSame('SOLR_CONTENT', $this->configuration->getValueByPath($testPath), 'Could not get configuration value by path');
     }
 
@@ -55,7 +55,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function canGetObjectByPath()
     {
-        $testPath = 'plugin.tx_solr.index.queue.tt_news.fields.content';
+        $testPath = 'plugin.tx_meilisearch.index.queue.tt_news.fields.content';
         $expectedResult = [
             'content' => 'SOLR_CONTENT',
             'content.' => ['field' => 'bodytext'],
@@ -69,7 +69,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function canShowEvenIfEmptyFallBackToGlobalSetting()
     {
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'search.' => [
                 'faceting.' => [
                     'showEmptyFacets' => true,
@@ -90,7 +90,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
         $showEmptyColor = $configuration->getSearchFacetingShowEmptyFacetsByName('color');
         self::assertTrue($showEmptyColor);
 
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'search.' => [
                 'faceting.' => [
                     'facets.' => [
@@ -119,7 +119,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function canGetIndexQueueTableOrFallbackToConfigurationName()
     {
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'index.' => [
                 'queue.' => [
                     'pages.' => [
@@ -145,7 +145,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function canGetIndexQueueTypeOrFallbackToConfigurationName()
     {
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'index.' => [
                 'queue.' => [
                     'pages.' => [
@@ -171,7 +171,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function canGetIndexQueueConfigurationNames()
     {
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'index.' => [
                 'queue.' => [
                     'pages' => 1,
@@ -190,7 +190,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
         self::assertCount(1, $enabledIndexQueueNames, 'Retrieved unexpected amount of index queue configurations');
         self::assertContains('pages', $enabledIndexQueueNames, 'Pages was no enabled index queue configuration');
 
-        $fakeConfigurationArray['plugin.']['tx_solr.']['index.']['queue.']['custom'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['index.']['queue.']['custom'] = 1;
         $configuration = new TypoScriptConfiguration($fakeConfigurationArray);
         $enabledIndexQueueNames = $configuration->getEnabledIndexQueueConfigurationNames();
 
@@ -203,7 +203,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function canGetIndexQueueConfigurationRecursiveUpdateFields()
     {
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'index.' => [
                 'queue.' => [
                     'pages' => 1,
@@ -220,7 +220,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
         self::assertEquals([], $configuration->getIndexQueueConfigurationRecursiveUpdateFields('pages'));
         self::assertEquals([], $configuration->getIndexQueueConfigurationRecursiveUpdateFields('custom'));
 
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'index.' => [
                 'queue.' => [
                     'pages' => 1,
@@ -235,7 +235,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
         self::assertEquals([], $configuration->getIndexQueueConfigurationRecursiveUpdateFields('pages'));
         self::assertEquals([], $configuration->getIndexQueueConfigurationRecursiveUpdateFields('custom'));
 
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'index.' => [
                 'queue.' => [
                     'pages' => 1,
@@ -258,7 +258,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function canGetInitialPagesAdditionalWhereClause()
     {
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'index.' => [
                 'queue.' => [
                     'pages' => 1,
@@ -283,7 +283,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function canGetAdditionalWhereClause()
     {
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'index.' => [
                 'queue.' => [
                     'pages' => 1,
@@ -308,7 +308,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function canGetIndexQueueConfigurationNamesByTableName()
     {
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'index.' => [
                 'queue.' => [
                     'tx_model_news' => 1,
@@ -335,7 +335,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function canGetIndexQueueInitializerClassByConfigurationName()
     {
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'index.' => [
                 'queue.' => [
                     'tx_model_news' => 1,
@@ -359,7 +359,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function canGetIndexQueueClassByConfigurationName()
     {
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'index.' => [
                 'queue.' => [
                     'tx_model_news' => 1,
@@ -383,7 +383,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function canGetIndexQueueMonitoredTables()
     {
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'index.' => [
                 'queue.' => [
                     'tx_model_news' => 1,
@@ -414,7 +414,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function canGetIndexQueueIsMonitoredTable()
     {
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'index.' => [
                 'queue.' => [
                     'tx_model_news' => 1,
@@ -449,7 +449,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function canGetLoggingEnableStateForIndexQueueByConfigurationName()
     {
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'logging.' => [
                 'indexing.' => [
                     'queue.' => [
@@ -475,7 +475,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function canGetLoggingEnableStateForIndexQueueByConfigurationNameByFallingBack()
     {
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'logging.' => [
                 'indexing' => 1,
                 'indexing.' => [
@@ -502,7 +502,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function canGetIndexFieldsConfigurationByConfigurationName()
     {
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'index.' => [
                 'queue.' => [
                     'pages.' => [
@@ -525,7 +525,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function canGetIndexQueueMappedFieldNamesByConfigurationName()
     {
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'index.' => [
                 'queue.' => [
                     'pages.' => [
@@ -550,7 +550,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function canGetIndexAdditionalFieldsConfiguration()
     {
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'index.' => [
                 'additionalFields.' => [
                     'additional_sortSubTitle_stringS' => 'subtitle',
@@ -569,7 +569,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function canGetIndexMappedAdditionalFieldNames()
     {
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'index.' => [
                 'additionalFields.' => [
                     'additional_sortSubTitle_stringS' => 'subtitle',
@@ -588,7 +588,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function canGetIndexQueueIndexerByConfigurationName()
     {
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'index.' => [
                 'queue.' => [
                     'pages.' => [
@@ -607,7 +607,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function canGetIndexQueueIndexerConfigurationByConfigurationName()
     {
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'index.' => [
                 'queue.' => [
                     'pages.' => [
@@ -627,7 +627,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function canGetIndexQueuePagesExcludeContentByClassArray()
     {
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'index.' => [
                 'queue.' => [
                     'pages.' => [
@@ -657,7 +657,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function canRemovePageSectionFilter()
     {
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'search.' => [
                 'query.' => [
                     'filter.' => [
@@ -679,7 +679,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function removePageSectionFilterIsKeepingOtherFilters()
     {
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'search.' => [
                 'query.' => [
                     'filter.' => [
@@ -701,7 +701,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function canGetSearchQueryReturnFieldsAsArrayNoConfig()
     {
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'search.' => [
                 'query.' => [
                 ],
@@ -717,7 +717,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function canGetSearchQueryReturnFieldsAsArrayWithConfig()
     {
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'search.' => [
                 'query.' => [
                     'returnFields' => 'foo, bar',
@@ -734,7 +734,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function canGetSearchSortingDefaultOrderBySortOptionNameIsFallingBackToDefaultSortOrder()
     {
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'search.' => [
                 'sorting.' => [
                     'defaultOrder' => 'desc',
@@ -759,7 +759,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function canGetSearchSortingDefaultOrderBySortOptionName()
     {
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'search.' => [
                 'sorting.' => [
                     'defaultOrder' => 'desc',
@@ -785,7 +785,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function canGetSearchSortingDefaultOrderBySortOptionNameInLowerCase()
     {
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'search.' => [
                 'sorting.' => [
                     'options.' => [
@@ -810,7 +810,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function canGetSearchGroupingHighestGroupResultsLimit()
     {
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'search.' => [
                 'grouping.' => [
                     'numberOfResultsPerGroup' => 3,
@@ -839,7 +839,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function canGetSearchGroupingHighestGroupResultsLimitAsGlobalFallback()
     {
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'search.' => [
                 'grouping.' => [
                     'numberOfResultsPerGroup' => 8,
@@ -868,7 +868,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function canGetSearchGroupingWhenDisabled()
     {
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'search.' => [
                 'grouping' => 0,
                 'grouping.' => [
@@ -895,7 +895,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
     {
         $fakeConfigurationArray = [
             'plugin.' => [
-                'tx_solr.' => [
+                'tx_meilisearch.' => [
                     'search.' => [
                         'grouping' => 1,
                         'grouping.' => [
@@ -909,7 +909,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
         $configuration = new TypoScriptConfiguration($fakeConfigurationArray);
         self::assertFalse($configuration->getIsGroupingGetParameterSwitchEnabled(), 'Expected allowGetParameterSwitch to be disabled');
 
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['grouping.']['allowGetParameterSwitch'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['grouping.']['allowGetParameterSwitch'] = 1;
         $configuration = new TypoScriptConfiguration($fakeConfigurationArray);
         self::assertTrue($configuration->getIsGroupingGetParameterSwitchEnabled(), 'Expected allowGetParameterSwitch to be enabled');
     }
@@ -928,7 +928,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
      */
     public function canGetAdditionalPersistentArgumentNames()
     {
-        $fakeConfigurationArray['plugin.']['tx_solr.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.'] = [
             'search.' => [
                 'additionalPersistentArgumentNames' => 'customA, customB',
             ],

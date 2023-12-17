@@ -11,6 +11,6 @@
 ,"uid","pid","colPos","CType","bodytext"
 ,2,2,0,"text","Our awesome new sock products prices starting at 10 euro"
 ,3,3,0,"text","Our awesome men jeans products prices starting at 50 euro"
-"tx_solr_statistics",
+"tx_meilisearch_statistics",
 ,"pid","num_found","keywords"
 ,1,100,"shoes"

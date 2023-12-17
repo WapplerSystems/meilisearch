@@ -19,7 +19,7 @@ use WapplerSystems\Meilisearch\Domain\Search\Query\AbstractQueryBuilder;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 
 /**
- * The Spellchecking ParameterProvider is responsible to build the solr query parameters
+ * The Spellchecking ParameterProvider is responsible to build the meilisearch query parameters
  * that are needed for the spellchecking.
  */
 class Spellchecking extends AbstractDeactivatable implements ParameterBuilderInterface
@@ -42,14 +42,14 @@ class Spellchecking extends AbstractDeactivatable implements ParameterBuilderInt
         return $this->maxCollationTries;
     }
 
-    public static function fromTypoScriptConfiguration(TypoScriptConfiguration $solrConfiguration): Spellchecking
+    public static function fromTypoScriptConfiguration(TypoScriptConfiguration $meilisearchConfiguration): Spellchecking
     {
-        $isEnabled = $solrConfiguration->getSearchSpellchecking();
+        $isEnabled = $meilisearchConfiguration->getSearchSpellchecking();
         if (!$isEnabled) {
             return new Spellchecking(false);
         }
 
-        $maxCollationTries = $solrConfiguration->getSearchSpellcheckingNumberOfSuggestionsToTry();
+        $maxCollationTries = $meilisearchConfiguration->getSearchSpellcheckingNumberOfSuggestionsToTry();
 
         return new Spellchecking(true, $maxCollationTries);
     }

@@ -9,7 +9,7 @@ parameters:
     - phpstan-constants.php
 
   universalObjectCratesClasses:
-    - WapplerSystems\Meilisearch\System\Solr\Document\Document
+    - WapplerSystems\Meilisearch\System\Meilisearch\Document\Document
     - WapplerSystems\Meilisearch\Domain\Search\ResultSet\Result\SearchResult
 
   paths:

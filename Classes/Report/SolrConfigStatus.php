@@ -25,7 +25,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Reports\Status;
 
 /**
- * Provides a status report about which solrconfig version is used and checks
+ * Provides a status report about which meilisearchconfig version is used and checks
  * whether it fits the recommended version shipping with the extension.
  *
  * @author Ingo Renner <ingo@typo3.org>
@@ -35,17 +35,17 @@ class MeilisearchConfigStatus extends AbstractMeilisearchStatus
     /**
      * The config name property is constructed as follows:
      *
-     * tx_solr    - The extension key
+     * tx_meilisearch    - The extension key
      * x-y-z    - The extension version this config is meant to work with
      * YYYYMMDD    - The date the config file was changed the last time
      *
-     * Must be updated when changing the solrconfig.
+     * Must be updated when changing the meilisearchconfig.
      */
-    public const RECOMMENDED_SOLRCONFIG_VERSION = 'tx_solr-12-0-0--20230602';
+    public const RECOMMENDED_SOLRCONFIG_VERSION = 'tx_meilisearch-12-0-0--20230602';
 
     /**
-     * Compiles a collection of solrconfig version checks against each configured
-     * Meilisearch server. Only adds an entry if a solrconfig other than the
+     * Compiles a collection of meilisearchconfig version checks against each configured
+     * Meilisearch server. Only adds an entry if a meilisearchconfig other than the
      * recommended one was found.
      *
      * @throws UnexpectedTYPO3SiteInitializationException
@@ -53,8 +53,8 @@ class MeilisearchConfigStatus extends AbstractMeilisearchStatus
     public function getStatus(): array
     {
         $reports = [];
-        $solrConnections = GeneralUtility::makeInstance(ConnectionManager::class)->getAllConnections();
-        if (empty($solrConnections)) {
+        $meilisearchConnections = GeneralUtility::makeInstance(ConnectionManager::class)->getAllConnections();
+        if (empty($meilisearchConnections)) {
             $reports[] = GeneralUtility::makeInstance(
                 Status::class,
                 'Meilisearchconfig Version',
@@ -66,9 +66,9 @@ class MeilisearchConfigStatus extends AbstractMeilisearchStatus
             return $reports;
         }
 
-        /** @var MeilisearchConnection $solrConnection */
-        foreach ($solrConnections as $solrConnection) {
-            $adminService = $solrConnection->getAdminService();
+        /** @var MeilisearchConnection $meilisearchConnection */
+        foreach ($meilisearchConnections as $meilisearchConnection) {
+            $adminService = $meilisearchConnection->getAdminService();
             if (!$adminService->ping()) {
                 $reports[] = GeneralUtility::makeInstance(
                     Status::class,
@@ -87,7 +87,7 @@ class MeilisearchConfigStatus extends AbstractMeilisearchStatus
                 $status = GeneralUtility::makeInstance(
                     Status::class,
                     'Meilisearchconfig Version',
-                    'Unsupported solrconfig.xml',
+                    'Unsupported meilisearchconfig.xml',
                     $report,
                     ContextualFeedbackSeverity::WARNING
                 );
@@ -114,6 +114,6 @@ class MeilisearchConfigStatus extends AbstractMeilisearchStatus
      */
     public function getLabel(): string
     {
-        return 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_reports.xlf:status_solr_solrconfig';
+        return 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_reports.xlf:status_meilisearch_meilisearchconfig';
     }
 }

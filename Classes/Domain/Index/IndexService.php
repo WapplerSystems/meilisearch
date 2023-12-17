@@ -56,12 +56,12 @@ class IndexService
         Site                     $site,
         QueueInterface           $queue = null,
         EventDispatcherInterface $eventDispatcher = null,
-        MeilisearchLogManager    $solrLogManager = null,
+        MeilisearchLogManager    $meilisearchLogManager = null,
     ) {
         $this->site = $site;
         $this->indexQueue = $queue ?? GeneralUtility::makeInstance(Queue::class);
         $this->eventDispatcher = $eventDispatcher ?? GeneralUtility::makeInstance(EventDispatcherInterface::class);
-        $this->logger = $solrLogManager ?? GeneralUtility::makeInstance(MeilisearchLogManager::class, __CLASS__);
+        $this->logger = $meilisearchLogManager ?? GeneralUtility::makeInstance(MeilisearchLogManager::class, __CLASS__);
     }
 
     public function setContextTask(IndexQueueWorkerTask $contextTask): void
@@ -114,9 +114,9 @@ class IndexService
         $this->eventDispatcher->dispatch($afterIndexItemsEvent);
 
         if ($enableCommitsSetting && count($itemsToIndex) > 0) {
-            $solrServers = GeneralUtility::makeInstance(ConnectionManager::class)->getConnectionsBySite($this->site);
-            foreach ($solrServers as $solrServer) {
-                $response = $solrServer->getWriteService()->commit(false, false);
+            $meilisearchServers = GeneralUtility::makeInstance(ConnectionManager::class)->getConnectionsBySite($this->site);
+            foreach ($meilisearchServers as $meilisearchServer) {
+                $response = $meilisearchServer->getWriteService()->commit(false, false);
                 if ($response->getHttpStatus() !== 200) {
                     $errors++;
                 }
@@ -166,7 +166,7 @@ class IndexService
             if ($itemChangedDateAfterIndex > $itemChangedDate && $itemChangedDateAfterIndex > time()) {
                 $this->indexQueue->setForcedChangeTimeByItem($item, $itemChangedDateAfterIndex);
             }
-        } catch (Throwable $e) { // @todo: wrap with EX:solr exception
+        } catch (Throwable $e) { // @todo: wrap with EX:meilisearch exception
             $this->restoreOriginalHttpHost($originalHttpHost);
             throw $e;
         }

@@ -74,7 +74,7 @@ abstract class SetUpUpdateHandler extends SetUpUnitTestCase
         $this->typoScriptConfigurationMock = $this->createMock(TypoScriptConfiguration::class);
         $this->frontendEnvironmentMock
             ->expects(self::any())
-            ->method('getSolrConfigurationFromPageId')
+            ->method('getMeilisearchConfigurationFromPageId')
             ->willReturn($this->typoScriptConfigurationMock);
 
         parent::setUp();

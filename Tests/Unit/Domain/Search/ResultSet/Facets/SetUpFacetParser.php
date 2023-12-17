@@ -22,7 +22,7 @@ use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\UrlFacetContainer;
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSet;
 use WapplerSystems\Meilisearch\Domain\Search\SearchRequest;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
-use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
 use WapplerSystems\Meilisearch\System\Util\ArrayAccessor;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -53,10 +53,10 @@ abstract class SetUpFacetParser extends SetUpUnitTestCase
         $searchResultSet->setResponse($fakeResponse);
 
         $activeUrlFacets = new UrlFacetContainer(
-            new ArrayAccessor([ 'tx_solr' => ['filter' => $activeFilters] ])
+            new ArrayAccessor([ 'tx_meilisearch' => ['filter' => $activeFilters] ])
         );
         $configuration = [];
-        $configuration['plugin.']['tx_solr.']['search.']['faceting.']['facets.'] = $facetConfiguration;
+        $configuration['plugin.']['tx_meilisearch.']['search.']['faceting.']['facets.'] = $facetConfiguration;
         $typoScriptConfiguration = new TypoScriptConfiguration($configuration);
         $searchRequestMock->expects(self::any())
             ->method('getContextTypoScriptConfiguration')

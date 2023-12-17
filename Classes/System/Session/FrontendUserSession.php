@@ -38,27 +38,27 @@ class FrontendUserSession
 
     public function setPerPage(int $requestedPerPage): void
     {
-        $this->feUser->setKey('ses', 'tx_solr_resultsPerPage', $requestedPerPage);
+        $this->feUser->setKey('ses', 'tx_meilisearch_resultsPerPage', $requestedPerPage);
     }
 
     public function getPerPage(): int
     {
-        return (int)$this->feUser->getKey('ses', 'tx_solr_resultsPerPage');
+        return (int)$this->feUser->getKey('ses', 'tx_meilisearch_resultsPerPage');
     }
 
     public function getHasPerPage(): bool
     {
-        return $this->feUser->getKey('ses', 'tx_solr_resultsPerPage') !== null;
+        return $this->feUser->getKey('ses', 'tx_meilisearch_resultsPerPage') !== null;
     }
 
     public function getLastSearches(): array
     {
-        $result = $this->feUser->getKey('ses', 'tx_solr_lastSearches');
+        $result = $this->feUser->getKey('ses', 'tx_meilisearch_lastSearches');
         return is_array($result) ? $result : [];
     }
 
     public function setLastSearches(array $lastSearches): void
     {
-        $this->feUser->setKey('ses', 'tx_solr_lastSearches', $lastSearches);
+        $this->feUser->setKey('ses', 'tx_meilisearch_lastSearches', $lastSearches);
     }
 }

@@ -13,9 +13,9 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace WapplerSystems\Meilisearch\Tests\Unit\System\Solr\Parser;
+namespace WapplerSystems\Meilisearch\Tests\Unit\System\Meilisearch\Parser;
 
-use WapplerSystems\Meilisearch\System\Solr\Parser\SynonymParser;
+use WapplerSystems\Meilisearch\System\Meilisearch\Parser\SynonymParser;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 
 /**

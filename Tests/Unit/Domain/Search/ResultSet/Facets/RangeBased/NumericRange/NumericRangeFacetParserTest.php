@@ -57,7 +57,7 @@ class NumericRangeFacetParserTest extends SetUpFacetParser
         string $facetName
     ): ?NumericRangeFacet {
         $searchResultSet = $this->initializeSearchResultSetFromFakeResponse(
-            'fake_solr_response_with_numericRange_facet.json',
+            'fake_meilisearch_response_with_numericRange_facet.json',
             $facetConfiguration,
             $filters
         );

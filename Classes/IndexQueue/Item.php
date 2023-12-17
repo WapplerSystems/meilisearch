@@ -37,33 +37,33 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class Item implements ItemInterface, MountPointAwareItemInterface
 {
     /**
-     * The item's uid in the index queue (tx_solr_indexqueue_item.uid)
+     * The item's uid in the index queue (tx_meilisearch_indexqueue_item.uid)
      */
     protected ?int $indexQueueUid = null;
 
     /**
-     * The root page uid of the tree the item is located in (tx_solr_indexqueue_item.root)
+     * The root page uid of the tree the item is located in (tx_meilisearch_indexqueue_item.root)
      */
     protected ?int $rootPageUid;
 
     /**
-     * The record's type, usually a table name, but could also be a file type (tx_solr_indexqueue_item.item_type)
+     * The record's type, usually a table name, but could also be a file type (tx_meilisearch_indexqueue_item.item_type)
      */
     protected ?string $type;
 
     /**
-     * The name of the indexing configuration that should be used when indexing (tx_solr_indexqueue_item.indexing_configuration)
+     * The name of the indexing configuration that should be used when indexing (tx_meilisearch_indexqueue_item.indexing_configuration)
      * the item.
      */
     protected string $indexingConfigurationName;
 
     /**
-     * The unix timestamp when the record was last changed (tx_solr_indexqueue_item.changed)
+     * The unix timestamp when the record was last changed (tx_meilisearch_indexqueue_item.changed)
      */
     protected ?int $changed = null;
 
     /**
-     * The unix timestamp when the record was last indexed (tx_solr_indexqueue_item.indexed)
+     * The unix timestamp when the record was last indexed (tx_meilisearch_indexqueue_item.indexed)
      */
     protected ?int $indexed = null;
 
@@ -117,7 +117,7 @@ class Item implements ItemInterface, MountPointAwareItemInterface
     /**
      * Constructor, takes item metadata information and resolves that to the full record.
      *
-     * @param array $itemMetaData Metadata describing the item to index using the index queue. Is expected to contain a record from table tx_solr_indexqueue_item
+     * @param array $itemMetaData Metadata describing the item to index using the index queue. Is expected to contain a record from table tx_meilisearch_indexqueue_item
      * @param array $fullRecord Optional full record for the item. If provided, can save some SQL queries.
      */
     public function __construct(

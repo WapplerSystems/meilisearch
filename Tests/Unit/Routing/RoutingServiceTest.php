@@ -146,7 +146,7 @@ class RoutingServiceTest extends SetUpUnitTestCase
         $routingService = $this->getRoutingService();
 
         $queryParameters = [
-            'tx_solr' => [
+            'tx_meilisearch' => [
                 'filter' => [
                     'color:yellow',
                     'taste:sour',
@@ -164,7 +164,7 @@ class RoutingServiceTest extends SetUpUnitTestCase
          * The order of the values should be alphanumeric
          */
         $expectedResult = [
-            'tx_solr' => [
+            'tx_meilisearch' => [
                 'filter' => [
                     'color:green,red,yellow',
                     'taste:matcha,sour,sour°matcha',
@@ -189,7 +189,7 @@ class RoutingServiceTest extends SetUpUnitTestCase
         $routingService = $this->getRoutingService();
 
         $filter = [
-            'tx_solr' => [
+            'tx_meilisearch' => [
                 'filter' => [
                     'color:green,red,yellow',
                     'product:candy,sweets',
@@ -202,7 +202,7 @@ class RoutingServiceTest extends SetUpUnitTestCase
          * The order of the expected result based on the order of the filter!
          */
         $expectedResult = [
-            'tx_solr' => [
+            'tx_meilisearch' => [
                 'filter' => [
                     'color:green',
                     'color:red',
@@ -231,7 +231,7 @@ class RoutingServiceTest extends SetUpUnitTestCase
     {
         $routingService = $this->getRoutingService();
         $queryParameters = [
-            'tx_solr' => [
+            'tx_meilisearch' => [
                 'filter' => [
                     'color:yellow',
                     'taste:sour',
@@ -280,7 +280,7 @@ class RoutingServiceTest extends SetUpUnitTestCase
          * The order of the values should be alphanumeric
          */
         $expectedResult = [
-            'tx_solr' => [
+            'tx_meilisearch' => [
                 'filter' => [
                     'color:green',
                     'color:red',
@@ -324,7 +324,7 @@ class RoutingServiceTest extends SetUpUnitTestCase
 
         self::assertEquals(
             [
-                'tx_solr' => [
+                'tx_meilisearch' => [
                     'filter' => ['colorType:blue'],
                 ],
             ],
@@ -355,7 +355,7 @@ class RoutingServiceTest extends SetUpUnitTestCase
 
         self::assertEquals(
             [
-                'tx_solr' => [
+                'tx_meilisearch' => [
                     'filter' => ['colorType:blue', 'colorType:green'],
                 ],
             ],
@@ -397,7 +397,7 @@ class RoutingServiceTest extends SetUpUnitTestCase
 
         self::assertEquals(
             [
-                'tx_solr' => [
+                'tx_meilisearch' => [
                     'filter' => [
                         'taste:sweet',
                         'taste:sour',

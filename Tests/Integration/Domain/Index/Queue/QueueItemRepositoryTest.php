@@ -35,7 +35,7 @@ class QueueItemRepositoryTest extends IntegrationTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->writeDefaultSolrTestSiteConfiguration();
+        $this->writeDefaultMeilisearchTestSiteConfiguration();
     }
 
     /**
@@ -162,9 +162,9 @@ class QueueItemRepositoryTest extends IntegrationTest
             self::assertSame([], $item->getIndexingProperties(), 'New added item should have empty indexing properties');
             self::assertFalse($item->hasIndexingProperty('sense_of_live'), 'New indexing property should not exist');
 
-            $item->setIndexingProperty('shared_property', 'hello solr');
+            $item->setIndexingProperty('shared_property', 'hello meilisearch');
             $item->storeIndexingProperties();
-            self::assertSame('hello solr', $item->getIndexingProperty('shared_property'), 'New indexing property be retrieved');
+            self::assertSame('hello meilisearch', $item->getIndexingProperty('shared_property'), 'New indexing property be retrieved');
         }
 
         $queueItemRepository->deleteItemsBySite($currentSite, 'news_pages');
@@ -176,7 +176,7 @@ class QueueItemRepositoryTest extends IntegrationTest
         self::assertCount(1, $items, 'Retrieved unexpected amount of records from queue item repository');
 
         foreach ($items as $item) {
-            self::assertSame('hello solr', $item->getIndexingProperty('shared_property'), 'Previous added indexing property was lost');
+            self::assertSame('hello meilisearch', $item->getIndexingProperty('shared_property'), 'Previous added indexing property was lost');
         }
     }
 

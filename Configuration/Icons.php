@@ -3,7 +3,7 @@
 return [
     'extensions-meilisearch-module-main' => [
         'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
-        'source' => 'EXT:meilisearch/Resources/Public/Images/Icons/ModuleSolrMain.svg',
+        'source' => 'EXT:meilisearch/Resources/Public/Images/Icons/ModuleMeilisearchMain.svg',
     ],
     'extensions-meilisearch-module-meilisearch-core-optimization' => [
         'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
@@ -15,11 +15,11 @@ return [
     ],
     'extensions-meilisearch-module-initmeilisearchconnections' => [
         'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
-        'source' => 'EXT:meilisearch/Resources/Public/Images/Icons/InitSolrConnections.svg',
+        'source' => 'EXT:meilisearch/Resources/Public/Images/Icons/InitMeilisearchConnections.svg',
     ],
     'extensions-meilisearch-module-initmeilisearchconnection' => [
         'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
-        'source' => 'EXT:meilisearch/Resources/Public/Images/Icons/InitSolrConnection.svg',
+        'source' => 'EXT:meilisearch/Resources/Public/Images/Icons/InitMeilisearchConnection.svg',
     ],
     'extensions-meilisearch-module-index-queue' => [
         'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,

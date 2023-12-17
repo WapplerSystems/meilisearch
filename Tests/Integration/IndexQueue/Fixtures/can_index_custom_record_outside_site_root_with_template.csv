@@ -1,7 +1,7 @@
 "pages",
 ,"uid","pid","is_siteroot","doktype","sys_language_uid","l10n_parent","slug","title"
-,1,0,1,1,0,0,"/","Siteroot with correct Solr configuration"
-,111,0,1,1,0,0,"/","Another siteroot with Solr configuration which should not be used"
+,1,0,1,1,0,0,"/","Siteroot with correct Meilisearch configuration"
+,111,0,1,1,0,0,"/","Another siteroot with Meilisearch configuration which should not be used"
 ,112,111,0,254,0,0,"/storage-folder","Storage folder outside siteroot"
 "tx_fakeextension_domain_model_bar",
 ,"uid","pid","title","sys_language_uid","l10n_parent","category"
@@ -25,7 +25,7 @@ page.10 {
     }
 }
 
-plugin.tx_solr {
+plugin.tx_meilisearch {
     enabled = 1
     index {
         fieldProcessingInstructions {
@@ -71,7 +71,7 @@ page.10 {
     }
 }
 
-plugin.tx_solr {
+plugin.tx_meilisearch {
     enabled = 1
     index {
         fieldProcessingInstructions {

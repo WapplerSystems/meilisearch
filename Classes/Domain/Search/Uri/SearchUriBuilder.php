@@ -405,8 +405,8 @@ class SearchUriBuilder
                 $this->getSubstitution($value, $values, $branch);
             } else {
                 // @todo: Refactor to multi-dimensional array.
-                // https://solr-ddev-site.ddev.site/content-examples/form-elements/search?tx_solr[filter][type:tx_news_domain_model_news]=1&tx_solr[q]=*
-                // https://solr-ddev-site.ddev.site/content-examples/form-elements/search?tx_solr[filter][0]=type:pages&tx_solr[q]=*
+                // https://meilisearch-ddev-site.ddev.site/content-examples/form-elements/search?tx_meilisearch[filter][type:tx_news_domain_model_news]=1&tx_meilisearch[q]=*
+                // https://meilisearch-ddev-site.ddev.site/content-examples/form-elements/search?tx_meilisearch[filter][0]=type:pages&tx_meilisearch[q]=*
                 if ($filter && $value !== 1) {
                     [$facetType] = explode(':', $value);
                     $branch[] = $facetType;

@@ -178,7 +178,7 @@ class GroupedResultParser extends AbstractResultParser
     /**
      * Retrieves all configured queries independent if they have been configured in query or queries.
      *
-     * @todo This can be merged into TypoScriptConfiguration when solrfluidgrouping was merged to EXT:meilisearch
+     * @todo This can be merged into TypoScriptConfiguration when meilisearchfluidgrouping was merged to EXT:meilisearch
      */
     protected function getQueriesFromConfigurationArray(array $configurationArray): array
     {
@@ -218,17 +218,17 @@ class GroupedResultParser extends AbstractResultParser
         $perPage = $parentGroup->getResultsPerPage();
         $offset = ($currentPage - 1) * $perPage;
 
-        // since apache solr does not natively support to set the offset per group, we get all documents to the current
+        // since apache meilisearch does not natively support to set the offset per group, we get all documents to the current
         // page and slice the part of the results here, that we need
         $relevantResults = array_slice($rawGroup->doclist->docs, $offset, $perPage);
 
         foreach ($relevantResults as $rawDoc) {
-            $solrDocument = new Document();
+            $meilisearchDocument = new Document();
             foreach (get_object_vars($rawDoc) as $key => $value) {
-                $solrDocument->setField($key, $value);
+                $meilisearchDocument->setField($key, $value);
             }
 
-            $document = $this->searchResultBuilder->fromApacheMeilisearchDocument($solrDocument);
+            $document = $this->searchResultBuilder->fromApacheMeilisearchDocument($meilisearchDocument);
             $document->setGroupItem($groupItem);
 
             $groupItem->addSearchResult($document);
@@ -237,7 +237,7 @@ class GroupedResultParser extends AbstractResultParser
     }
 
     /**
-     * Extracts the grouped results for a queryGroup from a solr raw response.
+     * Extracts the grouped results for a queryGroup from a meilisearch raw response.
      */
     protected function getGroupedResultForQuery(stdClass $parsedData, string $queryString): ?stdClass
     {

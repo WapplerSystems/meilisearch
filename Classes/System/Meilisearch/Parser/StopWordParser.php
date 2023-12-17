@@ -18,14 +18,14 @@ namespace WapplerSystems\Meilisearch\System\Meilisearch\Parser;
 use WapplerSystems\Meilisearch\Exception\InvalidArgumentException;
 
 /**
- * Class to parse the stopwords from a solr response.
+ * Class to parse the stopwords from a meilisearch response.
  *
  * @author Timo Hund <timo.hund@dkd.de>
  */
 class StopWordParser
 {
     /**
-     * Parse the solr stopwords response from a json string to an array.
+     * Parse the meilisearch stopwords response from a json string to an array.
      */
     public function parseJson(string $jsonString): array
     {

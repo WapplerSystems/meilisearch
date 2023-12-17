@@ -4,5 +4,5 @@ services:
     autoconfigure: true
     public: false
 
-  ApacheSolrForTypo3\FakeExtension\:
+  ApacheMeilisearchForTypo3\FakeExtension\:
     resource: '../Classes/*'

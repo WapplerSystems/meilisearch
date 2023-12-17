@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-chown -R solr:solr /var/solr /opt/solr
+chown -R meilisearch:meilisearch /var/meilisearch /opt/meilisearch

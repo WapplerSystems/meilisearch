@@ -51,7 +51,7 @@ class RecordMonitorTest extends IntegrationTest
     ];
 
     protected array $testExtensionsToLoad = [
-        'typo3conf/ext/solr',
+        'typo3conf/ext/meilisearch',
         '../vendor/wapplersystems/meilisearch/Tests/Integration/Fixtures/Extensions/fake_extension',
     ];
 
@@ -85,7 +85,7 @@ class RecordMonitorTest extends IntegrationTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->writeDefaultSolrTestSiteConfiguration();
+        $this->writeDefaultMeilisearchTestSiteConfiguration();
         $this->recordMonitor = GeneralUtility::makeInstance(RecordMonitor::class);
         $this->dataHandler = GeneralUtility::makeInstance(DataHandler::class);
         $this->indexQueue = GeneralUtility::makeInstance(Queue::class);
@@ -164,7 +164,7 @@ class RecordMonitorTest extends IntegrationTest
      * our MariaDB server version for the right syntax to use near 'OR (mount_pid=1
      * AND mount_pid_ol=1)) AND doktype = 7 AND no_search = 0 AND pages' at line 1" (228 chars)
      *
-     * @see https://github.com/TYPO3-Solr/ext-solr/issues/155
+     * @see https://github.com/TYPO3-Meilisearch/ext-meilisearch/issues/155
      * @test
      */
     public function canUpdateRootPageRecordWithoutSQLErrorFromMountPages(): void
@@ -199,7 +199,7 @@ class RecordMonitorTest extends IntegrationTest
     /**
      * Regression test for issue #48. Indexing of new records will crash if the name of the Indexing
      * Queue Configuration is different from tablename
-     * @see https://github.com/TYPO3-Solr/ext-solr/issues/48
+     * @see https://github.com/TYPO3-Meilisearch/ext-meilisearch/issues/48
      * @test
      */
     public function canUseCorrectIndexingConfigurationForANewNonPagesRecord(): void
@@ -284,7 +284,7 @@ class RecordMonitorTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_solr.index {
+            plugin.tx_meilisearch.index {
                 queue {
                     foo = 1
                     foo {
@@ -556,7 +556,7 @@ class RecordMonitorTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_solr.index {
+            plugin.tx_meilisearch.index {
                 queue {
                     foo = 1
                     foo {
@@ -641,7 +641,7 @@ class RecordMonitorTest extends IntegrationTest
     }
 
     /**
-     * @see https://github.com/TYPO3-Solr/ext-solr/issues/639
+     * @see https://github.com/TYPO3-Meilisearch/ext-meilisearch/issues/639
      * @test
      */
     public function canUseCorrectIndexingConfigurationForANewCustomPageTypeRecord(): void
@@ -651,7 +651,7 @@ class RecordMonitorTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_solr.index.queue {
+            plugin.tx_meilisearch.index.queue {
                 pages {
                     allowedPageTypes = 1,3,7
                 }
@@ -770,7 +770,7 @@ class RecordMonitorTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-             plugin.tx_solr.index.queue {
+             plugin.tx_meilisearch.index.queue {
                 custom_page_type = 1
                 custom_page_type {
                     initialization = WapplerSystems\Meilisearch\IndexQueue\Initializer\Page
@@ -1182,7 +1182,7 @@ class RecordMonitorTest extends IntegrationTest
         $this->addTypoScriptToTemplateRecord(
             1,
             /* @lang TYPO3_TypoScript */
-            'plugin.tx_solr.index.queue.pages.recursiveUpdateFields = title'
+            'plugin.tx_meilisearch.index.queue.pages.recursiveUpdateFields = title'
         );
         $this->assertEmptyIndexQueue();
 
@@ -1211,7 +1211,7 @@ class RecordMonitorTest extends IntegrationTest
         $this->addTypoScriptToTemplateRecord(
             1,
             /* @lang TYPO3_TypoScript */
-            'plugin.tx_solr.index.queue.pages.recursiveUpdateFields = title'
+            'plugin.tx_meilisearch.index.queue.pages.recursiveUpdateFields = title'
         );
         $this->assertEmptyIndexQueue();
 
@@ -1269,7 +1269,7 @@ class RecordMonitorTest extends IntegrationTest
         $this->addTypoScriptToTemplateRecord(
             1,
             /* @lang TYPO3_TypoScript */
-            'plugin.tx_solr.index.queue.pages.recursiveUpdateFields = title'
+            'plugin.tx_meilisearch.index.queue.pages.recursiveUpdateFields = title'
         );
         $this->assertEmptyIndexQueue();
 
@@ -1325,7 +1325,7 @@ class RecordMonitorTest extends IntegrationTest
         $this->addTypoScriptToTemplateRecord(
             1,
             /* @lang TYPO3_TypoScript */
-            'plugin.tx_solr.index.queue.pages.recursiveUpdateFields = doktype'
+            'plugin.tx_meilisearch.index.queue.pages.recursiveUpdateFields = doktype'
         );
         $this->assertEmptyIndexQueue();
 
@@ -1354,7 +1354,7 @@ class RecordMonitorTest extends IntegrationTest
         $this->addTypoScriptToTemplateRecord(
             1,
             /* @lang TYPO3_TypoScript */
-            'plugin.tx_solr.index.queue.pages.recursiveUpdateFields = doktype'
+            'plugin.tx_meilisearch.index.queue.pages.recursiveUpdateFields = doktype'
         );
         $this->assertEmptyIndexQueue();
 
@@ -1385,7 +1385,7 @@ class RecordMonitorTest extends IntegrationTest
         $this->addTypoScriptToTemplateRecord(
             1,
             /* @lang TYPO3_TypoScript */
-            'plugin.tx_solr.index.queue.pages.recursiveUpdateFields = doktype'
+            'plugin.tx_meilisearch.index.queue.pages.recursiveUpdateFields = doktype'
         );
         $this->assertEmptyIndexQueue();
 
@@ -1580,7 +1580,7 @@ class RecordMonitorTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_solr.index.queue {
+            plugin.tx_meilisearch.index.queue {
                 foo = 1
                 foo {
                     additionalPageIds = 2
@@ -1594,7 +1594,7 @@ class RecordMonitorTest extends IntegrationTest
             111,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_solr.index.queue {
+            plugin.tx_meilisearch.index.queue {
                 foo = 1
                 foo {
                     additionalPageIds = 2
@@ -1627,7 +1627,7 @@ class RecordMonitorTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_solr.index.queue {
+            plugin.tx_meilisearch.index.queue {
                 foo = 1
                 foo {
                     additionalPageIds = 2
@@ -1694,7 +1694,7 @@ class RecordMonitorTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_solr.index.queue {
+            plugin.tx_meilisearch.index.queue {
                 foo = 1
                 foo {
                     additionalPageIds = 3
@@ -1709,7 +1709,7 @@ class RecordMonitorTest extends IntegrationTest
             111,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_solr.index.queue {
+            plugin.tx_meilisearch.index.queue {
                 foo = 1
                 foo {
                     additionalPageIds = 3
@@ -1746,7 +1746,7 @@ class RecordMonitorTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_solr.index.queue {
+            plugin.tx_meilisearch.index.queue {
                 foo = 1
                 foo {
                     additionalPageIds = 3
@@ -1759,7 +1759,7 @@ class RecordMonitorTest extends IntegrationTest
             111,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_solr.index.queue {
+            plugin.tx_meilisearch.index.queue {
                 foo = 1
                 foo {
                     additionalPageIds = 3
@@ -1926,14 +1926,14 @@ class RecordMonitorTest extends IntegrationTest
         $dataHandler->start(['pages' => ['NEW' => ['hidden' => 0, 'pid' => 1]]], []);
         $dataHandler->process_datamap();
 
-        // we should have one item in the solr queue
+        // we should have one item in the meilisearch queue
         $this->assertIndexQueueContainsItemAmount(1);
     }
 
     /**
      * Tests if updates on access restricted pages lead to index queue updates
      *
-     * https://github.com/TYPO3-Solr/ext-solr/issues/3225
+     * https://github.com/TYPO3-Meilisearch/ext-meilisearch/issues/3225
      * @test
      */
     public function canQueueAccessRestrictedPageOnPageUpdate(): void

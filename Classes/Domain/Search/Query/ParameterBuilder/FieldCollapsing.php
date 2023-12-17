@@ -19,7 +19,7 @@ use WapplerSystems\Meilisearch\Domain\Search\Query\AbstractQueryBuilder;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 
 /**
- * The FieldCollapsing ParameterProvider is responsible to build the solr query parameters
+ * The FieldCollapsing ParameterProvider is responsible to build the meilisearch query parameters
  * that are needed for the field collapsing.
  */
 class FieldCollapsing extends AbstractDeactivatable implements ParameterBuilderInterface
@@ -75,21 +75,21 @@ class FieldCollapsing extends AbstractDeactivatable implements ParameterBuilderI
         $this->expandRowCount = $expandRowCount;
     }
 
-    public static function fromTypoScriptConfiguration(TypoScriptConfiguration $solrConfiguration): FieldCollapsing
+    public static function fromTypoScriptConfiguration(TypoScriptConfiguration $meilisearchConfiguration): FieldCollapsing
     {
-        $isEnabled = $solrConfiguration->getSearchVariants();
+        $isEnabled = $meilisearchConfiguration->getSearchVariants();
         if (!$isEnabled) {
             return new FieldCollapsing(false);
         }
 
         // Deactivate collapsing/variants feature if grouping feature is enabled
-        if ($solrConfiguration->getIsSearchGroupingEnabled()) {
+        if ($meilisearchConfiguration->getIsSearchGroupingEnabled()) {
             return new FieldCollapsing(false);
         }
 
-        $collapseField = $solrConfiguration->getSearchVariantsField();
-        $expand = $solrConfiguration->getSearchVariantsExpand();
-        $expandRows = $solrConfiguration->getSearchVariantsLimit();
+        $collapseField = $meilisearchConfiguration->getSearchVariantsField();
+        $expand = $meilisearchConfiguration->getSearchVariantsExpand();
+        $expandRows = $meilisearchConfiguration->getSearchVariantsLimit();
 
         return new FieldCollapsing(true, $collapseField, $expand, $expandRows);
     }

@@ -51,7 +51,7 @@ class Site
 
     protected ?Typo3Site $typo3SiteObject = null;
 
-    protected array $solrConnectionConfigurations = [];
+    protected array $meilisearchConnectionConfigurations = [];
 
     protected array $freeContentModeLanguages = [];
 
@@ -68,7 +68,7 @@ class Site
         PagesRepository $pagesRepository = null,
         int $defaultLanguageId = 0,
         array $availableLanguageIds = [],
-        array $solrConnectionConfigurations = [],
+        array $meilisearchConnectionConfigurations = [],
         Typo3Site $typo3SiteObject = null,
     ) {
         $this->configuration = $configuration;
@@ -78,7 +78,7 @@ class Site
         $this->pagesRepository = $pagesRepository ?? GeneralUtility::makeInstance(PagesRepository::class);
         $this->defaultLanguageId = $defaultLanguageId;
         $this->availableLanguageIds = $availableLanguageIds;
-        $this->solrConnectionConfigurations = $solrConnectionConfigurations;
+        $this->meilisearchConnectionConfigurations = $meilisearchConnectionConfigurations;
         $this->typo3SiteObject = $typo3SiteObject;
     }
 
@@ -89,7 +89,7 @@ class Site
      */
     public function getMeilisearchConnectionConfiguration(int $language = 0): array
     {
-        if (!is_array($this->solrConnectionConfigurations[$language] ?? null)) {
+        if (!is_array($this->meilisearchConnectionConfigurations[$language] ?? null)) {
             /** @var NoMeilisearchConnectionFoundException $noMeilisearchConnectionException */
             $noMeilisearchConnectionException = GeneralUtility::makeInstance(
                 NoMeilisearchConnectionFoundException::class,
@@ -102,7 +102,7 @@ class Site
             throw $noMeilisearchConnectionException;
         }
 
-        return $this->solrConnectionConfigurations[$language];
+        return $this->meilisearchConnectionConfigurations[$language];
     }
 
     public function getTypo3SiteObject(): Typo3Site
@@ -176,7 +176,7 @@ class Site
     }
 
     /**
-     * Gets the site's Meilisearch TypoScript configuration (plugin.tx_solr.*)
+     * Gets the site's Meilisearch TypoScript configuration (plugin.tx_meilisearch.*)
      *
      * Purpose: Interface and Unit test mocking helper method.
      */
@@ -218,8 +218,8 @@ class Site
         $initialPagesAdditionalWhereClause = '';
         // Fetch configuration in order to be able to read initialPagesAdditionalWhereClause
         if ($indexQueueConfigurationName !== null) {
-            $solrConfiguration = $this->getMeilisearchConfiguration();
-            $initialPagesAdditionalWhereClause = $solrConfiguration->getInitialPagesAdditionalWhereClause($indexQueueConfigurationName);
+            $meilisearchConfiguration = $this->getMeilisearchConfiguration();
+            $initialPagesAdditionalWhereClause = $meilisearchConfiguration->getInitialPagesAdditionalWhereClause($indexQueueConfigurationName);
         }
         return $this->pagesRepository->findAllSubPageIdsByRootPage($pageId, $initialPagesAdditionalWhereClause);
     }
@@ -228,7 +228,7 @@ class Site
      * Generates the site's unique Site Hash.
      *
      * The Site Hash is build from the site's main domain, the system encryption
-     * key, and the extension "tx_solr". These components are concatenated and
+     * key, and the extension "tx_meilisearch". These components are concatenated and
      * sha1-hashed.
      */
     public function getSiteHash(): string

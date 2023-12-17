@@ -29,7 +29,7 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Utility class for tx_solr
+ * Utility class for tx_meilisearch
  *
  * @author Ingo Renner <ingo@typo3.org>
  * (c) 2009-2015 Ingo Renner <ingo@typo3.org>

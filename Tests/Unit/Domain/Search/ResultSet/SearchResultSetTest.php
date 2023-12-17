@@ -29,7 +29,7 @@ use WapplerSystems\Meilisearch\Event\Search\AfterSearchQueryHasBeenPreparedEvent
 use WapplerSystems\Meilisearch\Search;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
-use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Tests\Unit\Fixtures\EventDispatcher\MockEventDispatcher;
@@ -42,7 +42,7 @@ class SearchResultSetTest extends SetUpUnitTestCase
     protected TypoScriptConfiguration|MockObject $configurationMock;
     protected Search|MockObject $searchMock;
     protected SearchResultSetService $searchResultSetService;
-    protected MeilisearchLogManager|MockObject $solrLogManagerMock;
+    protected MeilisearchLogManager|MockObject $meilisearchLogManagerMock;
     protected Query|MockObject $queryMock;
     protected EscapeService|MockObject $escapeServiceMock;
     protected MockEventDispatcher $eventDispatcher;
@@ -51,14 +51,14 @@ class SearchResultSetTest extends SetUpUnitTestCase
     {
         $this->configurationMock = $this->createMock(TypoScriptConfiguration::class);
         $this->searchMock = $this->createMock(Search::class);
-        $this->solrLogManagerMock = $this->createMock(MeilisearchLogManager::class);
+        $this->meilisearchLogManagerMock = $this->createMock(MeilisearchLogManager::class);
 
         $this->escapeServiceMock = $this->createMock(EscapeService::class);
         $this->escapeServiceMock->expects(self::any())->method('escape')->willReturnArgument(0);
 
         $queryBuilder = new QueryBuilder(
             $this->configurationMock,
-            $this->solrLogManagerMock,
+            $this->meilisearchLogManagerMock,
             $this->createMock(SiteHashService::class)
         );
 
@@ -67,7 +67,7 @@ class SearchResultSetTest extends SetUpUnitTestCase
         $this->searchResultSetService = new SearchResultSetService(
             $this->configurationMock,
             $this->searchMock,
-            $this->solrLogManagerMock,
+            $this->meilisearchLogManagerMock,
             null,
             $queryBuilder,
             $this->eventDispatcher
@@ -87,7 +87,7 @@ class SearchResultSetTest extends SetUpUnitTestCase
         $this->assertOneSearchWillBeTriggeredWithQueryAndShouldReturnFakeResponse('my search', 0, $fakeResponse);
         $this->configurationMock->expects(self::once())->method('getSearchQueryReturnFieldsAsArray')->willReturn(['*']);
 
-        $fakeRequest = new SearchRequest(['tx_solr' => ['q' => 'my search']]);
+        $fakeRequest = new SearchRequest(['tx_meilisearch' => ['q' => 'my search']]);
         $fakeRequest->setResultsPerPage(10);
 
         $resultSet = $this->searchResultSetService->search($fakeRequest);
@@ -103,7 +103,7 @@ class SearchResultSetTest extends SetUpUnitTestCase
         $this->assertOneSearchWillBeTriggeredWithQueryAndShouldReturnFakeResponse('my 2. search', 50, $fakeResponse);
         $this->configurationMock->expects(self::once())->method('getSearchQueryReturnFieldsAsArray')->willReturn(['*']);
 
-        $fakeRequest = new SearchRequest(['tx_solr' => ['q' => 'my 2. search', 'page' => 3]]);
+        $fakeRequest = new SearchRequest(['tx_meilisearch' => ['q' => 'my 2. search', 'page' => 3]]);
         $fakeRequest->setResultsPerPage(25);
 
         $resultSet = $this->searchResultSetService->search($fakeRequest);
@@ -126,7 +126,7 @@ class SearchResultSetTest extends SetUpUnitTestCase
         $fakeResponse = $this->createMock(ResponseAdapter::class);
         $this->assertOneSearchWillBeTriggeredWithQueryAndShouldReturnFakeResponse('my 3. search', 0, $fakeResponse);
 
-        $fakeRequest = new SearchRequest(['tx_solr' => ['q' => 'my 3. search']]);
+        $fakeRequest = new SearchRequest(['tx_meilisearch' => ['q' => 'my 3. search']]);
         $fakeRequest->setResultsPerPage(10);
 
         $resultSet = $this->searchResultSetService->search($fakeRequest);
@@ -148,11 +148,11 @@ class SearchResultSetTest extends SetUpUnitTestCase
             }
         });
 
-        $fakedSolrResponse = $this->getFixtureContentByName('fakeResponse.json');
-        $fakeResponse = new ResponseAdapter($fakedSolrResponse);
+        $fakedMeilisearchResponse = $this->getFixtureContentByName('fakeResponse.json');
+        $fakeResponse = new ResponseAdapter($fakedMeilisearchResponse);
         $this->assertOneSearchWillBeTriggeredWithQueryAndShouldReturnFakeResponse('my 4. search', 0, $fakeResponse);
 
-        $fakeRequest = new SearchRequest(['tx_solr' => ['q' => 'my 4. search']]);
+        $fakeRequest = new SearchRequest(['tx_meilisearch' => ['q' => 'my 4. search']]);
         $fakeRequest->setResultsPerPage(10);
         $resultSet  = $this->searchResultSetService->search($fakeRequest);
 
@@ -176,7 +176,7 @@ class SearchResultSetTest extends SetUpUnitTestCase
         $this->configurationMock->expects(self::any())->method('getSearchQueryFilterConfiguration')->willReturn(
             ['type:pages']
         );
-        $fakeRequest = new SearchRequest(['tx_solr' => ['q' => 'test']]);
+        $fakeRequest = new SearchRequest(['tx_meilisearch' => ['q' => 'test']]);
         $fakeRequest->setResultsPerPage(10);
 
         $this->assertOneSearchWillBeTriggeredWithQueryAndShouldReturnFakeResponse('test', 0, $fakeResponse);
@@ -199,11 +199,11 @@ class SearchResultSetTest extends SetUpUnitTestCase
 
         $this->configurationMock->expects(self::once())->method('getSearchQueryReturnFieldsAsArray')->willReturn(['*']);
 
-        $fakedSolrResponse = $this->getFixtureContentByName('fakeCollapsedResponse.json');
-        $fakeResponse = new ResponseAdapter($fakedSolrResponse);
+        $fakedMeilisearchResponse = $this->getFixtureContentByName('fakeCollapsedResponse.json');
+        $fakeResponse = new ResponseAdapter($fakedMeilisearchResponse);
         $this->assertOneSearchWillBeTriggeredWithQueryAndShouldReturnFakeResponse('variantsSearch', 0, $fakeResponse);
 
-        $fakeRequest = new SearchRequest(['tx_solr' => ['q' => 'variantsSearch']]);
+        $fakeRequest = new SearchRequest(['tx_meilisearch' => ['q' => 'variantsSearch']]);
         $fakeRequest->setResultsPerPage(10);
         $resultSet = $this->searchResultSetService->search($fakeRequest);
         self::assertSame(1, count($resultSet->getSearchResults()), 'Unexpected amount of document');

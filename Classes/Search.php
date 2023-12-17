@@ -30,7 +30,7 @@ use Throwable;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Class to handle solr search requests
+ * Class to handle meilisearch search requests
  *
  * @author Ingo Renner <ingo@typo3.org>
  */
@@ -39,7 +39,7 @@ class Search
     /**
      * An instance of the Meilisearch service
      */
-    protected ?MeilisearchConnection $solr;
+    protected ?MeilisearchConnection $meilisearch;
 
     /**
      * The search query
@@ -61,15 +61,15 @@ class Search
      * @throws DBALException
      * @throws NoMeilisearchConnectionFoundException
      */
-    public function __construct(MeilisearchConnection $solrConnection = null)
+    public function __construct(MeilisearchConnection $meilisearchConnection = null)
     {
         $this->logger = new MeilisearchLogManager(__CLASS__, GeneralUtility::makeInstance(DebugWriter::class));
 
-        $this->solr = $solrConnection;
+        $this->meilisearch = $meilisearchConnection;
 
-        if (is_null($solrConnection)) {
+        if (is_null($meilisearchConnection)) {
             $connectionManager = GeneralUtility::makeInstance(ConnectionManager::class);
-            $this->solr = $connectionManager->getConnectionByPageId(($GLOBALS['TSFE']->id ?? 0), ($GLOBALS['TSFE']?->getLanguage()->getLanguageId() ?? 0));
+            $this->meilisearch = $connectionManager->getConnectionByPageId(($GLOBALS['TSFE']->id ?? 0), ($GLOBALS['TSFE']?->getLanguage()->getLanguageId() ?? 0));
         }
 
         $this->configuration = Util::getMeilisearchConfiguration();
@@ -80,7 +80,7 @@ class Search
      */
     public function getMeilisearchConnection(): ?MeilisearchConnection
     {
-        return $this->solr;
+        return $this->meilisearch;
     }
 
     /**
@@ -90,9 +90,9 @@ class Search
      * be able to switch between multiple cores/connections during
      * one request
      */
-    public function setMeilisearchConnection(MeilisearchConnection $solrConnection): void
+    public function setMeilisearchConnection(MeilisearchConnection $meilisearchConnection): void
     {
-        $this->solr = $solrConnection;
+        $this->meilisearch = $meilisearchConnection;
     }
 
     /**
@@ -117,7 +117,7 @@ class Search
         $query->setStart($offset);
 
         try {
-            $response = $this->solr->getReadService()->search($query);
+            $response = $this->meilisearch->getReadService()->search($query);
             if ($this->configuration->getLoggingQueryQueryString()) {
                 $this->logger->info(
                     'Querying Meilisearch, getting result',
@@ -150,22 +150,22 @@ class Search
     }
 
     /**
-     * Sends a ping to the solr server to see whether it is available.
+     * Sends a ping to the meilisearch server to see whether it is available.
      */
     public function ping(bool $useCache = true): bool
     {
-        $solrAvailable = false;
+        $meilisearchAvailable = false;
 
         try {
-            if (!$this->solr->getReadService()->ping($useCache)) {
+            if (!$this->meilisearch->getReadService()->ping($useCache)) {
                 throw new Exception('Meilisearch Server not responding.', 1237475791);
             }
 
-            $solrAvailable = true;
+            $meilisearchAvailable = true;
         } catch (Throwable $e) {
             if ($this->configuration->getLoggingExceptions()) {
                 $this->logger->error(
-                    'Exception while trying to ping the solr server',
+                    'Exception while trying to ping the meilisearch server',
                     [
                         $e->__toString(),
                     ]
@@ -173,7 +173,7 @@ class Search
             }
         }
 
-        return $solrAvailable;
+        return $meilisearchAvailable;
     }
 
     /**

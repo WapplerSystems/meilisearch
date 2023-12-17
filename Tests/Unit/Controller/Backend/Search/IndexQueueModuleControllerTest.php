@@ -89,7 +89,7 @@ class IndexQueueModuleControllerTest extends AbstractModuleController
 
         $this->indexQueueMock->expects(self::once())->method('updateOrAddItemForAllRelatedRootPages')->willReturn(0);
 
-        $this->assertQueueUpdateIsTriggeredFor('tx_solr_file', 88);
-        $this->controller->requeueDocumentAction('tx_solr_file', 88);
+        $this->assertQueueUpdateIsTriggeredFor('tx_meilisearch_file', 88);
+        $this->controller->requeueDocumentAction('tx_meilisearch_file', 88);
     }
 }

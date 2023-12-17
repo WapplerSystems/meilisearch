@@ -40,7 +40,7 @@ class IndexAdministrationModuleControllerTest extends IntegrationTest
         parent::setUp();
         $GLOBALS['LANG'] = GeneralUtility::makeInstance(LanguageServiceFactory::class)->create('default');
 
-        $this->writeDefaultSolrTestSiteConfiguration();
+        $this->writeDefaultMeilisearchTestSiteConfiguration();
     }
 
     protected function getControllerMockObject(): IndexAdministrationModuleController|MockObject
@@ -53,7 +53,7 @@ class IndexAdministrationModuleControllerTest extends IntegrationTest
                     'moduleDataStorageService' => GeneralUtility::makeInstance(ModuleDataStorageService::class),
                     'siteRepository' => GeneralUtility::makeInstance(SiteRepository::class),
                     'siteFinder' => GeneralUtility::makeInstance(SiteFinder::class),
-                    'solrConnectionManager' => GeneralUtility::makeInstance(ConnectionManager::class),
+                    'meilisearchConnectionManager' => GeneralUtility::makeInstance(ConnectionManager::class),
                     'indexQueue' => GeneralUtility::makeInstance(Queue::class),
                 ]
             )

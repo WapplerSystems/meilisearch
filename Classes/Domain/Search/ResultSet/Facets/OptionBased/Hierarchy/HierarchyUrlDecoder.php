@@ -20,7 +20,7 @@ namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\OptionBased\
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\FacetUrlDecoderInterface;
 
 /**
- * Filter encoder to build Meilisearch hierarchy queries from tx_solr[filter]
+ * Filter encoder to build Meilisearch hierarchy queries from tx_meilisearch[filter]
  *
  * @author Ingo Renner <ingo@typo3.org>
  */

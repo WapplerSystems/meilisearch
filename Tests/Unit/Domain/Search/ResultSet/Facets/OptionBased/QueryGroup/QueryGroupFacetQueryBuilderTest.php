@@ -105,7 +105,7 @@ class QueryGroupFacetQueryBuilderTest extends SetUpUnitTestCase
             ],
         ];
 
-        $fakeConfiguration['plugin.']['tx_solr.']['search.']['faceting.'] = $fakeFacetConfiguration;
+        $fakeConfiguration['plugin.']['tx_meilisearch.']['search.']['faceting.'] = $fakeFacetConfiguration;
         $configuration = new TypoScriptConfiguration($fakeConfiguration);
         $builder = new QueryGroupFacetQueryBuilder();
 

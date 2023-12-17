@@ -54,7 +54,7 @@ class FrontendEnvironment implements SingletonInterface
 
     /**
      * Check whether the page record is within the configured allowed pages types(doktype) for indexing.
-     * Uses TypoScript: plugin.tx_solr.index.queue.<queue name>.allowedPageTypes
+     * Uses TypoScript: plugin.tx_meilisearch.index.queue.<queue name>.allowedPageTypes
      *
      * @throws DBALException
      */

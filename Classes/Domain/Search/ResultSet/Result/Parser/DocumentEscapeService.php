@@ -22,7 +22,7 @@ use WapplerSystems\Meilisearch\System\Meilisearch\Document\Document;
 use WapplerSystems\Meilisearch\Util;
 
 /**
- * Applies htmlspecialschars on documents of a solr response.
+ * Applies htmlspecialschars on documents of a meilisearch response.
  */
 class DocumentEscapeService
 {

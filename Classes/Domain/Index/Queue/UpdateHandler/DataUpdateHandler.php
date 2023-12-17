@@ -109,7 +109,7 @@ class DataUpdateHandler extends AbstractUpdateHandler
         RootPageResolver $rootPageResolver,
         PagesRepository $pagesRepository,
         DataHandler $dataHandler,
-        MeilisearchLogManager $solrLogManager = null
+        MeilisearchLogManager $meilisearchLogManager = null
     ) {
         parent::__construct($recordService, $frontendEnvironment, $tcaService, $indexQueue);
 
@@ -117,7 +117,7 @@ class DataUpdateHandler extends AbstractUpdateHandler
         $this->rootPageResolver = $rootPageResolver;
         $this->pagesRepository = $pagesRepository;
         $this->dataHandler = $dataHandler;
-        $this->logger = $solrLogManager ?? GeneralUtility::makeInstance(
+        $this->logger = $meilisearchLogManager ?? GeneralUtility::makeInstance(
             MeilisearchLogManager::class,
             __CLASS__
         );
@@ -279,8 +279,8 @@ class DataUpdateHandler extends AbstractUpdateHandler
      */
     protected function applyPageChangesToQueue(int $uid): void
     {
-        $solrConfiguration = $this->getMeilisearchConfigurationFromPageId($uid);
-        $record = $this->configurationAwareRecordService->getRecord('pages', $uid, $solrConfiguration);
+        $meilisearchConfiguration = $this->getMeilisearchConfigurationFromPageId($uid);
+        $record = $this->configurationAwareRecordService->getRecord('pages', $uid, $meilisearchConfiguration);
         if (!empty($record) && $this->tcaService->isEnabledRecord('pages', $record)) {
             $this->mountPageUpdater->update($uid);
             $this->indexQueue->updateItem('pages', $uid);
@@ -297,11 +297,11 @@ class DataUpdateHandler extends AbstractUpdateHandler
      */
     protected function applyRecordChangesToQueue(string $table, int $uid, int $pid): void
     {
-        $solrConfiguration = $this->getMeilisearchConfigurationFromPageId($pid);
-        $isMonitoredTable = $solrConfiguration->getIndexQueueIsMonitoredTable($table);
+        $meilisearchConfiguration = $this->getMeilisearchConfigurationFromPageId($pid);
+        $isMonitoredTable = $meilisearchConfiguration->getIndexQueueIsMonitoredTable($table);
 
         if ($isMonitoredTable) {
-            $record = $this->configurationAwareRecordService->getRecord($table, $uid, $solrConfiguration);
+            $record = $this->configurationAwareRecordService->getRecord($table, $uid, $meilisearchConfiguration);
 
             if (!empty($record) && $this->tcaService->isEnabledRecord($table, $record)) {
                 $uid = $this->tcaService->getTranslationOriginalUidIfTranslated($table, $record, $uid);
@@ -314,7 +314,7 @@ class DataUpdateHandler extends AbstractUpdateHandler
     }
 
     /**
-     * Removes record from the index queue and from the solr index
+     * Removes record from the index queue and from the meilisearch index
      */
     protected function removeFromIndexAndQueue(string $recordTable, int $recordUid): void
     {
@@ -322,7 +322,7 @@ class DataUpdateHandler extends AbstractUpdateHandler
     }
 
     /**
-     * Removes record from the index queue and from the solr index when the item is in the queue.
+     * Removes record from the index queue and from the meilisearch index when the item is in the queue.
      *
      * @throws DBALException
      */
@@ -410,14 +410,14 @@ class DataUpdateHandler extends AbstractUpdateHandler
             if (!$site instanceof Site) {
                 continue;
             }
-            $solrConfiguration = $site->getMeilisearchConfiguration();
-            $isMonitoredRecord = $solrConfiguration->getIndexQueueIsMonitoredTable($recordTable);
+            $meilisearchConfiguration = $site->getMeilisearchConfiguration();
+            $isMonitoredRecord = $meilisearchConfiguration->getIndexQueueIsMonitoredTable($recordTable);
             if (!$isMonitoredRecord) {
                 // when it is a non monitored record, we can skip it.
                 continue;
             }
 
-            $record = $this->configurationAwareRecordService->getRecord($recordTable, $recordUid, $solrConfiguration);
+            $record = $this->configurationAwareRecordService->getRecord($recordTable, $recordUid, $meilisearchConfiguration);
             if (empty($record)) {
                 // TODO move this part to the garbage collector
                 // check if the item should be removed from the index because it no longer matches the conditions

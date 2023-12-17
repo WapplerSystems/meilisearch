@@ -34,7 +34,7 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 class DebugWriter
 {
     /**
-     * When the feature is enabled with: plugin.tx_solr.logging.debugOutput the log writer uses the extbase
+     * When the feature is enabled with: plugin.tx_meilisearch.logging.debugOutput the log writer uses the extbase
      * debug functionality in the frontend, or the console in the backend to display the devlog messages.
      *
      * @param mixed $level Log level. Value according to \Psr\Log\LogLevel.

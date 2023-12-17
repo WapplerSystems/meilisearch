@@ -50,7 +50,7 @@ class QueueInitializationService
     }
 
     /**
-     * Truncate and rebuild the tx_solr_indexqueue_item table. This is the most
+     * Truncate and rebuild the tx_meilisearch_indexqueue_item table. This is the most
      * complete way to force reindexing, or to build the Index Queue for the
      * first time. The Index Queue initialization is site-specific.
      *
@@ -68,7 +68,7 @@ class QueueInitializationService
     }
 
     /**
-     * Truncates and rebuilds the tx_solr_indexqueue_item table for a set of sites and a set of index configurations.
+     * Truncates and rebuilds the tx_meilisearch_indexqueue_item table for a set of sites and a set of index configurations.
      *
      * @param array $sites The array of sites to initialize
      * @param array $indexingConfigurationNames the array of index configurations to initialize.
@@ -118,11 +118,11 @@ class QueueInitializationService
      */
     protected function applyInitialization(Site $site, string $indexingConfigurationName): bool
     {
-        $solrConfiguration = $site->getMeilisearchConfiguration();
+        $meilisearchConfiguration = $site->getMeilisearchConfiguration();
 
         /** @var QueueInterface $queue */
         $queue = GeneralUtility::makeInstance(
-            $solrConfiguration->getIndexQueueClassByConfigurationName($indexingConfigurationName)
+            $meilisearchConfiguration->getIndexQueueClassByConfigurationName($indexingConfigurationName)
         );
         if ($queue instanceof QueueInitializationServiceAwareInterface) {
             $queue->setQueueInitializationService($this);
@@ -133,9 +133,9 @@ class QueueInitializationService
             $queue->deleteItemsBySite($site, $indexingConfigurationName);
         }
 
-        $type = $solrConfiguration->getIndexQueueTypeOrFallbackToConfigurationName($indexingConfigurationName);
-        $initializerClass = $solrConfiguration->getIndexQueueInitializerClassByConfigurationName($indexingConfigurationName);
-        $indexConfiguration = $solrConfiguration->getIndexQueueConfigurationByName($indexingConfigurationName);
+        $type = $meilisearchConfiguration->getIndexQueueTypeOrFallbackToConfigurationName($indexingConfigurationName);
+        $initializerClass = $meilisearchConfiguration->getIndexQueueInitializerClassByConfigurationName($indexingConfigurationName);
+        $indexConfiguration = $meilisearchConfiguration->getIndexQueueConfigurationByName($indexingConfigurationName);
 
         return $this->executeInitializer($site, $indexingConfigurationName, $initializerClass, $type, $indexConfiguration);
     }

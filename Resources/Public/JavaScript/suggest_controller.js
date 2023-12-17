@@ -3,15 +3,15 @@ function SuggestController() {
     this.init = function () {
 
         jQuery('form[data-suggest]').each(function () {
-            var $form = $(this), $searchBox = $form.find('.tx-solr-suggest'), $formAutoComplete;
+            var $form = $(this), $searchBox = $form.find('.tx-meilisearch-suggest'), $formAutoComplete;
 
-            if ($form.find('.tx-solr-autocomplete').length > 0){
-                $formAutoComplete = $form.find('.tx-solr-autocomplete');
+            if ($form.find('.tx-meilisearch-autocomplete').length > 0){
+                $formAutoComplete = $form.find('.tx-meilisearch-autocomplete');
             } else {
                 $formAutoComplete = $('body');
             }
 
-            $form.find('.tx-solr-suggest-focus').focus();
+            $form.find('.tx-meilisearch-suggest-focus').focus();
 
             // when no specific container found, use the form as container
             if ($searchBox.length === 0) {
@@ -21,19 +21,19 @@ function SuggestController() {
 
             // Prevent submit of empty search form
             $form.on('submit', function (e) {
-                if ($form.find('.tx-solr-suggest').val() === '') {
+                if ($form.find('.tx-meilisearch-suggest').val() === '') {
                     e.preventDefault();
-                    $form.find('.tx-solr-suggest').focus();
+                    $form.find('.tx-meilisearch-suggest').focus();
                 }
             });
 
-            $form.find('.tx-solr-suggest').devbridgeAutocomplete({
+            $form.find('.tx-meilisearch-suggest').devbridgeAutocomplete({
                 serviceUrl: $form.data('suggest'),
                 dataType: 'jsonp',
                 ajaxSettings: {
-                    jsonp: "tx_solr[callback]"
+                    jsonp: "tx_meilisearch[callback]"
                 },
-                paramName: 'tx_solr[queryString]',
+                paramName: 'tx_meilisearch[queryString]',
                 groupBy: 'category',
                 maxHeight: 1000,
                 appendTo: $formAutoComplete,
@@ -87,7 +87,7 @@ function SuggestController() {
                 beforeRender: function (container) {
                     // remove first group header
                     container.find('.autocomplete-group:first').remove();
-                    container.addClass('tx-solr-autosuggest');
+                    container.addClass('tx-meilisearch-autosuggest');
 
                     // add active class to container
                     $searchBox.parent().addClass('autocomplete-active').fadeIn();
@@ -137,12 +137,12 @@ function SuggestController() {
 }
 
 jQuery(document).ready(function() {
-    /** solr search autocomplete **/
-    var solrSuggestController = new SuggestController();
-    solrSuggestController.init();
+    /** meilisearch search autocomplete **/
+    var meilisearchSuggestController = new SuggestController();
+    meilisearchSuggestController.init();
 
-    jQuery("body").on("tx_solr_updated", function() {
-        solrSuggestController.init();
+    jQuery("body").on("tx_meilisearch_updated", function() {
+        meilisearchSuggestController.init();
     });
 });
 

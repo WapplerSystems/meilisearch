@@ -34,14 +34,14 @@ class PhraseFields extends AbstractFieldList implements ParameterBuilderInterfac
     /**
      * Instantiates PhraseFields from TypoScript configuration.
      */
-    public static function fromTypoScriptConfiguration(TypoScriptConfiguration $solrConfiguration): PhraseFields
+    public static function fromTypoScriptConfiguration(TypoScriptConfiguration $meilisearchConfiguration): PhraseFields
     {
-        $isEnabled = $solrConfiguration->getPhraseSearchIsEnabled();
+        $isEnabled = $meilisearchConfiguration->getPhraseSearchIsEnabled();
         if (!$isEnabled) {
             return new PhraseFields(false);
         }
 
-        return self::fromString($solrConfiguration->getSearchQueryPhraseFields());
+        return self::fromString($meilisearchConfiguration->getSearchQueryPhraseFields());
     }
 
     /**

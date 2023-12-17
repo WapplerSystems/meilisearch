@@ -1,8 +1,8 @@
-{namespace solr=WapplerSystems\Meilisearch\ViewHelpers}
+{namespace meilisearch=WapplerSystems\Meilisearch\ViewHelpers}
 <f:layout name="Backend/WithPageTree"/>
 
 <f:section name="Main">
 	<f:for each="{documents}" as="document">
-		<f:render partial="Backend/ApacheSolr/SingleDocument" arguments="{document: document, documentType: documentType, documentsCount: '{f:count(subject: documents)}'}"/>
+		<f:render partial="Backend/ApacheMeilisearch/SingleDocument" arguments="{document: document, documentType: documentType, documentsCount: '{f:count(subject: documents)}'}"/>
 	</f:for>
 </f:section>

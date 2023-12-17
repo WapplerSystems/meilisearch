@@ -91,6 +91,6 @@ class SortingExpressionTest extends SetUpUnitTestCase
         } else {
             $result = $expression->getForFacet($sorting);
         }
-        self::assertSame($expectedResult, $result, 'Unexpected expression for solr server');
+        self::assertSame($expectedResult, $result, 'Unexpected expression for meilisearch server');
     }
 }

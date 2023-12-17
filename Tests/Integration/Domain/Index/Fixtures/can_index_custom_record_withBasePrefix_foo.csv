@@ -26,7 +26,7 @@ page.10 {
     }
 }
 
-plugin.tx_solr {
+plugin.tx_meilisearch {
 
     enabled = 1
 
@@ -49,7 +49,7 @@ plugin.tx_solr {
                     url = TEXT
                     url {
                         typolink.parameter = 1
-                        typolink.additionalParams = &tx_ttnews[tt_news]={field:uid}&L={field:__solr_index_language}
+                        typolink.additionalParams = &tx_ttnews[tt_news]={field:uid}&L={field:__meilisearch_index_language}
                         typolink.additionalParams.insertData = 1
                         typolink.returnLast = url
                         typolink.useCacheHash = 1

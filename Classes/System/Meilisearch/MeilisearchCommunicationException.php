@@ -20,19 +20,19 @@ namespace WapplerSystems\Meilisearch\System\Meilisearch;
 use RuntimeException;
 
 /**
- * This exception or a more specific one should be thrown when there is an error in the communication with the solr server.
+ * This exception or a more specific one should be thrown when there is an error in the communication with the meilisearch server.
  */
 class MeilisearchCommunicationException extends RuntimeException
 {
-    protected ?ResponseAdapter $solrResponse = null;
+    protected ?ResponseAdapter $meilisearchResponse = null;
 
     public function getMeilisearchResponse(): ?ResponseAdapter
     {
-        return $this->solrResponse;
+        return $this->meilisearchResponse;
     }
 
-    public function setMeilisearchResponse(ResponseAdapter $solrResponse): void
+    public function setMeilisearchResponse(ResponseAdapter $meilisearchResponse): void
     {
-        $this->solrResponse = $solrResponse;
+        $this->meilisearchResponse = $meilisearchResponse;
     }
 }

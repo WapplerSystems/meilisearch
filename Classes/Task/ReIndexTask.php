@@ -71,26 +71,26 @@ class ReIndexTask extends AbstractMeilisearchTask
     protected function cleanUpIndex(): bool
     {
         $cleanUpResult = true;
-        $solrConfiguration = $this->getSite()->getMeilisearchConfiguration();
-        $solrServers = GeneralUtility::makeInstance(ConnectionManager::class)->getConnectionsBySite($this->getSite());
+        $meilisearchConfiguration = $this->getSite()->getMeilisearchConfiguration();
+        $meilisearchServers = GeneralUtility::makeInstance(ConnectionManager::class)->getConnectionsBySite($this->getSite());
         $typesToCleanUp = [];
-        $enableCommitsSetting = $solrConfiguration->getEnableCommits();
+        $enableCommitsSetting = $meilisearchConfiguration->getEnableCommits();
 
         foreach ($this->indexingConfigurationsToReIndex as $indexingConfigurationName) {
-            $type = $solrConfiguration->getIndexQueueTypeOrFallbackToConfigurationName($indexingConfigurationName);
+            $type = $meilisearchConfiguration->getIndexQueueTypeOrFallbackToConfigurationName($indexingConfigurationName);
             $typesToCleanUp[] = $type;
         }
 
-        foreach ($solrServers as $solrServer) {
+        foreach ($meilisearchServers as $meilisearchServer) {
             $deleteQuery = 'type:(' . implode(' OR ', $typesToCleanUp) . ')' . ' AND siteHash:' . $this->getSite()->getSiteHash();
-            $solrServer->getWriteService()->deleteByQuery($deleteQuery);
+            $meilisearchServer->getWriteService()->deleteByQuery($deleteQuery);
 
             if (!$enableCommitsSetting) {
                 // Do not commit
                 continue;
             }
 
-            $response = $solrServer->getWriteService()->commit(false, false);
+            $response = $meilisearchServer->getWriteService()->commit(false, false);
             if ($response->getHttpStatus() != 200) {
                 $cleanUpResult = false;
                 break;

@@ -43,7 +43,7 @@ class PageStrategy extends AbstractStrategy
     }
 
     /**
-     * Determines the relevant page id for a content element update. Deletes the page from solr and requeues the
+     * Determines the relevant page id for a content element update. Deletes the page from meilisearch and requeues the
      * page for a reindex.
      *
      * @throws DBALException

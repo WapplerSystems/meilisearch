@@ -28,7 +28,7 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
  * Indexer to add / overwrite page document fields as defined in
- * plugin.tx_solr.index.queue.pages.fields.
+ * plugin.tx_meilisearch.index.queue.pages.fields.
  *
  * @author Ingo Renner <ingo@typo3.org>
  */
@@ -41,7 +41,7 @@ class PageFieldMappingIndexer
      * Builds a substitute document for the currently being indexed page.
      *
      * Uses the original document and adds fields as defined in
-     * plugin.tx_solr.index.queue.pages.fields.
+     * plugin.tx_meilisearch.index.queue.pages.fields.
      */
     public function __invoke(AfterPageDocumentIsCreatedForIndexingEvent $event): void
     {
@@ -99,14 +99,14 @@ class PageFieldMappingIndexer
      * Allows to put the page record through cObj processing if wanted / needed.
      * Otherwise, the plain page record field value is used.
      *
-     * @param string $solrFieldName The Meilisearch field name to resolve the value from the item's record
+     * @param string $meilisearchFieldName The Meilisearch field name to resolve the value from the item's record
      * @return string|array The resolved value to be indexed
      */
-    protected function resolveFieldValue(string $solrFieldName, Document $pageDocument, array $pageRecord): mixed
+    protected function resolveFieldValue(string $meilisearchFieldName, Document $pageDocument, array $pageRecord): mixed
     {
         $pageIndexingConfiguration = $this->configuration->getIndexQueueFieldsConfigurationByConfigurationName($this->pageIndexingConfigurationName);
 
-        if (isset($pageIndexingConfiguration[$solrFieldName . '.'])) {
+        if (isset($pageIndexingConfiguration[$meilisearchFieldName . '.'])) {
             $pageRecord = AbstractIndexer::addVirtualContentFieldToRecord($pageDocument, $pageRecord);
 
             // configuration found => need to resolve a cObj
@@ -114,15 +114,15 @@ class PageFieldMappingIndexer
             $contentObject->start($pageRecord, 'pages');
 
             $fieldValue = $contentObject->cObjGetSingle(
-                $pageIndexingConfiguration[$solrFieldName],
-                $pageIndexingConfiguration[$solrFieldName . '.']
+                $pageIndexingConfiguration[$meilisearchFieldName],
+                $pageIndexingConfiguration[$meilisearchFieldName . '.']
             );
 
-            if (AbstractIndexer::isSerializedValue($pageIndexingConfiguration, $solrFieldName)) {
+            if (AbstractIndexer::isSerializedValue($pageIndexingConfiguration, $meilisearchFieldName)) {
                 $fieldValue = unserialize($fieldValue);
             }
         } else {
-            $fieldValue = $pageRecord[$pageIndexingConfiguration[$solrFieldName]];
+            $fieldValue = $pageRecord[$pageIndexingConfiguration[$meilisearchFieldName]];
         }
 
         return $fieldValue;

@@ -19,7 +19,7 @@
 		</include>
 	</coverage>
 	<testsuites>
-		<testsuite name="ext-solr-integration-tests">
+		<testsuite name="ext-meilisearch-integration-tests">
 			<directory>../../Tests/Integration/</directory>
 		</testsuite>
 	</testsuites>

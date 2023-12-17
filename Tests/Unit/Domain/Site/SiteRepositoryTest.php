@@ -140,7 +140,7 @@ class SiteRepositoryTest extends SetUpUnitTestCase
         );
 
         $siteOne = $this->siteRepository->getFirstAvailableSite();
-        $connections = $siteOne->getAllSolrConnectionConfigurations();
+        $connections = $siteOne->getAllMeilisearchConnectionConfigurations();
         self::assertEquals([0, 2, 5], array_keys($connections), 'Could not get languages for site');
     }
 
@@ -165,7 +165,7 @@ class SiteRepositoryTest extends SetUpUnitTestCase
                     );
                     $site->expects($this->any())->method('isEnabled')->willReturn(count($fakedConnectionConfiguration) > 0);
                     $site->expects($this->any())
-                        ->method('getAllSolrConnectionConfigurations')
+                        ->method('getAllMeilisearchConnectionConfigurations')
                         ->willReturn($fakedConnectionConfiguration);
                     return $site;
                 }

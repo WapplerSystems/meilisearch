@@ -17,27 +17,27 @@ declare(strict_types=1);
 
 namespace WapplerSystems\Meilisearch\Tests\Integration\Report;
 
-use WapplerSystems\Meilisearch\Report\SolrStatus;
+use WapplerSystems\Meilisearch\Report\MeilisearchStatus;
 use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Integration test for the Solr status report
+ * Integration test for the Meilisearch status report
  *
  * @author Timo Hund
  */
-class SolrStatusTest extends IntegrationTest
+class MeilisearchStatusTest extends IntegrationTest
 {
     /**
      * @test
      */
-    public function allStatusChecksShouldBeOkForValidSolrConnection(): void
+    public function allStatusChecksShouldBeOkForValidMeilisearchConnection(): void
     {
-        $this->writeDefaultSolrTestSiteConfiguration();
+        $this->writeDefaultMeilisearchTestSiteConfiguration();
 
-        $solrStatus = GeneralUtility::makeInstance(SolrStatus::class);
-        $statusCollection = $solrStatus->getStatus();
+        $meilisearchStatus = GeneralUtility::makeInstance(MeilisearchStatus::class);
+        $statusCollection = $meilisearchStatus->getStatus();
 
         foreach ($statusCollection as $status) {
             self::assertSame(ContextualFeedbackSeverity::OK, $status->getSeverity(), 'Expected that all status objects should be ok');
@@ -47,12 +47,12 @@ class SolrStatusTest extends IntegrationTest
     /**
      * @test
      */
-    public function allStatusChecksShouldFailForInvalidSolrConnection(): void
+    public function allStatusChecksShouldFailForInvalidMeilisearchConnection(): void
     {
-        $this->writeDefaultSolrTestSiteConfigurationForHostAndPort(null, 'invalid', 4711);
+        $this->writeDefaultMeilisearchTestSiteConfigurationForHostAndPort(null, 'invalid', 4711);
 
-        $solrStatus = GeneralUtility::makeInstance(SolrStatus::class);
-        $statusCollection = $solrStatus->getStatus();
+        $meilisearchStatus = GeneralUtility::makeInstance(MeilisearchStatus::class);
+        $statusCollection = $meilisearchStatus->getStatus();
 
         foreach ($statusCollection as $status) {
             self::assertSame(ContextualFeedbackSeverity::ERROR, $status->getSeverity(), 'Expected that all status objects should indicate an error');

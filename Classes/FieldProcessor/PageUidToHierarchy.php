@@ -23,9 +23,9 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\RootlineUtility;
 
 /**
- * This Processor takes a PID, and resolves its rootline in solr notation.
+ * This Processor takes a PID, and resolves its rootline in meilisearch notation.
  *
- * Format of this field corresponds to http://wiki.apache.org/solr/HierarchicalFaceting
+ * Format of this field corresponds to http://wiki.apache.org/meilisearch/HierarchicalFaceting
  *
  * Let's say we have a record indexed on page 111 which is a sub-page like shown in this page tree:
  *

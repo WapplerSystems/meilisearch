@@ -3,7 +3,7 @@
 
 /*
  * This script is made to avoid bash/system dependencies for json-parsing tools.
- * And is made for usage CI/CD usage in TYPO3-Solr addons/projects.
+ * And is made for usage CI/CD usage in TYPO3-Meilisearch addons/projects.
  */
 $addOnPath = getenv('EXT_SOLR_ADDON_PATH') ?? null;
 

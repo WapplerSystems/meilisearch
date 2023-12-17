@@ -1,11 +1,11 @@
-<solr>
-	<solrcloud>
+<meilisearch>
+	<meilisearchcloud>
 		<str name="host">${host:}</str>
 		<int name="hostPort">${jetty.port:8983}</int>
-		<str name="hostContext">${hostContext:solr}</str>
+		<str name="hostContext">${hostContext:meilisearch}</str>
 		<int name="zkClientTimeout">${zkClientTimeout:15000}</int>
 		<bool name="genericCoreNodeNames">${genericCoreNodeNames:true}</bool>
-	</solrcloud>
+	</meilisearchcloud>
 
 	<shardHandlerFactory name="shardHandlerFactory"
 						 class="HttpShardHandlerFactory">
@@ -14,4 +14,4 @@
 	</shardHandlerFactory>
 
 	<str name="modules">scripting</str>
-</solr>
+</meilisearch>

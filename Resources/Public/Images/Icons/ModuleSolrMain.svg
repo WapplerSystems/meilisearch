@@ -13,7 +13,7 @@
    version="1.1"
    id="svg6241"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="ModuleSolrMain.svg">
+   sodipodi:docname="ModuleMeilisearchMain.svg">
   <metadata
      id="metadata6261">
     <rdf:RDF>
@@ -50,11 +50,11 @@
   <defs
      id="defs6243" />
   <g
-     id="InitSolrConnection"
+     id="InitMeilisearchConnection"
      transform="matrix(0.5659569,0,0,0.54992106,1.8607181,2.2303893)"
      style="fill:#ffffff;fill-rule:evenodd;stroke:none;stroke-width:1;fill-opacity:1">
     <g
-       id="solr-for-typo3"
+       id="meilisearch-for-typo3"
        style="fill-rule:nonzero;fill:#ffffff;fill-opacity:1">
       <path
          d="M 0.40340844,2.3907921 C 0.225236,2.7880078 0.10971884,3.2194438 0.06960059,3.6730991 L 0.68494456,4.7805028 0.40340844,2.3907921 Z"

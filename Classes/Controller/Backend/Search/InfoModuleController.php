@@ -92,7 +92,7 @@ class InfoModuleController extends AbstractModuleController
 
         /** @var Path $path */
         $path = GeneralUtility::makeInstance(Path::class);
-        $connections = $this->solrConnectionManager->getConnectionsBySite($this->selectedSite);
+        $connections = $this->meilisearchConnectionManager->getConnectionsBySite($this->selectedSite);
 
         if (empty($connections)) {
             $this->view->assign('can_not_proceed', true);
@@ -139,7 +139,7 @@ class InfoModuleController extends AbstractModuleController
             ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT,
             'meilisearch'
         );
-        $statisticsConfig = $frameWorkConfiguration['plugin.']['tx_solr.']['statistics.'] ?? [];
+        $statisticsConfig = $frameWorkConfiguration['plugin.']['tx_meilisearch.']['statistics.'] ?? [];
 
         $topHitsLimit = (int)($statisticsConfig['topHits.']['limit'] ?? 5);
         $noHitsLimit = (int)($statisticsConfig['noHits.']['limit'] ?? 5);
@@ -202,9 +202,9 @@ class InfoModuleController extends AbstractModuleController
     {
         $indexFieldsInfoByCorePaths = [];
 
-        $solrCoreConnections = $this->solrConnectionManager->getConnectionsBySite($this->selectedSite);
-        foreach ($solrCoreConnections as $solrCoreConnection) {
-            $coreAdmin = $solrCoreConnection->getAdminService();
+        $meilisearchCoreConnections = $this->meilisearchConnectionManager->getConnectionsBySite($this->selectedSite);
+        foreach ($meilisearchCoreConnections as $meilisearchCoreConnection) {
+            $coreAdmin = $meilisearchCoreConnection->getAdminService();
 
             $indexFieldsInfo = [
                 'corePath' => $coreAdmin->getCorePath(),
@@ -249,11 +249,11 @@ class InfoModuleController extends AbstractModuleController
      */
     protected function collectIndexInspectorInfo(): void
     {
-        $solrCoreConnections = $this->solrConnectionManager->getConnectionsBySite($this->selectedSite);
+        $meilisearchCoreConnections = $this->meilisearchConnectionManager->getConnectionsBySite($this->selectedSite);
         $documentsByCoreAndType = [];
         $alreadyListedCores = [];
-        foreach ($solrCoreConnections as $languageId => $solrCoreConnection) {
-            $coreAdmin = $solrCoreConnection->getAdminService();
+        foreach ($meilisearchCoreConnections as $languageId => $meilisearchCoreConnection) {
+            $coreAdmin = $meilisearchCoreConnection->getAdminService();
 
             // Do not list cores twice when multiple languages use the same core
             $url = (string)$coreAdmin;

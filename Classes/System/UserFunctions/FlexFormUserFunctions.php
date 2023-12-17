@@ -58,7 +58,7 @@ class FlexFormUserFunctions
     }
 
     /**
-     * This method parses the solr schema fields into the required format for the backend flexform.
+     * This method parses the meilisearch schema fields into the required format for the backend flexform.
      *
      * @throws NoMeilisearchConnectionFoundException
      * @throws DBALException
@@ -115,7 +115,7 @@ class FlexFormUserFunctions
     }
 
     /**
-     * Get solr connection.
+     * Get meilisearch connection.
      *
      * @throws NoMeilisearchConnectionFoundException
      * @throws DBALException
@@ -126,7 +126,7 @@ class FlexFormUserFunctions
     }
 
     /**
-     * Retrieves all fieldnames that occurs in the solr schema for one page.
+     * Retrieves all fieldnames that occurs in the meilisearch schema for one page.
      *
      * @throws NoMeilisearchConnectionFoundException
      * @throws DBALException
@@ -166,7 +166,7 @@ class FlexFormUserFunctions
         $extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class);
         $namespaces = [];
         foreach ($extensionConfiguration->getAvailablePluginNamespaces() as $namespace) {
-            $label = $namespace === 'tx_solr' ? 'Default' : $namespace;
+            $label = $namespace === 'tx_meilisearch' ? 'Default' : $namespace;
             $namespaces[$namespace] = [$label, $namespace];
         }
         $parentInformation['items'] = $namespaces;

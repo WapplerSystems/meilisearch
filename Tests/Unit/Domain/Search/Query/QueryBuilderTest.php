@@ -219,8 +219,8 @@ class QueryBuilderTest extends SetUpUnitTestCase
     public function canSetHighlightingFieldList(): void
     {
         $fakeConfigurationArray = [];
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['results.']['resultsHighlighting'] = 1;
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['results.']['resultsHighlighting.']['highlightFields'] = 'title';
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['results.']['resultsHighlighting'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['results.']['resultsHighlighting.']['highlightFields'] = 'title';
         $fakeConfiguration = new TypoScriptConfiguration($fakeConfigurationArray);
 
         $query = $this->getInitializedTestSearchQuery('test', $fakeConfiguration);
@@ -240,8 +240,8 @@ class QueryBuilderTest extends SetUpUnitTestCase
     public function canPassCustomWrapForHighlighting(): void
     {
         $fakeConfigurationArray = [];
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['results.']['resultsHighlighting'] = 1;
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['results.']['resultsHighlighting.']['wrap'] = '[A]|[B]';
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['results.']['resultsHighlighting'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['results.']['resultsHighlighting.']['wrap'] = '[A]|[B]';
         $fakeConfiguration = new TypoScriptConfiguration($fakeConfigurationArray);
         $query = $this->getInitializedTestSearchQuery('test', $fakeConfiguration);
 
@@ -261,8 +261,8 @@ class QueryBuilderTest extends SetUpUnitTestCase
     public function simplePreAndPostIsUsedWhenFastVectorHighlighterCouldNotBeUsed(): void
     {
         $fakeConfigurationArray = [];
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['results.']['resultsHighlighting'] = 1;
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['results.']['resultsHighlighting.']['wrap'] = '[A]|[B]';
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['results.']['resultsHighlighting'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['results.']['resultsHighlighting.']['wrap'] = '[A]|[B]';
         $fakeConfiguration = new TypoScriptConfiguration($fakeConfigurationArray);
 
         $query = $this->getInitializedTestSearchQuery('test', $fakeConfiguration);
@@ -325,8 +325,8 @@ class QueryBuilderTest extends SetUpUnitTestCase
      */
     public function canSetQueryString(): void
     {
-        $query = $this->getInitializedTestSearchQuery('i like solr');
-        self::assertSame('i like solr', $query->getQuery(), 'Can not set and get query string');
+        $query = $this->getInitializedTestSearchQuery('i like meilisearch');
+        self::assertSame('i like meilisearch', $query->getQuery(), 'Can not set and get query string');
     }
 
     /**
@@ -334,7 +334,7 @@ class QueryBuilderTest extends SetUpUnitTestCase
      */
     public function canSetPage(): void
     {
-        $query = $this->getInitializedTestSearchQuery('i like solr');
+        $query = $this->getInitializedTestSearchQuery('i like meilisearch');
         $query->setStart(10);
 
         self::assertSame(10, $query->getStart(), 'Can not set and get page');
@@ -542,7 +542,7 @@ class QueryBuilderTest extends SetUpUnitTestCase
     {
         $input = 'content^10, title^5';
         $fakeConfigurationArray = [];
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['query.']['queryFields'] = $input;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['query.']['queryFields'] = $input;
         $fakeConfiguration = new TypoScriptConfiguration($fakeConfigurationArray);
         $query = $this->getInitializedTestSearchQuery('test', $fakeConfiguration);
         $queryParameters = $this->getAllQueryParameters($query);
@@ -630,7 +630,7 @@ class QueryBuilderTest extends SetUpUnitTestCase
     {
         $input = 'abstract, price';
         $fakeConfigurationArray = [];
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['query.']['returnFields'] = $input;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['query.']['returnFields'] = $input;
         $fakeConfiguration = new TypoScriptConfiguration($fakeConfigurationArray);
         $query = $this->getInitializedTestSearchQuery('test', $fakeConfiguration);
         $queryParameters = $this->getAllQueryParameters($query);
@@ -767,8 +767,8 @@ class QueryBuilderTest extends SetUpUnitTestCase
     {
         $input = 10;
         $fakeConfigurationArray = [];
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting'] = 1;
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting.']['minimumCount'] = $input;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting.']['minimumCount'] = $input;
         $fakeConfiguration = new TypoScriptConfiguration($fakeConfigurationArray);
 
         $query = $this->getInitializedTestSearchQuery('test', $fakeConfiguration);
@@ -786,8 +786,8 @@ class QueryBuilderTest extends SetUpUnitTestCase
     {
         $input = 'alpha';
         $fakeConfigurationArray = [];
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting'] = 1;
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting.']['sortBy'] = $input;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting.']['sortBy'] = $input;
         $fakeConfiguration = new TypoScriptConfiguration($fakeConfigurationArray);
 
         $query = $this->getInitializedTestSearchQuery('test', $fakeConfiguration);
@@ -867,8 +867,8 @@ class QueryBuilderTest extends SetUpUnitTestCase
     {
         $input = 9;
         $fakeConfigurationArray = [];
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['spellchecking'] = 1;
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['spellchecking.']['numberOfSuggestionsToTry'] = $input;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['spellchecking'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['spellchecking.']['numberOfSuggestionsToTry'] = $input;
         $fakeConfiguration = new TypoScriptConfiguration($fakeConfigurationArray);
 
         $query = $this->getInitializedTestSearchQuery('test', $fakeConfiguration);
@@ -885,8 +885,8 @@ class QueryBuilderTest extends SetUpUnitTestCase
      */
     public function canUseConfiguredVariantsFieldWhenVariantsAreActive()
     {
-        $fakeConfigurationArray = ['plugin.' => ['tx_solr.' => ['search.' => ['variants' => 1]]]];
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['variants.'] = [
+        $fakeConfigurationArray = ['plugin.' => ['tx_meilisearch.' => ['search.' => ['variants' => 1]]]];
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['variants.'] = [
             'variantField' => 'myField',
         ];
 
@@ -901,8 +901,8 @@ class QueryBuilderTest extends SetUpUnitTestCase
      */
     public function canUseConfiguredVariantsExpandAndRowCount()
     {
-        $fakeConfigurationArray = ['plugin.' => ['tx_solr.' => ['search.' => ['variants' => 1]]]];
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['variants.'] = [
+        $fakeConfigurationArray = ['plugin.' => ['tx_meilisearch.' => ['search.' => ['variants' => 1]]]];
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['variants.'] = [
             'variantField' => 'variants',
             'expand' => true,
             'limit' => 10,
@@ -920,8 +920,8 @@ class QueryBuilderTest extends SetUpUnitTestCase
      */
     public function expandRowsIsNotSetWhenExpandIsInactive()
     {
-        $fakeConfigurationArray = ['plugin.' => ['tx_solr.' => ['search.' => ['variants' => 1]]]];
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['variants.'] = [
+        $fakeConfigurationArray = ['plugin.' => ['tx_meilisearch.' => ['search.' => ['variants' => 1]]]];
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['variants.'] = [
             'variantField' => 'variants',
             'expand' => false,
             'limit' => 10,
@@ -1355,7 +1355,7 @@ class QueryBuilderTest extends SetUpUnitTestCase
     public function phraseFieldsAreSetInUrlQueryIfPhraseSearchIsEnabled()
     {
         $fakeConfigurationArray = [];
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['query.']['phrase'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['query.']['phrase'] = 1;
         $fakeConfiguration = new TypoScriptConfiguration($fakeConfigurationArray);
         $query = $this->getInitializedTestSearchQuery('foo bar', $fakeConfiguration);
 
@@ -1373,8 +1373,8 @@ class QueryBuilderTest extends SetUpUnitTestCase
     public function canAddPhraseFieldsFromConfiguration()
     {
         $fakeConfigurationArray = [];
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['query.']['phrase'] = 1;
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['query.']['phrase.']['fields'] = 'content^22.0, title^11.0';
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['query.']['phrase'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['query.']['phrase.']['fields'] = 'content^22.0, title^11.0';
 
         $fakeConfiguration = new TypoScriptConfiguration($fakeConfigurationArray);
         $query = $this->getInitializedTestSearchQuery('foo bar', $fakeConfiguration);
@@ -1403,7 +1403,7 @@ class QueryBuilderTest extends SetUpUnitTestCase
     public function canAddBigramFieldsWhenBigramPhraseIsEnabled()
     {
         $fakeConfigurationArray = [];
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['query.']['bigramPhrase'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['query.']['bigramPhrase'] = 1;
         $fakeConfiguration = new TypoScriptConfiguration($fakeConfigurationArray);
         $query = $this->getInitializedTestSearchQuery('foo bar', $fakeConfiguration);
 
@@ -1421,8 +1421,8 @@ class QueryBuilderTest extends SetUpUnitTestCase
     public function canAddBigramFieldsFromConfiguration()
     {
         $fakeConfigurationArray = [];
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['query.']['bigramPhrase'] = 1;
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['query.']['bigramPhrase.']['fields'] = 'content^12.0, title^14.0';
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['query.']['bigramPhrase'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['query.']['bigramPhrase.']['fields'] = 'content^12.0, title^14.0';
 
         $fakeConfiguration = new TypoScriptConfiguration($fakeConfigurationArray);
         $query = $this->getInitializedTestSearchQuery('foo bar', $fakeConfiguration);
@@ -1451,7 +1451,7 @@ class QueryBuilderTest extends SetUpUnitTestCase
     public function trigramPhraseFieldsAreSetInUrlQueryIfTrigramPhraseSearchIsEnabled()
     {
         $fakeConfigurationArray = [];
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['query.']['trigramPhrase'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['query.']['trigramPhrase'] = 1;
         $fakeConfiguration = new TypoScriptConfiguration($fakeConfigurationArray);
         $query = $this->getInitializedTestSearchQuery('foo bar', $fakeConfiguration);
         $trigram = TrigramPhraseFields::fromTypoScriptConfiguration($fakeConfiguration);
@@ -1468,8 +1468,8 @@ class QueryBuilderTest extends SetUpUnitTestCase
     public function canAddTrigramFieldsFromConfiguration()
     {
         $fakeConfigurationArray = [];
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['query.']['trigramPhrase'] = 1;
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['query.']['trigramPhrase.']['fields'] = 'content^12.0, title^14.0';
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['query.']['trigramPhrase'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['query.']['trigramPhrase.']['fields'] = 'content^12.0, title^14.0';
         $fakeConfiguration = new TypoScriptConfiguration($fakeConfigurationArray);
         $query = $this->getInitializedTestSearchQuery('foo bar', $fakeConfiguration);
         $parameters = $this->getAllQueryParameters($query);

@@ -18,7 +18,7 @@ namespace WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder;
 use WapplerSystems\Meilisearch\Exception\InvalidArgumentException;
 
 /**
- * The Operator ParameterProvider is responsible to build the solr query parameters
+ * The Operator ParameterProvider is responsible to build the meilisearch query parameters
  * that are needed for the operator q.op.
  */
 class Operator extends AbstractDeactivatable

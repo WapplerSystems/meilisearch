@@ -96,7 +96,7 @@ class ExtensionConfiguration
      */
     public function getAvailablePluginNamespaces(): array
     {
-        $pluginNamespacesList = 'tx_solr,' . $this->getConfigurationOrDefaultValue(
+        $pluginNamespacesList = 'tx_meilisearch,' . $this->getConfigurationOrDefaultValue(
             'pluginNamespaces'
         );
         return array_unique(GeneralUtility::trimExplode(',', $pluginNamespacesList));

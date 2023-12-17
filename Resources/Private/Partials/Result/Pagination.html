@@ -1,16 +1,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en"
 	xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
-	xmlns:s="http://typo3.org/ns/ApacheSolrForTypo3/Solr/ViewHelpers"
+	xmlns:s="http://typo3.org/ns/ApacheMeilisearchForTypo3/Meilisearch/ViewHelpers"
 	data-namespace-typo3-fluid="true"
 >
 
 <f:section name="Pagination">
 
-	<nav class="solr-pagination">
+	<nav class="meilisearch-pagination">
 		<ul class="pagination">
 			<f:if condition="{pagination.previousPageNumber}">
 				<li class="page-item">
-					<a class="page-link solr-ajaxified" href="{s:uri.paginate.resultPage(page: pagination.previousPageNumber)}">&laquo;</a>
+					<a class="page-link meilisearch-ajaxified" href="{s:uri.paginate.resultPage(page: pagination.previousPageNumber)}">&laquo;</a>
 				</li>
 			</f:if>
 
@@ -27,10 +27,10 @@
 						<li class="page-item">
 							<f:if condition="{page} > 1">
 								<f:then>
-									<a class="page-link solr-ajaxified" href="{s:uri.paginate.resultPage(page: page)}">{page}</a>
+									<a class="page-link meilisearch-ajaxified" href="{s:uri.paginate.resultPage(page: page)}">{page}</a>
 								</f:then>
 								<f:else>
-									<a class="page-link solr-ajaxified" href="{s:uri.paginate.resultPage()}">{page}</a>
+									<a class="page-link meilisearch-ajaxified" href="{s:uri.paginate.resultPage()}">{page}</a>
 								</f:else>
 							</f:if>
 						</li>
@@ -44,7 +44,7 @@
 
 			<f:if condition="{pagination.nextPageNumber}">
 				<li class="page-item">
-					<a class="page-link solr-ajaxified" href="{s:uri.paginate.resultPage(page: pagination.nextPageNumber)}">&raquo;</a>
+					<a class="page-link meilisearch-ajaxified" href="{s:uri.paginate.resultPage(page: pagination.nextPageNumber)}">&raquo;</a>
 				</li>
 			</f:if>
 		</ul>

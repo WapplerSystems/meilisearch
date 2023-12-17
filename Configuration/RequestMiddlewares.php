@@ -14,7 +14,7 @@ $extensionConfiguration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
 );
 if ($extensionConfiguration->getIsRouteEnhancerEnabled()) {
     $requestMiddlewares['wapplersystems/meilisearch-route-enhancer'] = [
-        'target' => \WapplerSystems\Meilisearch\Middleware\SolrRoutingMiddleware::class,
+        'target' => \WapplerSystems\Meilisearch\Middleware\MeilisearchRoutingMiddleware::class,
         'before' => [
             'typo3/cms-frontend/site',
         ],

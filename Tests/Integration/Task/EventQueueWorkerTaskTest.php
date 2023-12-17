@@ -43,7 +43,7 @@ class EventQueueWorkerTaskTest extends IntegrationTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->writeDefaultSolrTestSiteConfiguration();
+        $this->writeDefaultMeilisearchTestSiteConfiguration();
         $this->indexQueue = GeneralUtility::makeInstance(Queue::class);
         $this->eventQueue = GeneralUtility::makeInstance(EventQueueItemRepository::class);
 

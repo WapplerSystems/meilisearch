@@ -1,6 +1,6 @@
 "pages",
 ,"uid","pid","is_siteroot","doktype","slug","title"
-,1,0,1,1,"/","hello solr"
+,1,0,1,1,"/","hello meilisearch"
 "tx_fakeextension_domain_model_bar",
 ,"uid","pid","title"
 ,88,1,"testnews"
@@ -29,7 +29,7 @@ page.10 {
     }
 }
 
-plugin.tx_solr {
+plugin.tx_meilisearch {
     enabled = 1
     index {
         fieldProcessingInstructions {

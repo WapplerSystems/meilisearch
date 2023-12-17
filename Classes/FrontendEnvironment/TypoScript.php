@@ -70,7 +70,7 @@ class TypoScript implements SingletonInterface
         }
 
         /** @var TwoLevelCache $cache */
-        $cache = GeneralUtility::makeInstance(TwoLevelCache::class, 'tx_solr_configuration');
+        $cache = GeneralUtility::makeInstance(TwoLevelCache::class, 'tx_meilisearch_configuration');
         $configurationArray = $cache->get($cacheId);
 
         if (!empty($configurationArray)) {
@@ -87,7 +87,7 @@ class TypoScript implements SingletonInterface
     }
 
     /**
-     * Builds a configuration array, containing the solr configuration.
+     * Builds a configuration array, containing the meilisearch configuration.
      *
      * @throws DBALException
      */

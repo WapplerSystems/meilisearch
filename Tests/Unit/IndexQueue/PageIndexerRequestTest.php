@@ -179,13 +179,13 @@ class PageIndexerRequestTest extends SetUpUnitTestCase
             return $this->getFakedGuzzleResponse($this->getFixtureContentByName('fakeResponse.json'));
         });
 
-        /** @var MockObject|MeilisearchLogManager $solrLogManagerMock */
-        $solrLogManagerMock = $this->createMock(MeilisearchLogManager::class);
+        /** @var MockObject|MeilisearchLogManager $meilisearchLogManagerMock */
+        $meilisearchLogManagerMock = $this->createMock(MeilisearchLogManager::class);
         /** @var MockObject|ExtensionConfiguration $extensionConfigurationMock */
         $extensionConfigurationMock = $this->createMock(ExtensionConfiguration::class);
 
         $testParameters = json_encode(['requestId' => '581f76be71f60']);
-        $pageIndexerRequest = new PageIndexerRequest($testParameters, $solrLogManagerMock, $extensionConfigurationMock, $requestFactoryMock);
+        $pageIndexerRequest = new PageIndexerRequest($testParameters, $meilisearchLogManagerMock, $extensionConfigurationMock, $requestFactoryMock);
 
         /** @var MockObject|Item $queueItemMock */
         $queueItemMock = $this->createMock(Item::class);
@@ -231,12 +231,12 @@ class PageIndexerRequestTest extends SetUpUnitTestCase
      */
     protected function getPageIndexerRequest(string $jsonEncodedParameter = null, RequestFactory $requestFactory = null): PageIndexerRequest
     {
-        /** @var MockObject|MeilisearchLogManager $solrLogManagerMock */
-        $solrLogManagerMock = $this->createMock(MeilisearchLogManager::class);
+        /** @var MockObject|MeilisearchLogManager $meilisearchLogManagerMock */
+        $meilisearchLogManagerMock = $this->createMock(MeilisearchLogManager::class);
         /** @var MockObject|ExtensionConfiguration $extensionConfigurationMock */
         $extensionConfigurationMock = $this->createMock(ExtensionConfiguration::class);
         $requestFactory = $requestFactory ?? $this->createMock(RequestFactory::class);
-        return new PageIndexerRequest($jsonEncodedParameter, $solrLogManagerMock, $extensionConfigurationMock, $requestFactory);
+        return new PageIndexerRequest($jsonEncodedParameter, $meilisearchLogManagerMock, $extensionConfigurationMock, $requestFactory);
     }
 
     /**
@@ -246,7 +246,7 @@ class PageIndexerRequestTest extends SetUpUnitTestCase
      */
     protected function getMockedPageIndexerRequestWithUsedFakeResponse($testParameters, $fakeResponse): PageIndexerRequest|MockObject
     {
-        $solrLogManagerMock = $this->createMock(MeilisearchLogManager::class);
+        $meilisearchLogManagerMock = $this->createMock(MeilisearchLogManager::class);
         $extensionConfigurationMock = $this->createMock(ExtensionConfiguration::class);
         $requestFactoryMock = $this->createMock(RequestFactory::class);
         /** @var MockObject|PageIndexerRequest $requestMock */
@@ -254,7 +254,7 @@ class PageIndexerRequestTest extends SetUpUnitTestCase
             ->onlyMethods(['getUrl'])
             ->setConstructorArgs([
                 $testParameters,
-                $solrLogManagerMock,
+                $meilisearchLogManagerMock,
                 $extensionConfigurationMock,
                 $requestFactoryMock,
             ])

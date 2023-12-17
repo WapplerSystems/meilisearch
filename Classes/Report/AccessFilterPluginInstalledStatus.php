@@ -42,10 +42,10 @@ class AccessFilterPluginInstalledStatus extends AbstractMeilisearchStatus
     /**
      * The plugin's Java class name.
      */
-    public const PLUGIN_CLASS_NAME = 'org.typo3.solr.search.AccessFilterQParserPlugin';
+    public const PLUGIN_CLASS_NAME = 'org.typo3.meilisearch.search.AccessFilterQParserPlugin';
 
     /**
-     * Compiles a collection of solrconfig.xml checks against each configured
+     * Compiles a collection of meilisearchconfig.xml checks against each configured
      * Meilisearch server. Only adds an entry if the Access Filter Query Parser Plugin
      * is not configured.
      *
@@ -54,10 +54,10 @@ class AccessFilterPluginInstalledStatus extends AbstractMeilisearchStatus
     public function getStatus(): array
     {
         $reports = [];
-        $solrConnections = GeneralUtility::makeInstance(ConnectionManager::class)->getAllConnections();
+        $meilisearchConnections = GeneralUtility::makeInstance(ConnectionManager::class)->getAllConnections();
 
-        foreach ($solrConnections as $solrConnection) {
-            $adminService = $solrConnection->getAdminService();
+        foreach ($meilisearchConnections as $meilisearchConnection) {
+            $adminService = $meilisearchConnection->getAdminService();
             if ($adminService->ping()) {
                 $installationStatus = $this->checkPluginInstallationStatus($adminService);
                 $versionStatus = $this->checkPluginVersion($adminService);
@@ -90,7 +90,7 @@ class AccessFilterPluginInstalledStatus extends AbstractMeilisearchStatus
      */
     public function getLabel(): string
     {
-        return 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_reports.xlf:status_solr_access-filter';
+        return 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_reports.xlf:status_meilisearch_access-filter';
     }
 
     /**

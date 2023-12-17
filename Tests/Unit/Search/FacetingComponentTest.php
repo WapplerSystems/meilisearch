@@ -45,12 +45,12 @@ class FacetingComponentTest extends SetUpUnitTestCase
     ): array {
         $facetRegistry = new FacetRegistry();
 
-        /** @var MeilisearchLogManager|MockObject $solrLogManagerMock */
-        $solrLogManagerMock = $this->createMock(MeilisearchLogManager::class);
+        /** @var MeilisearchLogManager|MockObject $meilisearchLogManagerMock */
+        $meilisearchLogManagerMock = $this->createMock(MeilisearchLogManager::class);
 
         $queryBuilder = new QueryBuilder(
             $fakeConfiguration,
-            $solrLogManagerMock,
+            $meilisearchLogManagerMock,
             $this->createMock(SiteHashService::class)
         );
         $query = $queryBuilder->buildSearchQuery('test');
@@ -85,8 +85,8 @@ class FacetingComponentTest extends SetUpUnitTestCase
     public function testCanAddASimpleFacet(): void
     {
         $fakeConfigurationArray = [];
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting'] = 1;
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting.']['facets.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting.']['facets.'] = [
             'type.' => [
                 'field' => 'type',
             ],
@@ -120,8 +120,8 @@ class FacetingComponentTest extends SetUpUnitTestCase
     public function testCanAddSortByIndexArgument(): void
     {
         $fakeConfigurationArray = [];
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting'] = 1;
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting.']['facets.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting.']['facets.'] = [
             'type.' => [
                 'field' => 'type',
                 'sortBy' => 'index',
@@ -154,8 +154,8 @@ class FacetingComponentTest extends SetUpUnitTestCase
     public function testCanAddSortByCountArgument(): void
     {
         $fakeConfigurationArray = [];
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting'] = 1;
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting.']['facets.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting.']['facets.'] = [
             'type.' => [
                 'field' => 'type',
                 'sortBy' => 'count',
@@ -195,9 +195,9 @@ class FacetingComponentTest extends SetUpUnitTestCase
     public function testCanHandleKeepAllFacetsOnSelectionOnAllFacetWhenGloballyConfigured(): void
     {
         $fakeConfigurationArray = [];
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting'] = 1;
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting.']['keepAllFacetsOnSelection'] = 1;
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting.']['facets.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting.']['keepAllFacetsOnSelection'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting.']['facets.'] = [
             'type.' => [
                 'field' => 'type',
             ],
@@ -239,8 +239,8 @@ class FacetingComponentTest extends SetUpUnitTestCase
     public function testExcludeTagsAreEmptyWhenKeepAllFacetsOnSelectionIsNotSet(): void
     {
         $fakeConfigurationArray = [];
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting'] = 1;
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting.']['facets.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting.']['facets.'] = [
             'type.' => [
                 'field' => 'type',
             ],
@@ -284,8 +284,8 @@ class FacetingComponentTest extends SetUpUnitTestCase
     public function testCanHandleKeepAllOptionsOnSelectionForASingleFacet(): void
     {
         $fakeConfigurationArray = [];
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting'] = 1;
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting.']['facets.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting.']['facets.'] = [
             'type.' => [
                 'field' => 'type',
                 'keepAllOptionsOnSelection' => 1,
@@ -314,9 +314,9 @@ class FacetingComponentTest extends SetUpUnitTestCase
     public function testCanHandleCombinationOfKeepAllFacetsOnSelectionAndKeepAllOptionsOnSelection(): void
     {
         $fakeConfigurationArray = [];
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting'] = 1;
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting.']['keepAllFacetsOnSelection'] = 1;
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting.']['facets.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting.']['keepAllFacetsOnSelection'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting.']['facets.'] = [
             'type.' => [
                 'field' => 'type',
                 'keepAllOptionsOnSelection' => 1,
@@ -352,11 +352,11 @@ class FacetingComponentTest extends SetUpUnitTestCase
     public function testCanHandleCombinationOfKeepAllFacetsOnSelectionAndKeepAllOptionsOnSelectionAndCountAllFacetsForSelection(): void
     {
         $fakeConfigurationArray = [];
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting'] = 1;
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting.']['keepAllFacetsOnSelection'] = 1;
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting.']['countAllFacetsForSelection'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting.']['keepAllFacetsOnSelection'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting.']['countAllFacetsForSelection'] = 1;
 
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting.']['facets.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting.']['facets.'] = [
             'type.' => [
                 'field' => 'type',
                 'keepAllOptionsOnSelection' => 1,
@@ -392,8 +392,8 @@ class FacetingComponentTest extends SetUpUnitTestCase
     public function testCanAddQueryFilters(): void
     {
         $fakeConfigurationArray = [];
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting'] = 1;
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting.']['facets.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting.']['facets.'] = [
             'type.' => [
                 'field' => 'type',
             ],
@@ -425,8 +425,8 @@ class FacetingComponentTest extends SetUpUnitTestCase
     public function testCanAddQueryFiltersWithKeepAllOptionsOnSelectionFacet(): void
     {
         $fakeConfigurationArray = [];
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting'] = 1;
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting.']['facets.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting.']['facets.'] = [
             'type.' => [
                 'field' => 'type',
                 'keepAllOptionsOnSelection' => 1,
@@ -458,9 +458,9 @@ class FacetingComponentTest extends SetUpUnitTestCase
     public function testCanAddQueryFiltersWithGlobalKeepAllOptionsOnSelection(): void
     {
         $fakeConfigurationArray = [];
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting'] = 1;
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting.']['keepAllFacetsOnSelection'] = 1;
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting.']['facets.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting.']['keepAllFacetsOnSelection'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting.']['facets.'] = [
             'type.' => [
                 'field' => 'type',
             ],
@@ -491,8 +491,8 @@ class FacetingComponentTest extends SetUpUnitTestCase
     public function testCanAddExcludeTagWithAdditionalExcludeTagConfiguration(): void
     {
         $fakeConfigurationArray = [];
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting'] = 1;
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting.']['facets.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting.']['facets.'] = [
             'type.' => [
                 'field' => 'type',
                 'additionalExcludeTags' => 'type,color',
@@ -533,9 +533,9 @@ class FacetingComponentTest extends SetUpUnitTestCase
         ];
 
         $fakeConfigurationArray = [];
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting'] = 1;
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting.']['keepAllFacetsOnSelection'] = 1;
-        $fakeConfigurationArray['plugin.']['tx_solr.']['search.']['faceting.']['facets.'] = [
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting.']['keepAllFacetsOnSelection'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['faceting.']['facets.'] = [
             'something0.' => [
                 'field' => 'something0',
             ],
@@ -614,7 +614,7 @@ class FacetingComponentTest extends SetUpUnitTestCase
                 ]
             ),
             'The assoc parameters/keys for parameters of selected facets are not as expected.' . PHP_EOL
-            . 'Probably they are not delegated to Apache Solr query, which leads to a non functional faceting.'
+            . 'Probably they are not delegated to Apache Meilisearch query, which leads to a non functional faceting.'
         );
     }
 }

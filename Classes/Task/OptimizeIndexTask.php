@@ -48,9 +48,9 @@ class OptimizeIndexTask extends AbstractMeilisearchTask
     public function execute()
     {
         $optimizeResult = true;
-        $solrServers = GeneralUtility::makeInstance(ConnectionManager::class)->getConnectionsBySite($this->getSite());
-        foreach ($solrServers as $solrServer) {
-            $writeService = $solrServer->getWriteService();
+        $meilisearchServers = GeneralUtility::makeInstance(ConnectionManager::class)->getConnectionsBySite($this->getSite());
+        foreach ($meilisearchServers as $meilisearchServer) {
+            $writeService = $meilisearchServer->getWriteService();
             $corePath = $writeService->getCorePath();
             if (!in_array($corePath, $this->coresToOptimizeIndex)) {
                 continue;

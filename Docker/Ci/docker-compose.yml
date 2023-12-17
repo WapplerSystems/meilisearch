@@ -11,7 +11,7 @@ services:
       dockerfile: ./Docker/Ci/Dockerfile
       args:
         PHP_VERSION: 7.4
-    working_dir: /ext-solr
+    working_dir: /ext-meilisearch
     env_file:
       - environment.yml
 

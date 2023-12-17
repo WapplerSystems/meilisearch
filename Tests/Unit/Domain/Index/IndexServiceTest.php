@@ -60,9 +60,9 @@ class IndexServiceTest extends SetUpUnitTestCase
         $fakeConfiguration = $this->createMock(TypoScriptConfiguration::class);
         $this->siteMock = $this->getMockBuilder(Site::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['getSolrConfiguration'])
+            ->onlyMethods(['getMeilisearchConfiguration'])
             ->getMock();
-        $this->siteMock->expects(self::once())->method('getSolrConfiguration')->willReturn($fakeConfiguration);
+        $this->siteMock->expects(self::once())->method('getMeilisearchConfiguration')->willReturn($fakeConfiguration);
 
         // we create an IndexService where indexItem is mocked to avoid real indexing in the unit test
         $indexService = $this->getMockBuilder(IndexService::class)
@@ -86,7 +86,7 @@ class IndexServiceTest extends SetUpUnitTestCase
      */
     public function testConfigurationIsNotFetchedWhenProgressIsCalculated(): void
     {
-        $this->siteMock->expects(self::never())->method('getSolrConfiguration');
+        $this->siteMock->expects(self::never())->method('getMeilisearchConfiguration');
 
         $statisticMock = $this->createMock(QueueStatistic::class);
         $statisticMock->expects(self::once())->method('getSuccessPercentage')->willReturn(50.0);
@@ -109,9 +109,9 @@ class IndexServiceTest extends SetUpUnitTestCase
         $fakeConfiguration = $this->createMock(TypoScriptConfiguration::class);
         $this->siteMock = $this->getMockBuilder(Site::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['getSolrConfiguration', 'getDomain'])
+            ->onlyMethods(['getMeilisearchConfiguration', 'getDomain'])
             ->getMock();
-        $this->siteMock->expects(self::any())->method('getSolrConfiguration')->willReturn($fakeConfiguration);
+        $this->siteMock->expects(self::any())->method('getMeilisearchConfiguration')->willReturn($fakeConfiguration);
         $this->siteMock->expects(self::any())->method('getDomain')->willReturn('www.indextest.local');
 
         /** @var IndexService|MockObject $indexService */
@@ -150,7 +150,7 @@ class IndexServiceTest extends SetUpUnitTestCase
     public function testDomainIsUsedFromSiteObject(): void
     {
         $fakeConfiguration = $this->createMock(TypoScriptConfiguration::class);
-        $this->siteMock->expects(self::once())->method('getSolrConfiguration')->willReturn($fakeConfiguration);
+        $this->siteMock->expects(self::once())->method('getMeilisearchConfiguration')->willReturn($fakeConfiguration);
         $this->siteMock->expects(self::any())->method('getDomain')->willReturn('www.indextest.local');
 
         /** @var IndexService|MockObject $indexService  */

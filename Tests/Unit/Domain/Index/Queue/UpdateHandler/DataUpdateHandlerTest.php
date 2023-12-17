@@ -44,7 +44,7 @@ class DataUpdateHandlerTest extends SetUpUpdateHandler
 
     protected DataHandler|MockObject $dataHandlerMock;
 
-    protected MeilisearchLogManager|MockObject $solrLogManagerMock;
+    protected MeilisearchLogManager|MockObject $meilisearchLogManagerMock;
 
     protected MockObject|MeilisearchLogManager $loggerMock;
 
@@ -433,7 +433,7 @@ class DataUpdateHandlerTest extends SetUpUpdateHandler
 
         $this->frontendEnvironmentMock
             ->expects(self::never())
-            ->method('getSolrConfigurationFromPageId');
+            ->method('getMeilisearchConfigurationFromPageId');
 
         $this->dataUpdateHandler->handlePageUpdate($dummyPageRecord['uid']);
     }
@@ -964,7 +964,7 @@ class DataUpdateHandlerTest extends SetUpUpdateHandler
         $siteMock = $this->createMock(Site::class);
         $siteMock
             ->expects(self::once())
-            ->method('getSolrConfiguration')
+            ->method('getMeilisearchConfiguration')
             ->willReturn($this->typoScriptConfigurationMock);
 
         $siteRepositoryMock = $this->createMock(SiteRepository::class);

@@ -13,9 +13,9 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace WapplerSystems\Meilisearch\Tests\Unit\System\Solr\Parser;
+namespace WapplerSystems\Meilisearch\Tests\Unit\System\Meilisearch\Parser;
 
-use WapplerSystems\Meilisearch\System\Solr\Parser\StopWordParser;
+use WapplerSystems\Meilisearch\System\Meilisearch\Parser\StopWordParser;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 
 /**

@@ -16,7 +16,7 @@
 namespace WapplerSystems\Meilisearch\System\Meilisearch\Schema;
 
 /**
- * Object representation of the solr schema.
+ * Object representation of the meilisearch schema.
  *
  * @author Timo Hund <timo.hund@dkd.de>
  */

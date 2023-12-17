@@ -18,8 +18,8 @@ declare(strict_types=1);
 namespace WapplerSystems\Meilisearch\Tests\Integration;
 
 use WapplerSystems\Meilisearch\ConnectionManager;
-use WapplerSystems\Meilisearch\NoSolrConnectionFoundException;
-use WapplerSystems\Meilisearch\System\Solr\SolrConnection;
+use WapplerSystems\Meilisearch\NoMeilisearchConnectionFoundException;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchConnection;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -39,14 +39,14 @@ class ConnectionManagerTest extends IntegrationTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->writeDefaultSolrTestSiteConfiguration();
+        $this->writeDefaultMeilisearchTestSiteConfiguration();
     }
 
-    public function canFindSolrConnectionsByRootPageIdDataProvider(): array
+    public function canFindMeilisearchConnectionsByRootPageIdDataProvider(): array
     {
         return [
-            ['rootPageId' => 1, 'siteName' => 'integration_tree_one', 'expectedSolrHost' => 'solr.testone.endpoint'],
-            ['rootPageId' => 111, 'siteName' => 'integration_tree_two', 'expectedSolrHost' => 'solr.testtwo.endpoint'],
+            ['rootPageId' => 1, 'siteName' => 'integration_tree_one', 'expectedMeilisearchHost' => 'meilisearch.testone.endpoint'],
+            ['rootPageId' => 111, 'siteName' => 'integration_tree_two', 'expectedMeilisearchHost' => 'meilisearch.testtwo.endpoint'],
         ];
     }
 
@@ -61,28 +61,28 @@ class ConnectionManagerTest extends IntegrationTest
      *  ——[111] Second site
      *
      * @test
-     * @dataProvider canFindSolrConnectionsByRootPageIdDataProvider
+     * @dataProvider canFindMeilisearchConnectionsByRootPageIdDataProvider
      */
-    public function canFindSolrConnectionsByRootPageId(int $rootPageId, string $siteName, string $expectedSolrHost)
+    public function canFindMeilisearchConnectionsByRootPageId(int $rootPageId, string $siteName, string $expectedMeilisearchHost)
     {
-        $this->mergeSiteConfiguration($siteName, ['solr_host_read' => $expectedSolrHost]);
+        $this->mergeSiteConfiguration($siteName, ['meilisearch_host_read' => $expectedMeilisearchHost]);
         $this->importCSVDataSet(__DIR__ . '/Fixtures/connection_basic.csv');
 
         $connectionManager = GeneralUtility::makeInstance(ConnectionManager::class);
 
         foreach ([0, 1, 2] as $languageID) {
-            $solrService = $connectionManager->getConnectionByRootPageId($rootPageId, $languageID);
-            self::assertInstanceOf(SolrConnection::class, $solrService, vsprintf('Should find solr connection for root page "%s" and language "%s"', [$rootPageId, $languageID]));
-            self::assertEquals($expectedSolrHost, $solrService->getEndpoint('read')->getHost(), vsprintf('Apache Solr host must be the same as configured.' .
-                ' Wrong connection is used. I expected "%s" as Host for "%s" Site with Root-Page ID "%s".', [$expectedSolrHost, $siteName, $rootPageId]));
+            $meilisearchService = $connectionManager->getConnectionByRootPageId($rootPageId, $languageID);
+            self::assertInstanceOf(MeilisearchConnection::class, $meilisearchService, vsprintf('Should find meilisearch connection for root page "%s" and language "%s"', [$rootPageId, $languageID]));
+            self::assertEquals($expectedMeilisearchHost, $meilisearchService->getEndpoint('read')->getHost(), vsprintf('Apache Meilisearch host must be the same as configured.' .
+                ' Wrong connection is used. I expected "%s" as Host for "%s" Site with Root-Page ID "%s".', [$expectedMeilisearchHost, $siteName, $rootPageId]));
         }
     }
 
-    public function canFindSolrConnectionsByPageIdDataProvider(): array
+    public function canFindMeilisearchConnectionsByPageIdDataProvider(): array
     {
         return [
-            ['pageId' => 11, 'siteName' => 'integration_tree_one', 'expectedSolrHost' => 'solr.testone.endpoint'],
-            ['pageId' => 21, 'siteName' => 'integration_tree_two', 'expectedSolrHost' => 'solr.testtwo.endpoint'],
+            ['pageId' => 11, 'siteName' => 'integration_tree_one', 'expectedMeilisearchHost' => 'meilisearch.testone.endpoint'],
+            ['pageId' => 21, 'siteName' => 'integration_tree_two', 'expectedMeilisearchHost' => 'meilisearch.testtwo.endpoint'],
         ];
     }
 
@@ -108,20 +108,20 @@ class ConnectionManagerTest extends IntegrationTest
      *      —— [32] Subpage 2 of Detached
      *
      * @test
-     * @dataProvider canFindSolrConnectionsByPageIdDataProvider
+     * @dataProvider canFindMeilisearchConnectionsByPageIdDataProvider
      */
-    public function canFindSolrConnectionsByPageId(int $pageId, string $siteName, string $expectedSolrHost)
+    public function canFindMeilisearchConnectionsByPageId(int $pageId, string $siteName, string $expectedMeilisearchHost)
     {
-        $this->mergeSiteConfiguration($siteName, ['solr_host_read' => $expectedSolrHost]);
+        $this->mergeSiteConfiguration($siteName, ['meilisearch_host_read' => $expectedMeilisearchHost]);
         $this->importCSVDataSet(__DIR__ . '/Fixtures/connection_basic.csv');
 
         $connectionManager = GeneralUtility::makeInstance(ConnectionManager::class);
 
         foreach ([0, 1, 2] as $languageID) {
-            $solrService = $connectionManager->getConnectionByPageId($pageId, $languageID);
-            self::assertInstanceOf(SolrConnection::class, $solrService, vsprintf('Should find solr connection for page id "%s" and language "%s"', [$pageId, $languageID]));
-            self::assertEquals($expectedSolrHost, $solrService->getEndpoint('read')->getHost(), vsprintf('Apache Solr host must be the same as configured.' .
-                ' Wrong connection is used. I expected "%s" as Host for "%s" Site with Root-Page ID "%s".', [$expectedSolrHost, $siteName, $pageId]));
+            $meilisearchService = $connectionManager->getConnectionByPageId($pageId, $languageID);
+            self::assertInstanceOf(MeilisearchConnection::class, $meilisearchService, vsprintf('Should find meilisearch connection for page id "%s" and language "%s"', [$pageId, $languageID]));
+            self::assertEquals($expectedMeilisearchHost, $meilisearchService->getEndpoint('read')->getHost(), vsprintf('Apache Meilisearch host must be the same as configured.' .
+                ' Wrong connection is used. I expected "%s" as Host for "%s" Site with Root-Page ID "%s".', [$expectedMeilisearchHost, $siteName, $pageId]));
         }
     }
 
@@ -154,7 +154,7 @@ class ConnectionManagerTest extends IntegrationTest
     }
 
     /**
-     * The connection manager must throw an exception on configured site without solr connection information by trying to get connection by root page id.
+     * The connection manager must throw an exception on configured site without meilisearch connection information by trying to get connection by root page id.
      * There is following scenario:
      *
      * [0]
@@ -163,20 +163,20 @@ class ConnectionManagerTest extends IntegrationTest
      *
      * @test
      */
-    public function exceptionIsThrownForUnAvailableSolrConnectionOnGetConnectionByRootPageId()
+    public function exceptionIsThrownForUnAvailableMeilisearchConnectionOnGetConnectionByRootPageId()
     {
         $this->setupNotFullyConfiguredSite();
 
-        $this->expectException(NoSolrConnectionFoundException::class);
+        $this->expectException(NoMeilisearchConnectionFoundException::class);
         $connectionManager = GeneralUtility::makeInstance(ConnectionManager::class);
         $connectionManager->getConnectionByRootPageId(3);
 
-        $this->expectException(NoSolrConnectionFoundException::class);
+        $this->expectException(NoMeilisearchConnectionFoundException::class);
         $connectionManager->getConnectionByPageId(31);
     }
 
     /**
-     * The connection manager must throw an exception on configured site without solr connection information by trying to get connection by page id.
+     * The connection manager must throw an exception on configured site without meilisearch connection information by trying to get connection by page id.
      * There is following scenario:
      *
      * [0]
@@ -189,11 +189,11 @@ class ConnectionManagerTest extends IntegrationTest
      *
      * @test
      */
-    public function exceptionIsThrownForUnAvailableSolrConnectionOnGetConnectionByPageId()
+    public function exceptionIsThrownForUnAvailableMeilisearchConnectionOnGetConnectionByPageId()
     {
         $this->setupNotFullyConfiguredSite();
 
-        $this->expectException(NoSolrConnectionFoundException::class);
+        $this->expectException(NoMeilisearchConnectionFoundException::class);
         $connectionManager = GeneralUtility::makeInstance(ConnectionManager::class);
         $connectionManager->getConnectionByPageId(31);
     }
@@ -218,16 +218,16 @@ class ConnectionManagerTest extends IntegrationTest
      *
      * @test
      */
-    public function canFindSolrConnectionForMountedPageIfMountPointIsGiven()
+    public function canFindMeilisearchConnectionForMountedPageIfMountPointIsGiven()
     {
         $this->importCSVDataSet(__DIR__ . '/Fixtures/connection_for_mounted_page.csv');
 
         $connectionManager = GeneralUtility::makeInstance(ConnectionManager::class);
 
-        $solrService = $connectionManager->getConnectionByPageId(24, 0, '24-14');
-        self::assertInstanceOf(SolrConnection::class, $solrService, 'Should find solr connection for level 0 of mounted page.');
+        $meilisearchService = $connectionManager->getConnectionByPageId(24, 0, '24-14');
+        self::assertInstanceOf(MeilisearchConnection::class, $meilisearchService, 'Should find meilisearch connection for level 0 of mounted page.');
 
-        $solrService1 = $connectionManager->getConnectionByPageId(25, 0, '24-14');
-        self::assertInstanceOf(SolrConnection::class, $solrService1, 'Should find solr connection for level 1 of mounted page.');
+        $meilisearchService1 = $connectionManager->getConnectionByPageId(25, 0, '24-14');
+        self::assertInstanceOf(MeilisearchConnection::class, $meilisearchService1, 'Should find meilisearch connection for level 1 of mounted page.');
     }
 }

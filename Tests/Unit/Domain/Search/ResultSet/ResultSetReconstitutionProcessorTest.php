@@ -21,7 +21,7 @@ use WapplerSystems\Meilisearch\Domain\Search\ResultSet\ResultSetReconstitutionPr
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSet;
 use WapplerSystems\Meilisearch\Domain\Search\SearchRequest;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
-use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -53,7 +53,7 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
      */
     public function canReconstituteSpellCheckingModelsFromResponse(): void
     {
-        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_solr_response_with_spellCheck.json');
+        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_meilisearch_response_with_spellCheck.json');
 
         // before the reconstitution of the domain object from the response we expect that no spelling suggestions
         // are present
@@ -71,7 +71,7 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
      */
     public function canReconstituteFacetModelFromResponse(): void
     {
-        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_solr_response_with_one_fields_facet.json');
+        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_meilisearch_response_with_one_fields_facet.json');
 
         // before the reconstitution of the domain object from the response we expect that no facets
         // are present
@@ -99,7 +99,7 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
      */
     public function canReconstituteJsonFacetModelFromResponse(): void
     {
-        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_solr_response_with_jsonfacets.json');
+        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_meilisearch_response_with_jsonfacets.json');
 
         // before the reconstitution of the domain object from the response we expect that no facets
         // are present
@@ -135,7 +135,7 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
      */
     public function canReconstituteFacetModelsFromResponse(): void
     {
-        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_solr_response_with_multiple_fields_facets.json');
+        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_meilisearch_response_with_multiple_fields_facets.json');
 
         // before the reconstitution of the domain object from the response we expect that no facets
         // are present
@@ -168,7 +168,7 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
      */
     public function canSkipOptionsMarkedAsExcludeValue(): void
     {
-        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_solr_response_with_multiple_fields_facets.json');
+        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_meilisearch_response_with_multiple_fields_facets.json');
 
         // before the reconstitution of the domain object from the response we expect that no facets
         // are present
@@ -201,7 +201,7 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
      */
     public function canSetRequirementsMetToFalseOnFacetThatMissesARequirement(): void
     {
-        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_solr_response_with_multiple_fields_facets.json');
+        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_meilisearch_response_with_multiple_fields_facets.json');
 
         // before the reconstitution of the domain object from the response we expect that no facets
         // are present
@@ -244,7 +244,7 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
      */
     public function canSetRequirementsMetToTrueOnFacetThatFullFillsARequirement(): void
     {
-        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_solr_response_with_used_facet.json');
+        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_meilisearch_response_with_used_facet.json');
         /** @var MockObject|SearchRequest $usedSearchRequest */
         $usedSearchRequest = $searchResultSet->getUsedSearchRequest();
         $usedSearchRequest->expects(self::any())->method('getActiveFacetValuesByName')->willReturnCallback(
@@ -294,7 +294,7 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
      */
     public function canGetOptionsInExpectedOrder(): void
     {
-        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_solr_response_with_multiple_fields_facets.json');
+        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_meilisearch_response_with_multiple_fields_facets.json');
 
         // before the reconstitution of the domain object from the response we expect that no facets
         // are present
@@ -327,7 +327,7 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
      */
     public function canGetOptionsInExpectedOrderWhenReversOrderIsApplied(): void
     {
-        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_solr_response_with_multiple_fields_facets.json');
+        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_meilisearch_response_with_multiple_fields_facets.json');
 
         // before the reconstitution of the domain object from the response we expect that no facets
         // are present
@@ -361,7 +361,7 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
      */
     public function canGetOptionsInExpectedOrderWhenManualSortOrderIsApplied(): void
     {
-        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_solr_response_with_multiple_fields_facets.json');
+        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_meilisearch_response_with_multiple_fields_facets.json');
 
         // before the reconstitution of the domain object from the response we expect that no facets
         // are present
@@ -395,7 +395,7 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
      */
     public function canReconstituteFacetModelsWithSameFieldNameFromResponse(): void
     {
-        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_solr_response_with_multiple_fields_facets.json');
+        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_meilisearch_response_with_multiple_fields_facets.json');
 
         // before the reconstitution of the domain object from the response we expect that no facets
         // are present
@@ -435,12 +435,12 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
      */
     public function canReconstituteUsedFacet(): void
     {
-        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_solr_response_with_used_facet.json');
+        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_meilisearch_response_with_used_facet.json');
         /** @var MockObject|SearchRequest $usedSearchRequest */
         $usedSearchRequest = $searchResultSet->getUsedSearchRequest();
         $usedSearchRequest->expects(self::any())->method('getActiveFacetValuesByName')->willReturnCallback(
             function ($name) {
-                return $name == 'type' ? ['tx_solr_file'] : [];
+                return $name == 'type' ? ['tx_meilisearch_file'] : [];
             }
         );
 
@@ -487,12 +487,12 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
      */
     public function canMarkUsedOptionAsSelected(): void
     {
-        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_solr_response_with_used_facet.json');
+        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_meilisearch_response_with_used_facet.json');
         /** @var MockObject|SearchRequest $usedSearchRequest */
         $usedSearchRequest = $searchResultSet->getUsedSearchRequest();
         $usedSearchRequest->expects(self::any())->method('getActiveFacetValuesByName')->willReturnCallback(
             function ($name) {
-                return $name == 'type' ? ['tx_solr_file'] : [];
+                return $name == 'type' ? ['tx_meilisearch_file'] : [];
             }
         );
 
@@ -531,12 +531,12 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
      */
     public function includeIsUsedFacetsCanBeSetToFalse(): void
     {
-        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_solr_response_with_used_facet.json');
+        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_meilisearch_response_with_used_facet.json');
         /** @var MockObject|SearchRequest $usedSearchRequest */
         $usedSearchRequest = $searchResultSet->getUsedSearchRequest();
         $usedSearchRequest->expects(self::any())->method('getActiveFacetValuesByName')->willReturnCallback(
             function ($name) {
-                return $name == 'type' ? ['tx_solr_file'] : [];
+                return $name == 'type' ? ['tx_meilisearch_file'] : [];
             }
         );
 
@@ -570,7 +570,7 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
      */
     public function canGetConfiguredFacetNotInResponseAsUnavailableFacet(): void
     {
-        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_solr_response_with_used_facet.json');
+        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_meilisearch_response_with_used_facet.json');
         /** @var MockObject|SearchRequest $usedSearchRequest */
         $usedSearchRequest = $searchResultSet->getUsedSearchRequest();
         $usedSearchRequest->expects(self::any())->method('getActiveFacetValuesByName')->willReturnCallback(
@@ -614,7 +614,7 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
      */
     public function canGetTwoUsedFacetOptions(): void
     {
-        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_solr_response_with_two_used_facets.json');
+        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_meilisearch_response_with_two_used_facets.json');
         /** @var MockObject|SearchRequest $usedSearchRequest */
         $usedSearchRequest = $searchResultSet->getUsedSearchRequest();
         $usedSearchRequest->expects(self::any())->method('getActiveFacetValuesByName')->willReturnCallback(
@@ -661,7 +661,7 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
      */
     public function emptyFacetsAreNotReconstitutedWhenDisabled(): void
     {
-        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_solr_response_with_used_facet.json');
+        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_meilisearch_response_with_used_facet.json');
 
         // before the reconstitution of the domain object from the response we expect that no facets
         // are present
@@ -695,7 +695,7 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
      */
     public function emptyFacetIsKeptWhenNothingIsConfiguredGloballyButKeepingIsEnabledOnFacetLevel(): void
     {
-        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_solr_response_with_used_facet.json');
+        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_meilisearch_response_with_used_facet.json');
 
         // before the reconstitution of the domain object from the response we expect that no facets
         // are present
@@ -729,7 +729,7 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
      */
     public function includeInAvailableFacetsCanBeSetToFalse(): void
     {
-        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_solr_response_with_used_facet.json');
+        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_meilisearch_response_with_used_facet.json');
 
         // before the reconstitution of the domain object from the response we expect that no facets
         // are present
@@ -759,7 +759,7 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
      */
     public function includeInAvailableFacetsCanBeSetToTrue(): void
     {
-        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_solr_response_with_used_facet.json');
+        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_meilisearch_response_with_used_facet.json');
 
         // before the reconstitution of the domain object from the response we expect that no facets
         // are present
@@ -789,7 +789,7 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
      */
     public function labelCanBeConfiguredAsAPlainText(): void
     {
-        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_solr_response_with_multiple_fields_facets.json');
+        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_meilisearch_response_with_multiple_fields_facets.json');
 
         // before the reconstitution of the domain object from the response we expect that no facets
         // are present
@@ -817,7 +817,7 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
      */
     public function returnsCorrectSetUpFacetTypeForAQueryGroupFacet(): void
     {
-        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_solr_response_with_query_fields_facets.json');
+        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_meilisearch_response_with_query_fields_facets.json');
 
         // before the reconstitution of the domain object from the response we expect that no facets
         // are present
@@ -860,7 +860,7 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
      */
     public function canGetOptionsInExpectedOrderForQueryGroupFacet(): void
     {
-        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_solr_response_with_query_fields_facets.json');
+        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_meilisearch_response_with_query_fields_facets.json');
 
         // before the reconstitution of the domain object from the response we expect that no facets
         // are present
@@ -907,7 +907,7 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
      */
     public function canGetOptionsInExpectedOrderForQueryGroupFacetWithManualSortOrder(): void
     {
-        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_solr_response_with_query_fields_facets.json');
+        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_meilisearch_response_with_query_fields_facets.json');
 
         // before the reconstitution of the domain object from the response we expect that no facets
         // are present
@@ -955,7 +955,7 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
      */
     public function canGetOptionsInExpectedOrderForQueryGroupFacetWithReversOrder(): void
     {
-        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_solr_response_with_query_fields_facets.json');
+        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_meilisearch_response_with_query_fields_facets.json');
 
         // before the reconstitution of the domain object from the response we expect that no facets
         // are present
@@ -1003,10 +1003,10 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
      */
     public function returnsResultSetWithConfiguredSortingOptions(): void
     {
-        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_solr_response_with_query_fields_facets.json');
+        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_meilisearch_response_with_query_fields_facets.json');
 
         $configuration = [];
-        $configuration['plugin.']['tx_solr.']['search.'] = [
+        $configuration['plugin.']['tx_meilisearch.']['search.'] = [
             'sorting' => 1,
             'sorting.' => [
                 'defaultOrder' => 'asc',
@@ -1036,10 +1036,10 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
      */
     public function canReturnSortingsAndMarkedSelectedAsActive(): void
     {
-        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_solr_response_with_query_fields_facets.json');
+        $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_meilisearch_response_with_query_fields_facets.json');
 
         $configuration = [];
-        $configuration['plugin.']['tx_solr.']['search.'] = [
+        $configuration['plugin.']['tx_meilisearch.']['search.'] = [
             'sorting' => 1,
             'sorting.' => [
                 'defaultOrder' => 'asc',
@@ -1077,7 +1077,7 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
     protected function getConfigurationArrayFromFacetConfigurationArray(array $facetConfiguration): array
     {
         $configuration = [];
-        $configuration['plugin.']['tx_solr.']['search.']['faceting.'] = $facetConfiguration;
+        $configuration['plugin.']['tx_meilisearch.']['search.']['faceting.'] = $facetConfiguration;
         return $configuration;
     }
 

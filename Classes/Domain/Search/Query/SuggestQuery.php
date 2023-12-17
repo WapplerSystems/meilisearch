@@ -33,13 +33,13 @@ class SuggestQuery extends Query
 
     protected string $prefix;
 
-    public function __construct(string $keywords, TypoScriptConfiguration $solrConfiguration = null)
+    public function __construct(string $keywords, TypoScriptConfiguration $meilisearchConfiguration = null)
     {
         parent::__construct();
-        $solrConfiguration = $solrConfiguration ?? Util::getMeilisearchConfiguration();
+        $meilisearchConfiguration = $meilisearchConfiguration ?? Util::getMeilisearchConfiguration();
 
         $this->setQuery($keywords);
-        $this->configuration = $solrConfiguration->getObjectByPathOrDefault('plugin.tx_solr.suggest.');
+        $this->configuration = $meilisearchConfiguration->getObjectByPathOrDefault('plugin.tx_meilisearch.suggest.');
 
         if (!empty($this->configuration['treatMultipleTermsAsSingleTerm'])) {
             $this->prefix = $keywords;

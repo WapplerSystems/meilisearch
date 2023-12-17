@@ -13,23 +13,23 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Search\ApacheSolrDocument;
+namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Search\ApacheMeilisearchDocument;
 
 use WapplerSystems\Meilisearch\ConnectionManager;
-use WapplerSystems\Meilisearch\Domain\Search\ApacheSolrDocument\Repository;
+use WapplerSystems\Meilisearch\Domain\Search\ApacheMeilisearchDocument\Repository;
 use WapplerSystems\Meilisearch\Domain\Search\Query\Query;
 use WapplerSystems\Meilisearch\Domain\Search\Query\QueryBuilder;
 use WapplerSystems\Meilisearch\Domain\Site\Site;
-use WapplerSystems\Meilisearch\NoSolrConnectionFoundException;
+use WapplerSystems\Meilisearch\NoMeilisearchConnectionFoundException;
 use WapplerSystems\Meilisearch\Search;
-use WapplerSystems\Meilisearch\System\Solr\Document\Document;
-use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
-use WapplerSystems\Meilisearch\System\Solr\SolrConnection;
+use WapplerSystems\Meilisearch\System\Meilisearch\Document\Document;
+use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchConnection;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Test cases for ApacheSolrDocumentRepository
+ * Test cases for ApacheMeilisearchDocumentRepository
  */
 class RepositoryTest extends SetUpUnitTestCase
 {
@@ -41,7 +41,7 @@ class RepositoryTest extends SetUpUnitTestCase
     /**
      * @var ConnectionManager
      */
-    protected $solrConnectionManager;
+    protected $meilisearchConnectionManager;
 
     /**
      * @var Site
@@ -53,8 +53,8 @@ class RepositoryTest extends SetUpUnitTestCase
      */
     public function findOneByPageIdAndByLanguageIdReturnsFirstFoundDocument()
     {
-        $apacheSolrDocumentCollection = [new Document(), new Document()];
-        $apacheSolrDocumentRepository = $this->getAccessibleMock(
+        $apacheMeilisearchDocumentCollection = [new Document(), new Document()];
+        $apacheMeilisearchDocumentRepository = $this->getAccessibleMock(
             Repository::class,
             ['findByPageIdAndByLanguageId'],
             [],
@@ -62,34 +62,34 @@ class RepositoryTest extends SetUpUnitTestCase
             false
         );
 
-        $apacheSolrDocumentRepository
+        $apacheMeilisearchDocumentRepository
             ->expects(self::exactly(1))
             ->method('findByPageIdAndByLanguageId')
-            ->willReturn($apacheSolrDocumentCollection);
+            ->willReturn($apacheMeilisearchDocumentCollection);
 
-        /** @var Repository $apacheSolrDocumentRepository */
-        self::assertSame($apacheSolrDocumentCollection[0], $apacheSolrDocumentRepository->findOneByPageIdAndByLanguageId(0, 0));
+        /** @var Repository $apacheMeilisearchDocumentRepository */
+        self::assertSame($apacheMeilisearchDocumentCollection[0], $apacheMeilisearchDocumentRepository->findOneByPageIdAndByLanguageId(0, 0));
     }
 
     /**
      * @test
      */
-    public function findByPageIdAndByLanguageIdReturnsEmptyCollectionIfConnectionToSolrServerCanNotBeEstablished()
+    public function findByPageIdAndByLanguageIdReturnsEmptyCollectionIfConnectionToMeilisearchServerCanNotBeEstablished()
     {
-        $apacheSolrDocumentRepository = $this->getAccessibleMock(
+        $apacheMeilisearchDocumentRepository = $this->getAccessibleMock(
             Repository::class,
             ['initializeSearch'],
             [],
             '',
             false
         );
-        $apacheSolrDocumentRepository
+        $apacheMeilisearchDocumentRepository
             ->expects(self::exactly(1))
             ->method('initializeSearch')
-            ->will(self::throwException(new NoSolrConnectionFoundException()));
+            ->will(self::throwException(new NoMeilisearchConnectionFoundException()));
 
-        $apacheSolrDocumentCollection = $apacheSolrDocumentRepository->findByPageIdAndByLanguageId(777, 0);
-        self::assertEmpty($apacheSolrDocumentCollection);
+        $apacheMeilisearchDocumentCollection = $apacheMeilisearchDocumentRepository->findByPageIdAndByLanguageId(777, 0);
+        self::assertEmpty($apacheMeilisearchDocumentCollection);
     }
 
     /**
@@ -97,10 +97,10 @@ class RepositoryTest extends SetUpUnitTestCase
      */
     public function findByPageIdAndByLanguageIdReturnsResultFromSearch()
     {
-        $solrConnectionMock = $this->createMock(SolrConnection::class);
-        $solrConnectionManager = $this->getAccessibleMock(ConnectionManager::class, ['getConnectionByPageId'], [], '', false);
-        $solrConnectionManager->expects(self::any())->method('getConnectionByPageId')->willReturn($solrConnectionMock);
-        $mockedSingletons = [ConnectionManager::class => $solrConnectionManager];
+        $meilisearchConnectionMock = $this->createMock(MeilisearchConnection::class);
+        $meilisearchConnectionManager = $this->getAccessibleMock(ConnectionManager::class, ['getConnectionByPageId'], [], '', false);
+        $meilisearchConnectionManager->expects(self::any())->method('getConnectionByPageId')->willReturn($meilisearchConnectionMock);
+        $mockedSingletons = [ConnectionManager::class => $meilisearchConnectionManager];
 
         $search = $this->getAccessibleMock(Search::class, ['search'], [], '', false);
 
@@ -119,12 +119,12 @@ class RepositoryTest extends SetUpUnitTestCase
 
         $queryBuilderMock = $this->createMock(QueryBuilder::class);
 
-        $apacheSolrDocumentRepository = $this->getAccessibleMock(Repository::class, ['getSearch'], [null, null, $queryBuilderMock]);
-        $apacheSolrDocumentRepository->expects(self::once())->method('getSearch')->willReturn($search);
+        $apacheMeilisearchDocumentRepository = $this->getAccessibleMock(Repository::class, ['getSearch'], [null, null, $queryBuilderMock]);
+        $apacheMeilisearchDocumentRepository->expects(self::once())->method('getSearch')->willReturn($search);
         $queryMock = $this->createMock(Query::class);
         $queryBuilderMock->expects(self::any())->method('buildPageQuery')->willReturn($queryMock);
-        $actualApacheSolrDocumentCollection = $apacheSolrDocumentRepository->findByPageIdAndByLanguageId(777, 0);
+        $actualApacheMeilisearchDocumentCollection = $apacheMeilisearchDocumentRepository->findByPageIdAndByLanguageId(777, 0);
 
-        self::assertSame($testDocuments, $actualApacheSolrDocumentCollection);
+        self::assertSame($testDocuments, $actualApacheMeilisearchDocumentCollection);
     }
 }

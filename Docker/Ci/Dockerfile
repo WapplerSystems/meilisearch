@@ -1,6 +1,6 @@
 ARG PHP_VERSION
 FROM php:$PHP_VERSION-cli
-LABEL maintainer="team-solr@dkd.de"
+LABEL maintainer="team-meilisearch@dkd.de"
 ENV TERM linux
 
 # create man directory to fix jre dependencies issue
@@ -19,9 +19,9 @@ RUN apt-get update && apt-get install -yq \
         mysqli
 COPY --from=composer:1 /usr/bin/composer /usr/local/bin/composer
 
-COPY . /ext-solr/
+COPY . /ext-meilisearch/
 
 # add and switch user
-RUN adduser --disabled-password --gecos "" solr \
-    && chown -R solr:solr /ext-solr
-USER solr
+RUN adduser --disabled-password --gecos "" meilisearch \
+    && chown -R meilisearch:meilisearch /ext-meilisearch
+USER meilisearch

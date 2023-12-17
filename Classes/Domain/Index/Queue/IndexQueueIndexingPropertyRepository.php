@@ -23,11 +23,11 @@ use PDO;
 
 /**
  * Class IndexQueueIndexingPropertyRepository
- * Handles all CRUD operations to tx_solr_indexqueue_indexing_property table
+ * Handles all CRUD operations to tx_meilisearch_indexqueue_indexing_property table
  */
 class IndexQueueIndexingPropertyRepository extends AbstractRepository
 {
-    protected string $table = 'tx_solr_indexqueue_indexing_property';
+    protected string $table = 'tx_meilisearch_indexqueue_indexing_property';
 
     /**
      * Removes existing indexing properties.

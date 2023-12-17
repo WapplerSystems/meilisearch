@@ -131,7 +131,7 @@ class ConfigurationServiceTest extends SetUpUnitTestCase
         $flexFormServiceMock = $this->createMock(FlexFormService::class);
         $flexFormServiceMock->expects(self::once())->method('convertflexFormContentToArray')->willReturn($fakeFlexFormArrayData);
 
-        $typoScriptConfiguration = new TypoScriptConfiguration(['plugin.' => ['tx_solr.' => []]]);
+        $typoScriptConfiguration = new TypoScriptConfiguration(['plugin.' => ['tx_meilisearch.' => []]]);
 
         $configurationService = new ConfigurationService();
         $configurationService->setFlexFormService($flexFormServiceMock);

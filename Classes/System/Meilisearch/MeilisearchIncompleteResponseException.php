@@ -18,6 +18,6 @@ declare(strict_types=1);
 namespace WapplerSystems\Meilisearch\System\Meilisearch;
 
 /**
- * This exception should be thrown when the response from solr was incomplete
+ * This exception should be thrown when the response from meilisearch was incomplete
  */
 class MeilisearchIncompleteResponseException extends MeilisearchCommunicationException {}

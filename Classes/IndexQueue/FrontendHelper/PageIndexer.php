@@ -74,7 +74,7 @@ class PageIndexer implements FrontendHelper, SingletonInterface
     /**
      * Meilisearch server connection.
      */
-    protected ?MeilisearchConnection $solrConnection = null;
+    protected ?MeilisearchConnection $meilisearchConnection = null;
 
     /**
      * Documents that have been sent to Meilisearch
@@ -143,7 +143,7 @@ class PageIndexer implements FrontendHelper, SingletonInterface
      */
     public function __invoke(AfterCacheableContentIsGeneratedEvent $event): void
     {
-        $this->request = $event->getRequest()->getAttribute('solr.pageIndexingInstructions');
+        $this->request = $event->getRequest()->getAttribute('meilisearch.pageIndexingInstructions');
 
         if (!$this->request || $this->activated === false) {
             return;
@@ -196,17 +196,17 @@ class PageIndexer implements FrontendHelper, SingletonInterface
      */
     protected function index(Item $indexQueueItem, TypoScriptFrontendController $tsfe): void
     {
-        $this->solrConnection = $this->getMeilisearchConnection($indexQueueItem, $tsfe->getLanguage(), $this->configuration->getLoggingExceptions());
+        $this->meilisearchConnection = $this->getMeilisearchConnection($indexQueueItem, $tsfe->getLanguage(), $this->configuration->getLoggingExceptions());
 
         $document = $this->getPageDocument($tsfe, $this->generatePageUrl($tsfe), $this->getAccessRootline(), $tsfe->MP);
         $document = $this->substitutePageDocument($document, $tsfe->page, $indexQueueItem, $tsfe);
 
         $this->responseData['pageIndexed'] = (int)$this->indexPage($document, $indexQueueItem, $tsfe);
         $this->responseData['originalPageDocument'] = (array)$document;
-        $this->responseData['solrConnection'] = [
+        $this->responseData['meilisearchConnection'] = [
             'rootPage' => $indexQueueItem->getRootPageUid(),
             'sys_language_uid' => $tsfe->getLanguage()->getLanguageId(),
-            'meilisearch' => $this->solrConnection->getEndpoint('write')->getCoreBaseUri(),
+            'meilisearch' => $this->meilisearchConnection->getEndpoint('write')->getCoreBaseUri(),
         ];
 
         foreach ($this->documentsSentToMeilisearch as $document) {
@@ -215,21 +215,21 @@ class PageIndexer implements FrontendHelper, SingletonInterface
     }
 
     /**
-     * Gets the solr connection to use for indexing the page based on the
+     * Gets the meilisearch connection to use for indexing the page based on the
      * Index Queue item's properties.
      */
     protected function getMeilisearchConnection(Item $indexQueueItem, SiteLanguage $siteLanguage, bool $logExceptions): MeilisearchConnection
     {
         $connectionManager = GeneralUtility::makeInstance(ConnectionManager::class);
         try {
-            $solrConnection = $connectionManager->getConnectionByRootPageId($indexQueueItem->getRootPageUid(), $siteLanguage->getLanguageId());
-            if (!$solrConnection->getWriteService()->ping()) {
+            $meilisearchConnection = $connectionManager->getConnectionByRootPageId($indexQueueItem->getRootPageUid(), $siteLanguage->getLanguageId());
+            if (!$meilisearchConnection->getWriteService()->ping()) {
                 throw new Exception(
                     'Could not connect to Meilisearch server.',
                     1323946472
                 );
             }
-            return $solrConnection;
+            return $meilisearchConnection;
         } catch (Throwable $e) {
             $this->logger->error(
                 $e->getMessage() . ' Error code: ' . $e->getCode()
@@ -347,7 +347,7 @@ class PageIndexer implements FrontendHelper, SingletonInterface
             // chunk adds by 20
             $documentChunks = array_chunk($documents, 20);
             foreach ($documentChunks as $documentChunk) {
-                $response = $this->solrConnection->getWriteService()->addDocuments($documentChunk);
+                $response = $this->meilisearchConnection->getWriteService()->addDocuments($documentChunk);
                 if ($response->getHttpStatus() != 200) {
                     $this->logger->error('Meilisearch could not index page.', [$response->getRawResponse()]);
                     throw new \RuntimeException('Meilisearch Request failed.', 1331834983);

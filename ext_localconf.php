@@ -13,7 +13,7 @@ use WapplerSystems\Meilisearch\IndexQueue\FrontendHelper\Manager;
 use WapplerSystems\Meilisearch\IndexQueue\FrontendHelper\PageIndexer;
 use WapplerSystems\Meilisearch\IndexQueue\FrontendHelper\UserGroupDetector;
 use WapplerSystems\Meilisearch\IndexQueue\RecordMonitor;
-use WapplerSystems\Meilisearch\Routing\Enhancer\SolrFacetMaskAndCombineEnhancer;
+use WapplerSystems\Meilisearch\Routing\Enhancer\MeilisearchFacetMaskAndCombineEnhancer;
 use WapplerSystems\Meilisearch\System\Configuration\ExtensionConfiguration;
 use WapplerSystems\Meilisearch\Task\EventQueueWorkerTask;
 use WapplerSystems\Meilisearch\Task\EventQueueWorkerTaskAdditionalFieldProvider;
@@ -42,12 +42,12 @@ defined('TYPO3') or die('Access denied.');
     // Registering RecordMonitor and GarbageCollector hooks.
 
     // hooking into TCE Main to monitor record updates that may require deleting documents from the index
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass']['solr/garbagecollector'] = GarbageCollector::class;
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['solr/garbagecollector'] = GarbageCollector::class;
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass']['meilisearch/garbagecollector'] = GarbageCollector::class;
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['meilisearch/garbagecollector'] = GarbageCollector::class;
 
     // hooking into TCE Main to monitor record updates that may require reindexing by the index queue
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass']['solr/recordmonitor'] = RecordMonitor::class;
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['solr/recordmonitor'] = RecordMonitor::class;
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass']['meilisearch/recordmonitor'] = RecordMonitor::class;
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['meilisearch/recordmonitor'] = RecordMonitor::class;
 
     // ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- #
     // registering Index Queue page indexer helpers
@@ -87,8 +87,8 @@ defined('TYPO3') or die('Access denied.');
         'additionalFields' => EventQueueWorkerTaskAdditionalFieldProvider::class,
     ];
 
-    if (!isset($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][TableGarbageCollectionTask::class]['options']['tables']['tx_solr_statistics'])) {
-        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][TableGarbageCollectionTask::class]['options']['tables']['tx_solr_statistics'] = [
+    if (!isset($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][TableGarbageCollectionTask::class]['options']['tables']['tx_meilisearch_statistics'])) {
+        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][TableGarbageCollectionTask::class]['options']['tables']['tx_meilisearch_statistics'] = [
             'dateField' => 'tstamp',
             'expirePeriod' => 180,
         ];
@@ -98,31 +98,31 @@ defined('TYPO3') or die('Access denied.');
 
     // registering the eID scripts
     // TODO move to suggest form modifier
-    $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['tx_solr_api'] = ApiEid::class . '::main';
+    $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['tx_meilisearch_api'] = ApiEid::class . '::main';
 
     // ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- #
 
     // Register cache for frequent searches
 
-    if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_solr'])) {
-        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_solr'] = [];
+    if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_meilisearch'])) {
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_meilisearch'] = [];
     }
-    // Caching framework solr
-    if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_solr_configuration'])) {
-        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_solr_configuration'] = [];
-    }
-
-    if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_solr_configuration']['backend'])) {
-        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_solr_configuration']['backend'] = Typo3DatabaseBackend::class;
+    // Caching framework meilisearch
+    if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_meilisearch_configuration'])) {
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_meilisearch_configuration'] = [];
     }
 
-    if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_solr_configuration']['options'])) {
+    if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_meilisearch_configuration']['backend'])) {
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_meilisearch_configuration']['backend'] = Typo3DatabaseBackend::class;
+    }
+
+    if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_meilisearch_configuration']['options'])) {
         // default life-time is one day
-        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_solr_configuration']['options'] = ['defaultLifetime' => 60 * 60 * 24];
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_meilisearch_configuration']['options'] = ['defaultLifetime' => 60 * 60 * 24];
     }
 
-    if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_solr_configuration']['groups'])) {
-        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_solr_configuration']['groups'] = ['all'];
+    if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_meilisearch_configuration']['groups'])) {
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_meilisearch_configuration']['groups'] = ['all'];
     }
 
     // ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- #
@@ -216,11 +216,11 @@ defined('TYPO3') or die('Access denied.');
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['fluid']['namespaces']['meilisearch'] = ['WapplerSystems\\Meilisearch\\ViewHelpers'];
 
     /*
-     * Solr route enhancer configuration
+     * Meilisearch route enhancer configuration
      */
-    $GLOBALS['TYPO3_CONF_VARS']['SYS']['routing']['enhancers']['SolrFacetMaskAndCombineEnhancer'] = SolrFacetMaskAndCombineEnhancer::class;
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['routing']['enhancers']['MeilisearchFacetMaskAndCombineEnhancer'] = MeilisearchFacetMaskAndCombineEnhancer::class;
 
-    // add solr field to rootline fields
+    // add meilisearch field to rootline fields
     if ($GLOBALS['TYPO3_CONF_VARS']['FE']['addRootLineFields'] === '') {
         $GLOBALS['TYPO3_CONF_VARS']['FE']['addRootLineFields'] = 'no_search_sub_entries';
     } else {
@@ -236,8 +236,8 @@ defined('TYPO3') or die('Access denied.');
         'auth',
         AuthorizationService::class,
         [// service meta data
-            'title' => 'Solr Indexer Authorization',
-            'description' => 'Authorizes the Solr Index Queue indexer to access protected pages.',
+            'title' => 'Meilisearch Indexer Authorization',
+            'description' => 'Authorizes the Meilisearch Index Queue indexer to access protected pages.',
             'subtype' => 'getUserFE,authUserFE',
             'available' => true,
             'priority' => 100,
@@ -250,7 +250,7 @@ defined('TYPO3') or die('Access denied.');
     );
 
 
-    // Register Solr Grouping feature
+    // Register Meilisearch Grouping feature
     $parserRegistry = GeneralUtility::makeInstance(ResultParserRegistry::class);
     if (!$parserRegistry->hasParser(GroupedResultParser::class, 200)) {
         $parserRegistry->registerParser(GroupedResultParser::class, 200);

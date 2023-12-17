@@ -51,11 +51,11 @@ class ConfigurationService
     }
 
     /**
-     * Override the given solrConfiguration with flex form configuration.
+     * Override the given meilisearchConfiguration with flex form configuration.
      *
      * @param string $flexFormData The raw data from database.
      */
-    public function overrideConfigurationWithFlexFormSettings(string $flexFormData, TypoScriptConfiguration $solrTypoScriptConfiguration): void
+    public function overrideConfigurationWithFlexFormSettings(string $flexFormData, TypoScriptConfiguration $meilisearchTypoScriptConfiguration): void
     {
         if (empty($flexFormData)) {
             return;
@@ -65,7 +65,7 @@ class ConfigurationService
         $flexFormConfiguration = $this->overrideFilter($flexFormConfiguration);
         $flexFormConfiguration = $this->typoScriptService->convertPlainArrayToTypoScriptArray($flexFormConfiguration);
 
-        $solrTypoScriptConfiguration->mergeMeilisearchConfiguration($flexFormConfiguration, true, false);
+        $meilisearchTypoScriptConfiguration->mergeMeilisearchConfiguration($flexFormConfiguration, true, false);
     }
 
     /**

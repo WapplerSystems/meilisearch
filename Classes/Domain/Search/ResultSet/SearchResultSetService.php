@@ -66,16 +66,16 @@ class SearchResultSetService
     public function __construct(
         TypoScriptConfiguration   $configuration,
         Search                    $search,
-        ?MeilisearchLogManager    $solrLogManager = null,
+        ?MeilisearchLogManager    $meilisearchLogManager = null,
         ?SearchResultBuilder      $resultBuilder = null,
         ?QueryBuilder             $queryBuilder = null,
         ?EventDispatcherInterface $eventDispatcher = null
     ) {
         $this->search = $search;
         $this->typoScriptConfiguration = $configuration;
-        $this->logger = $solrLogManager ?? GeneralUtility::makeInstance(MeilisearchLogManager::class, __CLASS__);
+        $this->logger = $meilisearchLogManager ?? GeneralUtility::makeInstance(MeilisearchLogManager::class, __CLASS__);
         $this->searchResultBuilder = $resultBuilder ?? GeneralUtility::makeInstance(SearchResultBuilder::class);
-        $this->queryBuilder = $queryBuilder ?? GeneralUtility::makeInstance(QueryBuilder::class, $configuration, $solrLogManager);
+        $this->queryBuilder = $queryBuilder ?? GeneralUtility::makeInstance(QueryBuilder::class, $configuration, $meilisearchLogManager);
         $this->eventDispatcher = $eventDispatcher ?? GeneralUtility::makeInstance(EventDispatcherInterface::class);
     }
 
@@ -170,7 +170,7 @@ class SearchResultSetService
     {
         /** @var ResultParserRegistry $parserRegistry */
         $parserRegistry = GeneralUtility::makeInstance(ResultParserRegistry::class, $this->typoScriptConfiguration);
-        $useRawDocuments = (bool)$this->typoScriptConfiguration->getValueByPathOrDefaultValue('plugin.tx_solr.features.useRawDocuments', false);
+        $useRawDocuments = (bool)$this->typoScriptConfiguration->getValueByPathOrDefaultValue('plugin.tx_meilisearch.features.useRawDocuments', false);
         $parserRegistry->getParser($resultSet)->parse($resultSet, $useRawDocuments);
     }
 
@@ -222,7 +222,7 @@ class SearchResultSetService
 
         $response = $this->search->search($query, $offSet);
         if ($response === null) {
-            throw new MeilisearchIncompleteResponseException('The response retrieved from solr was incomplete', 1505989678);
+            throw new MeilisearchIncompleteResponseException('The response retrieved from meilisearch was incomplete', 1505989678);
         }
 
         return $response;
@@ -289,7 +289,7 @@ class SearchResultSetService
     }
 
     /**
-     * Retrieves a single document from solr by document id.
+     * Retrieves a single document from meilisearch by document id.
      */
     public function getDocumentById(string $documentId): SearchResult
     {

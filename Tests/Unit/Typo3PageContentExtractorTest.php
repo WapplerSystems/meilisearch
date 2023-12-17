@@ -105,8 +105,8 @@ class Typo3PageContentExtractorTest extends SetUpUnitTestCase
     {
         return [
             'can extract simple text' => [
-                'content' => '<p>Hello solr for TYPO3</p>',
-                'expectedResult' => 'Hello solr for TYPO3',
+                'content' => '<p>Hello meilisearch for TYPO3</p>',
+                'expectedResult' => 'Hello meilisearch for TYPO3',
             ],
             'can extract umlauts' => [
                 'content' => '<p>Heute ist ein sch&ouml;ner tag</p>',

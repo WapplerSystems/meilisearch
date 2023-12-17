@@ -13,14 +13,14 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace WapplerSystems\Meilisearch\Tests\Unit\System\Solr;
+namespace WapplerSystems\Meilisearch\Tests\Unit\System\Meilisearch;
 
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
-use WapplerSystems\Meilisearch\System\Solr\Parser\SchemaParser;
-use WapplerSystems\Meilisearch\System\Solr\Parser\StopWordParser;
-use WapplerSystems\Meilisearch\System\Solr\Parser\SynonymParser;
-use WapplerSystems\Meilisearch\System\Solr\SolrConnection;
+use WapplerSystems\Meilisearch\System\Meilisearch\Parser\SchemaParser;
+use WapplerSystems\Meilisearch\System\Meilisearch\Parser\StopWordParser;
+use WapplerSystems\Meilisearch\System\Meilisearch\Parser\SynonymParser;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchConnection;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Client\ClientInterface;
@@ -30,11 +30,11 @@ use Solarium\Client;
 use Solarium\Core\Client\Endpoint;
 
 /**
- * Class SolrConnectionTest
+ * Class MeilisearchConnectionTest
  *
  * @author Timo Hund <timo.hund@dkd.de>
  */
-class SolrConnectionTest extends SetUpUnitTestCase
+class MeilisearchConnectionTest extends SetUpUnitTestCase
 {
     /**
      * @param Endpoint|null $readEndpoint
@@ -48,9 +48,9 @@ class SolrConnectionTest extends SetUpUnitTestCase
      * @param RequestFactoryInterface|null $requestFactory
      * @param StreamFactoryInterface|null $streamFactory
      * @param EventDispatcherInterface|null $eventDispatcher
-     * @return SolrConnection|null
+     * @return MeilisearchConnection|null
      */
-    protected function getSolrConnectionWithDummyConstructorArgs(
+    protected function getMeilisearchConnectionWithDummyConstructorArgs(
         Endpoint                 $readEndpoint = null,
         Endpoint                 $writeEndpoint = null,
         TypoScriptConfiguration  $configuration = null,
@@ -62,9 +62,9 @@ class SolrConnectionTest extends SetUpUnitTestCase
         RequestFactoryInterface  $requestFactory = null,
         StreamFactoryInterface   $streamFactory = null,
         EventDispatcherInterface $eventDispatcher = null
-    ): ?SolrConnection {
+    ): ?MeilisearchConnection {
         try {
-            return new SolrConnection(
+            return new MeilisearchConnection(
                 $readEndpoint ?? $this->createMock(Endpoint::class),
                 $writeEndpoint ?? $this->createMock(Endpoint::class),
                 $configuration ?? $this->createMock(TypoScriptConfiguration::class),
@@ -93,10 +93,10 @@ class SolrConnectionTest extends SetUpUnitTestCase
         $clientMock->expects(self::any())->method('getEndpoints')->willReturn([$endpointMock]);
 
         $readEndpoint = new Endpoint(
-            ['host' => 'localhost', 'port' => 8080, 'path' => '/solr/', 'core' => 'core_en', 'scheme' => 'https', 'username' => '', 'password' => '']
+            ['host' => 'localhost', 'port' => 8080, 'path' => '/meilisearch/', 'core' => 'core_en', 'scheme' => 'https', 'username' => '', 'password' => '']
         );
         $writeEndpoint = $readEndpoint;
-        $connection = $this->getSolrConnectionWithDummyConstructorArgs($readEndpoint, $writeEndpoint);
+        $connection = $this->getMeilisearchConnectionWithDummyConstructorArgs($readEndpoint, $writeEndpoint);
         $connection->setClient($clientMock, 'admin');
 
         $endpointMock->expects(self::never())->method('setAuthentication');
@@ -113,10 +113,10 @@ class SolrConnectionTest extends SetUpUnitTestCase
         $clientMock->expects(self::any())->method('getEndpoints')->willReturn([$endpointMock]);
 
         $readEndpoint = new Endpoint(
-            ['host' => 'localhost', 'port' => 8080, 'path' => '/solr/', 'core' => 'core_en', 'scheme' => 'https', 'username' => 'foo', 'password' => 'bar']
+            ['host' => 'localhost', 'port' => 8080, 'path' => '/meilisearch/', 'core' => 'core_en', 'scheme' => 'https', 'username' => 'foo', 'password' => 'bar']
         );
         $writeEndpoint = $readEndpoint;
-        $connection = $this->getSolrConnectionWithDummyConstructorArgs($readEndpoint, $writeEndpoint);
+        $connection = $this->getMeilisearchConnectionWithDummyConstructorArgs($readEndpoint, $writeEndpoint);
         $connection->setClient($clientMock, 'admin');
 
         $endpointMock->expects(self::once())->method('setAuthentication');
@@ -129,8 +129,8 @@ class SolrConnectionTest extends SetUpUnitTestCase
     public function coreNameDataProvider(): array
     {
         return [
-            ['path' => '/solr/', 'core' => 'bla', 'expectedName' => 'bla'],
-            ['path' => '/somewherelese/solr/', 'core' => 'corename', 'expectedName' => 'corename'],
+            ['path' => '/meilisearch/', 'core' => 'bla', 'expectedName' => 'bla'],
+            ['path' => '/somewherelese/meilisearch/', 'core' => 'corename', 'expectedName' => 'corename'],
         ];
     }
 
@@ -145,8 +145,8 @@ class SolrConnectionTest extends SetUpUnitTestCase
             ['host' => 'localhost', 'port' => 8080, 'path' => $path, 'core' => $core, 'scheme' => 'http', 'username' => '', 'password' => '']
         );
         $writeEndpoint = $readEndpoint;
-        $solrService = $this->getSolrConnectionWithDummyConstructorArgs($readEndpoint, $writeEndpoint, $fakeConfiguration);
-        self::assertSame($expectedCoreName, $solrService->getReadService()->getPrimaryEndpoint()->getCore());
+        $meilisearchService = $this->getMeilisearchConnectionWithDummyConstructorArgs($readEndpoint, $writeEndpoint, $fakeConfiguration);
+        self::assertSame($expectedCoreName, $meilisearchService->getReadService()->getPrimaryEndpoint()->getCore());
     }
 
     /**
@@ -170,8 +170,8 @@ class SolrConnectionTest extends SetUpUnitTestCase
             ['host' => 'localhost', 'port' => 8080, 'path' => $path, 'core' => $core, 'scheme' => 'http', 'username' => '', 'password' => '']
         );
         $writeEndpoint = $readEndpoint;
-        $solrService = $this->getSolrConnectionWithDummyConstructorArgs($readEndpoint, $writeEndpoint);
-        self::assertSame($expectedCoreBasePath, $solrService->getReadService()->getPrimaryEndpoint()->getPath());
+        $meilisearchService = $this->getMeilisearchConnectionWithDummyConstructorArgs($readEndpoint, $writeEndpoint);
+        self::assertSame($expectedCoreBasePath, $meilisearchService->getReadService()->getPrimaryEndpoint()->getPath());
     }
 
     /**
@@ -189,10 +189,10 @@ class SolrConnectionTest extends SetUpUnitTestCase
                 'password' => '',
         ]);
         $writeEndpoint = $readEndpoint;
-        $solrService = $this->getSolrConnectionWithDummyConstructorArgs($readEndpoint, $writeEndpoint);
+        $meilisearchService = $this->getMeilisearchConnectionWithDummyConstructorArgs($readEndpoint, $writeEndpoint);
         self::assertSame(
-            'http://localhost:8080/mypath/solr/core_de/',
-            $solrService->getEndpoint('read')->getCoreBaseUri(),
+            'http://localhost:8080/mypath/meilisearch/core_de/',
+            $meilisearchService->getEndpoint('read')->getCoreBaseUri(),
             'Core base URI doesn\'t contain expected segments'
         );
     }

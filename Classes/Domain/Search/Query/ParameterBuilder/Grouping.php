@@ -19,7 +19,7 @@ use WapplerSystems\Meilisearch\Domain\Search\Query\AbstractQueryBuilder;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 
 /**
- * The Grouping ParameterProvider is responsible to build the solr query parameters
+ * The Grouping ParameterProvider is responsible to build the meilisearch query parameters
  * that are needed for the grouping.
  */
 class Grouping extends AbstractDeactivatable implements ParameterBuilderInterface
@@ -119,9 +119,9 @@ class Grouping extends AbstractDeactivatable implements ParameterBuilderInterfac
         $this->resultsPerGroup = $resultsPerGroup;
     }
 
-    public static function fromTypoScriptConfiguration(TypoScriptConfiguration $solrConfiguration): Grouping
+    public static function fromTypoScriptConfiguration(TypoScriptConfiguration $meilisearchConfiguration): Grouping
     {
-        if (!$solrConfiguration->getIsSearchGroupingEnabled()) {
+        if (!$meilisearchConfiguration->getIsSearchGroupingEnabled()) {
             return new Grouping(false);
         }
 
@@ -129,10 +129,10 @@ class Grouping extends AbstractDeactivatable implements ParameterBuilderInterfac
         $queries = [];
         $sortings = [];
 
-        $resultsPerGroup = $solrConfiguration->getSearchGroupingHighestGroupResultsLimit();
-        $configuredGroups = $solrConfiguration->getSearchGroupingGroupsConfiguration();
-        $numberOfGroups = $solrConfiguration->getSearchGroupingNumberOfGroups();
-        $sortBy = $solrConfiguration->getSearchGroupingSortBy();
+        $resultsPerGroup = $meilisearchConfiguration->getSearchGroupingHighestGroupResultsLimit();
+        $configuredGroups = $meilisearchConfiguration->getSearchGroupingGroupsConfiguration();
+        $numberOfGroups = $meilisearchConfiguration->getSearchGroupingNumberOfGroups();
+        $sortBy = $meilisearchConfiguration->getSearchGroupingSortBy();
 
         foreach ($configuredGroups as $groupConfiguration) {
             if (isset($groupConfiguration['field'])) {

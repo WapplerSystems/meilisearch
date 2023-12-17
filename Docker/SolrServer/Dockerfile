@@ -1,24 +1,24 @@
-FROM solr:9.3.0
-MAINTAINER dkd Internet Service GmbH <solr-eb-support@dkd.de>
+FROM meilisearch:9.3.0
+MAINTAINER dkd Internet Service GmbH <meilisearch-eb-support@dkd.de>
 ENV TERM linux
 
 ARG SOLR_UNIX_UID="8983"
 ARG SOLR_UNIX_GID="8983"
 
 USER root
-RUN rm -fR /opt/solr/server/solr/* \
-  && usermod --non-unique --uid "${SOLR_UNIX_UID}" solr \
-  && groupmod --non-unique --gid "${SOLR_UNIX_GID}" solr \
-  && chown -R solr:solr /var/solr /opt/solr \
+RUN rm -fR /opt/meilisearch/server/meilisearch/* \
+  && usermod --non-unique --uid "${SOLR_UNIX_UID}" meilisearch \
+  && groupmod --non-unique --gid "${SOLR_UNIX_GID}" meilisearch \
+  && chown -R meilisearch:meilisearch /var/meilisearch /opt/meilisearch \
   && apt update && apt upgrade -y && apt install sudo -y \
-  && echo "solr ALL=NOPASSWD: /docker-entrypoint-initdb.d/as-sudo/*" > /etc/sudoers.d/solr \
-  && echo "# EXT:meilisearch relevant changes: " >> /etc/default/solr.in.sh \
-    && echo "SOLR_ENABLE_REMOTE_STREAMING=true" >> /etc/default/solr.in.sh \
-    && echo "SOLR_ENABLE_STREAM_BODY=true" >> /etc/default/solr.in.sh \
-    && echo "# END: EXT:meilisearch" >> /etc/default/solr.in.sh
+  && echo "meilisearch ALL=NOPASSWD: /docker-entrypoint-initdb.d/as-sudo/*" > /etc/sudoers.d/meilisearch \
+  && echo "# EXT:meilisearch relevant changes: " >> /etc/default/meilisearch.in.sh \
+    && echo "SOLR_ENABLE_REMOTE_STREAMING=true" >> /etc/default/meilisearch.in.sh \
+    && echo "SOLR_ENABLE_STREAM_BODY=true" >> /etc/default/meilisearch.in.sh \
+    && echo "# END: EXT:meilisearch" >> /etc/default/meilisearch.in.sh
 
-COPY Docker/SolrServer/docker-entrypoint-initdb.d/ /docker-entrypoint-initdb.d
-USER solr
+COPY Docker/MeilisearchServer/docker-entrypoint-initdb.d/ /docker-entrypoint-initdb.d
+USER meilisearch
 
-COPY --chown=solr:solr Resources/Private/Solr/ /var/solr/data
-RUN mkdir -p /var/solr/data/data
+COPY --chown=meilisearch:meilisearch Resources/Private/Meilisearch/ /var/meilisearch/data
+RUN mkdir -p /var/meilisearch/data/data

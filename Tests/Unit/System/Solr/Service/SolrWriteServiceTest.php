@@ -13,9 +13,9 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace WapplerSystems\Meilisearch\Tests\Unit\System\Solr\Service;
+namespace WapplerSystems\Meilisearch\Tests\Unit\System\Meilisearch\Service;
 
-use WapplerSystems\Meilisearch\System\Solr\Service\SolrWriteService;
+use WapplerSystems\Meilisearch\System\Meilisearch\Service\MeilisearchWriteService;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Solarium\Client;
@@ -24,16 +24,16 @@ use Solarium\QueryType\Update\Query\Query;
 use Solarium\QueryType\Update\Result;
 
 /**
- * Tests the WapplerSystems\Meilisearch\SolrService class
+ * Tests the WapplerSystems\Meilisearch\MeilisearchService class
  *
  * @author Jens Jacobsen <typo3@jens-jacobsen.de>
  */
-class SolrWriteServiceTest extends SetUpUnitTestCase
+class MeilisearchWriteServiceTest extends SetUpUnitTestCase
 {
     protected Response|MockObject $responseMock;
     protected Result|MockObject $resultMock;
     protected Client|MockObject $clientMock;
-    protected SolrWriteService $service;
+    protected MeilisearchWriteService $service;
 
     protected function setUp(): void
     {
@@ -43,7 +43,7 @@ class SolrWriteServiceTest extends SetUpUnitTestCase
         $this->resultMock->expects(self::any())->method('getResponse')->willReturn($this->responseMock);
         $this->clientMock = $this->createMock(Client::class);
 
-        $this->service = new SolrWriteService($this->clientMock);
+        $this->service = new MeilisearchWriteService($this->clientMock);
         parent::setUp();
     }
 

@@ -28,7 +28,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class SearchResultBuilder
 {
     /**
-     * This method is used to wrap the original solr document instance in an instance of the configured SearchResult
+     * This method is used to wrap the original meilisearch document instance in an instance of the configured SearchResult
      * class.
      */
     public function fromApacheMeilisearchDocument(Document $originalDocument): SearchResult

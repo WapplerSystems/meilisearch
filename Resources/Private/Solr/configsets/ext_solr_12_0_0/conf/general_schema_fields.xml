@@ -273,7 +273,7 @@
 	<dynamicField name="*_currency"  type="currency"  indexed="true" stored="true" multiValued="false" />
 
 	<!--
-		The following causes solr to ignore any fields that don't already
+		The following causes meilisearch to ignore any fields that don't already
 		match an existing field name or dynamic field, rather than
 		reporting them as an error.
 	-->

@@ -38,10 +38,10 @@ class SiteHashServiceTest extends SetUpUnitTestCase
     {
         return [
             'siteHashDisabled' => ['*', '*'],
-            'allSitesInSystem' => ['__all', 'solrtesta.local,solrtestb.local'],
-            'currentSiteOnly' => ['__current_site', 'solrtesta.local'],
-            'emptyIsFallingBackToCurrentSiteOnly' => ['', 'solrtesta.local'],
-            'nullIsFallingBackToCurrentSiteOnly' => [null, 'solrtesta.local'],
+            'allSitesInSystem' => ['__all', 'meilisearchtesta.local,meilisearchtestb.local'],
+            'currentSiteOnly' => ['__current_site', 'meilisearchtesta.local'],
+            'emptyIsFallingBackToCurrentSiteOnly' => ['', 'meilisearchtesta.local'],
+            'nullIsFallingBackToCurrentSiteOnly' => [null, 'meilisearchtesta.local'],
         ];
     }
 
@@ -54,17 +54,17 @@ class SiteHashServiceTest extends SetUpUnitTestCase
         $siteLanguageMock = $this->createMock(SiteLanguage::class);
         $siteLanguageMock->method('getLanguageId')->willReturn(0);
 
-        $siteConfiguration = ['solr_enabled_read' => 1, 'solr_core_read' => 'core_en'];
+        $siteConfiguration = ['meilisearch_enabled_read' => 1, 'meilisearch_core_read' => 'core_en'];
 
         $baseAMock = $this->createMock(UriInterface::class);
-        $baseAMock->method('getHost')->willReturn('solrtesta.local');
+        $baseAMock->method('getHost')->willReturn('meilisearchtesta.local');
         $siteA = $this->createMock(Site::class);
         $siteA->method('getBase')->willReturn($baseAMock);
         $siteA->method('getLanguages')->willReturn([$siteLanguageMock]);
         $siteA->method('getConfiguration')->willReturn($siteConfiguration);
 
         $baseBMock = $this->createMock(UriInterface::class);
-        $baseBMock->method('getHost')->willReturn('solrtestb.local');
+        $baseBMock->method('getHost')->willReturn('meilisearchtestb.local');
         $siteB = $this->createMock(Site::class);
         $siteB->method('getBase')->willReturn($baseBMock);
         $siteB->method('getLanguages')->willReturn([$siteLanguageMock]);

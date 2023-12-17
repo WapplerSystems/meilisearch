@@ -86,7 +86,7 @@ class FrequentlySearchedViewHelper extends AbstractMeilisearchViewHelper
      */
     protected static function getInitializedCache(): ?FrontendInterface
     {
-        $cacheIdentifier = 'tx_solr';
+        $cacheIdentifier = 'tx_meilisearch';
         try {
             /** @var FrontendInterface $cacheInstance */
             $cacheInstance = GeneralUtility::makeInstance(CacheManager::class)->getCache($cacheIdentifier);
@@ -117,7 +117,7 @@ class FrequentlySearchedViewHelper extends AbstractMeilisearchViewHelper
                 $frequentSearches[] = [
                     'q' => htmlspecialchars_decode((string)$term),
                     'hits' => $hits,
-                    'style' => 'font-size: ' . $size . 'px', 'class' => 'tx-solr-frequent-term-' . $size,
+                    'style' => 'font-size: ' . $size . 'px', 'class' => 'tx-meilisearch-frequent-term-' . $size,
                     'size' => $size,
                 ];
             }

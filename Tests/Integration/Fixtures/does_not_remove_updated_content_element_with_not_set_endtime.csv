@@ -4,6 +4,6 @@
 "tt_content",
 ,"uid","pid","colPos","CType","bodytext"
 ,88,2,0,"text","will stay! still present after update!"
-"tx_solr_indexqueue_item",
+"tx_meilisearch_indexqueue_item",
 ,"uid","root","item_type","item_uid","indexing_configuration","errors","indexed","changed"
 ,4711,1,"pages",2,"pages","",1,1449151778

@@ -22,7 +22,7 @@ use WapplerSystems\Meilisearch\System\DateTime\FormatService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Parser to build solr range queries from tx_solr[filter]
+ * Parser to build meilisearch range queries from tx_meilisearch[filter]
  *
  * @author Markus Goldbach <markus.goldbach@dkd.de>
  * @copyright (c) 2010-2011 Markus Goldbach <markus.goldbach@dkd.de>

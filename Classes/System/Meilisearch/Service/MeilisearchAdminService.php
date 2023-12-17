@@ -51,7 +51,7 @@ class MeilisearchAdminService extends AbstractMeilisearchService
 
     protected ?ResponseAdapter $pluginsData = null;
 
-    protected ?string $solrconfigName = null;
+    protected ?string $meilisearchconfigName = null;
 
     protected SchemaParser $schemaParser;
 
@@ -160,24 +160,24 @@ class MeilisearchAdminService extends AbstractMeilisearchService
     }
 
     /**
-     * Gets the name of the solrconfig.xml file installed and in use on the Meilisearch
+     * Gets the name of the meilisearchconfig.xml file installed and in use on the Meilisearch
      * server.
      *
-     * @return string|null Name of the active solrconfig.xml
+     * @return string|null Name of the active meilisearchconfig.xml
      */
     public function getMeilisearchconfigName(): ?string
     {
-        if (is_null($this->solrconfigName)) {
-            $solrconfigXmlUrl = $this->_constructUrl(self::FILE_SERVLET, ['file' => 'solrconfig.xml']);
-            $response = $this->_sendRawGet($solrconfigXmlUrl);
-            $solrconfigXml = simplexml_load_string($response->getRawResponse());
-            if ($solrconfigXml === false) {
-                throw new InvalidArgumentException('No valid xml response from schema file: ' . $solrconfigXmlUrl);
+        if (is_null($this->meilisearchconfigName)) {
+            $meilisearchconfigXmlUrl = $this->_constructUrl(self::FILE_SERVLET, ['file' => 'meilisearchconfig.xml']);
+            $response = $this->_sendRawGet($meilisearchconfigXmlUrl);
+            $meilisearchconfigXml = simplexml_load_string($response->getRawResponse());
+            if ($meilisearchconfigXml === false) {
+                throw new InvalidArgumentException('No valid xml response from schema file: ' . $meilisearchconfigXmlUrl);
             }
-            $this->solrconfigName = (string)$solrconfigXml->attributes()->name;
+            $this->meilisearchconfigName = (string)$meilisearchconfigXml->attributes()->name;
         }
 
-        return $this->solrconfigName;
+        return $this->meilisearchconfigName;
     }
 
     /**
@@ -186,9 +186,9 @@ class MeilisearchAdminService extends AbstractMeilisearchService
     public function getMeilisearchServerVersion(): string
     {
         $systemInformation = $this->getSystemInformation();
-        // don't know why $systemInformation->lucene->solr-spec-version won't work
+        // don't know why $systemInformation->lucene->meilisearch-spec-version won't work
         $luceneInformation = (array)$systemInformation->lucene;
-        return $luceneInformation['solr-spec-version'] ?? '';
+        return $luceneInformation['meilisearch-spec-version'] ?? '';
     }
 
     /**

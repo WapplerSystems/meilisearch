@@ -18,7 +18,7 @@ namespace WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * The Sorting ParameterProvider is responsible to build the solr query parameters
+ * The Sorting ParameterProvider is responsible to build the meilisearch query parameters
  * that are needed for the sorting.
  */
 class Sortings extends AbstractDeactivatable

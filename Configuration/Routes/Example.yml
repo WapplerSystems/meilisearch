@@ -1,6 +1,6 @@
 routeEnhancers:
   Products:
-    type: SolrFacetMaskAndCombineEnhancer
+    type: MeilisearchFacetMaskAndCombineEnhancer
     limitToPages:
       - 10
     extensionKey: tx_meilisearch
@@ -9,7 +9,7 @@ routeEnhancers:
       replaceCharacters:
         ' ': '_'
       query:
-        # To reduce the amount of parameters you can force Solr to concat the values.
+        # To reduce the amount of parameters you can force Meilisearch to concat the values.
         # For example you have following filter:
         #   tx_meilisearch[filter][0]=taste:sweet&tx_meilisearch[filter][1]=taste:sour&tx_meilisearch[filter][2]=taste:matcha
         #
@@ -26,7 +26,7 @@ routeEnhancers:
         concat: true
         # valueSeparator: ','
 
-        # You can tell Solr to mask query facets. This feature require the map below
+        # You can tell Meilisearch to mask query facets. This feature require the map below
         #
         # For example you have following filter:
         #   tx_meilisearch[filter][0]=taste:sweet&tx_meilisearch[filter][1]=taste:sour&tx_meilisearch[filter][2]=taste:matcha

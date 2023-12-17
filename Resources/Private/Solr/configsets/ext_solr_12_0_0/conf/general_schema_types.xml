@@ -5,8 +5,8 @@
 		The "name" attribute is just a label to be used by field definitions.
 		The "class" attribute and any other attributes determine the real
 		behavior of the fieldType.
-			Class names starting with "solr" refer to java classes in the
-		org.apache.solr.analysis package.
+			Class names starting with "meilisearch" refer to java classes in the
+		org.apache.meilisearch.analysis package.
 
 	-->
 
@@ -15,12 +15,12 @@
 		limits compression (if enabled in the derived fields) to values which
 		exceed a certain size (in characters).
 	-->
-	<fieldType name="string"  class="solr.StrField"  sortMissingLast="true" omitNorms="true" useDocValuesAsStored="false" />
+	<fieldType name="string"  class="meilisearch.StrField"  sortMissingLast="true" omitNorms="true" useDocValuesAsStored="false" />
 
 	<!-- boolean type: "true" or "false" -->
-	<fieldType name="boolean" class="solr.BoolField" sortMissingLast="true" omitNorms="true"/>
+	<fieldType name="boolean" class="meilisearch.BoolField" sortMissingLast="true" omitNorms="true"/>
 	<!--Binary data type. The data should be sent/retrieved in as Base64 encoded Strings -->
-	<fieldType name="binary" class="solr.BinaryField"/>
+	<fieldType name="binary" class="meilisearch.BinaryField"/>
 
 	<!-- The optional sortMissingLast and sortMissingFirst attributes are
 			currently supported on types that are sorted internally as strings.
@@ -39,10 +39,10 @@
 	<!--
 		Default numeric field types. For faster range queries, consider the tint/tfloat/tlong/tdouble types.
 	-->
-	<fieldType name="integer" class="solr.IntPointField"    omitNorms="true" useDocValuesAsStored="false" />
-	<fieldType name="float"   class="solr.FloatPointField"  omitNorms="true" useDocValuesAsStored="false" />
-	<fieldType name="long"    class="solr.LongPointField"   omitNorms="true" useDocValuesAsStored="false" />
-	<fieldType name="double"  class="solr.DoublePointField" omitNorms="true" useDocValuesAsStored="false" />
+	<fieldType name="integer" class="meilisearch.IntPointField"    omitNorms="true" useDocValuesAsStored="false" />
+	<fieldType name="float"   class="meilisearch.FloatPointField"  omitNorms="true" useDocValuesAsStored="false" />
+	<fieldType name="long"    class="meilisearch.LongPointField"   omitNorms="true" useDocValuesAsStored="false" />
+	<fieldType name="double"  class="meilisearch.DoublePointField" omitNorms="true" useDocValuesAsStored="false" />
 
 	<!--
 		The format for this date field is of the form 1995-12-31T23:59:59Z, and
@@ -67,9 +67,9 @@
 
 		Note: For faster range queries, consider the tdate type
 	-->
-	<fieldType name="date" class="solr.DatePointField" sortMissingLast="true" omitNorms="true" useDocValuesAsStored="false" />
+	<fieldType name="date" class="meilisearch.DatePointField" sortMissingLast="true" omitNorms="true" useDocValuesAsStored="false" />
 
-	<!-- solr.TextField allows the specification of custom text analyzers
+	<!-- meilisearch.TextField allows the specification of custom text analyzers
 		specified as a tokenizer and a list of token filters. Different
 		analyzers may be specified for indexing and querying.
 
@@ -78,12 +78,12 @@
 		matching across fields.
 
 		For more info on customizing your analyzer chain, please see
-		http://wiki.apache.org/solr/AnalyzersTokenizersTokenFilters
+		http://wiki.apache.org/meilisearch/AnalyzersTokenizersTokenFilters
 	-->
 
 	<!-- One can also specify an existing Analyzer class that has a
 		default constructor via the class attribute on the analyzer element
-	<fieldType name="text_greek" class="solr.TextField">
+	<fieldType name="text_greek" class="meilisearch.TextField">
 		<analyzer class="org.apache.lucene.analysis.el.GreekAnalyzer"/>
 	</fieldType>
 	-->
@@ -92,19 +92,19 @@
 		With various TokenFilterFactories to produce a sortable field
 		that does not include some properties of the source text
 	-->
-	<fieldType name="textSort" class="solr.TextField" sortMissingLast="true" omitNorms="true">
+	<fieldType name="textSort" class="meilisearch.TextField" sortMissingLast="true" omitNorms="true">
 		<analyzer>
 			<!-- KeywordTokenizer does no actual tokenizing, so the entire
 				input string is preserved as a single token
 			-->
-			<tokenizer class="solr.KeywordTokenizerFactory"/>
+			<tokenizer class="meilisearch.KeywordTokenizerFactory"/>
 
 			<!-- The LowerCase TokenFilter does what you expect, which can be
 				when you want your sorting to be case insensitive
 			-->
-			<!-- <filter class="solr.LowerCaseFilterFactory" /> -->
+			<!-- <filter class="meilisearch.LowerCaseFilterFactory" /> -->
 			<!-- The TrimFilter removes any leading or trailing whitespace -->
-			<filter class="solr.TrimFilterFactory" />
+			<filter class="meilisearch.TrimFilterFactory" />
 			<!-- The PatternReplaceFilter gives you the flexibility to use
 				Java Regular expression to replace any sequence of characters
 				matching a pattern with an arbitrary replacement string,
@@ -116,7 +116,7 @@
 
 				http://java.sun.com/j2se/1.5.0/docs/api/java/util/regex/package-summary.html
 
-			<filter class="solr.PatternReplaceFilterFactory"
+			<filter class="meilisearch.PatternReplaceFilterFactory"
 					pattern="(^\p{Punct}+)" replacement="" replace="all"
 			/>
 			-->
@@ -126,61 +126,61 @@
 	<!--
 		A text field that only splits on whitespace for exact matching of words
 	-->
-	<fieldType name="textWhiteSpaceTokenized" class="solr.TextField" positionIncrementGap="100">
+	<fieldType name="textWhiteSpaceTokenized" class="meilisearch.TextField" positionIncrementGap="100">
 		<analyzer>
-			<tokenizer class="solr.WhitespaceTokenizerFactory"/>
+			<tokenizer class="meilisearch.WhitespaceTokenizerFactory"/>
 
-			<filter class="solr.LowerCaseFilterFactory"/>
-			<filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
+			<filter class="meilisearch.LowerCaseFilterFactory"/>
+			<filter class="meilisearch.RemoveDuplicatesTokenFilterFactory"/>
 		</analyzer>
 	</fieldType>
 
-	<fieldType name="textPath" class="solr.TextField" positionIncrementGap="100">
+	<fieldType name="textPath" class="meilisearch.TextField" positionIncrementGap="100">
 		<analyzer type="index">
-			<tokenizer class="solr.PathHierarchyTokenizerFactory"/>
+			<tokenizer class="meilisearch.PathHierarchyTokenizerFactory"/>
 		</analyzer>
 	</fieldType>
 
-	<fieldType name="stringEdgeNgram" class="solr.TextField" positionIncrementGap="100">
+	<fieldType name="stringEdgeNgram" class="meilisearch.TextField" positionIncrementGap="100">
 		<analyzer type="index">
-			<tokenizer class="solr.KeywordTokenizerFactory"/>
-			<filter class="solr.LowerCaseFilterFactory"/>
-			<filter class="solr.EdgeNGramFilterFactory" minGramSize="2" maxGramSize="32" preserveOriginal="true"/>
+			<tokenizer class="meilisearch.KeywordTokenizerFactory"/>
+			<filter class="meilisearch.LowerCaseFilterFactory"/>
+			<filter class="meilisearch.EdgeNGramFilterFactory" minGramSize="2" maxGramSize="32" preserveOriginal="true"/>
 		</analyzer>
 		<analyzer type="query">
-			<tokenizer class="solr.KeywordTokenizerFactory"/>
-			<filter class="solr.LowerCaseFilterFactory"/>
+			<tokenizer class="meilisearch.KeywordTokenizerFactory"/>
+			<filter class="meilisearch.LowerCaseFilterFactory"/>
 		</analyzer>
 	</fieldType>
 
-	<fieldType name="textEdgeNgram" class="solr.TextField" positionIncrementGap="100">
+	<fieldType name="textEdgeNgram" class="meilisearch.TextField" positionIncrementGap="100">
 		<analyzer type="index">
-			<tokenizer class="solr.StandardTokenizerFactory"/>
-			<filter class="solr.LowerCaseFilterFactory"/>
-			<filter class="solr.EdgeNGramFilterFactory" minGramSize="3" maxGramSize="15"/>
+			<tokenizer class="meilisearch.StandardTokenizerFactory"/>
+			<filter class="meilisearch.LowerCaseFilterFactory"/>
+			<filter class="meilisearch.EdgeNGramFilterFactory" minGramSize="3" maxGramSize="15"/>
 		</analyzer>
 		<analyzer type="query">
-			<tokenizer class="solr.StandardTokenizerFactory"/>
-			<filter class="solr.LowerCaseFilterFactory"/>
+			<tokenizer class="meilisearch.StandardTokenizerFactory"/>
+			<filter class="meilisearch.LowerCaseFilterFactory"/>
 		</analyzer>
 	</fieldType>
 
-	<fieldType name="textNgram" class="solr.TextField" positionIncrementGap="100">
+	<fieldType name="textNgram" class="meilisearch.TextField" positionIncrementGap="100">
 		<analyzer type="index">
-			<tokenizer class="solr.StandardTokenizerFactory"/>
-			<filter class="solr.NGramFilterFactory" minGramSize="2" maxGramSize="3"/>
+			<tokenizer class="meilisearch.StandardTokenizerFactory"/>
+			<filter class="meilisearch.NGramFilterFactory" minGramSize="2" maxGramSize="3"/>
 		</analyzer>
 		<analyzer type="query">
-			<tokenizer class="solr.StandardTokenizerFactory"/>
-			<filter class="solr.LowerCaseFilterFactory"/>
+			<tokenizer class="meilisearch.StandardTokenizerFactory"/>
+			<filter class="meilisearch.LowerCaseFilterFactory"/>
 		</analyzer>
 	</fieldType>
 
-	<fieldType name="phonetic" stored="false" indexed="true" class="solr.TextField" >
+	<fieldType name="phonetic" stored="false" indexed="true" class="meilisearch.TextField" >
 		<analyzer>
-			<tokenizer class="solr.StandardTokenizerFactory"/>
+			<tokenizer class="meilisearch.StandardTokenizerFactory"/>
 
-			<filter class="solr.DoubleMetaphoneFilterFactory" inject="false"/>
+			<filter class="meilisearch.DoubleMetaphoneFilterFactory" inject="false"/>
 		</analyzer>
 	</fieldType>
 
@@ -196,7 +196,7 @@
 		for the same version of the index, use a dynamicField and
 		change the name
 	-->
-	<fieldType name="random" class="solr.RandomSortField" indexed="true" />
+	<fieldType name="random" class="meilisearch.RandomSortField" indexed="true" />
 
 	<!--
 		This point type indexes the coordinates as separate fields (subFields)
@@ -204,24 +204,24 @@
 		Example: with subFieldSuffix="_doubleS" the coordinates will be indexed
 			in fields myLocation_0_doubleS,myLocation_1_doubleS
 	 -->
-	<fieldType name="point" class="solr.PointType" dimension="2" subFieldSuffix="_doubleS" />
+	<fieldType name="point" class="meilisearch.PointType" dimension="2" subFieldSuffix="_doubleS" />
 
 	<!-- A specialized field for geospatial search. If indexed, this fieldType must not be multivalued. -->
-	<fieldType name="location" class="solr.LatLonPointSpatialField" />
+	<fieldType name="location" class="meilisearch.LatLonPointSpatialField" />
 
 	<!--
 		An alternative geospatial field type. It supports multiValued and polygon shapes.
-		For more information about this see http://wiki.apache.org/solr/SolrAdaptersForLuceneSpatial4
+		For more information about this see http://wiki.apache.org/meilisearch/MeilisearchAdaptersForLuceneSpatial4
 	-->
-	<fieldType name="locationRpt" class="solr.SpatialRecursivePrefixTreeFieldType"
+	<fieldType name="locationRpt" class="meilisearch.SpatialRecursivePrefixTreeFieldType"
 			   geo="true" distErrPct="0.025" maxDistErr="0.000009" distanceUnits="degrees"  />
 
-	<fieldType name="currency" class="solr.CurrencyFieldType" amountLongSuffix="_longS" codeStrSuffix="_stringS" defaultCurrency="USD" currencyConfig="currency.xml" />
+	<fieldType name="currency" class="meilisearch.CurrencyFieldType" amountLongSuffix="_longS" codeStrSuffix="_stringS" defaultCurrency="USD" currencyConfig="currency.xml" />
 
 
 	<!-- since fields of this type are by default not stored or indexed, any data added to
 		them will be ignored outright
 	-->
-	<fieldType name="ignored" stored="false" indexed="false" class="solr.StrField" />
+	<fieldType name="ignored" stored="false" indexed="false" class="meilisearch.StrField" />
 
 </types>

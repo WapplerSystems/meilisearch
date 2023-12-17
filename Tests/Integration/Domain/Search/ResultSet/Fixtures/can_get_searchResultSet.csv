@@ -10,11 +10,11 @@ page = PAGE
 page.typeNum = 0
 config.index_enable = 1
 
-plugin.tx_solr {
+plugin.tx_meilisearch {
     enabled = 1
 
     index {
-        // assigns processing instructions to Solr fields during indexing, Solr field = processing instruction
+        // assigns processing instructions to Meilisearch fields during indexing, Meilisearch field = processing instruction
         fieldProcessingInstructions {
             changed = timestampToIsoDate
             created = timestampToIsoDate

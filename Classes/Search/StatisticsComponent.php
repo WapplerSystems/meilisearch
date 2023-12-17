@@ -54,9 +54,9 @@ class StatisticsComponent
 
     public function writeStatisticsAfterSearch(AfterSearchHasBeenExecutedEvent $event): void
     {
-        $solrConfiguration = $event->getSearchRequest()->getContextTypoScriptConfiguration();
+        $meilisearchConfiguration = $event->getSearchRequest()->getContextTypoScriptConfiguration();
 
-        if (!$solrConfiguration->getStatistics()) {
+        if (!$meilisearchConfiguration->getStatistics()) {
             return;
         }
         // Write the statistics
