@@ -20,7 +20,7 @@ namespace WapplerSystems\Meilisearch\Tests\Unit;
 use WapplerSystems\Meilisearch\Domain\Search\Query\SearchQuery;
 use WapplerSystems\Meilisearch\Search;
 use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
-use WapplerSystems\Meilisearch\System\Meilisearch\Service\MeilisearchReadService;
+use WapplerSystems\Meilisearch\System\Meilisearch\Service\MeilisearchService;
 use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchConnection;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -32,9 +32,9 @@ class SearchTest extends SetUpUnitTestCase
     protected MeilisearchConnection|MockObject $meilisearchConnectionMock;
 
     /**
-     * @var MeilisearchReadService|MockObject
+     * @var MeilisearchService|MockObject
      */
-    protected MeilisearchReadService|MockObject $meilisearchReadServiceMock;
+    protected MeilisearchService|MockObject $meilisearchReadServiceMock;
 
     /**
      * @var Search
@@ -44,13 +44,13 @@ class SearchTest extends SetUpUnitTestCase
     protected function setUp(): void
     {
         //        $this->meilisearchReadServiceMock = $this->createMock(MeilisearchReadService::class);
-        $this->meilisearchReadServiceMock = $this->getMockBuilder(MeilisearchReadService::class)
+        $this->meilisearchReadServiceMock = $this->getMockBuilder(MeilisearchService::class)
             ->disableOriginalConstructor()
             ->onlyMethods(['search'])
             ->getMock();
 
         $this->meilisearchConnectionMock = $this->createMock(MeilisearchConnection::class);
-        $this->meilisearchConnectionMock->expects(self::any())->method('getReadService')->willReturn($this->meilisearchReadServiceMock);
+        $this->meilisearchConnectionMock->expects(self::any())->method('getService')->willReturn($this->meilisearchReadServiceMock);
         $this->search = new Search($this->meilisearchConnectionMock);
         parent::setUp();
     }

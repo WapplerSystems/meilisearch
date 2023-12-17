@@ -15,10 +15,12 @@
 
 namespace WapplerSystems\Meilisearch\Controller\Backend\Search;
 
+use TYPO3\CMS\Core\Utility\DebugUtility;
 use WapplerSystems\Meilisearch\Api;
 use WapplerSystems\Meilisearch\Domain\Search\MeilisearchDocument\Repository as MeilisearchDocumentRepository;
 use WapplerSystems\Meilisearch\Domain\Search\Statistics\StatisticsRepository;
 use WapplerSystems\Meilisearch\Domain\Site\Exception\UnexpectedTYPO3SiteInitializationException;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchConnection;
 use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
 use WapplerSystems\Meilisearch\System\Validator\Path;
 use Doctrine\DBAL\Exception as DBALException;
@@ -32,7 +34,7 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
  */
 class InfoModuleController extends AbstractModuleController
 {
-    protected MeilisearchDocumentRepository $apacheMeilisearchDocumentRepository;
+    protected MeilisearchDocumentRepository $meilisearchDocumentRepository;
 
     /**
      * @inheritDoc
@@ -40,7 +42,7 @@ class InfoModuleController extends AbstractModuleController
     protected function initializeAction(): void
     {
         parent::initializeAction();
-        $this->apacheMeilisearchDocumentRepository = GeneralUtility::makeInstance(MeilisearchDocumentRepository::class);
+        $this->meilisearchDocumentRepository = GeneralUtility::makeInstance(MeilisearchDocumentRepository::class);
     }
 
     /**
@@ -75,7 +77,7 @@ class InfoModuleController extends AbstractModuleController
      */
     public function documentsDetailsAction(string $type, int $uid, int $pageId, int $languageUid): ResponseInterface
     {
-        $documents = $this->apacheMeilisearchDocumentRepository->findByTypeAndPidAndUidAndLanguageId($type, $uid, $pageId, $languageUid);
+        $documents = $this->meilisearchDocumentRepository->findByTypeAndPidAndUidAndLanguageId($type, $uid, $pageId, $languageUid);
         $this->view->assign('documents', $documents);
         return $this->getModuleTemplateResponse();
     }
@@ -99,29 +101,20 @@ class InfoModuleController extends AbstractModuleController
             return;
         }
 
-        $alreadyListedConnections = [];
         foreach ($connections as $connection) {
-            $coreAdmin = $connection->getAdminService();
-            $coreUrl = (string)$coreAdmin;
-            if (in_array($coreUrl, $alreadyListedConnections)) {
-                continue;
-            }
-            $alreadyListedConnections[] = $coreUrl;
 
-            if ($coreAdmin->ping()) {
-                $connectedHosts[] = $coreUrl;
+            $service = $connection->getService();
+
+            if ($service->getClient()->isHealthy()) {
+                $connectedHosts[] = $connection->getUrl();
             } else {
-                $missingHosts[] = $coreUrl;
+                $missingHosts[] = $connection->getUrl();
             }
 
-            if (!$path->isValidMeilisearchPath($coreAdmin->getCorePath())) {
-                $invalidPaths[] = $coreAdmin->getCorePath();
-            }
         }
 
         $this->view->assignMultiple([
             'site' => $this->selectedSite,
-            'apiKey' => Api::getApiKey(),
             'connectedHosts' => $connectedHosts,
             'missingHosts' => $missingHosts,
             'invalidPaths' => $invalidPaths,
@@ -204,26 +197,20 @@ class InfoModuleController extends AbstractModuleController
 
         $meilisearchCoreConnections = $this->meilisearchConnectionManager->getConnectionsBySite($this->selectedSite);
         foreach ($meilisearchCoreConnections as $meilisearchCoreConnection) {
-            $coreAdmin = $meilisearchCoreConnection->getAdminService();
+            $service = $meilisearchCoreConnection->getService();
+            $client = $service->getClient();
+
 
             $indexFieldsInfo = [
-                'corePath' => $coreAdmin->getCorePath(),
             ];
-            if ($coreAdmin->ping()) {
-                $lukeData = $coreAdmin->getLukeMetaData();
-                $limitNote = '';
+            if ($client->isHealthy()) {
 
-                if (isset($lukeData->index->numDocs) && $lukeData->index->numDocs > 20000) {
-                    $limitNote = '<em>Too many terms</em>';
-                } elseif (isset($lukeData->index->numDocs)) {
-                    $limitNote = 'Nothing indexed';
-                    // below limit, so we can get more data
-                    // Note: we use 2 since 1 fails on Ubuntu Hardy.
-                    $lukeData = $coreAdmin->getLukeMetaData(2);
-                }
+                DebugUtility::debug($client->getIndexes()->count());
 
-                $fields = $this->getFields($lukeData, $limitNote);
-                $coreMetrics = $this->getCoreMetrics($lukeData, $fields);
+                continue;
+
+
+
 
                 $indexFieldsInfo['noError'] = 'OK';
                 $indexFieldsInfo['fields'] = $fields;
@@ -233,11 +220,11 @@ class InfoModuleController extends AbstractModuleController
 
                 $this->addFlashMessage(
                     '',
-                    'Unable to contact Meilisearch server: ' . $this->selectedSite->getLabel() . ' ' . $coreAdmin->getCorePath(),
+                    'Unable to contact Meilisearch server: ' . $this->selectedSite->getLabel(),
                     ContextualFeedbackSeverity::ERROR
                 );
             }
-            $indexFieldsInfoByCorePaths[$coreAdmin->getCorePath()] = $indexFieldsInfo;
+            $indexFieldsInfoByCorePaths[$service->getCorePath()] = $indexFieldsInfo;
         }
         $this->view->assign('indexFieldsInfoByCorePaths', $indexFieldsInfoByCorePaths);
     }
@@ -253,23 +240,25 @@ class InfoModuleController extends AbstractModuleController
         $documentsByCoreAndType = [];
         $alreadyListedCores = [];
         foreach ($meilisearchCoreConnections as $languageId => $meilisearchCoreConnection) {
-            $coreAdmin = $meilisearchCoreConnection->getAdminService();
+            $service = $meilisearchCoreConnection->getService();
+
+            continue;
 
             // Do not list cores twice when multiple languages use the same core
-            $url = (string)$coreAdmin;
+            $url = (string)$service;
             if (in_array($url, $alreadyListedCores)) {
                 continue;
             }
             $alreadyListedCores[] = $url;
 
-            $documents = $this->apacheMeilisearchDocumentRepository->findByPageIdAndByLanguageId($this->selectedPageUID, $languageId);
+            $documents = $this->meilisearchDocumentRepository->findByPageIdAndByLanguageId($this->selectedPageUID, $languageId);
 
             $documentsByType = [];
             foreach ($documents as $document) {
                 $documentsByType[$document['type']][] = $document;
             }
 
-            $documentsByCoreAndType[$languageId]['core'] = $coreAdmin;
+            $documentsByCoreAndType[$languageId]['core'] = $service;
             $documentsByCoreAndType[$languageId]['documents'] = $documentsByType;
         }
 

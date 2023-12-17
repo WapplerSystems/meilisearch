@@ -117,7 +117,7 @@ class Search
         $query->setStart($offset);
 
         try {
-            $response = $this->meilisearch->getReadService()->search($query);
+            $response = $this->meilisearch->getService()->search($query);
             if ($this->configuration->getLoggingQueryQueryString()) {
                 $this->logger->info(
                     'Querying Meilisearch, getting result',
@@ -157,7 +157,7 @@ class Search
         $meilisearchAvailable = false;
 
         try {
-            if (!$this->meilisearch->getReadService()->ping($useCache)) {
+            if (!$this->meilisearch->getService()->ping($useCache)) {
                 throw new Exception('Meilisearch Server not responding.', 1237475791);
             }
 

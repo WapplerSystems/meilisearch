@@ -94,13 +94,6 @@ defined('TYPO3') or die('Access denied.');
         ];
     }
 
-    // ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- #
-
-    // registering the eID scripts
-    // TODO move to suggest form modifier
-    $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['tx_meilisearch_api'] = ApiEid::class . '::main';
-
-    // ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- #
 
     // Register cache for frequent searches
 

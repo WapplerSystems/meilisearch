@@ -146,7 +146,7 @@ class MeilisearchConnectionTest extends SetUpUnitTestCase
         );
         $writeEndpoint = $readEndpoint;
         $meilisearchService = $this->getMeilisearchConnectionWithDummyConstructorArgs($readEndpoint, $writeEndpoint, $fakeConfiguration);
-        self::assertSame($expectedCoreName, $meilisearchService->getReadService()->getPrimaryEndpoint()->getCore());
+        self::assertSame($expectedCoreName, $meilisearchService->getService()->getPrimaryEndpoint()->getCore());
     }
 
     /**
@@ -171,7 +171,7 @@ class MeilisearchConnectionTest extends SetUpUnitTestCase
         );
         $writeEndpoint = $readEndpoint;
         $meilisearchService = $this->getMeilisearchConnectionWithDummyConstructorArgs($readEndpoint, $writeEndpoint);
-        self::assertSame($expectedCoreBasePath, $meilisearchService->getReadService()->getPrimaryEndpoint()->getPath());
+        self::assertSame($expectedCoreBasePath, $meilisearchService->getService()->getPrimaryEndpoint()->getPath());
     }
 
     /**

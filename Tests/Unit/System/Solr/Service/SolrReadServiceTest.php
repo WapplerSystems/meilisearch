@@ -18,7 +18,7 @@ namespace WapplerSystems\Meilisearch\Tests\Unit\System\Meilisearch\Service;
 use WapplerSystems\Meilisearch\Domain\Search\Query\SearchQuery;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
-use WapplerSystems\Meilisearch\System\Meilisearch\Service\MeilisearchReadService;
+use WapplerSystems\Meilisearch\System\Meilisearch\Service\MeilisearchService;
 use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchCommunicationException;
 use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchInternalServerErrorException;
 use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchUnavailableException;
@@ -40,7 +40,7 @@ class MeilisearchReadServiceTest extends SetUpUnitTestCase
     protected Request|MockObject $requestMock;
     protected Response|MockObject $responseMock;
     protected Client|MockObject $clientMock;
-    protected MeilisearchReadService $service;
+    protected MeilisearchService $service;
 
     protected function setUp(): void
     {
@@ -50,7 +50,7 @@ class MeilisearchReadServiceTest extends SetUpUnitTestCase
         $this->clientMock->expects(self::any())->method('createRequest')->willReturn($this->requestMock);
         $this->clientMock->expects(self::any())->method('executeRequest')->willReturn($this->responseMock);
 
-        $this->service = new MeilisearchReadService($this->clientMock);
+        $this->service = new MeilisearchService($this->clientMock);
         parent::setUp();
     }
 
@@ -128,14 +128,14 @@ class MeilisearchReadServiceTest extends SetUpUnitTestCase
     }
 
     /**
-     * @return MeilisearchReadService
+     * @return MeilisearchService
      */
     protected function getDefaultMeilisearchServiceWithMockedDependencies()
     {
         $clientMock = $this->createMock(Client::class);
         $fakeConfiguration = $this->createMock(TypoScriptConfiguration::class);
         $logManagerMock = $this->createMock(MeilisearchLogManager::class);
-        $meilisearchService = new MeilisearchReadService($clientMock, $fakeConfiguration, $logManagerMock);
+        $meilisearchService = new MeilisearchService($clientMock, $fakeConfiguration, $logManagerMock);
         return $meilisearchService;
     }
 }

@@ -47,6 +47,17 @@ $GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_host'] = [
     'displayCond' => 'FIELD:meilisearch_enabled:=:1',
 ];
 
+$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_masterKey'] = [
+    'label' => 'Master key',
+    'config' => [
+        'type' => 'input',
+        'default' => '',
+        'placeholder' => '',
+        'size' => 70,
+    ],
+    'displayCond' => 'FIELD:meilisearch_enabled:=:1',
+];
+
 $GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_port'] = [
     'label' => 'Port',
     'config' => [
@@ -60,7 +71,7 @@ $GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_port'] = [
 
 $GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_path'] = [
     'label' => 'URL path to Meilisearch server',
-    'description' => 'Must not contain "/meilisearch/"! Unless you have an additional "meilisearch" segment in your path like "http://localhost:8983/meilisearch/meilisearch/core_en".',
+    'description' => '',
     'config' => [
         'type' => 'input',
         'eval' => 'trim',
@@ -69,26 +80,8 @@ $GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_path'] = [
     'displayCond' => 'FIELD:meilisearch_enabled:=:1',
 ];
 
-$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_use_write_connection'] = [
-    'label' => 'Use different write connection',
-    'onChange' => 'reload',
-    'config' => [
-        'type' => 'check',
-        'renderType' => 'checkboxToggle',
-        'default' => 0,
-        'items' => [
-            [
-                'label' => '',
-                'labelChecked' => '',
-                'labelUnchecked' => '',
-            ],
-        ],
-    ],
-    'displayCond' => 'FIELD:meilisearch_enabled:=:1',
-];
 
-
-$GLOBALS['SiteConfiguration']['site']['palettes']['meilisearch']['showitem'] = 'meilisearch_scheme, meilisearch_port, --linebreak--, meilisearch_host, meilisearch_path';
+$GLOBALS['SiteConfiguration']['site']['palettes']['meilisearch']['showitem'] = 'meilisearch_scheme, meilisearch_port, --linebreak--, meilisearch_host, meilisearch_path, --linebreak--, meilisearch_masterKey';
 
 $GLOBALS['SiteConfiguration']['site']['types']['0']['showitem'] .= ',--div--;Meilisearch,meilisearch_enabled,--palette--;;meilisearch';
 

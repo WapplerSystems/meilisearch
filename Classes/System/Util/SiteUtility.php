@@ -65,17 +65,16 @@ class SiteUtility
      *
      * In addition, every property can be defined for the ```read``` and ```write``` scope.
      *
-     * The convention for property keys is "meilisearch_{propertyName}_{scope}". With the configuration "meilisearch_host_read" you define the host
+     * The convention for property keys is "meilisearch_{propertyName}_{scope}". With the configuration "meilisearch_host" you define the host
      * for the meilisearch read connection.
      */
     public static function getConnectionProperty(
         CoreSite $typo3Site,
         string $property,
         int $languageId,
-        string $scope,
         mixed $defaultValue = null,
     ): string|int|bool|null {
-        $value = self::getConnectionPropertyOrFallback($typo3Site, $property, $languageId, $scope);
+        $value = self::getConnectionPropertyOrFallback($typo3Site, $property, $languageId);
         if ($value === null) {
             return $defaultValue;
         }
@@ -89,35 +88,17 @@ class SiteUtility
         CoreSite $typo3Site,
         int $languageUid,
     ): ?array {
-        $meilisearchEnabled = self::getConnectionProperty($typo3Site, 'enabled', $languageUid, 'read', true);
-        $meilisearchReadCore = self::getConnectionProperty($typo3Site, 'core', $languageUid, 'read');
-        $meilisearchWriteCore = self::getConnectionProperty($typo3Site, 'core', $languageUid, 'write');
-        if (!$meilisearchEnabled || empty($meilisearchReadCore) || empty($meilisearchWriteCore)) {
-            return null;
-        }
+        $meilisearchEnabled = self::getConnectionProperty($typo3Site, 'enabled', $languageUid, false);
 
         $rootPageUid = $typo3Site->getRootPageId();
         return [
             'connectionKey' => $rootPageUid . '|' . $languageUid,
             'rootPageUid' => $rootPageUid,
-            'read' => [
-                'scheme' => self::getConnectionProperty($typo3Site, 'scheme', $languageUid, 'read', 'http'),
-                'host' => self::getConnectionProperty($typo3Site, 'host', $languageUid, 'read', 'localhost'),
-                'port' => (int)self::getConnectionProperty($typo3Site, 'port', $languageUid, 'read', 8983),
-                'path' => self::getConnectionProperty($typo3Site, 'path', $languageUid, 'read', ''),
-                'core' => $meilisearchReadCore,
-                'username' => self::getConnectionProperty($typo3Site, 'username', $languageUid, 'read', ''),
-                'password' => self::getConnectionProperty($typo3Site, 'password', $languageUid, 'read', ''),
-            ],
-            'write' => [
-                'scheme' => self::getConnectionProperty($typo3Site, 'scheme', $languageUid, 'write', 'http'),
-                'host' => self::getConnectionProperty($typo3Site, 'host', $languageUid, 'write', 'localhost'),
-                'port' => (int)self::getConnectionProperty($typo3Site, 'port', $languageUid, 'write', 8983),
-                'path' => self::getConnectionProperty($typo3Site, 'path', $languageUid, 'write', ''),
-                'core' => $meilisearchWriteCore,
-                'username' => self::getConnectionProperty($typo3Site, 'username', $languageUid, 'write', ''),
-                'password' => self::getConnectionProperty($typo3Site, 'password', $languageUid, 'write', ''),
-            ],
+            'scheme' => self::getConnectionProperty($typo3Site, 'scheme', $languageUid, 'http'),
+            'host' => self::getConnectionProperty($typo3Site, 'host', $languageUid, 'localhost'),
+            'port' => (int)self::getConnectionProperty($typo3Site, 'port', $languageUid,  7700),
+            'path' => self::getConnectionProperty($typo3Site, 'path', $languageUid,  ''),
+            'masterKey' => self::getConnectionProperty($typo3Site, 'masterKey', $languageUid,  ''),
 
             'language' => $languageUid,
         ];
@@ -147,32 +128,25 @@ class SiteUtility
     protected static function getConnectionPropertyOrFallback(
         CoreSite $typo3Site,
         string $property,
-        int $languageId,
-        string $scope,
+        int $languageId
     ): string|int|bool|null {
-        if ($scope === 'write' && !self::isWriteConnectionEnabled($typo3Site, $languageId)) {
-            $scope = 'read';
-        }
 
         // convention key meilisearch_$property_$scope
-        $keyToCheck = 'meilisearch_' . $property . '_' . $scope;
-
-        // convention fallback key meilisearch_$property_read
-        $fallbackKey = 'meilisearch_' . $property . '_read';
+        $keyToCheck = 'meilisearch_' . $property;
 
         // try to find language specific setting if found return it
         $rootPageUid = $typo3Site->getRootPageId();
         if (!isset(self::$languages[$rootPageUid][$languageId])) {
             self::$languages[$rootPageUid][$languageId] = $typo3Site->getLanguageById($languageId)->toArray();
         }
-        $value = self::getValueOrFallback(self::$languages[$rootPageUid][$languageId], $keyToCheck, $fallbackKey);
+        $value = self::getValueOrFallback(self::$languages[$rootPageUid][$languageId], $keyToCheck);
         if ($value !== null) {
             return $value;
         }
 
         // if not found check global configuration
         $siteBaseConfiguration = $typo3Site->getConfiguration();
-        return self::getValueOrFallback($siteBaseConfiguration, $keyToCheck, $fallbackKey);
+        return self::getValueOrFallback($siteBaseConfiguration, $keyToCheck);
     }
 
     /**
@@ -205,15 +179,13 @@ class SiteUtility
      */
     protected static function getValueOrFallback(
         array $data,
-        string $keyToCheck,
-        string $fallbackKey,
+        string $keyToCheck
     ): string|int|bool|null {
         $value = $data[$keyToCheck] ?? null;
         if ($value === '0' || $value === 0 || !empty($value)) {
             return self::evaluateConfigurationData($value);
         }
-
-        return self::evaluateConfigurationData($data[$fallbackKey] ?? null);
+        return null;
     }
 
     /**

@@ -24,10 +24,7 @@ use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchInternalServerError
 use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchUnavailableException;
 use RuntimeException;
 
-/**
- * Class MeilisearchReadService
- */
-class MeilisearchReadService extends AbstractMeilisearchService
+class MeilisearchService extends AbstractMeilisearchService
 {
     protected bool $hasSearched = false;
 

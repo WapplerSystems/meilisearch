@@ -53,8 +53,8 @@ class RepositoryTest extends SetUpUnitTestCase
      */
     public function findOneByPageIdAndByLanguageIdReturnsFirstFoundDocument()
     {
-        $apacheMeilisearchDocumentCollection = [new Document(), new Document()];
-        $apacheMeilisearchDocumentRepository = $this->getAccessibleMock(
+        $meilisearchDocumentCollection = [new Document(), new Document()];
+        $meilisearchDocumentRepository = $this->getAccessibleMock(
             Repository::class,
             ['findByPageIdAndByLanguageId'],
             [],
@@ -62,13 +62,13 @@ class RepositoryTest extends SetUpUnitTestCase
             false
         );
 
-        $apacheMeilisearchDocumentRepository
+        $meilisearchDocumentRepository
             ->expects(self::exactly(1))
             ->method('findByPageIdAndByLanguageId')
-            ->willReturn($apacheMeilisearchDocumentCollection);
+            ->willReturn($meilisearchDocumentCollection);
 
-        /** @var Repository $apacheMeilisearchDocumentRepository */
-        self::assertSame($apacheMeilisearchDocumentCollection[0], $apacheMeilisearchDocumentRepository->findOneByPageIdAndByLanguageId(0, 0));
+        /** @var Repository $meilisearchDocumentRepository */
+        self::assertSame($meilisearchDocumentCollection[0], $meilisearchDocumentRepository->findOneByPageIdAndByLanguageId(0, 0));
     }
 
     /**
@@ -76,20 +76,20 @@ class RepositoryTest extends SetUpUnitTestCase
      */
     public function findByPageIdAndByLanguageIdReturnsEmptyCollectionIfConnectionToMeilisearchServerCanNotBeEstablished()
     {
-        $apacheMeilisearchDocumentRepository = $this->getAccessibleMock(
+        $meilisearchDocumentRepository = $this->getAccessibleMock(
             Repository::class,
             ['initializeSearch'],
             [],
             '',
             false
         );
-        $apacheMeilisearchDocumentRepository
+        $meilisearchDocumentRepository
             ->expects(self::exactly(1))
             ->method('initializeSearch')
             ->will(self::throwException(new NoMeilisearchConnectionFoundException()));
 
-        $apacheMeilisearchDocumentCollection = $apacheMeilisearchDocumentRepository->findByPageIdAndByLanguageId(777, 0);
-        self::assertEmpty($apacheMeilisearchDocumentCollection);
+        $meilisearchDocumentCollection = $meilisearchDocumentRepository->findByPageIdAndByLanguageId(777, 0);
+        self::assertEmpty($meilisearchDocumentCollection);
     }
 
     /**
@@ -119,11 +119,11 @@ class RepositoryTest extends SetUpUnitTestCase
 
         $queryBuilderMock = $this->createMock(QueryBuilder::class);
 
-        $apacheMeilisearchDocumentRepository = $this->getAccessibleMock(Repository::class, ['getSearch'], [null, null, $queryBuilderMock]);
-        $apacheMeilisearchDocumentRepository->expects(self::once())->method('getSearch')->willReturn($search);
+        $meilisearchDocumentRepository = $this->getAccessibleMock(Repository::class, ['getSearch'], [null, null, $queryBuilderMock]);
+        $meilisearchDocumentRepository->expects(self::once())->method('getSearch')->willReturn($search);
         $queryMock = $this->createMock(Query::class);
         $queryBuilderMock->expects(self::any())->method('buildPageQuery')->willReturn($queryMock);
-        $actualMeilisearchDocumentCollection = $apacheMeilisearchDocumentRepository->findByPageIdAndByLanguageId(777, 0);
+        $actualMeilisearchDocumentCollection = $meilisearchDocumentRepository->findByPageIdAndByLanguageId(777, 0);
 
         self::assertSame($testDocuments, $actualMeilisearchDocumentCollection);
     }

@@ -158,57 +158,57 @@ class SiteUtilityTest extends SetUpUnitTestCase
     public function siteConfigurationValueHandlingDataProvider(): array
     {
         return [
-            [ // directly set boolean value (true) for meilisearch_enabled_read
+            [ // directly set boolean value (true) for meilisearch_enabled
                 'fakeConfiguration' => [
-                    'meilisearch_enabled_read' => true,
+                    'meilisearch_enabled' => true,
                 ],
                 'property' => 'enabled',
                 'scope' => 'read',
                 'expectedConfigurationValue' => true,
             ],
-            [ // directly set boolean value (false) for meilisearch_enabled_read
+            [ // directly set boolean value (false) for meilisearch_enabled
                 'fakeConfiguration' => [
-                    'meilisearch_enabled_read' => false,
+                    'meilisearch_enabled' => false,
                 ],
                 'property' => 'enabled',
                 'scope' => 'read',
                 'expectedConfigurationValue' => false,
             ],
-            [ // boolean value (true) set via environment variable for meilisearch_enabled_read
+            [ // boolean value (true) set via environment variable for meilisearch_enabled
                 'fakeConfiguration' => [
-                    'meilisearch_enabled_read' => 'true',
+                    'meilisearch_enabled' => 'true',
                 ],
                 'property' => 'enabled',
                 'scope' => 'read',
                 'expectedConfigurationValue' => true,
             ],
-            [ // boolean value (false) set via environment variable for meilisearch_enabled_read
+            [ // boolean value (false) set via environment variable for meilisearch_enabled
                 'fakeConfiguration' => [
-                    'meilisearch_enabled_read' => 'false',
+                    'meilisearch_enabled' => 'false',
                 ],
                 'property' => 'enabled',
                 'scope' => 'read',
                 'expectedConfigurationValue' => false,
             ],
-            [ // string '0' for meilisearch_enabled_read
+            [ // string '0' for meilisearch_enabled
                 'fakeConfiguration' => [
-                    'meilisearch_enabled_read' => '0',
+                    'meilisearch_enabled' => '0',
                 ],
                 'property' => 'enabled',
                 'scope' => 'read',
                 'expectedConfigurationValue' => '0',
             ],
-            [ // int 0 value for meilisearch_enabled_read
+            [ // int 0 value for meilisearch_enabled
                 'fakeConfiguration' => [
-                    'meilisearch_enabled_read' => 0,
+                    'meilisearch_enabled' => 0,
                 ],
                 'property' => 'enabled',
                 'scope' => 'read',
                 'expectedConfigurationValue' => 0,
             ],
-            [ // int 0 value for meilisearch_enabled_read
+            [ // int 0 value for meilisearch_enabled
                 'fakeConfiguration' => [
-                    'meilisearch_enabled_read' => 0,
+                    'meilisearch_enabled' => 0,
                 ],
                 'property' => 'enabled',
                 'scope' => 'read',
@@ -253,8 +253,7 @@ class SiteUtilityTest extends SetUpUnitTestCase
             [ // disabled write connection via int 0 for meilisearch_enabled_write, use right scope
                 'fakeConfiguration' => [
                     'meilisearch_use_write_connection' => 1,
-                    'meilisearch_enabled_read' => '1',
-                    'meilisearch_enabled_write' => '0',
+                    'meilisearch_enabled' => '1',
                 ],
                 'property' => 'enabled',
                 'scope' => 'write',

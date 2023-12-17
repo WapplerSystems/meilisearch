@@ -141,7 +141,7 @@ class ConnectionManagerTest extends SetUpUnitTestCase
             $configuration['write'] = $configuration['read'];
 
             $meilisearchService = $this->connectionManager->getConnectionFromConfiguration($configuration);
-            self::assertEquals($expectedConnectionString, $meilisearchService->getReadService()->__toString());
+            self::assertEquals($expectedConnectionString, $meilisearchService->getService()->__toString());
         } catch (InvalidConnectionException $exception) {
             $exceptionOccurred = true;
         }

@@ -82,7 +82,7 @@ class MeilisearchConnectionTest extends IntegrationTest
         $GLOBALS['TYPO3_CONF_VARS']['HTTP']['timeout'] = 0.0001;
         $meilisearchConnection = $this->canFindMeilisearchConnectionByPageAndReturn();
 
-        $httpClientAdapter = $meilisearchConnection->getReadService()->getClient()->getAdapter();
+        $httpClientAdapter = $meilisearchConnection->getService()->getClient()->getAdapter();
         $httpClientObject = $this->getInaccessiblePropertyFromObject(
             $httpClientAdapter,
             'httpClient'

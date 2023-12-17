@@ -54,7 +54,7 @@ class SiteHashServiceTest extends SetUpUnitTestCase
         $siteLanguageMock = $this->createMock(SiteLanguage::class);
         $siteLanguageMock->method('getLanguageId')->willReturn(0);
 
-        $siteConfiguration = ['meilisearch_enabled_read' => 1, 'meilisearch_core_read' => 'core_en'];
+        $siteConfiguration = ['meilisearch_enabled' => 1, 'meilisearch_core_read' => 'core_en'];
 
         $baseAMock = $this->createMock(UriInterface::class);
         $baseAMock->method('getHost')->willReturn('meilisearchtesta.local');

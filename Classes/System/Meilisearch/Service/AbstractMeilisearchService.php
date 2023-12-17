@@ -17,18 +17,16 @@ declare(strict_types=1);
 
 namespace WapplerSystems\Meilisearch\System\Meilisearch\Service;
 
+use Meilisearch\Client;
+use Meilisearch\Contracts\Endpoint;
 use WapplerSystems\Meilisearch\PingFailedException;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchConnection;
 use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
 use WapplerSystems\Meilisearch\Util;
 use Closure;
 use Psr\Log\LogLevel;
-use Solarium\Client;
-use Solarium\Core\Client\Endpoint;
-use Solarium\Core\Client\Request;
-use Solarium\Core\Query\QueryInterface;
-use Solarium\Exception\HttpException;
 use Throwable;
 use TYPO3\CMS\Core\Http\Uri;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -43,25 +41,17 @@ abstract class AbstractMeilisearchService
 
     protected Client $client;
 
-    public function __construct(Client $client, $typoScriptConfiguration = null, $logManager = null)
+    protected MeilisearchConnection $connection;
+
+    public function __construct(MeilisearchConnection $connection, Client $client, $typoScriptConfiguration = null, $logManager = null)
     {
+        $this->connection = $connection;
         $this->client = $client;
         $this->configuration = $typoScriptConfiguration ?? Util::getMeilisearchConfiguration();
         $this->logger = $logManager ?? GeneralUtility::makeInstance(MeilisearchLogManager::class, __CLASS__);
     }
 
-    /**
-     * Returns the path to the core meilisearch path + core path.
-     */
-    public function getCorePath(): string
-    {
-        $endpoint = $this->getPrimaryEndpoint();
-        return $endpoint->getPath() . '/' . $endpoint->getCore();
-    }
 
-    /**
-     * Returns the Solarium client
-     */
     public function getClient(): Client
     {
         return $this->client;
@@ -77,130 +67,34 @@ abstract class AbstractMeilisearchService
     }
 
     /**
-     * Creates a string representation of the Meilisearch connection. Specifically will return the Meilisearch URL.
-     * @TODO: Add support for API version 2
      */
     public function __toString()
     {
-        $endpoint = $this->getPrimaryEndpoint();
-        try {
-            return $endpoint->getCoreBaseUri();
-        } catch (Throwable) {
-        }
-        return  $endpoint->getScheme() . '://' . $endpoint->getHost() . ':' . $endpoint->getPort() . $endpoint->getPath() . '/' . $endpoint->getCore() . '/';
+        return $this->connection->getUrl();
     }
 
-    public function getPrimaryEndpoint(): Endpoint
+    /**
+     * @return array<Endpoint>
+     */
+    public function getEndpoints(): array
     {
-        return $this->client->getEndpoint();
+        return [];
     }
 
-    /**
-     * Central method for making a get operation against this Meilisearch Server
-     */
-    protected function _sendRawGet(string $url): ResponseAdapter
-    {
-        return $this->_sendRawRequest($url);
-    }
 
-    /**
-     * Central method for making an HTTP DELETE operation against the Meilisearch server
-     */
-    protected function _sendRawDelete(string $url): ResponseAdapter
-    {
-        return $this->_sendRawRequest($url, Request::METHOD_DELETE);
-    }
-
-    /**
-     * Central method for making a post operation against this Meilisearch Server
-     */
-    protected function _sendRawPost(
-        string $url,
-        string $rawPost,
-        string $contentType = 'text/xml; charset=UTF-8'
-    ): ResponseAdapter {
-        $initializeRequest = function (Request $request) use ($rawPost, $contentType) {
-            $request->setRawData($rawPost);
-            $request->addHeader('Content-Type: ' . $contentType);
-            return $request;
-        };
-
-        return $this->_sendRawRequest($url, Request::METHOD_POST, $rawPost, $initializeRequest);
-    }
-
-    /**
-     * Method that performs an HTTP request with the solarium client.
-     */
-    protected function _sendRawRequest(
-        string $url,
-        string $method = Request::METHOD_GET,
-        string $body = '',
-        Closure $initializeRequest = null
-    ): ResponseAdapter {
-        $logSeverity = LogLevel::INFO;
-        $exception = null;
-        $url = $this->reviseUrl($url);
-        try {
-            $request = $this->buildSolariumRequestFromUrl($url, $method);
-            if ($initializeRequest !== null) {
-                $request = $initializeRequest($request);
-            }
-            $response = $this->executeRequest($request);
-        } catch (HttpException $exception) {
-            $logSeverity = LogLevel::ERROR;
-            $response = new ResponseAdapter($exception->getBody(), $exception->getCode(), $exception->getMessage());
-        }
-
-        if ($this->configuration->getLoggingQueryRawPost() || $response->getHttpStatus() != 200) {
-            $message = 'Querying Meilisearch using ' . $method;
-            $this->writeLog($logSeverity, $message, $url, $response, $exception, $body);
-        }
-
-        return $response;
-    }
-
-    /**
-     * Revise url
-     * - Resolve relative paths
-     */
-    protected function reviseUrl(string $url): string
-    {
-        /** @var Uri $uri */
-        $uri = GeneralUtility::makeInstance(Uri::class, $url);
-
-        if ($uri->getPath() === '') {
-            return $url;
-        }
-
-        $path = trim($uri->getPath(), '/');
-        $pathsCurrent = explode('/', $path);
-        $pathNew = [];
-        foreach ($pathsCurrent as $pathCurrent) {
-            if ($pathCurrent === '..') {
-                array_pop($pathNew);
-                continue;
-            }
-            if ($pathCurrent === '.') {
-                continue;
-            }
-            $pathNew[] = $pathCurrent;
-        }
-
-        $uri = $uri->withPath(implode('/', $pathNew));
-        return (string)$uri;
-    }
 
     /**
      * Build the log data and writes the message to the log
      */
     protected function writeLog(
-        string $logSeverity,
-        string $message,
-        string $url,
+        string           $logSeverity,
+        string           $message,
+        string           $url,
         ?ResponseAdapter $meilisearchResponse,
-        Throwable $exception = null,
-        string $contentSend = ''
-    ): void {
+        Throwable        $exception = null,
+        string           $contentSend = ''
+    ): void
+    {
         $logData = $this->buildLogDataFromResponse($meilisearchResponse, $exception, $url, $contentSend);
         $this->logger->log($logSeverity, $message, $logData);
     }
@@ -210,10 +104,11 @@ abstract class AbstractMeilisearchService
      */
     protected function buildLogDataFromResponse(
         ResponseAdapter $meilisearchResponse,
-        Throwable $e = null,
-        string $url = '',
-        string $contentSend = ''
-    ): array {
+        Throwable       $e = null,
+        string          $url = '',
+        string          $contentSend = ''
+    ): array
+    {
         $logData = ['query url' => $url, 'response' => (array)$meilisearchResponse];
 
         if ($contentSend !== '') {
@@ -232,28 +127,12 @@ abstract class AbstractMeilisearchService
         return $logData;
     }
 
-    /**
-     * Call the /admin/ping servlet, can be used to quickly tell if a connection to the
-     * server is available.
-     *
-     * Simply overrides the MeilisearchPhpClient implementation, changing ping from a
-     * HEAD to a GET request, see http://forge.typo3.org/issues/44167
-     *
-     * Also does not report the time, see https://forge.typo3.org/issues/64551
-     *
-     * @param bool $useCache indicates if the ping result should be cached in the instance or not
-     *
-     * @return bool TRUE if Meilisearch can be reached, FALSE if not
-     */
-    public function ping(bool $useCache = true): bool
-    {
-        try {
-            $httpResponse = $this->performPingRequest($useCache);
-        } catch (HttpException) {
-            return false;
-        }
 
-        return $httpResponse->getHttpStatus() === 200;
+    public function ping(): bool
+    {
+
+        return true;
+
     }
 
     /**
@@ -341,30 +220,6 @@ abstract class AbstractMeilisearchService
         return new ResponseAdapter($result->getBody(), $result->getStatusCode(), $result->getStatusMessage());
     }
 
-    /**
-     * Build the request for Solarium.
-     *
-     * Important: The endpoint already contains the API information.
-     * The internal Solarium will append the information including the core if set.
-     */
-    protected function buildSolariumRequestFromUrl(
-        string $url,
-        string $httpMethod = Request::METHOD_GET,
-    ): Request {
-        $params = [];
-        parse_str(parse_url($url, PHP_URL_QUERY) ?? '', $params);
-        $request = new Request();
-        $path = parse_url($url, PHP_URL_PATH) ?? '';
-        $endpoint = $this->getPrimaryEndpoint();
-        $api = $request->getApi() === Request::API_V1 ? 'meilisearch' : 'api';
-        $coreBasePath = $endpoint->getPath() . '/' . $api . '/' . $endpoint->getCore() . '/';
-
-        $handler = $this->buildRelativePath($coreBasePath, $path);
-        $request->setMethod($httpMethod);
-        $request->setParams($params);
-        $request->setHandler($handler);
-        return $request;
-    }
 
     /**
      * Build a relative path from base path to target path.
@@ -373,7 +228,8 @@ abstract class AbstractMeilisearchService
     protected function buildRelativePath(
         string $basePath,
         string $targetPath,
-    ): string {
+    ): string
+    {
         $basePath = trim($basePath, '/');
         $targetPath = trim($targetPath, '/');
         $baseElements = explode('/', $basePath);

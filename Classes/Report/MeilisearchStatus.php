@@ -22,11 +22,11 @@ use WapplerSystems\Meilisearch\Domain\Site\Exception\UnexpectedTYPO3SiteInitiali
 use WapplerSystems\Meilisearch\Domain\Site\Site;
 use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
 use WapplerSystems\Meilisearch\PingFailedException;
-use WapplerSystems\Meilisearch\System\Meilisearch\Service\MeilisearchAdminService;
 use Throwable;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Reports\Status;
+use WapplerSystems\Meilisearch\System\Meilisearch\Service\MeilisearchService;
 
 /**
  * Provides a status report about whether a connection to the Meilisearch server can
@@ -113,8 +113,8 @@ class MeilisearchStatus extends AbstractMeilisearchStatus
         $this->responseStatus = ContextualFeedbackSeverity::OK;
 
         $meilisearchAdmin = $this->connectionManager
-            ->getMeilisearchConnectionForEndpoints($meilisearchConnection['read'], $meilisearchConnection['write'])
-            ->getAdminService();
+            ->getMeilisearchConnection($meilisearchConnection)
+            ->getService();
 
         $meilisearchVersion = $this->checkMeilisearchVersion($meilisearchAdmin);
         $accessFilter = $this->checkAccessFilter($meilisearchAdmin);
@@ -122,7 +122,6 @@ class MeilisearchStatus extends AbstractMeilisearchStatus
         $configName = $this->checkMeilisearchConfigName($meilisearchAdmin);
         $schemaName = $this->checkMeilisearchSchemaName($meilisearchAdmin);
 
-        /** @phpstan-ignore-next-line */
         if ($this->responseStatus !== ContextualFeedbackSeverity::OK) {
             $header = 'Failed contacting the Meilisearch server.';
         }
@@ -154,7 +153,7 @@ class MeilisearchStatus extends AbstractMeilisearchStatus
      *
      * @return string meilisearch version
      */
-    protected function checkMeilisearchVersion(MeilisearchAdminService $meilisearch): string
+    protected function checkMeilisearchVersion(MeilisearchService $meilisearch): string
     {
         try {
             $meilisearchVersion = $this->formatMeilisearchVersion($meilisearch->getMeilisearchServerVersion());
@@ -169,7 +168,7 @@ class MeilisearchStatus extends AbstractMeilisearchStatus
     /**
      * Checks the access filter setup and adds it to the report.
      */
-    protected function checkAccessFilter(MeilisearchAdminService $meilisearchAdminService): string
+    protected function checkAccessFilter(MeilisearchService $meilisearchAdminService): string
     {
         try {
             $accessFilterPluginStatus = GeneralUtility::makeInstance(AccessFilterPluginInstalledStatus::class);
@@ -185,7 +184,7 @@ class MeilisearchStatus extends AbstractMeilisearchStatus
     /**
      * Checks the ping time and adds it to the report.
      */
-    protected function checkPingTime(MeilisearchAdminService $meilisearchAdminService): string
+    protected function checkPingTime(MeilisearchService $meilisearchAdminService): string
     {
         try {
             $pingQueryTime = $meilisearchAdminService->getPingRoundTripRuntime();
@@ -200,7 +199,7 @@ class MeilisearchStatus extends AbstractMeilisearchStatus
     /**
      * Checks the meilisearch config name and adds it to the report.
      */
-    protected function checkMeilisearchConfigName(MeilisearchAdminService $meilisearchAdminService): string
+    protected function checkMeilisearchConfigName(MeilisearchService $meilisearchAdminService): string
     {
         try {
             $meilisearchConfigMessage = $meilisearchAdminService->getMeilisearchconfigName();
@@ -215,7 +214,7 @@ class MeilisearchStatus extends AbstractMeilisearchStatus
     /**
      * Checks the meilisearch schema name and adds it to the report.
      */
-    protected function checkMeilisearchSchemaName(MeilisearchAdminService $meilisearchAdminService): string
+    protected function checkMeilisearchSchemaName(MeilisearchService $meilisearchAdminService): string
     {
         try {
             $meilisearchSchemaMessage = $meilisearchAdminService->getSchema()->getName();

@@ -219,7 +219,7 @@ abstract class IntegrationTest extends FunctionalTestCase
         $this->mergeSiteConfiguration('integration_tree_one', $globalMeilisearchSettings);
         $this->mergeSiteConfiguration('integration_tree_two', $globalMeilisearchSettings);
         // disable meilisearch for site three
-        $this->mergeSiteConfiguration('integration_tree_three', ['meilisearch_enabled_read' => false]);
+        $this->mergeSiteConfiguration('integration_tree_three', ['meilisearch_enabled' => false]);
 
         $this->importRootPagesAndTemplatesForConfiguredSites();
 

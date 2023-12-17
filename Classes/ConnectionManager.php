@@ -27,7 +27,6 @@ use WapplerSystems\Meilisearch\System\Records\Pages\PagesRepository as PagesRepo
 use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchConnection;
 use WapplerSystems\Meilisearch\System\Util\SiteUtility;
 use Doctrine\DBAL\Exception as DBALException;
-use Solarium\Core\Client\Endpoint;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Site\Entity\Site as Typo3Site;
 
@@ -64,44 +63,24 @@ class ConnectionManager implements SingletonInterface
      *
      * @throw InvalidConnectionException
      */
-    public function getMeilisearchConnectionForEndpoints(array $readEndpointConfiguration, array $writeEndpointConfiguration): MeilisearchConnection
+    public function getMeilisearchConnection(array $clientConfiguration): MeilisearchConnection
     {
-        $connectionHash = md5(json_encode($readEndpointConfiguration) . json_encode($writeEndpointConfiguration));
+        $connectionHash = md5(json_encode($clientConfiguration));
         if (!isset(self::$connections[$connectionHash])) {
-            $readEndpoint = new Endpoint($readEndpointConfiguration);
-            if (!$this->isValidEndpoint($readEndpoint)) {
-                throw new InvalidConnectionException('Invalid read endpoint');
-            }
 
-            $writeEndpoint = new Endpoint($writeEndpointConfiguration);
-            if (!$this->isValidEndpoint($writeEndpoint)) {
-                throw new InvalidConnectionException('Invalid write endpoint');
-            }
-
-            self::$connections[$connectionHash] = GeneralUtility::makeInstance(MeilisearchConnection::class, $readEndpoint, $writeEndpoint);
+            self::$connections[$connectionHash] = GeneralUtility::makeInstance(MeilisearchConnection::class, $clientConfiguration);
         }
 
         return self::$connections[$connectionHash];
     }
 
-    /**
-     * Checks if endpoint is valid
-     */
-    protected function isValidEndpoint(Endpoint $endpoint): bool
-    {
-        return
-            !empty($endpoint->getHost())
-            && !empty($endpoint->getPort())
-            && !empty($endpoint->getCore())
-        ;
-    }
 
     /**
      * Creates a meilisearch configuration from the configuration array and returns it.
      */
     public function getConnectionFromConfiguration(array $meilisearchConfiguration): MeilisearchConnection
     {
-        return $this->getMeilisearchConnectionForEndpoints($meilisearchConfiguration['read'], $meilisearchConfiguration['write']);
+        return $this->getMeilisearchConnection($meilisearchConfiguration);
     }
 
     /**
@@ -238,10 +217,5 @@ class ConnectionManager implements SingletonInterface
         );
     }
 
-
-    private function createClientFromArray(array $configuration)
-    {
-        return new Client(($configuration['scheme'] ?? 'http') . '://' . $configuration['host'] . ':' . $configuration['port'], $configuration['apiKey'] ?? null, new \TYPO3\CMS\Core\Http\Client(\TYPO3\CMS\Core\Http\Client\GuzzleClientFactory::getClient()));
-    }
 
 }

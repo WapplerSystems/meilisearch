@@ -25,7 +25,7 @@ class MeilisearchDocumentRepositoryTest extends IntegrationTest
     /**
      * @var Repository|null
      */
-    protected ?Repository $apacheMeilisearchDocumentRepository = null;
+    protected ?Repository $meilisearchDocumentRepository = null;
 
     protected function setUp(): void
     {
@@ -36,7 +36,7 @@ class MeilisearchDocumentRepositoryTest extends IntegrationTest
         $this->addTypoScriptToTemplateRecord(1, 'config.index_enable = 1');
         $this->indexPages([1, 2, 3, 4, 5]);
 
-        $this->apacheMeilisearchDocumentRepository = GeneralUtility::makeInstance(Repository::class);
+        $this->meilisearchDocumentRepository = GeneralUtility::makeInstance(Repository::class);
     }
 
     /**
@@ -45,7 +45,7 @@ class MeilisearchDocumentRepositoryTest extends IntegrationTest
     protected function tearDown(): void
     {
         $this->cleanUpMeilisearchServerAndAssertEmpty();
-        unset($this->apacheMeilisearchDocumentRepository);
+        unset($this->meilisearchDocumentRepository);
         parent::tearDown();
     }
 
@@ -54,11 +54,11 @@ class MeilisearchDocumentRepositoryTest extends IntegrationTest
      */
     public function canFindByPageIdAndByLanguageId()
     {
-        $apacheMeilisearchDocumentsCollection = $this->apacheMeilisearchDocumentRepository->findByPageIdAndByLanguageId(3, 0);
+        $meilisearchDocumentsCollection = $this->meilisearchDocumentRepository->findByPageIdAndByLanguageId(3, 0);
 
-        self::assertIsArray($apacheMeilisearchDocumentsCollection, 'Repository did not get Document collection from pageId 3.');
-        self::assertNotEmpty($apacheMeilisearchDocumentsCollection, 'Repository did not get apache meilisearch documents from pageId 3.');
-        self::assertInstanceOf(Document::class, $apacheMeilisearchDocumentsCollection[0], 'MeilisearchDocumentRepository returned not an array of type Document.');
+        self::assertIsArray($meilisearchDocumentsCollection, 'Repository did not get Document collection from pageId 3.');
+        self::assertNotEmpty($meilisearchDocumentsCollection, 'Repository did not get apache meilisearch documents from pageId 3.');
+        self::assertInstanceOf(Document::class, $meilisearchDocumentsCollection[0], 'MeilisearchDocumentRepository returned not an array of type Document.');
     }
 
     /**
@@ -66,7 +66,7 @@ class MeilisearchDocumentRepositoryTest extends IntegrationTest
      */
     public function canReturnEmptyCollectionIfNoConnectionToMeilisearchServerIsEstablished()
     {
-        $apacheMeilisearchDocumentsCollection = $this->apacheMeilisearchDocumentRepository->findByPageIdAndByLanguageId(3, 777);
-        self::assertEmpty($apacheMeilisearchDocumentsCollection, 'MeilisearchDocumentRepository does not return empty collection if no connection to core can be established.');
+        $meilisearchDocumentsCollection = $this->meilisearchDocumentRepository->findByPageIdAndByLanguageId(3, 777);
+        self::assertEmpty($meilisearchDocumentsCollection, 'MeilisearchDocumentRepository does not return empty collection if no connection to core can be established.');
     }
 }
