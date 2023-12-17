@@ -110,7 +110,7 @@ class SiteRepository
     }
 
     /**
-     * Gets all available TYPO3 sites with Solr configured.
+     * Gets all available TYPO3 sites with Meilisearch configured.
      *
      * @return Site[] An array of available sites
      *
@@ -140,18 +140,18 @@ class SiteRepository
      */
     protected function getAvailableTYPO3ManagedSites(bool $stopOnInvalidSite): array
     {
-        $typo3ManagedSolrSites = [];
+        $typo3ManagedMeilisearchSites = [];
         $typo3Sites = $this->siteFinder->getAllSites();
         foreach ($typo3Sites as $typo3Site) {
             try {
                 $rootPageId = $typo3Site->getRootPageId();
-                if (isset($typo3ManagedSolrSites[$rootPageId])) {
+                if (isset($typo3ManagedMeilisearchSites[$rootPageId])) {
                     //get each site only once
                     continue;
                 }
-                $typo3ManagedSolrSite = $this->buildSite($rootPageId);
-                if ($typo3ManagedSolrSite->isEnabled()) {
-                    $typo3ManagedSolrSites[$rootPageId] = $typo3ManagedSolrSite;
+                $typo3ManagedMeilisearchSite = $this->buildSite($rootPageId);
+                if ($typo3ManagedMeilisearchSite->isEnabled()) {
+                    $typo3ManagedMeilisearchSites[$rootPageId] = $typo3ManagedMeilisearchSite;
                 }
             } catch (Throwable $e) {
                 if ($stopOnInvalidSite) {
@@ -163,7 +163,7 @@ class SiteRepository
                 }
             }
         }
-        return $typo3ManagedSolrSites;
+        return $typo3ManagedMeilisearchSites;
     }
 
     /**
@@ -247,13 +247,13 @@ class SiteRepository
         $solrConnectionConfigurations = [];
 
         foreach ($availableLanguageIds as $languageUid) {
-            $solrConnection = SiteUtility::getSolrConnectionConfiguration($typo3Site, $languageUid);
+            $solrConnection = SiteUtility::getMeilisearchConnectionConfiguration($typo3Site, $languageUid);
             if ($solrConnection !== null) {
                 $solrConnectionConfigurations[$languageUid] = $solrConnection;
             }
         }
 
-        $solrConfiguration = $this->frontendEnvironment->getSolrConfigurationFromPageId(
+        $solrConfiguration = $this->frontendEnvironment->getMeilisearchConfigurationFromPageId(
             $rootPageRecord['uid'],
             $tsfeToUseForTypoScriptConfiguration->getLanguage()->getLanguageId()
         );

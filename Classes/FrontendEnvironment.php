@@ -93,7 +93,7 @@ class FrontendEnvironment implements SingletonInterface
      *
      * @throws DBALException
      */
-    public function getSolrConfigurationFromPageId(
+    public function getMeilisearchConfigurationFromPageId(
         int $pageId,
         ?int $language = 0,
         ?int $rootPageId = null,

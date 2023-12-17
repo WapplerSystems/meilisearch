@@ -18,23 +18,23 @@ declare(strict_types=1);
 namespace WapplerSystems\Meilisearch\IndexQueue;
 
 use WapplerSystems\Meilisearch\ConnectionManager;
-use WapplerSystems\Meilisearch\Domain\Search\ApacheSolrDocument\Builder;
+use WapplerSystems\Meilisearch\Domain\Search\ApacheMeilisearchDocument\Builder;
 use WapplerSystems\Meilisearch\Domain\Site\Site;
 use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
 use WapplerSystems\Meilisearch\Event\Indexing\BeforeDocumentIsProcessedForIndexingEvent;
 use WapplerSystems\Meilisearch\Event\Indexing\BeforeDocumentsAreIndexedEvent;
-use WapplerSystems\Meilisearch\Exception as EXTSolrException;
+use WapplerSystems\Meilisearch\Exception as EXTMeilisearchException;
 use WapplerSystems\Meilisearch\FieldProcessor\Service;
 use WapplerSystems\Meilisearch\FrontendEnvironment;
 use WapplerSystems\Meilisearch\FrontendEnvironment\Exception\Exception as FrontendEnvironmentException;
 use WapplerSystems\Meilisearch\FrontendEnvironment\Tsfe;
 use WapplerSystems\Meilisearch\IndexQueue\Exception\IndexingException;
-use WapplerSystems\Meilisearch\NoSolrConnectionFoundException;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\NoMeilisearchConnectionFoundException;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\System\Records\Pages\PagesRepository;
-use WapplerSystems\Meilisearch\System\Solr\Document\Document;
-use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
-use WapplerSystems\Meilisearch\System\Solr\SolrConnection;
+use WapplerSystems\Meilisearch\System\Meilisearch\Document\Document;
+use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchConnection;
 use Doctrine\DBAL\Exception as DBALException;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LogLevel;
@@ -59,9 +59,9 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 class Indexer extends AbstractIndexer
 {
     /**
-     * A Solr service instance to interact with the Solr server
+     * A Meilisearch service instance to interact with the Meilisearch server
      */
-    protected ?SolrConnection $currentlyUsedSolrConnection;
+    protected ?MeilisearchConnection $currentlyUsedMeilisearchConnection;
 
     protected ConnectionManager $connectionManager;
 
@@ -81,16 +81,16 @@ class Indexer extends AbstractIndexer
      */
     protected bool $loggingEnabled = false;
 
-    protected SolrLogManager $logger;
+    protected MeilisearchLogManager $logger;
     protected EventDispatcherInterface $eventDispatcher;
 
     public function __construct(
-        array $options = [],
-        PagesRepository $pagesRepository = null,
-        Builder $documentBuilder = null,
-        ConnectionManager $connectionManager = null,
-        FrontendEnvironment $frontendEnvironment = null,
-        SolrLogManager $logger = null,
+        array                    $options = [],
+        PagesRepository          $pagesRepository = null,
+        Builder                  $documentBuilder = null,
+        ConnectionManager        $connectionManager = null,
+        FrontendEnvironment      $frontendEnvironment = null,
+        MeilisearchLogManager    $logger = null,
         EventDispatcherInterface $eventDispatcher = null,
     ) {
         $this->options = $options;
@@ -98,7 +98,7 @@ class Indexer extends AbstractIndexer
         $this->documentBuilder = $documentBuilder ?? GeneralUtility::makeInstance(Builder::class);
         $this->connectionManager = $connectionManager ?? GeneralUtility::makeInstance(ConnectionManager::class);
         $this->frontendEnvironment = $frontendEnvironment ?? GeneralUtility::makeInstance(FrontendEnvironment::class);
-        $this->logger = $logger ?? GeneralUtility::makeInstance(SolrLogManager::class, __CLASS__);
+        $this->logger = $logger ?? GeneralUtility::makeInstance(MeilisearchLogManager::class, __CLASS__);
         $this->eventDispatcher = $eventDispatcher ?? GeneralUtility::makeInstance(EventDispatcherInterface::class);
     }
 
@@ -106,9 +106,9 @@ class Indexer extends AbstractIndexer
      * Indexes an item from the indexing queue and returns true when indexed, false when not
      *
      * @throws DBALException
-     * @throws EXTSolrException
+     * @throws EXTMeilisearchException
      * @throws FrontendEnvironmentException
-     * @throws NoSolrConnectionFoundException
+     * @throws NoMeilisearchConnectionFoundException
      * @throws SiteNotFoundException
      * @throws IndexingException
      */
@@ -119,9 +119,9 @@ class Indexer extends AbstractIndexer
         $this->type = $item->getType();
         $this->setLogging($item);
 
-        $solrConnections = $this->getSolrConnectionsByItem($item);
+        $solrConnections = $this->getMeilisearchConnectionsByItem($item);
         foreach ($solrConnections as $systemLanguageUid => $solrConnection) {
-            $this->currentlyUsedSolrConnection = $solrConnection;
+            $this->currentlyUsedMeilisearchConnection = $solrConnection;
 
             if (!$this->indexItem($item, (int)$systemLanguageUid)) {
                 /*
@@ -140,7 +140,7 @@ class Indexer extends AbstractIndexer
     }
 
     /**
-     * Creates a single Solr Document for an item in a specific language.
+     * Creates a single Meilisearch Document for an item in a specific language.
      *
      * @param Item $item An index queue item to index.
      * @param int $language The language to use.
@@ -148,7 +148,7 @@ class Indexer extends AbstractIndexer
      * @return bool TRUE if item was indexed successfully, FALSE on failure
      *
      * @throws DBALException
-     * @throws EXTSolrException
+     * @throws EXTMeilisearchException
      * @throws FrontendEnvironmentException
      * @throws IndexingException
      * @throws SiteNotFoundException
@@ -182,7 +182,7 @@ class Indexer extends AbstractIndexer
         $event = $this->eventDispatcher->dispatch($event);
         $documents = $event->getDocuments();
 
-        $response = $this->currentlyUsedSolrConnection->getWriteService()->addDocuments($documents);
+        $response = $this->currentlyUsedMeilisearchConnection->getWriteService()->addDocuments($documents);
         if ($response->getHttpStatus() !== 200) {
             $responseData = json_decode($response->getRawResponse() ?? '', true);
             throw new IndexingException(
@@ -316,7 +316,7 @@ class Indexer extends AbstractIndexer
     {
         try {
             $pageId = $this->getPageIdOfItem($item);
-            $solrConfiguration = $this->frontendEnvironment->getSolrConfigurationFromPageId($pageId, $language, $item->getRootPageUid());
+            $solrConfiguration = $this->frontendEnvironment->getMeilisearchConfigurationFromPageId($pageId, $language, $item->getRootPageUid());
             return $solrConfiguration->getIndexQueueFieldsConfigurationByConfigurationName($indexConfigurationName);
         } catch (Throwable) {
             return [];
@@ -338,7 +338,7 @@ class Indexer extends AbstractIndexer
      */
     protected function getFieldConfigurationFromItemRootPage(Item $item, int $language, string $indexConfigurationName): array
     {
-        $solrConfiguration = $this->frontendEnvironment->getSolrConfigurationFromPageId($item->getRootPageUid(), $language);
+        $solrConfiguration = $this->frontendEnvironment->getMeilisearchConfigurationFromPageId($item->getRootPageUid(), $language);
 
         return $solrConfiguration->getIndexQueueFieldsConfigurationByConfigurationName($indexConfigurationName);
     }
@@ -362,13 +362,13 @@ class Indexer extends AbstractIndexer
     }
 
     /**
-     * Converts an item array (record) to a Solr document by mapping the
-     * record's fields onto Solr document fields as configured in TypoScript.
+     * Converts an item array (record) to a Meilisearch document by mapping the
+     * record's fields onto Meilisearch document fields as configured in TypoScript.
      *
      * @param Item $item An index queue item
      * @param int $language Language Id
      *
-     * @return Document|null The Solr document converted from the record
+     * @return Document|null The Meilisearch document converted from the record
      *
      * @throws FrontendEnvironmentException
      * @throws SiteNotFoundException
@@ -403,12 +403,12 @@ class Indexer extends AbstractIndexer
     }
 
     /**
-     * Creates a Solr document with the basic / core fields set already.
+     * Creates a Meilisearch document with the basic / core fields set already.
      *
      * @param Item $item The item to index
      * @param array $itemRecord The record to use to build the base document
      *
-     * @return Document A basic Solr document
+     * @return Document A basic Meilisearch document
      *
      * @throws DBALException
      */
@@ -476,15 +476,15 @@ class Indexer extends AbstractIndexer
      * @return Document[] An array of manipulated Document objects.
      *
      * @throws DBALException
-     * @throws EXTSolrException
+     * @throws EXTMeilisearchException
      */
     protected function processDocuments(Item $item, array $documents): array
     {
         //        // needs to respect the TS settings for the page the item is on, conditions may apply
-        //        $solrConfiguration = $this->frontendEnvironment->getSolrConfigurationFromPageId($item->getRootPageUid());
+        //        $solrConfiguration = $this->frontendEnvironment->getMeilisearchConfigurationFromPageId($item->getRootPageUid());
 
         $siteRepository = GeneralUtility::makeInstance(SiteRepository::class);
-        $solrConfiguration = $siteRepository->getSiteByPageId($item->getRootPageUid())->getSolrConfiguration();
+        $solrConfiguration = $siteRepository->getSiteByPageId($item->getRootPageUid())->getMeilisearchConfiguration();
         $fieldProcessingInstructions = $solrConfiguration->getIndexFieldProcessingInstructionsConfiguration();
 
         // same as in the FE indexer
@@ -499,17 +499,17 @@ class Indexer extends AbstractIndexer
     // Initialization
 
     /**
-     * Gets the Solr connections applicable for an item.
+     * Gets the Meilisearch connections applicable for an item.
      *
      * The connections include the default connection and connections to be used
      * for translations of an item.
      *
-     * @return SolrConnection[] An array of connections, the array's keys are the sys_language_uid of the language of the connection
+     * @return MeilisearchConnection[] An array of connections, the array's keys are the sys_language_uid of the language of the connection
      *
-     * @throws NoSolrConnectionFoundException
+     * @throws NoMeilisearchConnectionFoundException
      * @throws DBALException
      */
-    protected function getSolrConnectionsByItem(Item $item): array
+    protected function getMeilisearchConnectionsByItem(Item $item): array
     {
         $solrConnections = [];
 
@@ -520,9 +520,9 @@ class Indexer extends AbstractIndexer
             $pageId = $item->getRecordPageId();
         }
 
-        // Solr configurations possible for this item
+        // Meilisearch configurations possible for this item
         $site = $item->getSite();
-        $solrConfigurationsBySite = $site->getAllSolrConnectionConfigurations();
+        $solrConfigurationsBySite = $site->getAllMeilisearchConnectionConfigurations();
         $siteLanguages = [];
         foreach ($solrConfigurationsBySite as $solrConfiguration) {
             $siteLanguages[] = $solrConfiguration['language'];
@@ -632,7 +632,7 @@ class Indexer extends AbstractIndexer
      *
      * @param array $translationOverlays
      * @param int $rootPageId
-     * @return SolrConnection[]
+     * @return MeilisearchConnection[]
      *
      * @throws DBALException
      */
@@ -646,7 +646,7 @@ class Indexer extends AbstractIndexer
             try {
                 $connection = $this->connectionManager->getConnectionByRootPageId($rootPageId, $languageId);
                 $connections[$languageId] = $connection;
-            } catch (NoSolrConnectionFoundException) {
+            } catch (NoMeilisearchConnectionFoundException) {
                 // ignore the exception as we seek only those connections
                 // actually available
             }
@@ -658,7 +658,7 @@ class Indexer extends AbstractIndexer
     // Utility methods
 
     // FIXME extract log() and setLogging() to WapplerSystems\Meilisearch\IndexQueue\AbstractIndexer
-    // FIXME extract an interface Tx_Solr_IndexQueue_ItemInterface
+    // FIXME extract an interface Tx_Meilisearch_IndexQueue_ItemInterface
 
     /**
      * Enables logging dependent on the configuration of the item's site
@@ -667,7 +667,7 @@ class Indexer extends AbstractIndexer
      */
     protected function setLogging(Item $item): void
     {
-        $solrConfiguration = $this->frontendEnvironment->getSolrConfigurationFromPageId($item->getRootPageUid());
+        $solrConfiguration = $this->frontendEnvironment->getMeilisearchConfigurationFromPageId($item->getRootPageUid());
         $this->loggingEnabled = $solrConfiguration->getLoggingIndexingQueueOperationsByConfigurationNameWithFallBack(
             $item->getIndexingConfigurationName()
         );
@@ -677,8 +677,8 @@ class Indexer extends AbstractIndexer
      * Logs the item and what document was created from it
      *
      * @param Item $item The item that is being indexed.
-     * @param Document[] $itemDocuments An array of Solr documents created from the item's data
-     * @param ResponseAdapter $response The Solr response for the particular index document
+     * @param Document[] $itemDocuments An array of Meilisearch documents created from the item's data
+     * @param ResponseAdapter $response The Meilisearch response for the particular index document
      */
     protected function log(Item $item, array $itemDocuments, ResponseAdapter $response): void
     {

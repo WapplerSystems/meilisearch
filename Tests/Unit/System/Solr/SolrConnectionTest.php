@@ -16,7 +16,7 @@
 namespace WapplerSystems\Meilisearch\Tests\Unit\System\Solr;
 
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\System\Solr\Parser\SchemaParser;
 use WapplerSystems\Meilisearch\System\Solr\Parser\StopWordParser;
 use WapplerSystems\Meilisearch\System\Solr\Parser\SynonymParser;
@@ -43,7 +43,7 @@ class SolrConnectionTest extends SetUpUnitTestCase
      * @param SynonymParser|null $synonymParser
      * @param StopWordParser|null $stopWordParser
      * @param SchemaParser|null $schemaParser
-     * @param SolrLogManager|null $logManager
+     * @param MeilisearchLogManager|null $logManager
      * @param ClientInterface|null $psr7Client
      * @param RequestFactoryInterface|null $requestFactory
      * @param StreamFactoryInterface|null $streamFactory
@@ -51,16 +51,16 @@ class SolrConnectionTest extends SetUpUnitTestCase
      * @return SolrConnection|null
      */
     protected function getSolrConnectionWithDummyConstructorArgs(
-        Endpoint $readEndpoint = null,
-        Endpoint $writeEndpoint = null,
-        TypoScriptConfiguration $configuration = null,
-        SynonymParser $synonymParser = null,
-        StopWordParser $stopWordParser = null,
-        SchemaParser $schemaParser = null,
-        SolrLogManager $logManager = null,
-        ClientInterface $psr7Client = null,
-        RequestFactoryInterface $requestFactory = null,
-        StreamFactoryInterface $streamFactory = null,
+        Endpoint                 $readEndpoint = null,
+        Endpoint                 $writeEndpoint = null,
+        TypoScriptConfiguration  $configuration = null,
+        SynonymParser            $synonymParser = null,
+        StopWordParser           $stopWordParser = null,
+        SchemaParser             $schemaParser = null,
+        MeilisearchLogManager    $logManager = null,
+        ClientInterface          $psr7Client = null,
+        RequestFactoryInterface  $requestFactory = null,
+        StreamFactoryInterface   $streamFactory = null,
         EventDispatcherInterface $eventDispatcher = null
     ): ?SolrConnection {
         try {
@@ -71,7 +71,7 @@ class SolrConnectionTest extends SetUpUnitTestCase
                 $synonymParser ?? $this->createMock(SynonymParser::class),
                 $stopWordParser ?? $this->createMock(StopWordParser::class),
                 $schemaParser ?? $this->createMock(SchemaParser::class),
-                $logManager ?? $this->createMock(SolrLogManager::class),
+                $logManager ?? $this->createMock(MeilisearchLogManager::class),
                 $psr7Client ?? $this->createMock(ClientInterface::class),
                 $requestFactory ?? $this->createMock(RequestFactoryInterface::class),
                 $streamFactory ?? $this->createMock(StreamFactoryInterface::class),

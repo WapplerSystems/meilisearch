@@ -21,7 +21,7 @@ use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSet;
 use WapplerSystems\Meilisearch\Domain\Search\SearchRequest;
 use WapplerSystems\Meilisearch\Domain\Search\Uri\SearchUriBuilder;
 use WapplerSystems\Meilisearch\Exception\InvalidArgumentException;
-use WapplerSystems\Meilisearch\ViewHelpers\AbstractSolrFrontendViewHelper;
+use WapplerSystems\Meilisearch\ViewHelpers\AbstractMeilisearchFrontendViewHelper;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Web\RequestBuilder;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
@@ -35,7 +35,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
  * @author Frans Saris <frans@beech.it>
  * @author Timo Hund <timo.hund@dkd.de>
  */
-abstract class AbstractUriViewHelper extends AbstractSolrFrontendViewHelper
+abstract class AbstractUriViewHelper extends AbstractMeilisearchFrontendViewHelper
 {
     use CompileWithRenderStatic;
 

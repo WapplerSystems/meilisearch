@@ -73,8 +73,8 @@ class SearchRequestBuilder
 
         if ($this->shouldHideResultsFromInitialSearch($searchRequest)) {
             // initialize search with an empty query, which would by default return all documents
-            // anyway, tell Solr to not return any result documents
-            // Solr will still return facets though
+            // anyway, tell Meilisearch to not return any result documents
+            // Meilisearch will still return facets though
             $currentNumberOfResultsShown = 0;
         }
 

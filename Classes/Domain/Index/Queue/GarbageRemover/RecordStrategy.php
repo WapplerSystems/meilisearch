@@ -43,6 +43,6 @@ class RecordStrategy extends AbstractStrategy
             }
         }
 
-        $this->deleteInSolrAndRemoveFromIndexQueue($table, $uid);
+        $this->deleteInMeilisearchAndRemoveFromIndexQueue($table, $uid);
     }
 }

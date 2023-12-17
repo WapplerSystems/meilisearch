@@ -34,7 +34,7 @@ use TYPO3\CMS\Reports\Status;
  *
  * @author Ingo Renner <ingo@typo3.org>
  */
-class SolrConfigurationStatus extends AbstractSolrStatus
+class MeilisearchConfigurationStatus extends AbstractMeilisearchStatus
 {
     protected ExtensionConfiguration $extensionConfiguration;
 
@@ -125,7 +125,7 @@ class SolrConfigurationStatus extends AbstractSolrStatus
             );
         }
 
-        $report = $this->getRenderedReport('SolrConfigurationStatusIndexing.html', ['pages' => $rootPagesWithIndexingOff]);
+        $report = $this->getRenderedReport('MeilisearchConfigurationStatusIndexing.html', ['pages' => $rootPagesWithIndexingOff]);
         return GeneralUtility::makeInstance(
             Status::class,
             'Page Indexing',
@@ -147,7 +147,7 @@ class SolrConfigurationStatus extends AbstractSolrStatus
 
         foreach ($rootPages as $rootPage) {
             try {
-                $solrIsEnabledAndIndexingDisabled = $this->getIsSolrEnabled($rootPage['uid']) && !$this->getIsIndexingEnabled($rootPage['uid']);
+                $solrIsEnabledAndIndexingDisabled = $this->getIsMeilisearchEnabled($rootPage['uid']) && !$this->getIsIndexingEnabled($rootPage['uid']);
                 if ($solrIsEnabledAndIndexingDisabled) {
                     $rootPagesWithIndexingOff[] = $rootPage;
                 }
@@ -193,9 +193,9 @@ class SolrConfigurationStatus extends AbstractSolrStatus
      *
      * @throws DBALException
      */
-    protected function getIsSolrEnabled(int $pageUid): bool
+    protected function getIsMeilisearchEnabled(int $pageUid): bool
     {
-        return $this->frontendEnvironment->getSolrConfigurationFromPageId($pageUid)->getEnabled();
+        return $this->frontendEnvironment->getMeilisearchConfigurationFromPageId($pageUid)->getEnabled();
     }
 
     /**

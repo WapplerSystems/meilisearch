@@ -52,7 +52,7 @@ class DefaultResultParser extends AbstractResultParser
         }
 
         foreach ($documents as $searchResult) {
-            $searchResultObject = $this->searchResultBuilder->fromApacheSolrDocument($searchResult);
+            $searchResultObject = $this->searchResultBuilder->fromApacheMeilisearchDocument($searchResult);
             $searchResults[] = $searchResultObject;
         }
 

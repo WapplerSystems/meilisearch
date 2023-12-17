@@ -27,10 +27,10 @@ use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSet;
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSetService;
 use WapplerSystems\Meilisearch\Domain\Search\SearchRequest;
 use WapplerSystems\Meilisearch\Event\Search\AfterSuggestQueryHasBeenPreparedEvent;
-use WapplerSystems\Meilisearch\NoSolrConnectionFoundException;
+use WapplerSystems\Meilisearch\NoMeilisearchConnectionFoundException;
 use WapplerSystems\Meilisearch\Search;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
-use WapplerSystems\Meilisearch\System\Solr\ParsingUtil;
+use WapplerSystems\Meilisearch\System\Meilisearch\ParsingUtil;
 use WapplerSystems\Meilisearch\Util;
 use Doctrine\DBAL\Exception as DBALException;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -74,7 +74,7 @@ class SuggestService
      *
      * @throws AspectNotFoundException
      * @throws InvalidFacetPackageException
-     * @throws NoSolrConnectionFoundException
+     * @throws NoMeilisearchConnectionFoundException
      * @throws DBALException
      */
     public function getSuggestions(SearchRequest $searchRequest, array $additionalFilters = []): array
@@ -83,7 +83,7 @@ class SuggestService
         $frontendUserGroupIds = Util::getFrontendUserGroups();
 
         $suggestQuery = $this->queryBuilder->buildSuggestQuery($searchRequest->getRawUserQuery(), $additionalFilters, $requestId, $frontendUserGroupIds);
-        $solrSuggestions = $this->getSolrSuggestions($suggestQuery, $searchRequest);
+        $solrSuggestions = $this->getMeilisearchSuggestions($suggestQuery, $searchRequest);
 
         if ($solrSuggestions === []) {
             return ['status' => false];
@@ -145,10 +145,10 @@ class SuggestService
     /**
      * Retrieves the suggestions from the solr server.
      *
-     * @throws NoSolrConnectionFoundException
+     * @throws NoMeilisearchConnectionFoundException
      * @throws DBALException
      */
-    protected function getSolrSuggestions(SuggestQuery $suggestQuery, SearchRequest $searchRequest): array
+    protected function getMeilisearchSuggestions(SuggestQuery $suggestQuery, SearchRequest $searchRequest): array
     {
         $pageId = $this->tsfe->getRequestedId();
         $languageId = $this->tsfe->getLanguage()->getLanguageId();

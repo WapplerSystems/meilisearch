@@ -55,7 +55,7 @@ class CachedPathVariableModifier
             (string)$enhancerConfiguration['extensionKey']
         );
 
-        if (!$this->routingService->isRouteEnhancerForSolr((string)$enhancerConfiguration['type'])) {
+        if (!$this->routingService->isRouteEnhancerForMeilisearch((string)$enhancerConfiguration['type'])) {
             return;
         }
 

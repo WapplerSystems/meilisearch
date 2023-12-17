@@ -20,8 +20,8 @@ namespace WapplerSystems\Meilisearch\IndexQueue;
 use WapplerSystems\Meilisearch\Access\Rootline;
 use WapplerSystems\Meilisearch\Access\RootlineElement;
 use WapplerSystems\Meilisearch\Domain\Index\PageIndexer\PageUriBuilder;
-use WapplerSystems\Meilisearch\NoSolrConnectionFoundException;
-use WapplerSystems\Meilisearch\System\Solr\SolrConnection;
+use WapplerSystems\Meilisearch\NoMeilisearchConnectionFoundException;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchConnection;
 use WapplerSystems\Meilisearch\System\Util\SiteUtility;
 use Doctrine\DBAL\Exception as DBALException;
 use Exception;
@@ -48,7 +48,7 @@ class PageIndexer extends Indexer
      * @return bool Whether indexing was successful
      *
      * @throws DBALException
-     * @throws NoSolrConnectionFoundException
+     * @throws NoMeilisearchConnectionFoundException
      */
     public function index(Item $item): bool
     {
@@ -59,7 +59,7 @@ class PageIndexer extends Indexer
             return false;
         }
 
-        $systemLanguageUids = array_keys($this->getSolrConnectionsByItem($item));
+        $systemLanguageUids = array_keys($this->getMeilisearchConnectionsByItem($item));
         foreach ($systemLanguageUids as $systemLanguageUid) {
             $contentAccessGroups = $this->getAccessGroupsFromContent($item, $systemLanguageUid);
             foreach ($contentAccessGroups as $userGroup) {
@@ -95,31 +95,31 @@ class PageIndexer extends Indexer
     }
 
     /**
-     * Gets the Solr connections applicable for a page.
+     * Gets the Meilisearch connections applicable for a page.
      *
      * The connections include the default connection and connections to be used
      * for translations of a page.
      *
-     * @return SolrConnection[] An array of {@link SolrConnection} connections,
+     * @return MeilisearchConnection[] An array of {@link MeilisearchConnection} connections,
      *     the array's keys are the sys_language_uid of the language of the connection
      *
-     * @throws NoSolrConnectionFoundException
+     * @throws NoMeilisearchConnectionFoundException
      * @throws DBALException
      */
-    protected function getSolrConnectionsByItem(Item $item): array
+    protected function getMeilisearchConnectionsByItem(Item $item): array
     {
-        $solrConnections = parent::getSolrConnectionsByItem($item);
+        $solrConnections = parent::getMeilisearchConnectionsByItem($item);
 
         $page = $item->getRecord();
         if ((new PageTranslationVisibility((int)($page['l18n_cfg'] ?? 0)))->shouldBeHiddenInDefaultLanguage()) {
-            // page is configured to hide the default translation -> remove Solr connection for default language
+            // page is configured to hide the default translation -> remove Meilisearch connection for default language
             unset($solrConnections[0]);
         }
 
         if ((new PageTranslationVisibility((int)($page['l18n_cfg'] ?? 0)))->shouldHideTranslationIfNoTranslatedRecordExists()) {
-            $accessibleSolrConnections = [];
+            $accessibleMeilisearchConnections = [];
             if (isset($solrConnections[0])) {
-                $accessibleSolrConnections[0] = $solrConnections[0];
+                $accessibleMeilisearchConnections[0] = $solrConnections[0];
             }
 
             $translationOverlays = $this->pagesRepository->findTranslationOverlaysByPageId((int)$page['uid']);
@@ -127,11 +127,11 @@ class PageIndexer extends Indexer
             foreach ($translationOverlays as $overlay) {
                 $languageId = $overlay['sys_language_uid'];
                 if (array_key_exists($languageId, $solrConnections)) {
-                    $accessibleSolrConnections[$languageId] = $solrConnections[$languageId];
+                    $accessibleMeilisearchConnections[$languageId] = $solrConnections[$languageId];
                 }
             }
 
-            $solrConnections = $accessibleSolrConnections;
+            $solrConnections = $accessibleMeilisearchConnections;
         }
 
         return $solrConnections;
@@ -273,7 +273,7 @@ class PageIndexer extends Indexer
     //
 
     /**
-     * Creates a single Solr Document for a page in a specific language and for
+     * Creates a single Meilisearch Document for a page in a specific language and for
      * a specific frontend user group.
      *
      * @param Item $item The index queue item representing the page.

@@ -15,19 +15,19 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace WapplerSystems\Meilisearch\System\Solr\Service;
+namespace WapplerSystems\Meilisearch\System\Meilisearch\Service;
 
-use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
 use Solarium\QueryType\Extract\Query;
 use Solarium\QueryType\Update\Result;
 use Throwable;
 
 /**
- * Class SolrWriteService
+ * Class MeilisearchWriteService
  *
  * @author Timo Hund <timo.hund@dkd.de>
  */
-class SolrWriteService extends AbstractSolrService
+class MeilisearchWriteService extends AbstractMeilisearchService
 {
     public const EXTRACT_SERVLET = 'update/extract';
 
@@ -49,7 +49,7 @@ class SolrWriteService extends AbstractSolrService
         } catch (Throwable $e) {
             $param = $query->getRequestBuilder()->build($query)->getParams();
             $this->logger->error(
-                'Extracting text and meta data through Solr Cell over HTTP POST',
+                'Extracting text and meta data through Meilisearch Cell over HTTP POST',
                 [
                     'query' => (array)$query,
                     'parameters' => $param,
@@ -99,9 +99,9 @@ class SolrWriteService extends AbstractSolrService
     }
 
     /**
-     * Add an array of Solr Documents to the index all at once
+     * Add an array of Meilisearch Documents to the index all at once
      *
-     * @param array $documents Should be an array of \WapplerSystems\Meilisearch\System\Solr\Document\Document instances
+     * @param array $documents Should be an array of \WapplerSystems\Meilisearch\System\Meilisearch\Document\Document instances
      */
     public function addDocuments(array $documents): ResponseAdapter
     {

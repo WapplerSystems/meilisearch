@@ -32,7 +32,7 @@ use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Middleware to create beautiful URLs for Solr
+ * Middleware to create beautiful URLs for Meilisearch
  *
  * How to use:
  * Inside your extension create following file
@@ -41,7 +41,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * return [
  *   'frontend' => [
  *     'wapplersystems/meilisearch-route-enhancer' => [
- *       'target' => \WapplerSystems\Meilisearch\Middleware\SolrRoutingMiddleware::class,
+ *       'target' => \WapplerSystems\Meilisearch\Middleware\MeilisearchRoutingMiddleware::class,
  *       'before' => [
  *         'typo3/cms-frontend/site',
  *       ]
@@ -52,12 +52,12 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @author Lars Tode <lars.tode@dkd.de>
  * @see https://docs.typo3.org/m/typo3/reference-coreapi/main/en-us/ApiOverview/RequestHandling/Index.html
  */
-class SolrRoutingMiddleware implements MiddlewareInterface, LoggerAwareInterface
+class MeilisearchRoutingMiddleware implements MiddlewareInterface, LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
     /**
-     * Solr parameter key
+     * Meilisearch parameter key
      */
     protected string $namespace = 'tx_solr';
 

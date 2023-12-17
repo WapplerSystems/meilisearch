@@ -20,10 +20,10 @@ use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSet;
 use WapplerSystems\Meilisearch\Event\Search\AfterFrequentlySearchHasBeenExecutedEvent;
 use WapplerSystems\Meilisearch\Event\Search\BeforeSearchFormIsShownEvent;
 use WapplerSystems\Meilisearch\Event\Search\BeforeSearchResultIsShownEvent;
-use WapplerSystems\Meilisearch\Mvc\Variable\SolrVariableProvider;
+use WapplerSystems\Meilisearch\Mvc\Variable\MeilisearchVariableProvider;
 use WapplerSystems\Meilisearch\Pagination\ResultsPagination;
 use WapplerSystems\Meilisearch\Pagination\ResultsPaginator;
-use WapplerSystems\Meilisearch\System\Solr\SolrUnavailableException;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchUnavailableException;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
@@ -60,7 +60,7 @@ class SearchController extends AbstractBaseController
     public function initializeView(ViewInterface $view): void
     {
         if ($view instanceof TemplateView) {
-            $variableProvider = GeneralUtility::makeInstance(SolrVariableProvider::class);
+            $variableProvider = GeneralUtility::makeInstance(MeilisearchVariableProvider::class);
             $variableProvider->setSource($view->getRenderingContext()->getVariableProvider()->getSource());
             $view->getRenderingContext()->setVariableProvider($variableProvider);
             $view->getRenderingContext()->getVariableProvider()->add(
@@ -97,7 +97,7 @@ class SearchController extends AbstractBaseController
     public function resultsAction(): ResponseInterface
     {
         if ($this->searchService === null) {
-            return $this->handleSolrUnavailable();
+            return $this->handleMeilisearchUnavailable();
         }
 
         try {
@@ -147,8 +147,8 @@ class SearchController extends AbstractBaseController
             ];
 
             $this->view->assignMultiple($values);
-        } catch (SolrUnavailableException) {
-            return $this->handleSolrUnavailable();
+        } catch (MeilisearchUnavailableException) {
+            return $this->handleMeilisearchUnavailable();
         }
         return $this->htmlResponse();
     }
@@ -161,7 +161,7 @@ class SearchController extends AbstractBaseController
     public function formAction(): ResponseInterface
     {
         if ($this->searchService === null) {
-            return $this->handleSolrUnavailable();
+            return $this->handleMeilisearchUnavailable();
         }
 
         /** @var BeforeSearchFormIsShownEvent $formEvent */
@@ -222,14 +222,14 @@ class SearchController extends AbstractBaseController
     public function detailAction(string $documentId = ''): ResponseInterface
     {
         if ($this->searchService === null) {
-            return $this->handleSolrUnavailable();
+            return $this->handleMeilisearchUnavailable();
         }
 
         try {
             $document = $this->searchService->getDocumentById($documentId);
             $this->view->assign('document', $document);
-        } catch (SolrUnavailableException) {
-            return $this->handleSolrUnavailable();
+        } catch (MeilisearchUnavailableException) {
+            return $this->handleMeilisearchUnavailable();
         }
         return $this->htmlResponse();
     }
@@ -237,7 +237,7 @@ class SearchController extends AbstractBaseController
     /**
      * Rendered when no search is available.
      *
-     * @noinspection PhpUnused Is used by {@link self::handleSolrUnavailable()}
+     * @noinspection PhpUnused Is used by {@link self::handleMeilisearchUnavailable()}
      */
     public function solrNotAvailableAction(): ResponseInterface
     {
@@ -248,9 +248,9 @@ class SearchController extends AbstractBaseController
     /**
      * Called when the solr server is unavailable.
      */
-    protected function handleSolrUnavailable(): ResponseInterface
+    protected function handleMeilisearchUnavailable(): ResponseInterface
     {
-        parent::logSolrUnavailable();
+        parent::logMeilisearchUnavailable();
         return new ForwardResponse('solrNotAvailable');
     }
 

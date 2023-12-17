@@ -52,7 +52,7 @@ class PageStrategy extends AbstractStrategy
     protected function collectPageGarbageByContentChange(int $ttContentUid): void
     {
         $contentElement = BackendUtility::getRecord('tt_content', $ttContentUid, 'uid, pid', '', false);
-        $this->deleteInSolrAndUpdateIndexQueue('pages', $contentElement['pid']);
+        $this->deleteInMeilisearchAndUpdateIndexQueue('pages', $contentElement['pid']);
     }
 
     /**
@@ -66,7 +66,7 @@ class PageStrategy extends AbstractStrategy
         if (!empty($pageOverlay['l10n_parent']) && (int)($pageOverlay['l10n_parent']) !== 0) {
             $this->deleteIndexDocuments('pages', (int)$pageOverlay['l10n_parent'], (int)$pageOverlay['sys_language_uid']);
         } else {
-            $this->deleteInSolrAndRemoveFromIndexQueue('pages', $uid);
+            $this->deleteInMeilisearchAndRemoveFromIndexQueue('pages', $uid);
         }
     }
 }

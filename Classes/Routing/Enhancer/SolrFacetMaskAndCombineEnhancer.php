@@ -17,7 +17,7 @@ namespace WapplerSystems\Meilisearch\Routing\Enhancer;
 
 use WapplerSystems\Meilisearch\Routing\RoutingService;
 use WapplerSystems\Meilisearch\System\Configuration\ExtensionConfiguration;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\Utility\RoutingUtility;
 use TYPO3\CMS\Core\Routing\Enhancer\AbstractEnhancer;
 use TYPO3\CMS\Core\Routing\Enhancer\RoutingEnhancerInterface;
@@ -25,7 +25,7 @@ use TYPO3\CMS\Core\Routing\Route;
 use TYPO3\CMS\Core\Routing\RouteCollection;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class SolrFacetMaskAndCombineEnhancer extends AbstractEnhancer implements RoutingEnhancerInterface, SolrRouteEnhancerInterface
+class MeilisearchFacetMaskAndCombineEnhancer extends AbstractEnhancer implements RoutingEnhancerInterface, MeilisearchRouteEnhancerInterface
 {
     protected bool $isEnabled;
     protected array $configuration;
@@ -47,10 +47,10 @@ class SolrFacetMaskAndCombineEnhancer extends AbstractEnhancer implements Routin
     public function enhanceForMatching(RouteCollection $collection): void
     {
         if (!$this->isEnabled) {
-            $logger = GeneralUtility::makeInstance(SolrLogManager::class, __CLASS__);
+            $logger = GeneralUtility::makeInstance(MeilisearchLogManager::class, __CLASS__);
             $logger->error(
-                'Solr routing enhancer deactivated in Solr configuration,'
-                . ' set enableRouteEnhancer or remove SolrFacetMaskAndCombineEnhancer'
+                'Meilisearch routing enhancer deactivated in Meilisearch configuration,'
+                . ' set enableRouteEnhancer or remove MeilisearchFacetMaskAndCombineEnhancer'
             );
             return;
         }

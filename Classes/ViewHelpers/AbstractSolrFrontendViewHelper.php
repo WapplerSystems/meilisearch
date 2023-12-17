@@ -23,12 +23,12 @@ use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 
 /**
- * Class AbstractSolrFrontendViewHelper
+ * Class AbstractMeilisearchFrontendViewHelper
  *
  * @author Frans Saris <frans@beech.it>
  * @author Timo Hund <timo.hund@dkd.de>
  */
-abstract class AbstractSolrFrontendViewHelper extends AbstractSolrViewHelper
+abstract class AbstractMeilisearchFrontendViewHelper extends AbstractMeilisearchViewHelper
 {
     protected function getTypoScriptConfiguration(): ?TypoScriptConfiguration
     {

@@ -16,16 +16,16 @@
 namespace WapplerSystems\Meilisearch\System\Validator;
 
 /**
- * Class Path is used for Solr Path related methods
+ * Class Path is used for Meilisearch Path related methods
  *
  * @author Thomas Hohn <tho@systime.dk>
  */
 class Path
 {
     /**
-     * Validate that a path is a valid Solr Path
+     * Validate that a path is a valid Meilisearch Path
      */
-    public function isValidSolrPath(string $path): bool
+    public function isValidMeilisearchPath(string $path): bool
     {
         $path = trim($path);
 

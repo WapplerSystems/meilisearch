@@ -15,13 +15,13 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace WapplerSystems\Meilisearch\Domain\Search\ApacheSolrDocument;
+namespace WapplerSystems\Meilisearch\Domain\Search\ApacheMeilisearchDocument;
 
 use WapplerSystems\Meilisearch\Access\Rootline;
 use WapplerSystems\Meilisearch\Domain\Site\Site;
 use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
 use WapplerSystems\Meilisearch\Domain\Variants\IdBuilder;
-use WapplerSystems\Meilisearch\System\Solr\Document\Document;
+use WapplerSystems\Meilisearch\System\Meilisearch\Document\Document;
 use WapplerSystems\Meilisearch\Typo3PageContentExtractor;
 use WapplerSystems\Meilisearch\Util;
 use Doctrine\DBAL\Exception as DBALException;
@@ -29,9 +29,9 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
- * Builder class to build an ApacheSolrDocument
+ * Builder class to build an ApacheMeilisearchDocument
  *
- * Responsible to build \WapplerSystems\Meilisearch\System\Solr\Document\Document
+ * Responsible to build \WapplerSystems\Meilisearch\System\Meilisearch\Document\Document
  *
  * @author Timo Hund <timo.hund@dkd.de>
  */
@@ -103,7 +103,7 @@ class Builder
     }
 
     /**
-     * Creates a Solr document with the basic / core fields set already.
+     * Creates a Meilisearch document with the basic / core fields set already.
      *
      * @throws DBALException
      */

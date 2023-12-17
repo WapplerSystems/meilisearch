@@ -38,7 +38,7 @@ class PathToHierarchy implements FieldProcessor
         $results = [];
 
         foreach ($values as $value) {
-            $valueResults = $this->buildSolrHierarchyFromPath($value);
+            $valueResults = $this->buildMeilisearchHierarchyFromPath($value);
             $results = array_merge($results, $valueResults);
         }
 
@@ -46,13 +46,13 @@ class PathToHierarchy implements FieldProcessor
     }
 
     /**
-     * Builds a Solr hierarchy from path string.
+     * Builds a Meilisearch hierarchy from path string.
      *
      * @param string $path path string
-     * @return array Solr hierarchy
+     * @return array Meilisearch hierarchy
      * @see http://wiki.apache.org/solr/HierarchicalFaceting
      */
-    protected function buildSolrHierarchyFromPath(string $path): array
+    protected function buildMeilisearchHierarchyFromPath(string $path): array
     {
         $hierarchy = [];
         $path = HierarchyTool::substituteSlashes($path);

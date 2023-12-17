@@ -22,7 +22,7 @@ use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Result\SearchResultBuilde
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSet;
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSetProcessor;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
-use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -99,7 +99,7 @@ class VariantsProcessor implements SearchResultSetProcessor
             $fields = get_object_vars($variantDocumentArray);
             $variantDocument = new SearchResult($fields);
 
-            $variantSearchResult = $this->resultBuilder->fromApacheSolrDocument($variantDocument);
+            $variantSearchResult = $this->resultBuilder->fromApacheMeilisearchDocument($variantDocument);
             $variantSearchResult->setIsVariant();
             $variantSearchResult->setVariantParent($resultDocument);
 

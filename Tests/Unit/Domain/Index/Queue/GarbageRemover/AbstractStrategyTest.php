@@ -16,7 +16,7 @@
 namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Index\Queue\GarbageRemover;
 
 use WapplerSystems\Meilisearch\Domain\Index\Queue\GarbageRemover\AbstractStrategy;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
 use WapplerSystems\Meilisearch\System\Solr\Service\SolrWriteService;
 use WapplerSystems\Meilisearch\System\Solr\SolrConnection;
@@ -72,8 +72,8 @@ abstract class AbstractStrategyTest extends SetUpUnitTestCase
             ->method('getWriteService')
             ->willReturn($writeServiceMock);
 
-        $solrLogManagerMock = $this->createMock(SolrLogManager::class);
-        GeneralUtility::addInstance(SolrLogManager::class, $solrLogManagerMock);
+        $solrLogManagerMock = $this->createMock(MeilisearchLogManager::class);
+        GeneralUtility::addInstance(MeilisearchLogManager::class, $solrLogManagerMock);
         if ($status !== 200) {
             $solrLogManagerMock
                 ->expects(self::once())

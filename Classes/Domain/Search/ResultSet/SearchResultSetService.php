@@ -31,10 +31,10 @@ use WapplerSystems\Meilisearch\Event\Search\AfterSearchHasBeenExecutedEvent;
 use WapplerSystems\Meilisearch\Event\Search\AfterSearchQueryHasBeenPreparedEvent;
 use WapplerSystems\Meilisearch\Search;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
-use WapplerSystems\Meilisearch\System\Solr\Document\Document;
-use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
-use WapplerSystems\Meilisearch\System\Solr\SolrIncompleteResponseException;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
+use WapplerSystems\Meilisearch\System\Meilisearch\Document\Document;
+use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchIncompleteResponseException;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use UnexpectedValueException;
@@ -51,11 +51,11 @@ class SearchResultSetService
 
     protected ?SearchResultSet $lastResultSet = null;
 
-    protected ?bool $isSolrAvailable = null;
+    protected ?bool $isMeilisearchAvailable = null;
 
     protected TypoScriptConfiguration $typoScriptConfiguration;
 
-    protected SolrLogManager $logger;
+    protected MeilisearchLogManager $logger;
 
     protected SearchResultBuilder $searchResultBuilder;
 
@@ -64,27 +64,27 @@ class SearchResultSetService
     protected EventDispatcherInterface $eventDispatcher;
 
     public function __construct(
-        TypoScriptConfiguration $configuration,
-        Search $search,
-        ?SolrLogManager $solrLogManager = null,
-        ?SearchResultBuilder $resultBuilder = null,
-        ?QueryBuilder $queryBuilder = null,
+        TypoScriptConfiguration   $configuration,
+        Search                    $search,
+        ?MeilisearchLogManager    $solrLogManager = null,
+        ?SearchResultBuilder      $resultBuilder = null,
+        ?QueryBuilder             $queryBuilder = null,
         ?EventDispatcherInterface $eventDispatcher = null
     ) {
         $this->search = $search;
         $this->typoScriptConfiguration = $configuration;
-        $this->logger = $solrLogManager ?? GeneralUtility::makeInstance(SolrLogManager::class, __CLASS__);
+        $this->logger = $solrLogManager ?? GeneralUtility::makeInstance(MeilisearchLogManager::class, __CLASS__);
         $this->searchResultBuilder = $resultBuilder ?? GeneralUtility::makeInstance(SearchResultBuilder::class);
         $this->queryBuilder = $queryBuilder ?? GeneralUtility::makeInstance(QueryBuilder::class, $configuration, $solrLogManager);
         $this->eventDispatcher = $eventDispatcher ?? GeneralUtility::makeInstance(EventDispatcherInterface::class);
     }
 
-    public function getIsSolrAvailable(bool $useCache = true): bool
+    public function getIsMeilisearchAvailable(bool $useCache = true): bool
     {
-        if ($this->isSolrAvailable === null) {
-            $this->isSolrAvailable = $this->search->ping($useCache);
+        if ($this->isMeilisearchAvailable === null) {
+            $this->isMeilisearchAvailable = $this->search->ping($useCache);
         }
-        return $this->isSolrAvailable;
+        return $this->isMeilisearchAvailable;
     }
 
     /**
@@ -129,7 +129,7 @@ class SearchResultSetService
         $query = $event->getQuery();
 
         $resultSet->setUsedQuery($query);
-        // performing the actual search, sending the query to the Solr server
+        // performing the actual search, sending the query to the Meilisearch server
         $response = $this->doASearch($query, $searchRequest);
 
         if ($searchRequest->getResultsPerPage() === 0) {
@@ -210,9 +210,9 @@ class SearchResultSetService
     }
 
     /**
-     * Executes the search and builds a fake response for a current bug in Apache Solr 6.3
+     * Executes the search and builds a fake response for a current bug in Apache Meilisearch 6.3
      *
-     * @throws SolrIncompleteResponseException
+     * @throws MeilisearchIncompleteResponseException
      */
     protected function doASearch(Query $query, SearchRequest $searchRequest): ResponseAdapter
     {
@@ -222,7 +222,7 @@ class SearchResultSetService
 
         $response = $this->search->search($query, $offSet);
         if ($response === null) {
-            throw new SolrIncompleteResponseException('The response retrieved from solr was incomplete', 1505989678);
+            throw new MeilisearchIncompleteResponseException('The response retrieved from solr was incomplete', 1505989678);
         }
 
         return $response;
@@ -304,7 +304,7 @@ class SearchResultSetService
             throw new UnexpectedValueException('Response did not contain a valid Document object');
         }
 
-        return $this->searchResultBuilder->fromApacheSolrDocument($resultDocument);
+        return $this->searchResultBuilder->fromApacheMeilisearchDocument($resultDocument);
     }
 
     public function getLastResultSet(): ?SearchResultSet

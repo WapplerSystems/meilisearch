@@ -101,7 +101,7 @@ class Util
     /**
      * Shortcut to retrieve the TypoScript configuration for EXT:meilisearch
      */
-    public static function getSolrConfiguration(): TypoScriptConfiguration
+    public static function getMeilisearchConfiguration(): TypoScriptConfiguration
     {
         $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
         return $configurationManager->getTypoScriptConfiguration();

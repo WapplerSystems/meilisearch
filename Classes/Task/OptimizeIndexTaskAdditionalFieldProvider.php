@@ -35,7 +35,7 @@ use TYPO3\CMS\Scheduler\Task\AbstractTask;
 use TYPO3\CMS\Scheduler\Task\Enumeration\Action;
 
 /**
- * Adds additional field to specify the Solr server to initialize the index queue for
+ * Adds additional field to specify the Meilisearch server to initialize the index queue for
  *
  * @author Jens Jacobsen <typo3@jens-jacobsen.de>
  */
@@ -103,7 +103,7 @@ class OptimizeIndexTaskAdditionalFieldProvider extends AbstractAdditionalFieldPr
     }
 
     /**
-     * Used to define fields to provide the Solr server address when adding
+     * Used to define fields to provide the Meilisearch server address when adding
      * or editing a task.
      *
      * @param array $taskInfo reference to the array containing the info used in the add/edit form

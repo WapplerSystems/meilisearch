@@ -35,7 +35,7 @@ use TYPO3\CMS\Reports\Status;
  * * Entry Point[base] scheme expects -> http[s]
  * * Entry Point[base] authority expects -> [user-info@]host[:port]
  */
-class SiteHandlingStatus extends AbstractSolrStatus
+class SiteHandlingStatus extends AbstractMeilisearchStatus
 {
     public const TITLE_SITE_HANDLING_CONFIGURATION = 'Site handling configuration';
 

@@ -20,7 +20,7 @@ namespace WapplerSystems\Meilisearch\IndexQueue;
 use WapplerSystems\Meilisearch\ContentObject\Classification;
 use WapplerSystems\Meilisearch\ContentObject\Multivalue;
 use WapplerSystems\Meilisearch\ContentObject\Relation;
-use WapplerSystems\Meilisearch\System\Solr\Document\Document;
+use WapplerSystems\Meilisearch\System\Meilisearch\Document\Document;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -111,7 +111,7 @@ abstract class AbstractIndexer
      * is taken.
      *
      * @param array $indexingConfiguration Indexing configuration as defined in plugin.tx_solr_index.queue.[indexingConfigurationName].fields
-     * @param string $solrFieldName A Solr field name that is configured in the indexing configuration
+     * @param string $solrFieldName A Meilisearch field name that is configured in the indexing configuration
      * @param array $data A record or item's data
      * @return array|float|int|string|null The resolved string value to be indexed; null if value could not be resolved
      */

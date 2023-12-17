@@ -33,7 +33,7 @@ use TYPO3Fluid\Fluid\Core\Variables\VariableProviderInterface;
  *
  * @property RenderingContext $renderingContext
  */
-class SearchFormViewHelper extends AbstractSolrFrontendTagBasedViewHelper
+class SearchFormViewHelper extends AbstractMeilisearchFrontendTagBasedViewHelper
 {
     protected $tagName = 'form';
 

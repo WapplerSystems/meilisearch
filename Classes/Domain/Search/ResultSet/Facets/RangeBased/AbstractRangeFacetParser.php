@@ -25,7 +25,7 @@ use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\RangeBased\Numeric
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\RangeBased\NumericRange\NumericRangeFacet;
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSet;
 use WapplerSystems\Meilisearch\Event\Parser\AfterFacetIsParsedEvent;
-use WapplerSystems\Meilisearch\System\Solr\ParsingUtil;
+use WapplerSystems\Meilisearch\System\Meilisearch\ParsingUtil;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 

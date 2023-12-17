@@ -65,7 +65,7 @@ class ConfigurationService
         $flexFormConfiguration = $this->overrideFilter($flexFormConfiguration);
         $flexFormConfiguration = $this->typoScriptService->convertPlainArrayToTypoScriptArray($flexFormConfiguration);
 
-        $solrTypoScriptConfiguration->mergeSolrConfiguration($flexFormConfiguration, true, false);
+        $solrTypoScriptConfiguration->mergeMeilisearchConfiguration($flexFormConfiguration, true, false);
     }
 
     /**

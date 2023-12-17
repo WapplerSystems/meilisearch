@@ -18,11 +18,11 @@ declare(strict_types=1);
 namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet\Result;
 
 use WapplerSystems\Meilisearch\Exception\InvalidArgumentException;
-use WapplerSystems\Meilisearch\System\Solr\Document\Document;
+use WapplerSystems\Meilisearch\System\Meilisearch\Document\Document;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * The SearchResultBuilder is responsible to build a SearchResult object from an \WapplerSystems\Meilisearch\System\Solr\Document\Document
+ * The SearchResultBuilder is responsible to build a SearchResult object from an \WapplerSystems\Meilisearch\System\Meilisearch\Document\Document
  * and should use a different class as SearchResult if configured.
  */
 class SearchResultBuilder
@@ -31,7 +31,7 @@ class SearchResultBuilder
      * This method is used to wrap the original solr document instance in an instance of the configured SearchResult
      * class.
      */
-    public function fromApacheSolrDocument(Document $originalDocument): SearchResult
+    public function fromApacheMeilisearchDocument(Document $originalDocument): SearchResult
     {
         $searchResultClassName = $this->getResultClassName();
         $result = GeneralUtility::makeInstance($searchResultClassName, $originalDocument->getFields());

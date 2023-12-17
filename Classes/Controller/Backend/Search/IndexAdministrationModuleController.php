@@ -15,7 +15,7 @@
 
 namespace WapplerSystems\Meilisearch\Controller\Backend\Search;
 
-use WapplerSystems\Meilisearch\System\Solr\SolrConnection;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchConnection;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 use TYPO3\CMS\Core\Http\RedirectResponse;
@@ -52,7 +52,7 @@ class IndexAdministrationModuleController extends AbstractModuleController
             $solrServers = $this->solrConnectionManager->getConnectionsBySite($this->selectedSite);
             foreach ($solrServers as $solrServer) {
                 $writeService = $solrServer->getWriteService();
-                /** @var SolrConnection $solrServer */
+                /** @var MeilisearchConnection $solrServer */
                 $writeService->deleteByQuery('siteHash:' . $siteHash);
                 $writeService->commit(false, false);
                 $affectedCores[] = $writeService->getPrimaryEndpoint()->getCore();
@@ -67,7 +67,7 @@ class IndexAdministrationModuleController extends AbstractModuleController
     }
 
     /**
-     * Reloads the site's Solr cores.
+     * Reloads the site's Meilisearch cores.
      */
     public function reloadIndexConfigurationAction(): ResponseInterface
     {

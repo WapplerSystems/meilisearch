@@ -17,8 +17,8 @@ namespace WapplerSystems\Meilisearch\Controller;
 
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\InvalidFacetPackageException;
 use WapplerSystems\Meilisearch\Domain\Search\Suggest\SuggestService;
-use WapplerSystems\Meilisearch\NoSolrConnectionFoundException;
-use WapplerSystems\Meilisearch\System\Solr\SolrUnavailableException;
+use WapplerSystems\Meilisearch\NoMeilisearchConnectionFoundException;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchUnavailableException;
 use Doctrine\DBAL\Exception as DBALException;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -37,7 +37,7 @@ class SuggestController extends AbstractBaseController
      *
      * @throws DBALException
      * @throws InvalidFacetPackageException
-     * @throws NoSolrConnectionFoundException
+     * @throws NoMeilisearchConnectionFoundException
      *
      * @noinspection PhpUnused
      */
@@ -47,7 +47,7 @@ class SuggestController extends AbstractBaseController
         $rawQuery = htmlspecialchars(mb_strtolower(trim($queryString)));
 
         if ($this->searchService === null) {
-            return $this->handleSolrUnavailable();
+            return $this->handleMeilisearchUnavailable();
         }
 
         try {
@@ -66,8 +66,8 @@ class SuggestController extends AbstractBaseController
 
             $searchRequest = $this->getSearchRequestBuilder()->buildForSuggest($arguments, $rawQuery, $pageId, $languageId);
             $result = $suggestService->getSuggestions($searchRequest, $additionalFilters);
-        } catch (SolrUnavailableException) {
-            return $this->handleSolrUnavailable();
+        } catch (MeilisearchUnavailableException) {
+            return $this->handleMeilisearchUnavailable();
         }
         if ($callback) {
             return $this->htmlResponse(htmlspecialchars($callback) . '(' . json_encode($result, JSON_UNESCAPED_SLASHES) . ')');
@@ -75,9 +75,9 @@ class SuggestController extends AbstractBaseController
         return $this->htmlResponse(json_encode($result, JSON_UNESCAPED_SLASHES));
     }
 
-    private function handleSolrUnavailable(): ResponseInterface
+    private function handleMeilisearchUnavailable(): ResponseInterface
     {
-        $this->logSolrUnavailable();
+        $this->logMeilisearchUnavailable();
         $result = ['status' => false];
         return $this->htmlResponse(json_encode($result, JSON_UNESCAPED_SLASHES))->withStatus(503, self::STATUS_503_MESSAGE);
     }

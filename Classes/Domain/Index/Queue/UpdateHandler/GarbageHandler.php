@@ -81,7 +81,7 @@ class GarbageHandler extends AbstractUpdateHandler
      * Handles moved pages
      *
      * As rootline and page slug might have changed on page movement,
-     * document have to be removed from Solr. Reindexing is taken
+     * document have to be removed from Meilisearch. Reindexing is taken
      * care of by the DataUpdateHandler.
      *
      * @param int $uid

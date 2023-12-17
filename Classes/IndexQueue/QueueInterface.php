@@ -47,7 +47,7 @@ interface QueueInterface
     /**
      * Marks an item as needing (re)indexing.
      *
-     * Like with Solr itself, there's no add method, just a simple update method
+     * Like with Meilisearch itself, there's no add method, just a simple update method
      * that handles the adds, too.
      *
      * The method creates or updates the index queue items for all related rootPageIds.

@@ -29,25 +29,25 @@ class Slops implements ParameterBuilderInterface
     public const NO_SLOP = null;
 
     /**
-     * Represents the Apache Solr parameter: qs
+     * Represents the Apache Meilisearch parameter: qs
      * See: https://solr.apache.org/guide/solr/latest/query-guide/dismax-query-parser.html#qs-query-phrase-slop-parameter
      */
     protected ?int $querySlop = self::NO_SLOP;
 
     /**
-     * Represents the Apache Solr parameter: ps
+     * Represents the Apache Meilisearch parameter: ps
      * See: https://solr.apache.org/guide/solr/latest/query-guide/edismax-query-parser.html
      */
     protected ?int $phraseSlop = self::NO_SLOP;
 
     /**
-     * Represents the Apache Solr parameter: ps2
+     * Represents the Apache Meilisearch parameter: ps2
      * See: https://solr.apache.org/guide/solr/latest/query-guide/edismax-query-parser.html
      */
     protected ?int $bigramPhraseSlop = self::NO_SLOP;
 
     /**
-     * Represents the Apache Solr parameter: ps3
+     * Represents the Apache Meilisearch parameter: ps3
      * See: https://solr.apache.org/guide/solr/latest/query-guide/edismax-query-parser.html
      */
     protected ?int $trigramPhraseSlop = self::NO_SLOP;

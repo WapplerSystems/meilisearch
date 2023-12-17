@@ -22,11 +22,11 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3\CMS\Reports\StatusProviderInterface;
 
 /**
- * Provides shared functionality for all Solr reports.
+ * Provides shared functionality for all Meilisearch reports.
  *
  * @author Timo Hund <timo.hund@dkd.de>
  */
-abstract class AbstractSolrStatus implements StatusProviderInterface
+abstract class AbstractMeilisearchStatus implements StatusProviderInterface
 {
     /**
      * Assigns variables to the fluid StandaloneView and renders the view.

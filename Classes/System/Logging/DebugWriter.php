@@ -71,7 +71,7 @@ class DebugWriter
      */
     protected function getIsDebugOutputEnabled(): bool
     {
-        return Util::getSolrConfiguration()->getLoggingDebugOutput();
+        return Util::getMeilisearchConfiguration()->getLoggingDebugOutput();
     }
 
     protected function getIsPageIndexingRequest(): bool

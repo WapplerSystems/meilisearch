@@ -15,7 +15,7 @@
 
 namespace WapplerSystems\Meilisearch\ViewHelpers\Debug;
 
-use WapplerSystems\Meilisearch\ViewHelpers\AbstractSolrFrontendViewHelper;
+use WapplerSystems\Meilisearch\ViewHelpers\AbstractMeilisearchFrontendViewHelper;
 use Closure;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
@@ -31,7 +31,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
  *
  * @noinspection PhpUnused used in Fluid templates <s:debug.query />
  */
-class QueryViewHelper extends AbstractSolrFrontendViewHelper
+class QueryViewHelper extends AbstractMeilisearchFrontendViewHelper
 {
     use CompileWithRenderStatic;
 

@@ -17,7 +17,7 @@ declare(strict_types=1);
 
 namespace WapplerSystems\Meilisearch\Domain\Site;
 
-use WapplerSystems\Meilisearch\NoSolrConnectionFoundException;
+use WapplerSystems\Meilisearch\NoMeilisearchConnectionFoundException;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 use WapplerSystems\Meilisearch\System\Records\Pages\PagesRepository;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -83,23 +83,23 @@ class Site
     }
 
     /**
-     * Returns Solr connection configurations indexed by language id.
+     * Returns Meilisearch connection configurations indexed by language id.
      *
-     * @throws NoSolrConnectionFoundException
+     * @throws NoMeilisearchConnectionFoundException
      */
-    public function getSolrConnectionConfiguration(int $language = 0): array
+    public function getMeilisearchConnectionConfiguration(int $language = 0): array
     {
         if (!is_array($this->solrConnectionConfigurations[$language] ?? null)) {
-            /** @var NoSolrConnectionFoundException $noSolrConnectionException */
-            $noSolrConnectionException = GeneralUtility::makeInstance(
-                NoSolrConnectionFoundException::class,
-                'Could not find a Solr connection for root page [' . $this->getRootPageId() . '] and language [' . $language . '].',
+            /** @var NoMeilisearchConnectionFoundException $noMeilisearchConnectionException */
+            $noMeilisearchConnectionException = GeneralUtility::makeInstance(
+                NoMeilisearchConnectionFoundException::class,
+                'Could not find a Meilisearch connection for root page [' . $this->getRootPageId() . '] and language [' . $language . '].',
                 1552491117
             );
-            $noSolrConnectionException->setRootPageId($this->getRootPageId());
-            $noSolrConnectionException->setLanguageId($language);
+            $noMeilisearchConnectionException->setRootPageId($this->getRootPageId());
+            $noMeilisearchConnectionException->setLanguageId($language);
 
-            throw $noSolrConnectionException;
+            throw $noMeilisearchConnectionException;
         }
 
         return $this->solrConnectionConfigurations[$language];
@@ -176,11 +176,11 @@ class Site
     }
 
     /**
-     * Gets the site's Solr TypoScript configuration (plugin.tx_solr.*)
+     * Gets the site's Meilisearch TypoScript configuration (plugin.tx_solr.*)
      *
      * Purpose: Interface and Unit test mocking helper method.
      */
-    public function getSolrConfiguration(): TypoScriptConfiguration
+    public function getMeilisearchConfiguration(): TypoScriptConfiguration
     {
         return $this->configuration;
     }
@@ -218,7 +218,7 @@ class Site
         $initialPagesAdditionalWhereClause = '';
         // Fetch configuration in order to be able to read initialPagesAdditionalWhereClause
         if ($indexQueueConfigurationName !== null) {
-            $solrConfiguration = $this->getSolrConfiguration();
+            $solrConfiguration = $this->getMeilisearchConfiguration();
             $initialPagesAdditionalWhereClause = $solrConfiguration->getInitialPagesAdditionalWhereClause($indexQueueConfigurationName);
         }
         return $this->pagesRepository->findAllSubPageIdsByRootPage($pageId, $initialPagesAdditionalWhereClause);
@@ -267,15 +267,15 @@ class Site
     }
 
     /**
-     * Returns all Solr connection configurations.
+     * Returns all Meilisearch connection configurations.
      */
-    public function getAllSolrConnectionConfigurations(): array
+    public function getAllMeilisearchConnectionConfigurations(): array
     {
         $configs = [];
         foreach ($this->getAvailableLanguageIds() as $languageId) {
             try {
-                $configs[$languageId] = $this->getSolrConnectionConfiguration($languageId);
-            } catch (NoSolrConnectionFoundException) {
+                $configs[$languageId] = $this->getMeilisearchConnectionConfiguration($languageId);
+            } catch (NoMeilisearchConnectionFoundException) {
             }
         }
         return $configs;
@@ -286,6 +286,6 @@ class Site
      */
     public function isEnabled(): bool
     {
-        return !empty($this->getAllSolrConnectionConfigurations());
+        return !empty($this->getAllMeilisearchConnectionConfigurations());
     }
 }

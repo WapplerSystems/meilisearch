@@ -32,7 +32,7 @@ class AuthorizationService extends AbstractAuthenticationService
      * to allow the indexer to access and protected content. May also allow to
      * identify requests by the page indexer.
      */
-    public const SOLR_INDEXER_USERNAME = '__SolrIndexerUser__';
+    public const SOLR_INDEXER_USERNAME = '__MeilisearchIndexerUser__';
 
     /**
      * Gets a fake frontend user record to allow access to protected pages.

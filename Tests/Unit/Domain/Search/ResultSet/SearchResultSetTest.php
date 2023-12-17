@@ -28,7 +28,7 @@ use WapplerSystems\Meilisearch\Event\Search\AfterSearchHasBeenExecutedEvent;
 use WapplerSystems\Meilisearch\Event\Search\AfterSearchQueryHasBeenPreparedEvent;
 use WapplerSystems\Meilisearch\Search;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -42,7 +42,7 @@ class SearchResultSetTest extends SetUpUnitTestCase
     protected TypoScriptConfiguration|MockObject $configurationMock;
     protected Search|MockObject $searchMock;
     protected SearchResultSetService $searchResultSetService;
-    protected SolrLogManager|MockObject $solrLogManagerMock;
+    protected MeilisearchLogManager|MockObject $solrLogManagerMock;
     protected Query|MockObject $queryMock;
     protected EscapeService|MockObject $escapeServiceMock;
     protected MockEventDispatcher $eventDispatcher;
@@ -51,7 +51,7 @@ class SearchResultSetTest extends SetUpUnitTestCase
     {
         $this->configurationMock = $this->createMock(TypoScriptConfiguration::class);
         $this->searchMock = $this->createMock(Search::class);
-        $this->solrLogManagerMock = $this->createMock(SolrLogManager::class);
+        $this->solrLogManagerMock = $this->createMock(MeilisearchLogManager::class);
 
         $this->escapeServiceMock = $this->createMock(EscapeService::class);
         $this->escapeServiceMock->expects(self::any())->method('escape')->willReturnArgument(0);

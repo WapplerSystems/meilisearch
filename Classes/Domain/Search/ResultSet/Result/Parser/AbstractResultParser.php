@@ -22,7 +22,7 @@ use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSet;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * A ResultParser is responsible to create the result object structure from the \Apache_Solr_Response
+ * A ResultParser is responsible to create the result object structure from the \Apache_Meilisearch_Response
  * and assign it to the SearchResultSet.
  */
 abstract class AbstractResultParser

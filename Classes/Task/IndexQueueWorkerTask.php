@@ -33,14 +33,14 @@ use TYPO3\CMS\Scheduler\ProgressProviderInterface;
  *
  * @author Ingo Renner <ingo@typo3.org>
  */
-class IndexQueueWorkerTask extends AbstractSolrTask implements ProgressProviderInterface
+class IndexQueueWorkerTask extends AbstractMeilisearchTask implements ProgressProviderInterface
 {
     protected ?int $documentsToIndexLimit = null;
 
     protected string $forcedWebRoot = '';
 
     /**
-     * Works through the indexing queue and indexes the queued items into Solr and returns TRUE on success,
+     * Works through the indexing queue and indexes the queued items into Meilisearch and returns TRUE on success,
      * FALSE if no items were indexed or none were found.
      *
      * @throws WebRootAllReadyDefinedException
@@ -55,7 +55,7 @@ class IndexQueueWorkerTask extends AbstractSolrTask implements ProgressProviderI
 
         // Wrapped the CliEnvironment to avoid defining TYPO3_PATH_WEB since this
         // should only be done in the case when running it from outside TYPO3 BE
-        // @see #921 and #934 on https://github.com/TYPO3-Solr
+        // @see #921 and #934 on https://github.com/TYPO3-Meilisearch
         if (Environment::isCli()) {
             $cliEnvironment = GeneralUtility::makeInstance(CliEnvironment::class);
             $cliEnvironment->backup();

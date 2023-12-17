@@ -13,9 +13,9 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace WapplerSystems\Meilisearch\System\Solr\Parser;
+namespace WapplerSystems\Meilisearch\System\Meilisearch\Parser;
 
-use WapplerSystems\Meilisearch\System\Solr\Schema\Schema;
+use WapplerSystems\Meilisearch\System\Meilisearch\Schema\Schema;
 use stdClass;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 

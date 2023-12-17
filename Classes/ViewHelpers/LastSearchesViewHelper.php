@@ -29,7 +29,7 @@ use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
  *
  * @noinspection PhpUnused
  */
-class LastSearchesViewHelper extends AbstractSolrViewHelper
+class LastSearchesViewHelper extends AbstractMeilisearchViewHelper
 {
     protected $escapeChildren = false;
 

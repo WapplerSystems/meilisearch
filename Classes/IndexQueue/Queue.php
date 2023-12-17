@@ -30,7 +30,7 @@ use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
 use WapplerSystems\Meilisearch\Event\IndexQueue\AfterIndexQueueItemHasBeenMarkedForReindexingEvent;
 use WapplerSystems\Meilisearch\FrontendEnvironment;
 use WapplerSystems\Meilisearch\System\Cache\TwoLevelCache;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use Doctrine\DBAL\Exception as DBALException;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -47,7 +47,7 @@ class Queue implements QueueInterface, QueueInitializationServiceAwareInterface
 
     protected ConfigurationAwareRecordService $recordService;
 
-    protected SolrLogManager $logger;
+    protected MeilisearchLogManager $logger;
 
     protected QueueItemRepository $queueItemRepository;
 
@@ -67,7 +67,7 @@ class Queue implements QueueInterface, QueueInitializationServiceAwareInterface
         ?FrontendEnvironment $frontendEnvironment = null,
         ?EventDispatcherInterface $eventDispatcher = null,
     ) {
-        $this->logger = GeneralUtility::makeInstance(SolrLogManager::class, __CLASS__);
+        $this->logger = GeneralUtility::makeInstance(MeilisearchLogManager::class, __CLASS__);
         $this->rootPageResolver = $rootPageResolver ?? GeneralUtility::makeInstance(RootPageResolver::class);
         $this->recordService = $recordService ?? GeneralUtility::makeInstance(ConfigurationAwareRecordService::class);
         $this->queueItemRepository = $queueItemRepository ?? GeneralUtility::makeInstance(QueueItemRepository::class);
@@ -151,7 +151,7 @@ class Queue implements QueueInterface, QueueInitializationServiceAwareInterface
     /**
      * Marks an item as needing (re)indexing.
      *
-     * Like with Solr itself, there's no add method, just a simple update method
+     * Like with Meilisearch itself, there's no add method, just a simple update method
      * that handles the adds, too.
      *
      * The method creates or updates the index queue items for all related rootPageIds.
@@ -203,7 +203,7 @@ class Queue implements QueueInterface, QueueInitializationServiceAwareInterface
                 continue;
             }
 
-            $solrConfiguration = $site->getSolrConfiguration();
+            $solrConfiguration = $site->getMeilisearchConfiguration();
             $indexingConfiguration = $this->recordService->getIndexingConfigurationName($itemType, $itemUid, $solrConfiguration);
             if ($indexingConfiguration === null) {
                 continue;

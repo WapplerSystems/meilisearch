@@ -17,7 +17,7 @@ namespace WapplerSystems\Meilisearch\Tests\Unit\System\Solr\Service;
 
 use WapplerSystems\Meilisearch\Domain\Search\Query\SearchQuery;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\System\Solr\Service\SolrReadService;
 use WapplerSystems\Meilisearch\System\Solr\SolrCommunicationException;
 use WapplerSystems\Meilisearch\System\Solr\SolrInternalServerErrorException;
@@ -134,7 +134,7 @@ class SolrReadServiceTest extends SetUpUnitTestCase
     {
         $clientMock = $this->createMock(Client::class);
         $fakeConfiguration = $this->createMock(TypoScriptConfiguration::class);
-        $logManagerMock = $this->createMock(SolrLogManager::class);
+        $logManagerMock = $this->createMock(MeilisearchLogManager::class);
         $solrService = new SolrReadService($clientMock, $fakeConfiguration, $logManagerMock);
         return $solrService;
     }

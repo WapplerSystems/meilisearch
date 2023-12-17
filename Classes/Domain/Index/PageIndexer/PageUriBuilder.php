@@ -19,7 +19,7 @@ namespace WapplerSystems\Meilisearch\Domain\Index\PageIndexer;
 
 use WapplerSystems\Meilisearch\Event\Indexing\AfterFrontendPageUriForIndexingHasBeenGeneratedEvent;
 use WapplerSystems\Meilisearch\IndexQueue\Item;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\UriInterface;
 use TYPO3\CMS\Core\Exception\SiteNotFoundException;
@@ -36,15 +36,15 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class PageUriBuilder
 {
     protected SiteFinder $siteFinder;
-    protected SolrLogManager $logger;
+    protected MeilisearchLogManager $logger;
     protected EventDispatcherInterface $eventDispatcher;
 
     public function __construct(
-        SolrLogManager $logger = null,
-        SiteFinder $siteFinder = null,
+        MeilisearchLogManager    $logger = null,
+        SiteFinder               $siteFinder = null,
         EventDispatcherInterface $eventDispatcher = null
     ) {
-        $this->logger = $logger ?? GeneralUtility::makeInstance(SolrLogManager::class, __CLASS__);
+        $this->logger = $logger ?? GeneralUtility::makeInstance(MeilisearchLogManager::class, __CLASS__);
         $this->siteFinder = $siteFinder ?? GeneralUtility::makeInstance(SiteFinder::class);
         $this->eventDispatcher = $eventDispatcher ?? GeneralUtility::makeInstance(EventDispatcherInterface::class);
     }

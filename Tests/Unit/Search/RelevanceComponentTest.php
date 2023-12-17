@@ -23,7 +23,7 @@ use WapplerSystems\Meilisearch\Event\Search\AfterSearchQueryHasBeenPreparedEvent
 use WapplerSystems\Meilisearch\Search;
 use WapplerSystems\Meilisearch\Search\RelevanceComponent;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use Solarium\QueryType\Select\RequestBuilder;
 
@@ -62,7 +62,7 @@ class RelevanceComponentTest extends SetUpUnitTestCase
         $typoscriptConfiguration = $this->getTypoScriptConfigurationWithQueryConfiguration($searchConfiguration);
         $queryBuilder = new QueryBuilder(
             $typoscriptConfiguration,
-            $this->createMock(SolrLogManager::class),
+            $this->createMock(MeilisearchLogManager::class),
             $this->createMock(SiteHashService::class)
         );
 
@@ -99,7 +99,7 @@ class RelevanceComponentTest extends SetUpUnitTestCase
         $typoscriptConfiguration = $this->getTypoScriptConfigurationWithQueryConfiguration($searchConfiguration);
         $queryBuilder = new QueryBuilder(
             $typoscriptConfiguration,
-            $this->createMock(SolrLogManager::class),
+            $this->createMock(MeilisearchLogManager::class),
             $this->createMock(SiteHashService::class)
         );
 
@@ -137,7 +137,7 @@ class RelevanceComponentTest extends SetUpUnitTestCase
         $typoscriptConfiguration = $this->getTypoScriptConfigurationWithQueryConfiguration($searchConfiguration);
         $queryBuilder = new QueryBuilder(
             $typoscriptConfiguration,
-            $this->createMock(SolrLogManager::class),
+            $this->createMock(MeilisearchLogManager::class),
             $this->createMock(SiteHashService::class)
         );
         $relevanceComponent = new RelevanceComponent($queryBuilder);
@@ -174,7 +174,7 @@ class RelevanceComponentTest extends SetUpUnitTestCase
         $typoscriptConfiguration = $this->getTypoScriptConfigurationWithQueryConfiguration($searchConfiguration);
         $queryBuilder = new QueryBuilder(
             $typoscriptConfiguration,
-            $this->createMock(SolrLogManager::class),
+            $this->createMock(MeilisearchLogManager::class),
             $this->createMock(SiteHashService::class)
         );
 
@@ -211,7 +211,7 @@ class RelevanceComponentTest extends SetUpUnitTestCase
         $typoscriptConfiguration = $this->getTypoScriptConfigurationWithQueryConfiguration($searchConfiguration);
         $queryBuilder = new QueryBuilder(
             $typoscriptConfiguration,
-            $this->createMock(SolrLogManager::class),
+            $this->createMock(MeilisearchLogManager::class),
             $this->createMock(SiteHashService::class)
         );
 
@@ -249,7 +249,7 @@ class RelevanceComponentTest extends SetUpUnitTestCase
         $typoscriptConfiguration = $this->getTypoScriptConfigurationWithQueryConfiguration($searchConfiguration);
         $queryBuilder = new QueryBuilder(
             $typoscriptConfiguration,
-            $this->createMock(SolrLogManager::class),
+            $this->createMock(MeilisearchLogManager::class),
             $this->createMock(SiteHashService::class)
         );
 
@@ -286,7 +286,7 @@ class RelevanceComponentTest extends SetUpUnitTestCase
         $typoscriptConfiguration = $this->getTypoScriptConfigurationWithQueryConfiguration($searchConfiguration);
         $queryBuilder = new QueryBuilder(
             $typoscriptConfiguration,
-            $this->createMock(SolrLogManager::class),
+            $this->createMock(MeilisearchLogManager::class),
             $this->createMock(SiteHashService::class)
         );
         $relevanceComponent = new RelevanceComponent($queryBuilder);
@@ -324,7 +324,7 @@ class RelevanceComponentTest extends SetUpUnitTestCase
         $typoscriptConfiguration = $this->getTypoScriptConfigurationWithQueryConfiguration($searchConfiguration);
         $queryBuilder = new QueryBuilder(
             $typoscriptConfiguration,
-            $this->createMock(SolrLogManager::class),
+            $this->createMock(MeilisearchLogManager::class),
             $this->createMock(SiteHashService::class)
         );
         $relevanceComponent = new RelevanceComponent($queryBuilder);
@@ -359,7 +359,7 @@ class RelevanceComponentTest extends SetUpUnitTestCase
         $typoscriptConfiguration = $this->getTypoScriptConfigurationWithQueryConfiguration($searchConfiguration);
         $queryBuilder = new QueryBuilder(
             $typoscriptConfiguration,
-            $this->createMock(SolrLogManager::class),
+            $this->createMock(MeilisearchLogManager::class),
             $this->createMock(SiteHashService::class)
         );
 
@@ -398,7 +398,7 @@ class RelevanceComponentTest extends SetUpUnitTestCase
         $typoscriptConfiguration = $this->getTypoScriptConfigurationWithQueryConfiguration($searchConfiguration);
         $queryBuilder = new QueryBuilder(
             $typoscriptConfiguration,
-            $this->createMock(SolrLogManager::class),
+            $this->createMock(MeilisearchLogManager::class),
             $this->createMock(SiteHashService::class)
         );
 
@@ -436,7 +436,7 @@ class RelevanceComponentTest extends SetUpUnitTestCase
         $typoscriptConfiguration = $this->getTypoScriptConfigurationWithQueryConfiguration($searchConfiguration);
         $queryBuilder = new QueryBuilder(
             $typoscriptConfiguration,
-            $this->createMock(SolrLogManager::class),
+            $this->createMock(MeilisearchLogManager::class),
             $this->createMock(SiteHashService::class)
         );
 
@@ -472,7 +472,7 @@ class RelevanceComponentTest extends SetUpUnitTestCase
         $typoscriptConfiguration = $this->getTypoScriptConfigurationWithQueryConfiguration($searchConfiguration);
         $queryBuilder = new QueryBuilder(
             $typoscriptConfiguration,
-            $this->createMock(SolrLogManager::class),
+            $this->createMock(MeilisearchLogManager::class),
             $this->createMock(SiteHashService::class)
         );
 
@@ -507,7 +507,7 @@ class RelevanceComponentTest extends SetUpUnitTestCase
         $typoscriptConfiguration = $this->getTypoScriptConfigurationWithQueryConfiguration($searchConfiguration);
         $queryBuilder = new QueryBuilder(
             $typoscriptConfiguration,
-            $this->createMock(SolrLogManager::class),
+            $this->createMock(MeilisearchLogManager::class),
             $this->createMock(SiteHashService::class)
         );
 

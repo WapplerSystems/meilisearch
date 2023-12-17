@@ -69,7 +69,7 @@ class OptionsFacetQueryBuilder extends DefaultFacetQueryBuilder implements Facet
     }
 
     /**
-     * Builds exclude tags for Apache Solr query
+     * Builds exclude tags for Apache Meilisearch query
      */
     protected function buildExcludeTagsForJson(array $facetConfiguration, TypoScriptConfiguration $configuration): string
     {

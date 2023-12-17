@@ -52,7 +52,7 @@ abstract class AbstractFacet
     }
 
     /**
-     * Returns Solr-Document's field name
+     * Returns Meilisearch-Document's field name
      */
     public function getField(): string
     {

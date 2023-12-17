@@ -16,10 +16,10 @@
 namespace WapplerSystems\Meilisearch\Controller\Backend\Search;
 
 use WapplerSystems\Meilisearch\Api;
-use WapplerSystems\Meilisearch\Domain\Search\ApacheSolrDocument\Repository as ApacheSolrDocumentRepository;
+use WapplerSystems\Meilisearch\Domain\Search\ApacheMeilisearchDocument\Repository as ApacheMeilisearchDocumentRepository;
 use WapplerSystems\Meilisearch\Domain\Search\Statistics\StatisticsRepository;
 use WapplerSystems\Meilisearch\Domain\Site\Exception\UnexpectedTYPO3SiteInitializationException;
-use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
 use WapplerSystems\Meilisearch\System\Validator\Path;
 use Doctrine\DBAL\Exception as DBALException;
 use Psr\Http\Message\ResponseInterface;
@@ -32,7 +32,7 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
  */
 class InfoModuleController extends AbstractModuleController
 {
-    protected ApacheSolrDocumentRepository $apacheSolrDocumentRepository;
+    protected ApacheMeilisearchDocumentRepository $apacheMeilisearchDocumentRepository;
 
     /**
      * @inheritDoc
@@ -40,11 +40,11 @@ class InfoModuleController extends AbstractModuleController
     protected function initializeAction(): void
     {
         parent::initializeAction();
-        $this->apacheSolrDocumentRepository = GeneralUtility::makeInstance(ApacheSolrDocumentRepository::class);
+        $this->apacheMeilisearchDocumentRepository = GeneralUtility::makeInstance(ApacheMeilisearchDocumentRepository::class);
     }
 
     /**
-     * Index action, shows an overview of the state of the Solr index
+     * Index action, shows an overview of the state of the Meilisearch index
      *
      * @throws UnexpectedTYPO3SiteInitializationException
      * @throws DBALException
@@ -68,20 +68,20 @@ class InfoModuleController extends AbstractModuleController
     }
 
     /**
-     * Renders the details of Apache Solr documents
+     * Renders the details of Apache Meilisearch documents
      *
      * @noinspection PhpUnused
      * @throws DBALException
      */
     public function documentsDetailsAction(string $type, int $uid, int $pageId, int $languageUid): ResponseInterface
     {
-        $documents = $this->apacheSolrDocumentRepository->findByTypeAndPidAndUidAndLanguageId($type, $uid, $pageId, $languageUid);
+        $documents = $this->apacheMeilisearchDocumentRepository->findByTypeAndPidAndUidAndLanguageId($type, $uid, $pageId, $languageUid);
         $this->view->assign('documents', $documents);
         return $this->getModuleTemplateResponse();
     }
 
     /**
-     * Checks whether the configured Solr server can be reached and provides a
+     * Checks whether the configured Meilisearch server can be reached and provides a
      * flash message according to the result of the check.
      */
     protected function collectConnectionInfos(): void
@@ -114,7 +114,7 @@ class InfoModuleController extends AbstractModuleController
                 $missingHosts[] = $coreUrl;
             }
 
-            if (!$path->isValidSolrPath($coreAdmin->getCorePath())) {
+            if (!$path->isValidMeilisearchPath($coreAdmin->getCorePath())) {
                 $invalidPaths[] = $coreAdmin->getCorePath();
             }
         }
@@ -233,7 +233,7 @@ class InfoModuleController extends AbstractModuleController
 
                 $this->addFlashMessage(
                     '',
-                    'Unable to contact Apache Solr server: ' . $this->selectedSite->getLabel() . ' ' . $coreAdmin->getCorePath(),
+                    'Unable to contact Apache Meilisearch server: ' . $this->selectedSite->getLabel() . ' ' . $coreAdmin->getCorePath(),
                     ContextualFeedbackSeverity::ERROR
                 );
             }
@@ -262,7 +262,7 @@ class InfoModuleController extends AbstractModuleController
             }
             $alreadyListedCores[] = $url;
 
-            $documents = $this->apacheSolrDocumentRepository->findByPageIdAndByLanguageId($this->selectedPageUID, $languageId);
+            $documents = $this->apacheMeilisearchDocumentRepository->findByPageIdAndByLanguageId($this->selectedPageUID, $languageId);
 
             $documentsByType = [];
             foreach ($documents as $document) {

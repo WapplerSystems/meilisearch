@@ -20,6 +20,6 @@ namespace WapplerSystems\Meilisearch\Exception;
 use WapplerSystems\Meilisearch\Exception;
 
 /**
- * Exception that is thrown if a Solr connection is invalid
+ * Exception that is thrown if a Meilisearch connection is invalid
  */
 class InvalidConnectionException extends Exception {}

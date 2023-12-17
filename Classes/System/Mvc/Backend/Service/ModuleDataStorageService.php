@@ -63,7 +63,7 @@ class ModuleDataStorageService implements SingletonInterface
             return;
         }
         if (str_contains($serializedModuleData, 'WapplerSystems\\Meilisearch\\Domain\\Model\\ModuleData')
-            || str_contains($serializedModuleData, 'Tx_Solr_Site')) {
+            || str_contains($serializedModuleData, 'Tx_Meilisearch_Site')) {
             $serializedModuleData = '';
         }
     }

@@ -15,7 +15,7 @@
 
 namespace WapplerSystems\Meilisearch\System\Util;
 
-use WapplerSystems\Meilisearch\Domain\Site\Site as ExtSolrSite;
+use WapplerSystems\Meilisearch\Domain\Site\Site as ExtMeilisearchSite;
 use TYPO3\CMS\Core\Exception\SiteNotFoundException;
 use TYPO3\CMS\Core\Site\Entity\Site as CoreSite;
 use TYPO3\CMS\Core\Site\SiteFinder;
@@ -83,9 +83,9 @@ class SiteUtility
     }
 
     /**
-     * Builds the Solr connection configuration
+     * Builds the Meilisearch connection configuration
      */
-    public static function getSolrConnectionConfiguration(
+    public static function getMeilisearchConnectionConfiguration(
         CoreSite $typo3Site,
         int $languageUid,
     ): ?array {
@@ -124,14 +124,14 @@ class SiteUtility
     }
 
     /**
-     * Builds the Solr connection configuration for all languages of given TYPO3 site
+     * Builds the Meilisearch connection configuration for all languages of given TYPO3 site
      */
-    public static function getAllSolrConnectionConfigurations(
+    public static function getAllMeilisearchConnectionConfigurations(
         CoreSite $typo3Site,
     ): array {
         $connections = [];
         foreach ($typo3Site->getLanguages() as $language) {
-            $connection = self::getSolrConnectionConfiguration($typo3Site, $language->getLanguageId());
+            $connection = self::getMeilisearchConnectionConfiguration($typo3Site, $language->getLanguageId());
             if ($connection !== null) {
                 $connections[$language->getLanguageId()] = $connection;
             }
@@ -246,7 +246,7 @@ class SiteUtility
     /**
      * Retrieves the rootPageIds as an array from a set of sites.
      *
-     * @param CoreSite[]|ExtSolrSite[] $sites
+     * @param CoreSite[]|ExtMeilisearchSite[] $sites
      * @return int[]
      */
     public static function getRootPageIdsFromSites(array $sites): array

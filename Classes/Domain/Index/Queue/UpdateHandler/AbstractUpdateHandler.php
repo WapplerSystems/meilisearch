@@ -164,7 +164,7 @@ abstract class AbstractUpdateHandler
         $isRecursiveUpdateRequired = $this->isRecursiveUpdateRequired($pageId, $updatedFields);
         // If RecursiveUpdateTriggerConfiguration is false => check if changeFields are part of recursiveUpdateFields
         if ($isRecursiveUpdateRequired === false) {
-            $solrConfiguration = $this->frontendEnvironment->getSolrConfigurationFromPageId($pageId);
+            $solrConfiguration = $this->frontendEnvironment->getMeilisearchConfigurationFromPageId($pageId);
             $indexQueueConfigurationName = $this->configurationAwareRecordService->getIndexingConfigurationName(
                 'pages',
                 $pageId,

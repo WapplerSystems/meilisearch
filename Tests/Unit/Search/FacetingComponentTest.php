@@ -26,7 +26,7 @@ use WapplerSystems\Meilisearch\Event\Search\AfterSearchQueryHasBeenPreparedEvent
 use WapplerSystems\Meilisearch\Search;
 use WapplerSystems\Meilisearch\Search\FacetingComponent;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Solarium\QueryType\Select\RequestBuilder;
@@ -45,8 +45,8 @@ class FacetingComponentTest extends SetUpUnitTestCase
     ): array {
         $facetRegistry = new FacetRegistry();
 
-        /** @var SolrLogManager|MockObject $solrLogManagerMock */
-        $solrLogManagerMock = $this->createMock(SolrLogManager::class);
+        /** @var MeilisearchLogManager|MockObject $solrLogManagerMock */
+        $solrLogManagerMock = $this->createMock(MeilisearchLogManager::class);
 
         $queryBuilder = new QueryBuilder(
             $fakeConfiguration,

@@ -23,11 +23,11 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Scheduler task to empty the indexes of a site and re-initialize the
- * Solr Index Queue thus making the indexer re-index the site.
+ * Meilisearch Index Queue thus making the indexer re-index the site.
  *
  * @author Jens Jacobsen <typo3@jens-jacobsen.de>
  */
-class OptimizeIndexTask extends AbstractSolrTask
+class OptimizeIndexTask extends AbstractMeilisearchTask
 {
     /**
      * Cores to optimize.
@@ -35,7 +35,7 @@ class OptimizeIndexTask extends AbstractSolrTask
     protected array $coresToOptimizeIndex = [];
 
     /**
-     * Optimizes all Solr indexes for selected cores and returns TRUE if the execution was successful
+     * Optimizes all Meilisearch indexes for selected cores and returns TRUE if the execution was successful
      *
      * @return bool Returns TRUE on success, FALSE on failure.
      *

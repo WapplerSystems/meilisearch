@@ -27,10 +27,10 @@ use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Sorting\SortingCollection
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Spellchecking\Suggestion;
 use WapplerSystems\Meilisearch\Domain\Search\SearchRequest;
 use WapplerSystems\Meilisearch\Search;
-use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
 
 /**
- * The SearchResultSet is used to provide access to the Apache Solr Response and
+ * The SearchResultSet is used to provide access to the Apache Meilisearch Response and
  * other relevant information, like the used Query and Request objects.
  *
  * @author Timo Schmidt <timo.schmidt@dkd.de>

@@ -24,7 +24,7 @@ use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Grouping\GroupItemCollect
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Result\SearchResultCollection;
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSet;
 use WapplerSystems\Meilisearch\Domain\Search\SearchRequest;
-use WapplerSystems\Meilisearch\System\Solr\Document\Document;
+use WapplerSystems\Meilisearch\System\Meilisearch\Document\Document;
 use stdClass;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -34,7 +34,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class GroupedResultParser extends AbstractResultParser
 {
     /**
-     * The parse method creates a SearchResultCollection from the Apache_Solr_Response
+     * The parse method creates a SearchResultCollection from the Apache_Meilisearch_Response
      * and creates the group object structure.
      */
     public function parse(SearchResultSet $resultSet, bool $useRawDocuments = true): SearchResultSet
@@ -228,7 +228,7 @@ class GroupedResultParser extends AbstractResultParser
                 $solrDocument->setField($key, $value);
             }
 
-            $document = $this->searchResultBuilder->fromApacheSolrDocument($solrDocument);
+            $document = $this->searchResultBuilder->fromApacheMeilisearchDocument($solrDocument);
             $document->setGroupItem($groupItem);
 
             $groupItem->addSearchResult($document);

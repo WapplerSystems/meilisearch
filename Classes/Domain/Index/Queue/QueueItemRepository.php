@@ -21,7 +21,7 @@ use WapplerSystems\Meilisearch\Domain\Site\Site;
 use WapplerSystems\Meilisearch\Event\IndexQueue\AfterRecordsForIndexQueueItemsHaveBeenRetrievedEvent;
 use WapplerSystems\Meilisearch\IndexQueue\Item;
 use WapplerSystems\Meilisearch\IndexQueue\ItemInterface;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\System\Records\AbstractRepository;
 use WapplerSystems\Meilisearch\System\Util\SiteUtility;
 use Doctrine\DBAL\Exception as DBALException;
@@ -40,13 +40,13 @@ class QueueItemRepository extends AbstractRepository
 {
     protected string $table = 'tx_solr_indexqueue_item';
 
-    protected SolrLogManager $logger;
+    protected MeilisearchLogManager $logger;
     protected EventDispatcherInterface $eventDispatcher;
 
-    public function __construct(SolrLogManager $logManager = null, EventDispatcherInterface $eventDispatcher = null)
+    public function __construct(MeilisearchLogManager $logManager = null, EventDispatcherInterface $eventDispatcher = null)
     {
         $this->logger = $logManager ?? GeneralUtility::makeInstance(
-            SolrLogManager::class,
+            MeilisearchLogManager::class,
             __CLASS__
         );
         $this->eventDispatcher = $eventDispatcher ?? GeneralUtility::makeInstance(EventDispatcherInterface::class);

@@ -102,7 +102,7 @@ class QueueInitializationService
         $initializationStatus = [];
 
         $hasWildcardConfiguration = in_array('*', $indexingConfigurationNames);
-        $indexingConfigurationNames = $hasWildcardConfiguration ? $site->getSolrConfiguration()->getEnabledIndexQueueConfigurationNames() : $indexingConfigurationNames;
+        $indexingConfigurationNames = $hasWildcardConfiguration ? $site->getMeilisearchConfiguration()->getEnabledIndexQueueConfigurationNames() : $indexingConfigurationNames;
         foreach ($indexingConfigurationNames as $indexingConfigurationName) {
             $initializationStatus[$indexingConfigurationName] = $this->applyInitialization($site, (string)$indexingConfigurationName);
         }
@@ -118,7 +118,7 @@ class QueueInitializationService
      */
     protected function applyInitialization(Site $site, string $indexingConfigurationName): bool
     {
-        $solrConfiguration = $site->getSolrConfiguration();
+        $solrConfiguration = $site->getMeilisearchConfiguration();
 
         /** @var QueueInterface $queue */
         $queue = GeneralUtility::makeInstance(

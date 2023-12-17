@@ -6,7 +6,7 @@ namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Index\PageIndexer;
 
 use WapplerSystems\Meilisearch\Domain\Index\PageIndexer\PageUriBuilder;
 use WapplerSystems\Meilisearch\IndexQueue\Item;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use TYPO3\CMS\Core\EventDispatcher\NoopEventDispatcher;
 use TYPO3\CMS\Core\Http\Uri;
@@ -28,7 +28,7 @@ class PageUriBuilderTest extends SetUpUnitTestCase
         $itemMock->expects(self::any())->method('getRecordUid')->willReturn(55);
         $siteFinderMock = $this->getSiteFinderMock($pageRecord);
 
-        $loggerMock = $this->createMock(SolrLogManager::class);
+        $loggerMock = $this->createMock(MeilisearchLogManager::class);
 
         $uriBuilder = GeneralUtility::makeInstance(PageUriBuilder::class, $loggerMock, $siteFinderMock, new NoopEventDispatcher());
         $uriBuilder->getPageIndexingUriFromPageItemAndLanguageId($itemMock, 2, 'foo');
@@ -45,7 +45,7 @@ class PageUriBuilderTest extends SetUpUnitTestCase
         $itemMock->expects(self::any())->method('getRecordUid')->willReturn(55);
         $siteFinderMock = $this->getSiteFinderMock($pageRecord);
 
-        $loggerMock = $this->createMock(SolrLogManager::class);
+        $loggerMock = $this->createMock(MeilisearchLogManager::class);
 
         $uriBuilder = GeneralUtility::makeInstance(PageUriBuilder::class, $loggerMock, $siteFinderMock, new NoopEventDispatcher());
         $uri = $uriBuilder->getPageIndexingUriFromPageItemAndLanguageId($itemMock, 2, 'foo', ['frontendDataHelper.' => ['host' => 'www.secondsite.de']]);
@@ -63,7 +63,7 @@ class PageUriBuilderTest extends SetUpUnitTestCase
         $itemMock->expects(self::any())->method('getRecordUid')->willReturn(55);
         $siteFinderMock = $this->getSiteFinderMock($pageRecord);
 
-        $loggerMock = $this->createMock(SolrLogManager::class);
+        $loggerMock = $this->createMock(MeilisearchLogManager::class);
 
         $uriBuilder = GeneralUtility::makeInstance(PageUriBuilder::class, $loggerMock, $siteFinderMock, new NoopEventDispatcher());
         $uri = $uriBuilder->getPageIndexingUriFromPageItemAndLanguageId($itemMock, 2, 'foo', ['frontendDataHelper.' => ['scheme' => 'https']]);

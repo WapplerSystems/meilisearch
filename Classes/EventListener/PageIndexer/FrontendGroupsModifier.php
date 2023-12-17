@@ -20,7 +20,7 @@ namespace WapplerSystems\Meilisearch\EventListener\PageIndexer;
 use WapplerSystems\Meilisearch\Access\Rootline;
 use WapplerSystems\Meilisearch\IndexQueue\FrontendHelper\AuthorizationService;
 use WapplerSystems\Meilisearch\IndexQueue\PageIndexerRequest;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use TYPO3\CMS\Core\Http\JsonResponse;
 use TYPO3\CMS\Core\Http\PropagateResponseException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -33,7 +33,7 @@ use TYPO3\CMS\Frontend\Authentication\ModifyResolvedFrontendGroupsEvent;
 class FrontendGroupsModifier
 {
     /**
-     * Modifies the fe_groups of a user on X-Tx-Solr-Iq requests.
+     * Modifies the fe_groups of a user on X-Tx-Meilisearch-Iq requests.
      *
      * @throws PropagateResponseException
      */
@@ -54,7 +54,7 @@ class FrontendGroupsModifier
         }
 
         if (!$pageIndexerRequest->isAuthenticated()) {
-            $logger = GeneralUtility::makeInstance(SolrLogManager::class, self::class);
+            $logger = GeneralUtility::makeInstance(MeilisearchLogManager::class, self::class);
             $logger->error(
                 'Invalid Index Queue Frontend Request detected!',
                 [

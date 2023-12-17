@@ -18,7 +18,7 @@ namespace WapplerSystems\Meilisearch\Tests\Unit\IndexQueue;
 use WapplerSystems\Meilisearch\IndexQueue\Item;
 use WapplerSystems\Meilisearch\IndexQueue\PageIndexerRequest;
 use WapplerSystems\Meilisearch\System\Configuration\ExtensionConfiguration;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Http\Message\ResponseInterface;
@@ -179,8 +179,8 @@ class PageIndexerRequestTest extends SetUpUnitTestCase
             return $this->getFakedGuzzleResponse($this->getFixtureContentByName('fakeResponse.json'));
         });
 
-        /** @var MockObject|SolrLogManager $solrLogManagerMock */
-        $solrLogManagerMock = $this->createMock(SolrLogManager::class);
+        /** @var MockObject|MeilisearchLogManager $solrLogManagerMock */
+        $solrLogManagerMock = $this->createMock(MeilisearchLogManager::class);
         /** @var MockObject|ExtensionConfiguration $extensionConfigurationMock */
         $extensionConfigurationMock = $this->createMock(ExtensionConfiguration::class);
 
@@ -231,8 +231,8 @@ class PageIndexerRequestTest extends SetUpUnitTestCase
      */
     protected function getPageIndexerRequest(string $jsonEncodedParameter = null, RequestFactory $requestFactory = null): PageIndexerRequest
     {
-        /** @var MockObject|SolrLogManager $solrLogManagerMock */
-        $solrLogManagerMock = $this->createMock(SolrLogManager::class);
+        /** @var MockObject|MeilisearchLogManager $solrLogManagerMock */
+        $solrLogManagerMock = $this->createMock(MeilisearchLogManager::class);
         /** @var MockObject|ExtensionConfiguration $extensionConfigurationMock */
         $extensionConfigurationMock = $this->createMock(ExtensionConfiguration::class);
         $requestFactory = $requestFactory ?? $this->createMock(RequestFactory::class);
@@ -246,7 +246,7 @@ class PageIndexerRequestTest extends SetUpUnitTestCase
      */
     protected function getMockedPageIndexerRequestWithUsedFakeResponse($testParameters, $fakeResponse): PageIndexerRequest|MockObject
     {
-        $solrLogManagerMock = $this->createMock(SolrLogManager::class);
+        $solrLogManagerMock = $this->createMock(MeilisearchLogManager::class);
         $extensionConfigurationMock = $this->createMock(ExtensionConfiguration::class);
         $requestFactoryMock = $this->createMock(RequestFactory::class);
         /** @var MockObject|PageIndexerRequest $requestMock */

@@ -21,7 +21,7 @@ use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\AbstractFacet;
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\AbstractFacetParser;
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSet;
 use WapplerSystems\Meilisearch\Event\Parser\AfterFacetIsParsedEvent;
-use WapplerSystems\Meilisearch\System\Solr\ParsingUtil;
+use WapplerSystems\Meilisearch\System\Meilisearch\ParsingUtil;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -42,9 +42,9 @@ class HierarchyFacetParser extends AbstractFacetParser
         $response = $resultSet->getResponse();
         $fieldName = $facetConfiguration['field'];
         $label = $this->getPlainLabelOrApplyCObject($facetConfiguration);
-        $optionsFromSolrResponse = isset($response->facet_counts->facet_fields->{$fieldName}) ? ParsingUtil::getMapArrayFromFlatArray($response->facet_counts->facet_fields->{$fieldName}) : [];
+        $optionsFromMeilisearchResponse = isset($response->facet_counts->facet_fields->{$fieldName}) ? ParsingUtil::getMapArrayFromFlatArray($response->facet_counts->facet_fields->{$fieldName}) : [];
         $optionsFromRequest = $this->getActiveFacetValuesFromRequest($resultSet, $facetName);
-        $hasOptionsInResponse = !empty($optionsFromSolrResponse);
+        $hasOptionsInResponse = !empty($optionsFromMeilisearchResponse);
         $hasSelectedOptionsInRequest = count($optionsFromRequest) > 0;
         $hasNoOptionsToShow = !$hasOptionsInResponse && !$hasSelectedOptionsInRequest;
         $hideEmpty = !$resultSet->getUsedSearchRequest()->getContextTypoScriptConfiguration()->getSearchFacetingShowEmptyFacetsByName($facetName);
@@ -60,7 +60,7 @@ class HierarchyFacetParser extends AbstractFacetParser
 
         $facet->setIsAvailable($hasOptionsInResponse);
 
-        $nodesToCreate = $this->getMergedFacetValueFromSearchRequestAndSolrResponse($optionsFromSolrResponse, $optionsFromRequest);
+        $nodesToCreate = $this->getMergedFacetValueFromSearchRequestAndMeilisearchResponse($optionsFromMeilisearchResponse, $optionsFromRequest);
 
         if ($this->facetOptionsMustBeResorted($facetConfiguration)) {
             $nodesToCreate = $this->sortFacetOptionsInNaturalOrder($nodesToCreate);
@@ -107,9 +107,9 @@ class HierarchyFacetParser extends AbstractFacetParser
     /**
      * Checks if options must be resorted.
      *
-     * Apache Solr `facet.sort` can be set globally or per facet.
+     * Apache Meilisearch `facet.sort` can be set globally or per facet.
      * Relevant TypoScript paths:
-     * plugin.tx_solr.search.faceting.sortBy causes `facet.sort` Apache Solr parameter
+     * plugin.tx_solr.search.faceting.sortBy causes `facet.sort` Apache Meilisearch parameter
      * plugin.tx_solr.search.faceting.facets.[facetName].sortBy causes f.<fieldname>.facet.sort parameter
      *
      * see: https://lucene.apache.org/solr/guide/6_6/faceting.html#Faceting-Thefacet.sortParameter

@@ -21,12 +21,12 @@ use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSet;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 
 /**
- * Class AbstractSolrFrontendTagBasedViewHelper
+ * Class AbstractMeilisearchFrontendTagBasedViewHelper
  *
  * @author Frans Saris <frans@beech.it>
  * @author Timo Hund <timo.hund@dkd.de>
  */
-abstract class AbstractSolrFrontendTagBasedViewHelper extends AbstractSolrTagBasedViewHelper
+abstract class AbstractMeilisearchFrontendTagBasedViewHelper extends AbstractMeilisearchTagBasedViewHelper
 {
     protected function getTypoScriptConfiguration(): TypoScriptConfiguration
     {

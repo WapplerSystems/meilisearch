@@ -123,7 +123,7 @@ class Tsfe implements SingletonInterface
             // TYPO3 by default enables a preview mode if a backend user is logged in,
             // the VisibilityAspect is configured to show hidden elements.
             // Due to this setting hidden relations/translations might be indexed
-            // when running the Solr indexer via the TYPO3 backend.
+            // when running the Meilisearch indexer via the TYPO3 backend.
             // To avoid this, the VisibilityAspect is adapted for indexing.
             $context->setAspect(
                 'visibility',

@@ -26,7 +26,7 @@ use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSetService;
 use WapplerSystems\Meilisearch\Domain\Search\SearchRequest;
 use WapplerSystems\Meilisearch\Search;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -43,7 +43,7 @@ class SearchResultSetServiceTest extends SetUpUnitTestCase
     protected SearchResultSetService $searchResultSetService;
     protected TypoScriptConfiguration|MockObject $configurationMock;
     protected Search|MockObject $searchMock;
-    protected SolrLogManager|MockObject $logManagerMock;
+    protected MeilisearchLogManager|MockObject $logManagerMock;
     protected SearchResultBuilder|MockObject $searchResultBuilderMock;
     protected QueryBuilder|MockObject $queryBuilderMock;
     protected EventDispatcherInterface $eventDispatcher;
@@ -51,7 +51,7 @@ class SearchResultSetServiceTest extends SetUpUnitTestCase
     protected function setUp(): void
     {
         $this->configurationMock = $this->createMock(TypoScriptConfiguration::class);
-        $this->logManagerMock = $this->createMock(SolrLogManager::class);
+        $this->logManagerMock = $this->createMock(MeilisearchLogManager::class);
         $this->searchMock = $this->createMock(Search::class);
         $this->searchResultBuilderMock = $this->createMock(SearchResultBuilder::class);
         $this->queryBuilderMock = $this->createMock(QueryBuilder::class);
@@ -167,7 +167,7 @@ class SearchResultSetServiceTest extends SetUpUnitTestCase
             ->setConstructorArgs([
                 $typoScriptConfiguration,
                 $searchMock,
-                $this->createMock(SolrLogManager::class),
+                $this->createMock(MeilisearchLogManager::class),
                 $this->createMock(SearchResultBuilder::class),
                 $queryBuilderMock,
                 $this->eventDispatcher,

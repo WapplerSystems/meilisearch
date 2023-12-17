@@ -115,7 +115,7 @@ class FacetingComponent implements LoggerAwareInterface
 
     /**
      * Adds filters specified through HTTP GET as filter query parameters to
-     * the Solr query.
+     * the Meilisearch query.
      *
      * @throws InvalidFacetPackageException
      * @throws InvalidUrlDecoderException

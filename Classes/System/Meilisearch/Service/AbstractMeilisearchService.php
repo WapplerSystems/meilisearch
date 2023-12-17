@@ -15,12 +15,12 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace WapplerSystems\Meilisearch\System\Solr\Service;
+namespace WapplerSystems\Meilisearch\System\Meilisearch\Service;
 
 use WapplerSystems\Meilisearch\PingFailedException;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
-use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
+use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
 use WapplerSystems\Meilisearch\Util;
 use Closure;
 use Psr\Log\LogLevel;
@@ -33,21 +33,21 @@ use Throwable;
 use TYPO3\CMS\Core\Http\Uri;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-abstract class AbstractSolrService
+abstract class AbstractMeilisearchService
 {
     protected static array $pingCache = [];
 
     protected TypoScriptConfiguration $configuration;
 
-    protected SolrLogManager $logger;
+    protected MeilisearchLogManager $logger;
 
     protected Client $client;
 
     public function __construct(Client $client, $typoScriptConfiguration = null, $logManager = null)
     {
         $this->client = $client;
-        $this->configuration = $typoScriptConfiguration ?? Util::getSolrConfiguration();
-        $this->logger = $logManager ?? GeneralUtility::makeInstance(SolrLogManager::class, __CLASS__);
+        $this->configuration = $typoScriptConfiguration ?? Util::getMeilisearchConfiguration();
+        $this->logger = $logManager ?? GeneralUtility::makeInstance(MeilisearchLogManager::class, __CLASS__);
     }
 
     /**
@@ -77,7 +77,7 @@ abstract class AbstractSolrService
     }
 
     /**
-     * Creates a string representation of the Solr connection. Specifically will return the Solr URL.
+     * Creates a string representation of the Meilisearch connection. Specifically will return the Meilisearch URL.
      * @TODO: Add support for API version 2
      */
     public function __toString()
@@ -96,7 +96,7 @@ abstract class AbstractSolrService
     }
 
     /**
-     * Central method for making a get operation against this Solr Server
+     * Central method for making a get operation against this Meilisearch Server
      */
     protected function _sendRawGet(string $url): ResponseAdapter
     {
@@ -104,7 +104,7 @@ abstract class AbstractSolrService
     }
 
     /**
-     * Central method for making an HTTP DELETE operation against the Solr server
+     * Central method for making an HTTP DELETE operation against the Meilisearch server
      */
     protected function _sendRawDelete(string $url): ResponseAdapter
     {
@@ -112,7 +112,7 @@ abstract class AbstractSolrService
     }
 
     /**
-     * Central method for making a post operation against this Solr Server
+     * Central method for making a post operation against this Meilisearch Server
      */
     protected function _sendRawPost(
         string $url,
@@ -152,7 +152,7 @@ abstract class AbstractSolrService
         }
 
         if ($this->configuration->getLoggingQueryRawPost() || $response->getHttpStatus() != 200) {
-            $message = 'Querying Solr using ' . $method;
+            $message = 'Querying Meilisearch using ' . $method;
             $this->writeLog($logSeverity, $message, $url, $response, $exception, $body);
         }
 
@@ -236,14 +236,14 @@ abstract class AbstractSolrService
      * Call the /admin/ping servlet, can be used to quickly tell if a connection to the
      * server is available.
      *
-     * Simply overrides the SolrPhpClient implementation, changing ping from a
+     * Simply overrides the MeilisearchPhpClient implementation, changing ping from a
      * HEAD to a GET request, see http://forge.typo3.org/issues/44167
      *
      * Also does not report the time, see https://forge.typo3.org/issues/64551
      *
      * @param bool $useCache indicates if the ping result should be cached in the instance or not
      *
-     * @return bool TRUE if Solr can be reached, FALSE if not
+     * @return bool TRUE if Meilisearch can be reached, FALSE if not
      */
     public function ping(bool $useCache = true): bool
     {
@@ -273,14 +273,14 @@ abstract class AbstractSolrService
             $end = $this->getMilliseconds();
         } catch (HttpException $e) {
             throw new PingFailedException(
-                'Solr ping failed with unexpected response code: ' . $e->getCode(),
+                'Meilisearch ping failed with unexpected response code: ' . $e->getCode(),
                 1645716101
             );
         }
 
         if ($httpResponse->getHttpStatus() !== 200) {
             throw new PingFailedException(
-                'Solr ping failed with unexpected response code: ' . $httpResponse->getHttpStatus(),
+                'Meilisearch ping failed with unexpected response code: ' . $httpResponse->getHttpStatus(),
                 1645716102
             );
         }

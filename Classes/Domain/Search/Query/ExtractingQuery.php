@@ -18,7 +18,7 @@ namespace WapplerSystems\Meilisearch\Domain\Search\Query;
 use Solarium\QueryType\Extract\Query as SolariumExtractQuery;
 
 /**
- * Specialized query for content extraction using Solr Cell
+ * Specialized query for content extraction using Meilisearch Cell
  */
 class ExtractingQuery extends SolariumExtractQuery
 {

@@ -19,7 +19,7 @@ use WapplerSystems\Meilisearch\ConnectionManager;
 use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
 use WapplerSystems\Meilisearch\Exception\InvalidConnectionException;
 use WapplerSystems\Meilisearch\System\Configuration\ConfigurationManager;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\System\Records\Pages\PagesRepository;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -39,7 +39,7 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 class ConnectionManagerTest extends SetUpUnitTestCase
 {
     protected ConnectionManager|MockObject $connectionManager;
-    protected SolrLogManager|MockObject $logManagerMock;
+    protected MeilisearchLogManager|MockObject $logManagerMock;
     protected PagesRepository|MockObject $pageRepositoryMock;
     protected SiteRepository|MockObject $siteRepositoryMock;
     protected ConfigurationManager $configurationManager;
@@ -52,7 +52,7 @@ class ConnectionManagerTest extends SetUpUnitTestCase
         $TSFE = $this->createMock(TypoScriptFrontendController::class);
         $GLOBALS['TSFE'] = $TSFE;
 
-        $this->logManagerMock = $this->createMock(SolrLogManager::class);
+        $this->logManagerMock = $this->createMock(MeilisearchLogManager::class);
         $this->pageRepositoryMock = $this->createMock(PagesRepository::class);
         $this->siteRepositoryMock = $this->createMock(SiteRepository::class);
 

@@ -19,7 +19,7 @@ namespace WapplerSystems\Meilisearch\IndexQueue;
 
 use WapplerSystems\Meilisearch\IndexQueue\FrontendHelper\FrontendHelper;
 use WapplerSystems\Meilisearch\IndexQueue\FrontendHelper\Manager;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -64,7 +64,7 @@ class PageIndexerRequestHandler
             $this->frontendHelpers[] = $frontendHelper;
 
             if ($request->getParameter('loggingEnabled')) {
-                $logger = GeneralUtility::makeInstance(SolrLogManager::class, get_class($frontendHelper));
+                $logger = GeneralUtility::makeInstance(MeilisearchLogManager::class, get_class($frontendHelper));
                 $logger->info(
                     'Page indexer request received',
                     [

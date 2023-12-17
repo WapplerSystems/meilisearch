@@ -26,7 +26,7 @@ use WapplerSystems\Meilisearch\IndexQueue\Item;
 use WapplerSystems\Meilisearch\IndexQueue\Queue;
 use WapplerSystems\Meilisearch\IndexQueue\QueueInterface;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\Task\IndexQueueWorkerTask;
 use Doctrine\DBAL\ConnectionException;
 use Doctrine\DBAL\Exception as DBALException;
@@ -50,18 +50,18 @@ class IndexService
 
     protected EventDispatcherInterface $eventDispatcher;
 
-    protected SolrLogManager $logger;
+    protected MeilisearchLogManager $logger;
 
     public function __construct(
-        Site $site,
-        QueueInterface $queue = null,
+        Site                     $site,
+        QueueInterface           $queue = null,
         EventDispatcherInterface $eventDispatcher = null,
-        SolrLogManager $solrLogManager = null,
+        MeilisearchLogManager    $solrLogManager = null,
     ) {
         $this->site = $site;
         $this->indexQueue = $queue ?? GeneralUtility::makeInstance(Queue::class);
         $this->eventDispatcher = $eventDispatcher ?? GeneralUtility::makeInstance(EventDispatcherInterface::class);
-        $this->logger = $solrLogManager ?? GeneralUtility::makeInstance(SolrLogManager::class, __CLASS__);
+        $this->logger = $solrLogManager ?? GeneralUtility::makeInstance(MeilisearchLogManager::class, __CLASS__);
     }
 
     public function setContextTask(IndexQueueWorkerTask $contextTask): void
@@ -84,7 +84,7 @@ class IndexService
     {
         $errors     = 0;
         $indexRunId = uniqid();
-        $configurationToUse = $this->site->getSolrConfiguration();
+        $configurationToUse = $this->site->getMeilisearchConfiguration();
         $enableCommitsSetting = $configurationToUse->getEnableCommits();
 
         // get items to index

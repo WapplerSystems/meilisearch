@@ -53,7 +53,7 @@ class HtmlContentExtractor
     protected string $content = '';
 
     /**
-     * Mapping of HTML tags to Solr document fields.
+     * Mapping of HTML tags to Meilisearch document fields.
      */
     protected array $tagToFieldMapping = [
         'h1' => 'tagsH1',
@@ -86,7 +86,7 @@ class HtmlContentExtractor
     protected function getConfiguration(): TypoScriptConfiguration
     {
         if ($this->configuration === null) {
-            $this->configuration = Util::getSolrConfiguration();
+            $this->configuration = Util::getMeilisearchConfiguration();
         }
 
         return $this->configuration;
@@ -100,7 +100,7 @@ class HtmlContentExtractor
     /**
      * Returns the cleaned indexable content from the page's HTML markup.
      *
-     * The content is cleaned from HTML tags and control chars Solr could
+     * The content is cleaned from HTML tags and control chars Meilisearch could
      * stumble on.
      *
      * @return string Indexable, cleaned content ready for indexing.
@@ -141,7 +141,7 @@ class HtmlContentExtractor
     }
 
     /**
-     * Strips control characters that cause Jetty/Solr to fail.
+     * Strips control characters that cause Jetty/Meilisearch to fail.
      *
      * @param string $content the content to sanitize
      * @return string the sanitized content
@@ -198,7 +198,7 @@ class HtmlContentExtractor
     /**
      * Extracts HTML tag content from tags in the content marked for indexing.
      *
-     * @return array A mapping of Solr document field names to content found in defined tags.
+     * @return array A mapping of Meilisearch document field names to content found in defined tags.
      */
     public function getTagContent(): array
     {

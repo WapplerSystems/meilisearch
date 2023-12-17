@@ -27,7 +27,7 @@ use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
 use WapplerSystems\Meilisearch\FrontendEnvironment;
 use WapplerSystems\Meilisearch\IndexQueue\Queue;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\System\Records\Pages\PagesRepository;
 use WapplerSystems\Meilisearch\System\TCA\TCAService;
 use WapplerSystems\Meilisearch\Util;
@@ -96,7 +96,7 @@ class DataUpdateHandler extends AbstractUpdateHandler
 
     protected ?PagesRepository $pagesRepository;
 
-    protected SolrLogManager $logger;
+    protected MeilisearchLogManager $logger;
 
     protected DataHandler $dataHandler;
 
@@ -109,7 +109,7 @@ class DataUpdateHandler extends AbstractUpdateHandler
         RootPageResolver $rootPageResolver,
         PagesRepository $pagesRepository,
         DataHandler $dataHandler,
-        SolrLogManager $solrLogManager = null
+        MeilisearchLogManager $solrLogManager = null
     ) {
         parent::__construct($recordService, $frontendEnvironment, $tcaService, $indexQueue);
 
@@ -118,7 +118,7 @@ class DataUpdateHandler extends AbstractUpdateHandler
         $this->pagesRepository = $pagesRepository;
         $this->dataHandler = $dataHandler;
         $this->logger = $solrLogManager ?? GeneralUtility::makeInstance(
-            SolrLogManager::class,
+            MeilisearchLogManager::class,
             __CLASS__
         );
     }
@@ -279,7 +279,7 @@ class DataUpdateHandler extends AbstractUpdateHandler
      */
     protected function applyPageChangesToQueue(int $uid): void
     {
-        $solrConfiguration = $this->getSolrConfigurationFromPageId($uid);
+        $solrConfiguration = $this->getMeilisearchConfigurationFromPageId($uid);
         $record = $this->configurationAwareRecordService->getRecord('pages', $uid, $solrConfiguration);
         if (!empty($record) && $this->tcaService->isEnabledRecord('pages', $record)) {
             $this->mountPageUpdater->update($uid);
@@ -297,7 +297,7 @@ class DataUpdateHandler extends AbstractUpdateHandler
      */
     protected function applyRecordChangesToQueue(string $table, int $uid, int $pid): void
     {
-        $solrConfiguration = $this->getSolrConfigurationFromPageId($pid);
+        $solrConfiguration = $this->getMeilisearchConfigurationFromPageId($pid);
         $isMonitoredTable = $solrConfiguration->getIndexQueueIsMonitoredTable($table);
 
         if ($isMonitoredTable) {
@@ -338,9 +338,9 @@ class DataUpdateHandler extends AbstractUpdateHandler
     /**
      * @throws DBALException
      */
-    protected function getSolrConfigurationFromPageId(int $pageId): TypoScriptConfiguration
+    protected function getMeilisearchConfigurationFromPageId(int $pageId): TypoScriptConfiguration
     {
-        return $this->frontendEnvironment->getSolrConfigurationFromPageId($pageId);
+        return $this->frontendEnvironment->getMeilisearchConfigurationFromPageId($pageId);
     }
 
     /**
@@ -410,7 +410,7 @@ class DataUpdateHandler extends AbstractUpdateHandler
             if (!$site instanceof Site) {
                 continue;
             }
-            $solrConfiguration = $site->getSolrConfiguration();
+            $solrConfiguration = $site->getMeilisearchConfiguration();
             $isMonitoredRecord = $solrConfiguration->getIndexQueueIsMonitoredTable($recordTable);
             if (!$isMonitoredRecord) {
                 // when it is a non monitored record, we can skip it.

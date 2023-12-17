@@ -15,19 +15,19 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace WapplerSystems\Meilisearch\System\Solr\Service;
+namespace WapplerSystems\Meilisearch\System\Meilisearch\Service;
 
 use WapplerSystems\Meilisearch\Domain\Search\Query\Query;
-use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
-use WapplerSystems\Meilisearch\System\Solr\SolrCommunicationException;
-use WapplerSystems\Meilisearch\System\Solr\SolrInternalServerErrorException;
-use WapplerSystems\Meilisearch\System\Solr\SolrUnavailableException;
+use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchCommunicationException;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchInternalServerErrorException;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchUnavailableException;
 use RuntimeException;
 
 /**
- * Class SolrReadService
+ * Class MeilisearchReadService
  */
-class SolrReadService extends AbstractSolrService
+class MeilisearchReadService extends AbstractMeilisearchService
 {
     protected bool $hasSearched = false;
 
@@ -36,8 +36,8 @@ class SolrReadService extends AbstractSolrService
     /**
      * Performs a search.
      *
-     * @return ResponseAdapter Solr response
-     * @throws RuntimeException if Solr returns a HTTP status code other than 200
+     * @return ResponseAdapter Meilisearch response
+     * @throws RuntimeException if Meilisearch returns a HTTP status code other than 200
      */
     public function search(Query $query): ResponseAdapter
     {
@@ -74,9 +74,9 @@ class SolrReadService extends AbstractSolrService
     }
 
     /**
-     * This method handles a failed Solr request and maps it to a meaningful exception.
+     * This method handles a failed Meilisearch request and maps it to a meaningful exception.
      *
-     * @throws SolrCommunicationException
+     * @throws MeilisearchCommunicationException
      */
     protected function handleErrorResponse(ResponseAdapter $response): void
     {
@@ -84,19 +84,19 @@ class SolrReadService extends AbstractSolrService
         $message = $response->getHttpStatusMessage();
 
         if ($status === 0 || $status === 502) {
-            $e = new SolrUnavailableException('Solr Server not available: ' . $message, 1505989391);
-            $e->setSolrResponse($response);
+            $e = new MeilisearchUnavailableException('Meilisearch Server not available: ' . $message, 1505989391);
+            $e->setMeilisearchResponse($response);
             throw $e;
         }
 
         if ($status === 500) {
-            $e = new SolrInternalServerErrorException('Internal Server error during search: ' . $message, 1505989897);
-            $e->setSolrResponse($response);
+            $e = new MeilisearchInternalServerErrorException('Internal Server error during search: ' . $message, 1505989897);
+            $e->setMeilisearchResponse($response);
             throw $e;
         }
 
-        $e = new SolrCommunicationException('Invalid query. Solr returned an error: ' . $status . ' ' . $message, 1293109870);
-        $e->setSolrResponse($response);
+        $e = new MeilisearchCommunicationException('Invalid query. Meilisearch returned an error: ' . $status . ' ' . $message, 1293109870);
+        $e->setMeilisearchResponse($response);
 
         throw $e;
     }

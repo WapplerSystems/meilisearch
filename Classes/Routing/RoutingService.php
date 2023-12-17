@@ -17,7 +17,7 @@ declare(strict_types=1);
 
 namespace WapplerSystems\Meilisearch\Routing;
 
-use WapplerSystems\Meilisearch\Routing\Enhancer\SolrRouteEnhancerInterface;
+use WapplerSystems\Meilisearch\Routing\Enhancer\MeilisearchRouteEnhancerInterface;
 use InvalidArgumentException;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
@@ -122,7 +122,7 @@ class RoutingService implements LoggerAwareInterface
     {
         if (empty($routingConfiguration) ||
             empty($routingConfiguration['type']) ||
-            !$this->isRouteEnhancerForSolr((string)$routingConfiguration['type'])) {
+            !$this->isRouteEnhancerForMeilisearch((string)$routingConfiguration['type'])) {
             return $this;
         }
 
@@ -182,7 +182,7 @@ class RoutingService implements LoggerAwareInterface
 
     /**
      * This returns the plugin namespace
-     * @see https://docs.typo3.org/p/wapplersystems/meilisearch/main/en-us/Configuration/Reference/TxSolrView.html#pluginnamespace
+     * @see https://docs.typo3.org/p/wapplersystems/meilisearch/main/en-us/Configuration/Reference/TxMeilisearchView.html#pluginnamespace
      */
     public function getPluginNamespace(): string
     {
@@ -190,9 +190,9 @@ class RoutingService implements LoggerAwareInterface
     }
 
     /**
-     * Determine if an enhancer is in use for Solr
+     * Determine if an enhancer is in use for Meilisearch
      */
-    public function isRouteEnhancerForSolr(string $enhancerName): bool
+    public function isRouteEnhancerForMeilisearch(string $enhancerName): bool
     {
         if (empty($enhancerName)) {
             return false;
@@ -209,11 +209,11 @@ class RoutingService implements LoggerAwareInterface
 
         $interfaces = class_implements($className);
 
-        return in_array(SolrRouteEnhancerInterface::class, $interfaces);
+        return in_array(MeilisearchRouteEnhancerInterface::class, $interfaces);
     }
 
     /**
-     * Masks Solr filter inside the query parameters
+     * Masks Meilisearch filter inside the query parameters
      */
     public function finalizePathQuery(string $uriPath): string
     {
@@ -273,7 +273,7 @@ class RoutingService implements LoggerAwareInterface
     }
 
     /**
-     * Masks Solr filter inside the query parameters
+     * Masks Meilisearch filter inside the query parameters
      */
     public function maskQueryParameters(array $queryParams): array
     {
@@ -736,7 +736,7 @@ class RoutingService implements LoggerAwareInterface
             }
 
             if (empty($settings) || !isset($settings['type']) ||
-                !$this->isRouteEnhancerForSolr((string)$settings['type'])
+                !$this->isRouteEnhancerForMeilisearch((string)$settings['type'])
             ) {
                 continue;
             }

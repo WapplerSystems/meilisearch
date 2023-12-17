@@ -15,9 +15,9 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace WapplerSystems\Meilisearch\System\Solr;
+namespace WapplerSystems\Meilisearch\System\Meilisearch;
 
 /**
  * This exception should be thrown when the response from solr was incomplete
  */
-class SolrIncompleteResponseException extends SolrCommunicationException {}
+class MeilisearchIncompleteResponseException extends MeilisearchCommunicationException {}

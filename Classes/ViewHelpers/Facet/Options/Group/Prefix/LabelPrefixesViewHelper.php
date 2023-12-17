@@ -18,7 +18,7 @@ declare(strict_types=1);
 namespace WapplerSystems\Meilisearch\ViewHelpers\Facet\Options\Group\Prefix;
 
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\OptionBased\OptionCollection;
-use WapplerSystems\Meilisearch\ViewHelpers\AbstractSolrFrontendViewHelper;
+use WapplerSystems\Meilisearch\ViewHelpers\AbstractMeilisearchFrontendViewHelper;
 use Closure;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
@@ -28,7 +28,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
  *
  * @author Timo Hund <timo.hund@dkd.de>
  */
-class LabelPrefixesViewHelper extends AbstractSolrFrontendViewHelper
+class LabelPrefixesViewHelper extends AbstractMeilisearchFrontendViewHelper
 {
     use CompileWithRenderStatic;
 

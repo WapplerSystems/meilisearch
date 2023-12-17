@@ -23,7 +23,7 @@ use WapplerSystems\Meilisearch\FrontendEnvironment;
 use WapplerSystems\Meilisearch\IndexQueue\Item;
 use WapplerSystems\Meilisearch\IndexQueue\Queue;
 use WapplerSystems\Meilisearch\IndexQueue\RecordMonitor;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\System\Records\Pages\PagesRepository;
 use WapplerSystems\Meilisearch\System\Records\Queue\EventQueueItemRepository;
 use WapplerSystems\Meilisearch\System\TCA\TCAService;
@@ -511,7 +511,7 @@ class RecordMonitorTest extends IntegrationTest
      */
     public function logMessageIsCreatedWhenRecordWithoutPidIsCreated(): void
     {
-        $loggerMock = $this->getMockBuilder(SolrLogManager::class)
+        $loggerMock = $this->getMockBuilder(MeilisearchLogManager::class)
             ->onlyMethods([
                 'log',
             ])

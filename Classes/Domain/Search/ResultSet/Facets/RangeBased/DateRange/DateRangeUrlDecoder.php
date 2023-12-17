@@ -36,12 +36,12 @@ class DateRangeUrlDecoder implements FacetUrlDecoderInterface
     public const DELIMITER = '-';
 
     /**
-     * Parses the given date range from a GET parameter and returns a Solr
+     * Parses the given date range from a GET parameter and returns a Meilisearch
      * date range filter.
      *
      * @param string $value The range filter query string from the query URL
      * @param array $configuration Facet configuration
-     * @return string Lucene query language filter to be used for querying Solr
+     * @return string Lucene query language filter to be used for querying Meilisearch
      */
     public function decode(string $value, array $configuration = []): string
     {

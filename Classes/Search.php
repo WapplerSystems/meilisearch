@@ -20,10 +20,10 @@ namespace WapplerSystems\Meilisearch;
 use WapplerSystems\Meilisearch\Domain\Search\Query\Query;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 use WapplerSystems\Meilisearch\System\Logging\DebugWriter;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
-use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
-use WapplerSystems\Meilisearch\System\Solr\SolrCommunicationException;
-use WapplerSystems\Meilisearch\System\Solr\SolrConnection;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
+use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchCommunicationException;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchConnection;
 use Doctrine\DBAL\Exception as DBALException;
 use stdClass;
 use Throwable;
@@ -37,9 +37,9 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class Search
 {
     /**
-     * An instance of the Solr service
+     * An instance of the Meilisearch service
      */
-    protected ?SolrConnection $solr;
+    protected ?MeilisearchConnection $solr;
 
     /**
      * The search query
@@ -53,17 +53,17 @@ class Search
 
     protected TypoScriptConfiguration $configuration;
 
-    protected SolrLogManager $logger;
+    protected MeilisearchLogManager $logger;
 
     /**
      * Search constructor
      *
      * @throws DBALException
-     * @throws NoSolrConnectionFoundException
+     * @throws NoMeilisearchConnectionFoundException
      */
-    public function __construct(SolrConnection $solrConnection = null)
+    public function __construct(MeilisearchConnection $solrConnection = null)
     {
-        $this->logger = new SolrLogManager(__CLASS__, GeneralUtility::makeInstance(DebugWriter::class));
+        $this->logger = new MeilisearchLogManager(__CLASS__, GeneralUtility::makeInstance(DebugWriter::class));
 
         $this->solr = $solrConnection;
 
@@ -72,31 +72,31 @@ class Search
             $this->solr = $connectionManager->getConnectionByPageId(($GLOBALS['TSFE']->id ?? 0), ($GLOBALS['TSFE']?->getLanguage()->getLanguageId() ?? 0));
         }
 
-        $this->configuration = Util::getSolrConfiguration();
+        $this->configuration = Util::getMeilisearchConfiguration();
     }
 
     /**
-     * Gets the Solr connection used by this search.
+     * Gets the Meilisearch connection used by this search.
      */
-    public function getSolrConnection(): ?SolrConnection
+    public function getMeilisearchConnection(): ?MeilisearchConnection
     {
         return $this->solr;
     }
 
     /**
-     * Sets the Solr connection used by this search.
+     * Sets the Meilisearch connection used by this search.
      *
      * Since WapplerSystems\Meilisearch\Search is a \TYPO3\CMS\Core\SingletonInterface, this is needed to
      * be able to switch between multiple cores/connections during
      * one request
      */
-    public function setSolrConnection(SolrConnection $solrConnection): void
+    public function setMeilisearchConnection(MeilisearchConnection $solrConnection): void
     {
         $this->solr = $solrConnection;
     }
 
     /**
-     * Executes a query against a Solr server.
+     * Executes a query against a Meilisearch server.
      *
      * 1) Gets the query string
      * 2) Conducts the actual search
@@ -105,7 +105,7 @@ class Search
      * @param Query $query The query with keywords, filters, and so on.
      * @param int $offset Result offset for pagination.
      * @param int|null $limit Maximum number of results to return. If set to NULL, this value is taken from the query object.
-     * @return ResponseAdapter|null Solr response
+     * @return ResponseAdapter|null Meilisearch response
      */
     public function search(Query $query, int $offset = 0, ?int $limit = null): ?ResponseAdapter
     {
@@ -120,7 +120,7 @@ class Search
             $response = $this->solr->getReadService()->search($query);
             if ($this->configuration->getLoggingQueryQueryString()) {
                 $this->logger->info(
-                    'Querying Solr, getting result',
+                    'Querying Meilisearch, getting result',
                     [
                         'query string' => $query->getQuery(),
                         'query parameters' => $query->getRequestBuilder()->build($query)->getParams(),
@@ -128,10 +128,10 @@ class Search
                     ]
                 );
             }
-        } catch (SolrCommunicationException $e) {
+        } catch (MeilisearchCommunicationException $e) {
             if ($this->configuration->getLoggingExceptions()) {
                 $this->logger->error(
-                    'Exception while querying Solr',
+                    'Exception while querying Meilisearch',
                     [
                         'exception' => $e->__toString(),
                         'query' => (array)$query,
@@ -158,7 +158,7 @@ class Search
 
         try {
             if (!$this->solr->getReadService()->ping($useCache)) {
-                throw new Exception('Solr Server not responding.', 1237475791);
+                throw new Exception('Meilisearch Server not responding.', 1237475791);
             }
 
             $solrAvailable = true;
@@ -185,7 +185,7 @@ class Search
     }
 
     /**
-     * Gets the Solr response
+     * Gets the Meilisearch response
      */
     public function getResponse(): ?ResponseAdapter
     {
@@ -218,7 +218,7 @@ class Search
     }
 
     /**
-     * Gets the time in milliseconds Solr took to execute the query and return the result.
+     * Gets the time in milliseconds Meilisearch took to execute the query and return the result.
      */
     public function getQueryTime(): int
     {

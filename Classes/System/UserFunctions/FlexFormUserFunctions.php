@@ -18,10 +18,10 @@ declare(strict_types=1);
 namespace WapplerSystems\Meilisearch\System\UserFunctions;
 
 use WapplerSystems\Meilisearch\ConnectionManager;
-use WapplerSystems\Meilisearch\NoSolrConnectionFoundException;
+use WapplerSystems\Meilisearch\NoMeilisearchConnectionFoundException;
 use WapplerSystems\Meilisearch\System\Configuration\ExtensionConfiguration;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
-use WapplerSystems\Meilisearch\System\Solr\SolrConnection;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchConnection;
 use Doctrine\DBAL\Exception as DBALException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
@@ -39,7 +39,7 @@ class FlexFormUserFunctions
     /**
      * Provides all facet fields for a flexform select, enabling the editor to select one of them.
      *
-     * @throws NoSolrConnectionFoundException
+     * @throws NoMeilisearchConnectionFoundException
      * @throws DBALException
      */
     public function getFacetFieldsFromSchema(array &$parentInformation): void
@@ -53,17 +53,17 @@ class FlexFormUserFunctions
             return;
         }
 
-        $newItems = $this->getParsedSolrFieldsFromSchema($configuredFacets, $pageRecord);
+        $newItems = $this->getParsedMeilisearchFieldsFromSchema($configuredFacets, $pageRecord);
         $parentInformation['items'] = $newItems;
     }
 
     /**
      * This method parses the solr schema fields into the required format for the backend flexform.
      *
-     * @throws NoSolrConnectionFoundException
+     * @throws NoMeilisearchConnectionFoundException
      * @throws DBALException
      */
-    protected function getParsedSolrFieldsFromSchema(array $configuredFacets, array $pageRecord): array
+    protected function getParsedMeilisearchFieldsFromSchema(array $configuredFacets, array $pageRecord): array
     {
         $newItems = [];
 
@@ -88,7 +88,7 @@ class FlexFormUserFunctions
             }
 
             $newItems[$value] = [$label, $value];
-        }, $this->getFieldNamesFromSolrMetaDataForPage($pageRecord));
+        }, $this->getFieldNamesFromMeilisearchMetaDataForPage($pageRecord));
 
         ksort($newItems, SORT_NATURAL);
         return $newItems;
@@ -117,10 +117,10 @@ class FlexFormUserFunctions
     /**
      * Get solr connection.
      *
-     * @throws NoSolrConnectionFoundException
+     * @throws NoMeilisearchConnectionFoundException
      * @throws DBALException
      */
-    protected function getConnection(array $pageRecord): SolrConnection
+    protected function getConnection(array $pageRecord): MeilisearchConnection
     {
         return GeneralUtility::makeInstance(ConnectionManager::class)->getConnectionByPageId($pageRecord['pid'], $pageRecord['sys_language_uid']);
     }
@@ -128,10 +128,10 @@ class FlexFormUserFunctions
     /**
      * Retrieves all fieldnames that occurs in the solr schema for one page.
      *
-     * @throws NoSolrConnectionFoundException
+     * @throws NoMeilisearchConnectionFoundException
      * @throws DBALException
      */
-    protected function getFieldNamesFromSolrMetaDataForPage(array $pageRecord): array
+    protected function getFieldNamesFromMeilisearchMetaDataForPage(array $pageRecord): array
     {
         return array_keys((array)$this->getConnection($pageRecord)->getAdminService()->getFieldsMetaData());
     }

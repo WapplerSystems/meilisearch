@@ -18,11 +18,11 @@ declare(strict_types=1);
 namespace WapplerSystems\Meilisearch;
 
 /**
- * Exception that is thrown when no Solr connection could be found.
+ * Exception that is thrown when no Meilisearch connection could be found.
  *
  * @author Ingo Renner <ingo@typo3.org>
  */
-class NoSolrConnectionFoundException extends Exception
+class NoMeilisearchConnectionFoundException extends Exception
 {
     protected ?int $pageId = null;
 

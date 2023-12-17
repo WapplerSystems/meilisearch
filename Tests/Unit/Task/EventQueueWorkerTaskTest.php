@@ -17,7 +17,7 @@ namespace WapplerSystems\Meilisearch\Tests\Unit\Task;
 
 use WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\EventListener\Events\DelayedProcessingFinishedEvent;
 use WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\RecordUpdatedEvent;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\System\Records\Queue\EventQueueItemRepository;
 use WapplerSystems\Meilisearch\Task\EventQueueWorkerTask;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
@@ -111,8 +111,8 @@ class EventQueueWorkerTaskTest extends SetUpUnitTestCase
         GeneralUtility::setSingletonInstance(EventQueueItemRepository::class, $eventQueueItemRepositoryMock);
         $eventDispatcherMock = $this->createMock(EventDispatcherInterface::class);
         GeneralUtility::addInstance(EventDispatcherInterface::class, $eventDispatcherMock);
-        $solrLogManagerMock = $this->createMock(SolrLogManager::class);
-        GeneralUtility::addInstance(SolrLogManager::class, $solrLogManagerMock);
+        $solrLogManagerMock = $this->createMock(MeilisearchLogManager::class);
+        GeneralUtility::addInstance(MeilisearchLogManager::class, $solrLogManagerMock);
 
         $event = new RecordUpdatedEvent(123, 'tx_foo_bar');
         $serializedEvent = serialize($event);

@@ -19,7 +19,7 @@ use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\AbstractFacet;
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\AbstractFacetParser;
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSet;
 use WapplerSystems\Meilisearch\Event\Parser\AfterFacetIsParsedEvent;
-use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -39,7 +39,7 @@ class QueryGroupFacetParser extends AbstractFacetParser
     }
 
     /**
-     * Parses group params for Apache Solr query
+     * Parses group params for Apache Meilisearch query
      */
     public function parse(SearchResultSet $resultSet, string $facetName, array $facetConfiguration): ?AbstractFacet
     {
@@ -121,7 +121,7 @@ class QueryGroupFacetParser extends AbstractFacetParser
 
             // todo: add test cases to check if this is needed https://forge.typo3.org/issues/45440
             // remove tags from the facet.query response, for facet.field
-            // and facet.range Solr does that on its own automatically
+            // and facet.range Meilisearch does that on its own automatically
             $rawValue = preg_replace('/^\{!ex=[^\}]*\}(.*)/', '\\1', $rawValue);
 
             [$field, $query] = explode(':', $rawValue, 2);

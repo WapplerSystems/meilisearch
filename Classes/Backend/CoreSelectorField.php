@@ -120,7 +120,7 @@ class CoreSelectorField
     protected function getLanguageUidCoreMap(): array
     {
         $coreTableMap = [];
-        $cores = $this->site->getAllSolrConnectionConfigurations();
+        $cores = $this->site->getAllMeilisearchConnectionConfigurations();
         foreach ($cores as $languageUid => $core) {
             $corePath = $core['write']['path'];
             $coreTableMap[$languageUid] = $corePath;
@@ -140,7 +140,7 @@ class CoreSelectorField
         $selectorItems = [];
 
         foreach ($coresToOptimize as $corePath) {
-            $icon = 'module-searchbackend_SolrCoreoptimization';
+            $icon = 'module-searchbackend_MeilisearchCoreoptimization';
             $corePath = rtrim($corePath, '/');
             $selectorItems[] = [$corePath, $corePath, $icon];
         }

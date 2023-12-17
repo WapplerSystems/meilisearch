@@ -20,7 +20,7 @@ namespace WapplerSystems\Meilisearch\Task;
 use WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\EventListener\Events\DelayedProcessingFinishedEvent;
 use WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\DataUpdateEventInterface;
 use WapplerSystems\Meilisearch\Exception\InvalidArgumentException;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\System\Records\Queue\EventQueueItemRepository;
 use Doctrine\DBAL\Exception as DBALException;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -44,7 +44,7 @@ final class EventQueueWorkerTask extends AbstractTask
     protected int $limit = self::DEFAULT_PROCESSING_LIMIT;
 
     /**
-     * Works through the indexing queue and indexes the queued items into Solr.
+     * Works through the indexing queue and indexes the queued items into Meilisearch.
      *
      * @return bool Returns TRUE on success, FALSE if no items were indexed or none were found.
      *
@@ -89,7 +89,7 @@ final class EventQueueWorkerTask extends AbstractTask
                     new DelayedProcessingFinishedEvent($event)
                 );
             } catch (Throwable $e) {
-                $this->getSolrLogManager()->error(
+                $this->getMeilisearchLogManager()->error(
                     'Couldn\'t process queued event',
                     [
                         'eventQueueItemUid' => $queueItem['uid'],
@@ -151,11 +151,11 @@ final class EventQueueWorkerTask extends AbstractTask
     }
 
     /**
-     * Return the SolrLogManager
+     * Return the MeilisearchLogManager
      */
-    protected function getSolrLogManager(): SolrLogManager
+    protected function getMeilisearchLogManager(): MeilisearchLogManager
     {
-        return  GeneralUtility::makeInstance(SolrLogManager::class, __CLASS__);
+        return  GeneralUtility::makeInstance(MeilisearchLogManager::class, __CLASS__);
     }
 
     /**

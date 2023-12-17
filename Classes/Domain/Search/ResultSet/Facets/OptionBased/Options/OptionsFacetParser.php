@@ -21,7 +21,7 @@ use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\AbstractFacet;
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\AbstractFacetParser;
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSet;
 use WapplerSystems\Meilisearch\Event\Parser\AfterFacetIsParsedEvent;
-use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -45,10 +45,10 @@ class OptionsFacetParser extends AbstractFacetParser
         $response = $resultSet->getResponse();
         $fieldName = $facetConfiguration['field'];
         $label = $this->getPlainLabelOrApplyCObject($facetConfiguration);
-        $optionsFromSolrResponse = $this->getOptionsFromSolrResponse($facetName, $response);
-        $metricsFromSolrResponse = $this->getMetricsFromSolrResponse($facetName, $response);
+        $optionsFromMeilisearchResponse = $this->getOptionsFromMeilisearchResponse($facetName, $response);
+        $metricsFromMeilisearchResponse = $this->getMetricsFromMeilisearchResponse($facetName, $response);
         $optionsFromRequest = $this->getActiveFacetValuesFromRequest($resultSet, $facetName);
-        $hasOptionsInResponse = !empty($optionsFromSolrResponse);
+        $hasOptionsInResponse = !empty($optionsFromMeilisearchResponse);
         $hasSelectedOptionsInRequest = count($optionsFromRequest) > 0;
         $hasNoOptionsToShow = !$hasOptionsInResponse && !$hasSelectedOptionsInRequest;
         $hideEmpty = !$resultSet->getUsedSearchRequest()->getContextTypoScriptConfiguration()->getSearchFacetingShowEmptyFacetsByName($facetName);
@@ -71,7 +71,7 @@ class OptionsFacetParser extends AbstractFacetParser
         $facet->setIsUsed($hasActiveOptions);
         $facet->setIsAvailable($hasOptionsInResponse);
 
-        $optionsToCreate = $this->getMergedFacetValueFromSearchRequestAndSolrResponse($optionsFromSolrResponse, $optionsFromRequest);
+        $optionsToCreate = $this->getMergedFacetValueFromSearchRequestAndMeilisearchResponse($optionsFromMeilisearchResponse, $optionsFromRequest);
         foreach ($optionsToCreate as $optionsValue => $count) {
             if ($this->getIsExcludedFacetValue($optionsValue, $facetConfiguration)) {
                 continue;
@@ -87,7 +87,7 @@ class OptionsFacetParser extends AbstractFacetParser
                     $optionsValue,
                     $count,
                     $isOptionsActive,
-                    ($metricsFromSolrResponse[$optionsValue] ?? [])
+                    ($metricsFromMeilisearchResponse[$optionsValue] ?? [])
                 )
             );
         }
@@ -109,30 +109,30 @@ class OptionsFacetParser extends AbstractFacetParser
     }
 
     /**
-     * Converts Apache Solr Response to facets options array.
+     * Converts Apache Meilisearch Response to facets options array.
      */
-    protected function getOptionsFromSolrResponse(string $facetName, ResponseAdapter $response): array
+    protected function getOptionsFromMeilisearchResponse(string $facetName, ResponseAdapter $response): array
     {
-        $optionsFromSolrResponse = [];
+        $optionsFromMeilisearchResponse = [];
         if (!isset($response->facets->{$facetName})) {
-            return $optionsFromSolrResponse;
+            return $optionsFromMeilisearchResponse;
         }
 
         foreach ($response->facets->{$facetName}->buckets as $bucket) {
             $optionValue = $bucket->val;
             $optionCount = $bucket->count;
-            $optionsFromSolrResponse[(string)$optionValue] = $optionCount;
+            $optionsFromMeilisearchResponse[(string)$optionValue] = $optionCount;
         }
 
-        return $optionsFromSolrResponse;
+        return $optionsFromMeilisearchResponse;
     }
 
     /**
-     * Converts Apache Solr Response to facets metrics array.
+     * Converts Apache Meilisearch Response to facets metrics array.
      */
-    protected function getMetricsFromSolrResponse(string $facetName, ResponseAdapter $response): array
+    protected function getMetricsFromMeilisearchResponse(string $facetName, ResponseAdapter $response): array
     {
-        $metricsFromSolrResponse = [];
+        $metricsFromMeilisearchResponse = [];
 
         if (!isset($response->facets->{$facetName}->buckets)) {
             return [];
@@ -143,11 +143,11 @@ class OptionsFacetParser extends AbstractFacetParser
             foreach ($bucketVariables as $key => $value) {
                 if (str_starts_with($key, 'metrics_')) {
                     $metricsKey = str_replace('metrics_', '', $key);
-                    $metricsFromSolrResponse[$bucket->val][$metricsKey] = $value;
+                    $metricsFromMeilisearchResponse[$bucket->val][$metricsKey] = $value;
                 }
             }
         }
 
-        return $metricsFromSolrResponse;
+        return $metricsFromMeilisearchResponse;
     }
 }

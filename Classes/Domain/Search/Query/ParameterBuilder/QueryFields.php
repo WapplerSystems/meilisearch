@@ -19,7 +19,7 @@ use WapplerSystems\Meilisearch\Domain\Search\Query\AbstractQueryBuilder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * The QueryFields class holds all information for the query which fields should be used to query (Solr qf parameter).
+ * The QueryFields class holds all information for the query which fields should be used to query (Meilisearch qf parameter).
  */
 class QueryFields implements ParameterBuilderInterface
 {

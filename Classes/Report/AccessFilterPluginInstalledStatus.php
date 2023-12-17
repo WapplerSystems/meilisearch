@@ -19,21 +19,21 @@ namespace WapplerSystems\Meilisearch\Report;
 
 use WapplerSystems\Meilisearch\ConnectionManager;
 use WapplerSystems\Meilisearch\Domain\Site\Exception\UnexpectedTYPO3SiteInitializationException;
-use WapplerSystems\Meilisearch\System\Solr\Service\SolrAdminService;
+use WapplerSystems\Meilisearch\System\Meilisearch\Service\MeilisearchAdminService;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Reports\Status;
 
 /**
  * Provides a status report about whether the Access Filter Query Parser Plugin
- * is installed on the Solr server.
+ * is installed on the Meilisearch server.
  *
  * @author Ingo Renner <ingo@typo3.org>
  */
-class AccessFilterPluginInstalledStatus extends AbstractSolrStatus
+class AccessFilterPluginInstalledStatus extends AbstractMeilisearchStatus
 {
     /**
-     * Solr Access Filter plugin version.
+     * Meilisearch Access Filter plugin version.
      *
      * Must be updated when changing the plugin.
      */
@@ -46,7 +46,7 @@ class AccessFilterPluginInstalledStatus extends AbstractSolrStatus
 
     /**
      * Compiles a collection of solrconfig.xml checks against each configured
-     * Solr server. Only adds an entry if the Access Filter Query Parser Plugin
+     * Meilisearch server. Only adds an entry if the Access Filter Query Parser Plugin
      * is not configured.
      *
      * @throws UnexpectedTYPO3SiteInitializationException
@@ -75,9 +75,9 @@ class AccessFilterPluginInstalledStatus extends AbstractSolrStatus
         if (empty($reports)) {
             $reports[] = GeneralUtility::makeInstance(
                 Status::class,
-                'Solr Access Filter Plugin',
+                'Meilisearch Access Filter Plugin',
                 'OK',
-                'Solr Access Filter Plugin is installed in at least version ' . self::RECOMMENDED_PLUGIN_VERSION,
+                'Meilisearch Access Filter Plugin is installed in at least version ' . self::RECOMMENDED_PLUGIN_VERSION,
                 ContextualFeedbackSeverity::OK
             );
         }
@@ -94,9 +94,9 @@ class AccessFilterPluginInstalledStatus extends AbstractSolrStatus
     }
 
     /**
-     * Checks whether the Solr plugin is installed.
+     * Checks whether the Meilisearch plugin is installed.
      */
-    protected function checkPluginInstallationStatus(SolrAdminService $adminService): ?Status
+    protected function checkPluginInstallationStatus(MeilisearchAdminService $adminService): ?Status
     {
         if ($this->isPluginInstalled($adminService)) {
             return null;
@@ -107,7 +107,7 @@ class AccessFilterPluginInstalledStatus extends AbstractSolrStatus
         $report = $this->getRenderedReport('AccessFilterPluginInstalledStatusNotInstalled.html', $variables);
         return GeneralUtility::makeInstance(
             Status::class,
-            'Solr Access Filter Plugin',
+            'Meilisearch Access Filter Plugin',
             'Not Installed',
             $report,
             ContextualFeedbackSeverity::WARNING
@@ -115,9 +115,9 @@ class AccessFilterPluginInstalledStatus extends AbstractSolrStatus
     }
 
     /**
-     * Checks whether the Solr plugin version is up-to-date.
+     * Checks whether the Meilisearch plugin version is up-to-date.
      */
-    protected function checkPluginVersion(SolrAdminService $adminService): ?Status
+    protected function checkPluginVersion(MeilisearchAdminService $adminService): ?Status
     {
         if (!($this->isPluginInstalled($adminService) && $this->isPluginOutdated($adminService))) {
             return null;
@@ -129,7 +129,7 @@ class AccessFilterPluginInstalledStatus extends AbstractSolrStatus
 
         return GeneralUtility::makeInstance(
             Status::class,
-            'Solr Access Filter Plugin',
+            'Meilisearch Access Filter Plugin',
             'Outdated',
             $report,
             ContextualFeedbackSeverity::WARNING
@@ -138,11 +138,11 @@ class AccessFilterPluginInstalledStatus extends AbstractSolrStatus
 
     /**
      * Checks whether the Access Filter Query Parser Plugin is installed for
-     * the given Solr server instance.
+     * the given Meilisearch server instance.
      *
      * @return bool True if the plugin is installed, FALSE otherwise.
      */
-    protected function isPluginInstalled(SolrAdminService $adminService): bool
+    protected function isPluginInstalled(MeilisearchAdminService $adminService): bool
     {
         $accessFilterQueryParserPluginInstalled = false;
 
@@ -159,7 +159,7 @@ class AccessFilterPluginInstalledStatus extends AbstractSolrStatus
      *
      * @return bool True if the plugin is outdated, FALSE if it meets the current version recommendation.
      */
-    protected function isPluginOutdated(SolrAdminService $adminService): bool
+    protected function isPluginOutdated(MeilisearchAdminService $adminService): bool
     {
         $pluginVersion = $this->getInstalledPluginVersion($adminService);
         return version_compare($pluginVersion, self::RECOMMENDED_PLUGIN_VERSION, '<');
@@ -170,7 +170,7 @@ class AccessFilterPluginInstalledStatus extends AbstractSolrStatus
      *
      * @return string The installed plugin's version number.
      */
-    public function getInstalledPluginVersion(SolrAdminService $adminService): string
+    public function getInstalledPluginVersion(MeilisearchAdminService $adminService): string
     {
         $pluginsInformation = $adminService->getPluginsInformation();
 

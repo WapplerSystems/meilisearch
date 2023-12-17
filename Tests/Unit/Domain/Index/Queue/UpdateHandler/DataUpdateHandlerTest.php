@@ -21,7 +21,7 @@ use WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\DataUpdateHandle
 use WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\GarbageHandler;
 use WapplerSystems\Meilisearch\Domain\Site\Site;
 use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
@@ -44,9 +44,9 @@ class DataUpdateHandlerTest extends SetUpUpdateHandler
 
     protected DataHandler|MockObject $dataHandlerMock;
 
-    protected SolrLogManager|MockObject $solrLogManagerMock;
+    protected MeilisearchLogManager|MockObject $solrLogManagerMock;
 
-    protected MockObject|SolrLogManager $loggerMock;
+    protected MockObject|MeilisearchLogManager $loggerMock;
 
     protected function setUp(): void
     {
@@ -54,7 +54,7 @@ class DataUpdateHandlerTest extends SetUpUpdateHandler
         $this->mountPagesUpdaterMock = $this->createMock(MountPagesUpdater::class);
         $this->rootPageResolverMock = $this->createMock(RootPageResolver::class);
         $this->dataHandlerMock = $this->createMock(DataHandler::class);
-        $this->loggerMock = $this->createMock(SolrLogManager::class);
+        $this->loggerMock = $this->createMock(MeilisearchLogManager::class);
 
         $this->dataUpdateHandler = new DataUpdateHandler(
             $this->recordServiceMock,

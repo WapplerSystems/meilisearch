@@ -16,8 +16,8 @@
 namespace WapplerSystems\Meilisearch\Routing\Enhancer;
 
 /**
- * This interface uses to determine if an enhancer handle Solr specific requests
+ * This interface uses to determine if an enhancer handle Meilisearch specific requests
  *
  * @author Lars Tode <lars.tode@dkd.de>
  */
-interface SolrRouteEnhancerInterface {}
+interface MeilisearchRouteEnhancerInterface {}

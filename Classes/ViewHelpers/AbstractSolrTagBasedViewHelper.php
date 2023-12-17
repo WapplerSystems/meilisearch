@@ -19,7 +19,7 @@ namespace WapplerSystems\Meilisearch\ViewHelpers;
 
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 
-abstract class AbstractSolrTagBasedViewHelper extends AbstractTagBasedViewHelper
+abstract class AbstractMeilisearchTagBasedViewHelper extends AbstractTagBasedViewHelper
 {
     protected $escapeChildren = true;
 

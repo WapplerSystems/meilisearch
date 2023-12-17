@@ -119,7 +119,7 @@ class RecordMonitor
     /**
      * Hooks into TCE Main and watches all record creations and updates. If it
      * detects that the new/updated record belongs to a table configured for
-     * indexing through Solr, we add the record to the index queue.
+     * indexing through Meilisearch, we add the record to the index queue.
      *
      * @param string $status Status of the current operation, 'new' or 'update'
      * @param string $table The table the record belongs to

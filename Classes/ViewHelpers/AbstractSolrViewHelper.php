@@ -17,7 +17,7 @@ namespace WapplerSystems\Meilisearch\ViewHelpers;
 
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
-abstract class AbstractSolrViewHelper extends AbstractViewHelper
+abstract class AbstractMeilisearchViewHelper extends AbstractViewHelper
 {
     protected $escapeChildren = true;
 

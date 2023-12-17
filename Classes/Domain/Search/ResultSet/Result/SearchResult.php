@@ -18,10 +18,10 @@ declare(strict_types=1);
 namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet\Result;
 
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Grouping\GroupItem;
-use WapplerSystems\Meilisearch\System\Solr\Document\Document;
+use WapplerSystems\Meilisearch\System\Meilisearch\Document\Document;
 
 /**
- * Solr document class that should be used in the frontend in the search context.
+ * Meilisearch document class that should be used in the frontend in the search context.
  *
  * @author Timo Schmidt <timo.schmidt@dkd.de>
  */
@@ -30,7 +30,7 @@ class SearchResult extends Document
     /**
      * The variant field value
      *
-     * Value of Solr collapse field, which is defined via
+     * Value of Meilisearch collapse field, which is defined via
      * TypoScript variable "variants.variantField"
      */
     protected string $variantFieldValue = '';
@@ -150,7 +150,7 @@ class SearchResult extends Document
     }
 
     /**
-     * Note: The id field on Apache Solr document is a string.
+     * Note: The id field on Apache Meilisearch document is a string.
      */
     public function getId(): string
     {

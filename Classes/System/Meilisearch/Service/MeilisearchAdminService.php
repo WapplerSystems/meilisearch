@@ -15,16 +15,16 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace WapplerSystems\Meilisearch\System\Solr\Service;
+namespace WapplerSystems\Meilisearch\System\Meilisearch\Service;
 
 use WapplerSystems\Meilisearch\Exception\InvalidArgumentException;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
-use WapplerSystems\Meilisearch\System\Solr\Parser\SchemaParser;
-use WapplerSystems\Meilisearch\System\Solr\Parser\StopWordParser;
-use WapplerSystems\Meilisearch\System\Solr\Parser\SynonymParser;
-use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
-use WapplerSystems\Meilisearch\System\Solr\Schema\Schema;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
+use WapplerSystems\Meilisearch\System\Meilisearch\Parser\SchemaParser;
+use WapplerSystems\Meilisearch\System\Meilisearch\Parser\StopWordParser;
+use WapplerSystems\Meilisearch\System\Meilisearch\Parser\SynonymParser;
+use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Meilisearch\Schema\Schema;
 use Solarium\Client;
 use stdClass;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -32,9 +32,9 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use function simplexml_load_string;
 
 /**
- * Class SolrAdminService
+ * Class MeilisearchAdminService
  */
-class SolrAdminService extends AbstractSolrService
+class MeilisearchAdminService extends AbstractMeilisearchService
 {
     public const PLUGINS_SERVLET = 'admin/plugins';
     public const LUKE_SERVLET = 'admin/luke';
@@ -66,12 +66,12 @@ class SolrAdminService extends AbstractSolrService
     protected StopWordParser $stopWordParser;
 
     public function __construct(
-        Client $client,
+        Client                  $client,
         TypoScriptConfiguration $typoScriptConfiguration = null,
-        SolrLogManager $logManager = null,
-        SynonymParser $synonymParser = null,
-        StopWordParser $stopWordParser = null,
-        SchemaParser $schemaParser = null
+        MeilisearchLogManager   $logManager = null,
+        SynonymParser           $synonymParser = null,
+        StopWordParser          $stopWordParser = null,
+        SchemaParser            $schemaParser = null
     ) {
         parent::__construct($client, $typoScriptConfiguration, $logManager);
 
@@ -81,7 +81,7 @@ class SolrAdminService extends AbstractSolrService
     }
 
     /**
-     * Call the /admin/system servlet and retrieve system information about Solr
+     * Call the /admin/system servlet and retrieve system information about Meilisearch
      */
     public function system(): ResponseAdapter
     {
@@ -89,7 +89,7 @@ class SolrAdminService extends AbstractSolrService
     }
 
     /**
-     * Gets information about the plugins installed in Solr
+     * Gets information about the plugins installed in Meilisearch
      *
      * @return ResponseAdapter|null A nested array of plugin data.
      */
@@ -141,7 +141,7 @@ class SolrAdminService extends AbstractSolrService
     }
 
     /**
-     * Gets information about the Solr server
+     * Gets information about the Meilisearch server
      */
     public function getSystemInformation(): ResponseAdapter
     {
@@ -160,12 +160,12 @@ class SolrAdminService extends AbstractSolrService
     }
 
     /**
-     * Gets the name of the solrconfig.xml file installed and in use on the Solr
+     * Gets the name of the solrconfig.xml file installed and in use on the Meilisearch
      * server.
      *
      * @return string|null Name of the active solrconfig.xml
      */
-    public function getSolrconfigName(): ?string
+    public function getMeilisearchconfigName(): ?string
     {
         if (is_null($this->solrconfigName)) {
             $solrconfigXmlUrl = $this->_constructUrl(self::FILE_SERVLET, ['file' => 'solrconfig.xml']);
@@ -181,9 +181,9 @@ class SolrAdminService extends AbstractSolrService
     }
 
     /**
-     * Gets the Solr server's version number.
+     * Gets the Meilisearch server's version number.
      */
-    public function getSolrServerVersion(): string
+    public function getMeilisearchServerVersion(): string
     {
         $systemInformation = $this->getSystemInformation();
         // don't know why $systemInformation->lucene->solr-spec-version won't work

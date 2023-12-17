@@ -23,8 +23,8 @@ use WapplerSystems\Meilisearch\Domain\Site\Site;
 use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
 use WapplerSystems\Meilisearch\Exception\InvalidArgumentException;
 use WapplerSystems\Meilisearch\Exception\InvalidConnectionException;
-use WapplerSystems\Meilisearch\System\Records\Pages\PagesRepository as PagesRepositoryAtExtSolr;
-use WapplerSystems\Meilisearch\System\Solr\SolrConnection;
+use WapplerSystems\Meilisearch\System\Records\Pages\PagesRepository as PagesRepositoryAtExtMeilisearch;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchConnection;
 use WapplerSystems\Meilisearch\System\Util\SiteUtility;
 use Doctrine\DBAL\Exception as DBALException;
 use Solarium\Core\Client\Endpoint;
@@ -36,35 +36,35 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use function json_encode;
 
 /**
- * ConnectionManager is responsible to create SolrConnection objects.
+ * ConnectionManager is responsible to create MeilisearchConnection objects.
  *
  * @author Ingo Renner <ingo@typo3.org>
  */
 class ConnectionManager implements SingletonInterface
 {
     /**
-     * @var SolrConnection[]
+     * @var MeilisearchConnection[]
      */
     protected static array $connections = [];
 
-    protected PagesRepositoryAtExtSolr $pagesRepositoryAtExtSolr;
+    protected PagesRepositoryAtExtMeilisearch $pagesRepositoryAtExtMeilisearch;
 
     protected SiteRepository $siteRepository;
 
     public function __construct(
-        PagesRepositoryAtExtSolr $pagesRepositoryAtExtSolr = null,
+        PagesRepositoryAtExtMeilisearch $pagesRepositoryAtExtMeilisearch = null,
         SiteRepository $siteRepository = null
     ) {
         $this->siteRepository = $siteRepository ?? GeneralUtility::makeInstance(SiteRepository::class);
-        $this->pagesRepositoryAtExtSolr = $pagesRepositoryAtExtSolr ?? GeneralUtility::makeInstance(PagesRepositoryAtExtSolr::class);
+        $this->pagesRepositoryAtExtMeilisearch = $pagesRepositoryAtExtMeilisearch ?? GeneralUtility::makeInstance(PagesRepositoryAtExtMeilisearch::class);
     }
 
     /**
-     * Creates a Solr connection for read and write endpoints
+     * Creates a Meilisearch connection for read and write endpoints
      *
      * @throw InvalidConnectionException
      */
-    public function getSolrConnectionForEndpoints(array $readEndpointConfiguration, array $writeEndpointConfiguration): SolrConnection
+    public function getMeilisearchConnectionForEndpoints(array $readEndpointConfiguration, array $writeEndpointConfiguration): MeilisearchConnection
     {
         $connectionHash = md5(json_encode($readEndpointConfiguration) . json_encode($writeEndpointConfiguration));
         if (!isset(self::$connections[$connectionHash])) {
@@ -78,7 +78,7 @@ class ConnectionManager implements SingletonInterface
                 throw new InvalidConnectionException('Invalid write endpoint');
             }
 
-            self::$connections[$connectionHash] = GeneralUtility::makeInstance(SolrConnection::class, $readEndpoint, $writeEndpoint);
+            self::$connections[$connectionHash] = GeneralUtility::makeInstance(MeilisearchConnection::class, $readEndpoint, $writeEndpoint);
         }
 
         return self::$connections[$connectionHash];
@@ -99,23 +99,23 @@ class ConnectionManager implements SingletonInterface
     /**
      * Creates a solr configuration from the configuration array and returns it.
      */
-    public function getConnectionFromConfiguration(array $solrConfiguration): SolrConnection
+    public function getConnectionFromConfiguration(array $solrConfiguration): MeilisearchConnection
     {
-        return $this->getSolrConnectionForEndpoints($solrConfiguration['read'], $solrConfiguration['write']);
+        return $this->getMeilisearchConnectionForEndpoints($solrConfiguration['read'], $solrConfiguration['write']);
     }
 
     /**
-     * Gets a Solr connection for a page ID.
+     * Gets a Meilisearch connection for a page ID.
      *
      * @throws DBALException
-     * @throws NoSolrConnectionFoundException
+     * @throws NoMeilisearchConnectionFoundException
      */
-    public function getConnectionByPageId(int $pageId, int $language = 0, string $mountPointParametersList = ''): SolrConnection
+    public function getConnectionByPageId(int $pageId, int $language = 0, string $mountPointParametersList = ''): MeilisearchConnection
     {
         try {
             $site = $this->siteRepository->getSiteByPageId($pageId, $mountPointParametersList);
             $this->throwExceptionOnInvalidSite($site, 'No site for pageId ' . $pageId);
-            $config = $site->getSolrConnectionConfiguration($language);
+            $config = $site->getMeilisearchConnectionConfiguration($language);
             return $this->getConnectionFromConfiguration($config);
         } catch (InvalidArgumentException) {
             throw $this->buildNoConnectionExceptionForPageAndLanguage($pageId, $language);
@@ -123,13 +123,13 @@ class ConnectionManager implements SingletonInterface
     }
 
     /**
-     * Gets a Solr connection for a TYPO3 site and language
+     * Gets a Meilisearch connection for a TYPO3 site and language
      *
-     * @throws NoSolrConnectionFoundException
+     * @throws NoMeilisearchConnectionFoundException
      */
-    public function getConnectionByTypo3Site(Typo3Site $typo3Site, int $languageUid = 0): SolrConnection
+    public function getConnectionByTypo3Site(Typo3Site $typo3Site, int $languageUid = 0): MeilisearchConnection
     {
-        $config = SiteUtility::getSolrConnectionConfiguration($typo3Site, $languageUid);
+        $config = SiteUtility::getMeilisearchConnectionConfiguration($typo3Site, $languageUid);
         if ($config === null) {
             throw $this->buildNoConnectionExceptionForPageAndLanguage(
                 $typo3Site->getRootPageId(),
@@ -148,17 +148,17 @@ class ConnectionManager implements SingletonInterface
     }
 
     /**
-     * Gets a Solr connection for a root page ID.
+     * Gets a Meilisearch connection for a root page ID.
      *
      * @throws DBALException
-     * @throws NoSolrConnectionFoundException
+     * @throws NoMeilisearchConnectionFoundException
      */
-    public function getConnectionByRootPageId(int $pageId, ?int $language = 0): SolrConnection
+    public function getConnectionByRootPageId(int $pageId, ?int $language = 0): MeilisearchConnection
     {
         try {
             $site = $this->siteRepository->getSiteByRootPageId($pageId);
             $this->throwExceptionOnInvalidSite($site, 'No site for pageId ' . $pageId);
-            $config = $site->getSolrConnectionConfiguration($language ?? 0);
+            $config = $site->getMeilisearchConnectionConfiguration($language ?? 0);
             return $this->getConnectionFromConfiguration($config);
         } catch (InvalidArgumentException) {
             throw $this->buildNoConnectionExceptionForPageAndLanguage($pageId, $language);
@@ -168,7 +168,7 @@ class ConnectionManager implements SingletonInterface
     /**
      * Gets all connections found.
      *
-     * @return SolrConnection[] An array of initialized {@link SolrConnection} connections
+     * @return MeilisearchConnection[] An array of initialized {@link MeilisearchConnection} connections
      *
      * @throws UnexpectedTYPO3SiteInitializationException
      */
@@ -176,7 +176,7 @@ class ConnectionManager implements SingletonInterface
     {
         $solrConnections = [];
         foreach ($this->siteRepository->getAvailableSites() as $site) {
-            foreach ($site->getAllSolrConnectionConfigurations() as $solrConfiguration) {
+            foreach ($site->getAllMeilisearchConnectionConfigurations() as $solrConfiguration) {
                 $solrConnections[] = $this->getConnectionFromConfiguration($solrConfiguration);
             }
         }
@@ -187,13 +187,13 @@ class ConnectionManager implements SingletonInterface
     /**
      * Gets all connections configured for a given site.
      *
-     * @return SolrConnection[] An array of Solr connection objects {@link SolrConnection}
+     * @return MeilisearchConnection[] An array of Meilisearch connection objects {@link MeilisearchConnection}
      */
     public function getConnectionsBySite(Site $site): array
     {
         $connections = [];
 
-        foreach ($site->getAllSolrConnectionConfigurations() as $languageId => $solrConnectionConfiguration) {
+        foreach ($site->getAllMeilisearchConnectionConfigurations() as $languageId => $solrConnectionConfiguration) {
             $connections[$languageId] = $this->getConnectionFromConfiguration($solrConnectionConfiguration);
         }
 
@@ -201,21 +201,21 @@ class ConnectionManager implements SingletonInterface
     }
 
     /**
-     * Builds and returns the exception instance of {@link NoSolrConnectionFoundException}
+     * Builds and returns the exception instance of {@link NoMeilisearchConnectionFoundException}
      */
-    protected function buildNoConnectionExceptionForPageAndLanguage(int $pageId, int $language): NoSolrConnectionFoundException
+    protected function buildNoConnectionExceptionForPageAndLanguage(int $pageId, int $language): NoMeilisearchConnectionFoundException
     {
-        $message = 'Could not find a Solr connection for page [' . $pageId . '] and language [' . $language . '].';
-        $noSolrConnectionException = $this->buildNoConnectionException($message);
+        $message = 'Could not find a Meilisearch connection for page [' . $pageId . '] and language [' . $language . '].';
+        $noMeilisearchConnectionException = $this->buildNoConnectionException($message);
 
-        $noSolrConnectionException->setLanguageId($language);
-        return $noSolrConnectionException;
+        $noMeilisearchConnectionException->setLanguageId($language);
+        return $noMeilisearchConnectionException;
     }
 
     /**
      * Throws a no connection exception when no site was passed.
      *
-     * @throws NoSolrConnectionFoundException
+     * @throws NoMeilisearchConnectionFoundException
      */
     protected function throwExceptionOnInvalidSite(?Site $site, string $message): void
     {
@@ -227,12 +227,12 @@ class ConnectionManager implements SingletonInterface
     }
 
     /**
-     * Build a NoSolrConnectionFoundException with the passed message.
+     * Build a NoMeilisearchConnectionFoundException with the passed message.
      */
-    protected function buildNoConnectionException(string $message): NoSolrConnectionFoundException
+    protected function buildNoConnectionException(string $message): NoMeilisearchConnectionFoundException
     {
         return GeneralUtility::makeInstance(
-            NoSolrConnectionFoundException::class,
+            NoMeilisearchConnectionFoundException::class,
             $message,
             1575396474
         );

@@ -15,23 +15,23 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace WapplerSystems\Meilisearch\System\Solr;
+namespace WapplerSystems\Meilisearch\System\Meilisearch;
 
 use RuntimeException;
 
 /**
  * This exception or a more specific one should be thrown when there is an error in the communication with the solr server.
  */
-class SolrCommunicationException extends RuntimeException
+class MeilisearchCommunicationException extends RuntimeException
 {
     protected ?ResponseAdapter $solrResponse = null;
 
-    public function getSolrResponse(): ?ResponseAdapter
+    public function getMeilisearchResponse(): ?ResponseAdapter
     {
         return $this->solrResponse;
     }
 
-    public function setSolrResponse(ResponseAdapter $solrResponse): void
+    public function setMeilisearchResponse(ResponseAdapter $solrResponse): void
     {
         $this->solrResponse = $solrResponse;
     }

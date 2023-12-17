@@ -19,7 +19,7 @@ namespace WapplerSystems\Meilisearch\Report;
 
 use WapplerSystems\Meilisearch\ConnectionManager;
 use WapplerSystems\Meilisearch\Domain\Site\Exception\UnexpectedTYPO3SiteInitializationException;
-use WapplerSystems\Meilisearch\System\Solr\SolrConnection;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchConnection;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Reports\Status;
@@ -30,7 +30,7 @@ use TYPO3\CMS\Reports\Status;
  *
  * @author Ingo Renner <ingo@typo3.org>
  */
-class SchemaStatus extends AbstractSolrStatus
+class SchemaStatus extends AbstractMeilisearchStatus
 {
     /**
      * The schema name property is constructed as follows:
@@ -45,7 +45,7 @@ class SchemaStatus extends AbstractSolrStatus
 
     /**
      * Compiles a collection of schema version checks against each configured
-     * Solr server. Only adds an entry if a schema other than the
+     * Meilisearch server. Only adds an entry if a schema other than the
      * recommended one was found.
      *
      * @throws UnexpectedTYPO3SiteInitializationException
@@ -60,8 +60,8 @@ class SchemaStatus extends AbstractSolrStatus
         if (empty($solrConnections)) {
             $reports[] = GeneralUtility::makeInstance(
                 Status::class,
-                'Apache Solr Version / Schema Version',
-                'No Solr connections configured',
+                'Apache Meilisearch Version / Schema Version',
+                'No Meilisearch connections configured',
                 '',
                 ContextualFeedbackSeverity::WARNING
             );
@@ -71,13 +71,13 @@ class SchemaStatus extends AbstractSolrStatus
 
         foreach ($solrConnections as $solrConnection) {
             $adminService = $solrConnection->getAdminService();
-            /** @var SolrConnection $solrConnection */
+            /** @var MeilisearchConnection $solrConnection */
             if (!$adminService->ping()) {
                 $url = $adminService->__toString();
                 $pingFailedMsg = 'Could not ping solr server, can not check version ' . $url;
                 $status = GeneralUtility::makeInstance(
                     Status::class,
-                    'Apache Solr Version',
+                    'Apache Meilisearch Version',
                     'Not accessible',
                     $pingFailedMsg,
                     ContextualFeedbackSeverity::ERROR
@@ -104,7 +104,7 @@ class SchemaStatus extends AbstractSolrStatus
         if (empty($reports)) {
             $reports[] = GeneralUtility::makeInstance(
                 Status::class,
-                'Apache Solr Version / Schema Version',
+                'Apache Meilisearch Version / Schema Version',
                 'OK',
                 '',
                 ContextualFeedbackSeverity::OK

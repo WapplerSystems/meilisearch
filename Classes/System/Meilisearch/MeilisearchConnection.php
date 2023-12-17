@@ -15,16 +15,16 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace WapplerSystems\Meilisearch\System\Solr;
+namespace WapplerSystems\Meilisearch\System\Meilisearch;
 
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
-use WapplerSystems\Meilisearch\System\Solr\Parser\SchemaParser;
-use WapplerSystems\Meilisearch\System\Solr\Parser\StopWordParser;
-use WapplerSystems\Meilisearch\System\Solr\Parser\SynonymParser;
-use WapplerSystems\Meilisearch\System\Solr\Service\SolrAdminService;
-use WapplerSystems\Meilisearch\System\Solr\Service\SolrReadService;
-use WapplerSystems\Meilisearch\System\Solr\Service\SolrWriteService;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
+use WapplerSystems\Meilisearch\System\Meilisearch\Parser\SchemaParser;
+use WapplerSystems\Meilisearch\System\Meilisearch\Parser\StopWordParser;
+use WapplerSystems\Meilisearch\System\Meilisearch\Parser\SynonymParser;
+use WapplerSystems\Meilisearch\System\Meilisearch\Service\MeilisearchAdminService;
+use WapplerSystems\Meilisearch\System\Meilisearch\Service\MeilisearchReadService;
+use WapplerSystems\Meilisearch\System\Meilisearch\Service\MeilisearchWriteService;
 use WapplerSystems\Meilisearch\Util;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -38,17 +38,17 @@ use Solarium\Core\Client\Endpoint;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Solr Service Access
+ * Meilisearch Service Access
  *
  * @author Ingo Renner <ingo@typo3.org>
  */
-class SolrConnection
+class MeilisearchConnection
 {
-    protected ?SolrAdminService $adminService = null;
+    protected ?MeilisearchAdminService $adminService = null;
 
-    protected ?SolrReadService $readService = null;
+    protected ?MeilisearchReadService $readService = null;
 
-    protected ?SolrWriteService $writeService = null;
+    protected ?MeilisearchWriteService $writeService = null;
 
     protected TypoScriptConfiguration $configuration;
 
@@ -63,7 +63,7 @@ class SolrConnection
      */
     protected array $endpoints = [];
 
-    protected ?SolrLogManager $logger = null;
+    protected ?MeilisearchLogManager $logger = null;
 
     /**
      * @var ClientInterface[]|Client[]
@@ -84,22 +84,22 @@ class SolrConnection
      * @throws NotFoundExceptionInterface
      */
     public function __construct(
-        Endpoint $readEndpoint,
-        Endpoint $writeEndpoint,
-        TypoScriptConfiguration $configuration = null,
-        SynonymParser $synonymParser = null,
-        StopWordParser $stopWordParser = null,
-        SchemaParser $schemaParser = null,
-        SolrLogManager $logManager = null,
-        ClientInterface $psr7Client = null,
-        RequestFactoryInterface $requestFactory = null,
-        StreamFactoryInterface $streamFactory = null,
+        Endpoint                 $readEndpoint,
+        Endpoint                 $writeEndpoint,
+        TypoScriptConfiguration  $configuration = null,
+        SynonymParser            $synonymParser = null,
+        StopWordParser           $stopWordParser = null,
+        SchemaParser             $schemaParser = null,
+        MeilisearchLogManager    $logManager = null,
+        ClientInterface          $psr7Client = null,
+        RequestFactoryInterface  $requestFactory = null,
+        StreamFactoryInterface   $streamFactory = null,
         EventDispatcherInterface $eventDispatcher = null,
     ) {
         $this->endpoints['read'] = $readEndpoint;
         $this->endpoints['write'] = $writeEndpoint;
         $this->endpoints['admin'] = $writeEndpoint;
-        $this->configuration = $configuration ?? Util::getSolrConfiguration();
+        $this->configuration = $configuration ?? Util::getMeilisearchConfiguration();
         $this->synonymParser = $synonymParser;
         $this->stopWordParser = $stopWordParser;
         $this->schemaParser = $schemaParser;
@@ -119,9 +119,9 @@ class SolrConnection
     }
 
     /**
-     * Returns Solr admin service
+     * Returns Meilisearch admin service
      */
-    public function getAdminService(): SolrAdminService
+    public function getAdminService(): MeilisearchAdminService
     {
         if ($this->adminService === null) {
             $this->adminService = $this->buildAdminService();
@@ -131,15 +131,15 @@ class SolrConnection
     }
 
     /**
-     * Builds and returns Solr admin service
+     * Builds and returns Meilisearch admin service
      */
-    protected function buildAdminService(): SolrAdminService
+    protected function buildAdminService(): MeilisearchAdminService
     {
         $endpointKey = 'admin';
         $client = $this->getClient($endpointKey);
         $this->initializeClient($client, $endpointKey);
         return GeneralUtility::makeInstance(
-            SolrAdminService::class,
+            MeilisearchAdminService::class,
             $client,
             $this->configuration,
             $this->logger,
@@ -150,9 +150,9 @@ class SolrConnection
     }
 
     /**
-     * Returns Solr read service
+     * Returns Meilisearch read service
      */
-    public function getReadService(): SolrReadService
+    public function getReadService(): MeilisearchReadService
     {
         if ($this->readService === null) {
             $this->readService = $this->buildReadService();
@@ -162,20 +162,20 @@ class SolrConnection
     }
 
     /**
-     * Builds and returns Solr read service
+     * Builds and returns Meilisearch read service
      */
-    protected function buildReadService(): SolrReadService
+    protected function buildReadService(): MeilisearchReadService
     {
         $endpointKey = 'read';
         $client = $this->getClient($endpointKey);
         $this->initializeClient($client, $endpointKey);
-        return GeneralUtility::makeInstance(SolrReadService::class, $client);
+        return GeneralUtility::makeInstance(MeilisearchReadService::class, $client);
     }
 
     /**
-     * Returns Solr write service
+     * Returns Meilisearch write service
      */
-    public function getWriteService(): SolrWriteService
+    public function getWriteService(): MeilisearchWriteService
     {
         if ($this->writeService === null) {
             $this->writeService = $this->buildWriteService();
@@ -185,14 +185,14 @@ class SolrConnection
     }
 
     /**
-     * Builds and returns the Solr write service
+     * Builds and returns the Meilisearch write service
      */
-    protected function buildWriteService(): SolrWriteService
+    protected function buildWriteService(): MeilisearchWriteService
     {
         $endpointKey = 'write';
         $client = $this->getClient($endpointKey);
         $this->initializeClient($client, $endpointKey);
-        return GeneralUtility::makeInstance(SolrWriteService::class, $client);
+        return GeneralUtility::makeInstance(MeilisearchWriteService::class, $client);
     }
 
     /**
@@ -212,7 +212,7 @@ class SolrConnection
     }
 
     /**
-     * Sets auth credentials on all Solr connection endpoints.
+     * Sets auth credentials on all Meilisearch connection endpoints.
      */
     protected function setAuthenticationOnAllEndpoints(Client $client, string $username, string $password): void
     {
@@ -222,7 +222,7 @@ class SolrConnection
     }
 
     /**
-     * Returns Solr client
+     * Returns Meilisearch client
      */
     protected function getClient(string $endpointKey): Client
     {

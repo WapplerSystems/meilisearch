@@ -25,7 +25,7 @@ use TYPO3Fluid\Fluid\Core\Variables\VariableProviderInterface;
  * We added searchResultsSet and TypoScriptConfiguration to variables which would be
  * transferred to each render/section/layout
  */
-class SolrVariableProvider extends StandardVariableProvider
+class MeilisearchVariableProvider extends StandardVariableProvider
 {
     /**
      * @inheritDoc

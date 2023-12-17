@@ -23,13 +23,13 @@ namespace WapplerSystems\Meilisearch\FieldProcessor;
 abstract class AbstractHierarchyProcessor
 {
     /**
-     * Builds a Solr hierarchy from an array of uids that make up a rootline.
+     * Builds a Meilisearch hierarchy from an array of uids that make up a rootline.
      *
      * @param array $idRootline Array of Ids representing a rootline
-     * @return array Solr hierarchy
+     * @return array Meilisearch hierarchy
      * @see http://wiki.apache.org/solr/HierarchicalFaceting
      */
-    protected function buildSolrHierarchyFromIdRootline(array $idRootline): array
+    protected function buildMeilisearchHierarchyFromIdRootline(array $idRootline): array
     {
         $hierarchy = [];
 

@@ -22,7 +22,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
 /**
  * Condition for checking if type is a string.
  *
- * @todo: Find TYPO3/Fluid core way for that trouble and reuse it on {@link \ApacheSolrForTypo3\Tika\ViewHelpers\Backend\IsStringViewHelper}
+ * @todo: Find TYPO3/Fluid core way for that trouble and reuse it on {@link \ApacheMeilisearchForTypo3\Tika\ViewHelpers\Backend\IsStringViewHelper}
  */
 class IsStringViewHelper extends AbstractConditionViewHelper
 {

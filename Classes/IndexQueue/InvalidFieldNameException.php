@@ -18,7 +18,7 @@ namespace WapplerSystems\Meilisearch\IndexQueue;
 use RuntimeException;
 
 /**
- * Exception that is thrown when trying to add a field to a Solr document using
+ * Exception that is thrown when trying to add a field to a Meilisearch document using
  * a reserved name.
  *
  * @author Ingo Renner <ingo@typo3.org>

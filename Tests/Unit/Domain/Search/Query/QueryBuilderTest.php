@@ -35,7 +35,7 @@ use WapplerSystems\Meilisearch\Domain\Search\Query\QueryBuilder;
 use WapplerSystems\Meilisearch\Domain\Search\Query\SearchQuery;
 use WapplerSystems\Meilisearch\Domain\Site\SiteHashService;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Solarium\QueryType\Select\RequestBuilder;
@@ -48,14 +48,14 @@ use function str_starts_with;
 class QueryBuilderTest extends SetUpUnitTestCase
 {
     protected TypoScriptConfiguration|MockObject $configurationMock;
-    protected SolrLogManager|MockObject $loggerMock;
+    protected MeilisearchLogManager|MockObject $loggerMock;
     protected SiteHashService|MockObject $siteHashServiceMock;
     protected QueryBuilder|MockObject $builder;
 
     protected function setUp(): void
     {
         $this->configurationMock = $this->createMock(TypoScriptConfiguration::class);
-        $this->loggerMock = $this->createMock(SolrLogManager::class);
+        $this->loggerMock = $this->createMock(MeilisearchLogManager::class);
         $this->siteHashServiceMock = $this->createMock(SiteHashService::class);
         $this->builder = new QueryBuilder($this->configurationMock, $this->loggerMock, $this->siteHashServiceMock);
         parent::setUp();

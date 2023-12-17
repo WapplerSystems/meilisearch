@@ -17,13 +17,13 @@ declare(strict_types=1);
 
 namespace WapplerSystems\Meilisearch\FieldProcessor;
 
-use WapplerSystems\Meilisearch\Exception as ExtSolrException;
-use WapplerSystems\Meilisearch\System\Solr\Document\Document;
+use WapplerSystems\Meilisearch\Exception as ExtMeilisearchException;
+use WapplerSystems\Meilisearch\System\Meilisearch\Document\Document;
 use Doctrine\DBAL\Exception as DBALException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Service class that modifies fields in an Apache Solr Document, used for
+ * Service class that modifies fields in an Apache Meilisearch Document, used for
  * common field processing during indexing or resolving
  *
  * @author Daniel Poetzinger <poetzinger@aoemedia.de>
@@ -37,7 +37,7 @@ class Service
      * @param Document[] $documents
      *
      * @throws DBALException
-     * @throws ExtSolrException
+     * @throws ExtMeilisearchException
      */
     public function processDocuments(array $documents, array $processingConfiguration): void
     {
@@ -50,7 +50,7 @@ class Service
      * modifies a document according to the given configuration
      *
      * @throws DBALException
-     * @throws ExtSolrException
+     * @throws ExtMeilisearchException
      */
     public function processDocument(Document $document, array $processingConfiguration): void
     {
@@ -101,10 +101,10 @@ class Service
                             if ($customFieldProcessor instanceof FieldProcessor) {
                                 $fieldValue = $customFieldProcessor->process($fieldValue);
                             } else {
-                                throw new ExtSolrException('A FieldProcessor must implement the FieldProcessor interface', 1635082295);
+                                throw new ExtMeilisearchException('A FieldProcessor must implement the FieldProcessor interface', 1635082295);
                             }
                         } else {
-                            throw new ExtSolrException(sprintf('FieldProcessor %s is not implemented', $instruction), 1635082296);
+                            throw new ExtMeilisearchException(sprintf('FieldProcessor %s is not implemented', $instruction), 1635082296);
                         }
                 }
 

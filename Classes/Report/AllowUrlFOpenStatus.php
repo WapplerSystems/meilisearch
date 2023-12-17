@@ -27,7 +27,7 @@ use TYPO3\CMS\Reports\Status;
  *
  * @author Ingo Renner <ingo@typo3.org>
  */
-class AllowUrlFOpenStatus extends AbstractSolrStatus
+class AllowUrlFOpenStatus extends AbstractMeilisearchStatus
 {
     /**
      * Checks whether allow_url_fopen is enabled.
@@ -43,7 +43,7 @@ class AllowUrlFOpenStatus extends AbstractSolrStatus
             $severity = ContextualFeedbackSeverity::ERROR;
             $value = 'Off';
             $message = 'allow_url_fopen must be enabled in php.ini to allow
-				communication between TYPO3 and the Apache Solr server.
+				communication between TYPO3 and the Apache Meilisearch server.
 				Indexing pages using the Index Queue will also not work with
 				this setting disabled.';
         }

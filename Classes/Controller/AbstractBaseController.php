@@ -18,11 +18,11 @@ namespace WapplerSystems\Meilisearch\Controller;
 use WapplerSystems\Meilisearch\ConnectionManager;
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSetService;
 use WapplerSystems\Meilisearch\Domain\Search\SearchRequestBuilder;
-use WapplerSystems\Meilisearch\NoSolrConnectionFoundException;
+use WapplerSystems\Meilisearch\NoMeilisearchConnectionFoundException;
 use WapplerSystems\Meilisearch\Search;
-use WapplerSystems\Meilisearch\System\Configuration\ConfigurationManager as SolrConfigurationManager;
+use WapplerSystems\Meilisearch\System\Configuration\ConfigurationManager as MeilisearchConfigurationManager;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\System\Service\ConfigurationService;
 use TYPO3\CMS\Core\TypoScript\TypoScriptService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -41,18 +41,18 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 abstract class AbstractBaseController extends ActionController
 {
     /**
-     * The HTTP message for 503 error from Apache Solr server.
+     * The HTTP message for 503 error from Apache Meilisearch server.
      */
-    protected const STATUS_503_MESSAGE = 'Apache Solr Server is not available.';
+    protected const STATUS_503_MESSAGE = 'Apache Meilisearch Server is not available.';
 
     private ?ContentObjectRenderer $contentObjectRenderer = null;
 
     protected ?TypoScriptFrontendController $typoScriptFrontendController = null;
 
-    private ?SolrConfigurationManager $solrConfigurationManager = null;
+    private ?MeilisearchConfigurationManager $solrConfigurationManager = null;
 
     /**
-     * The configuration is private if you need it please get it from the SolrVariableProvider of RenderingContext.
+     * The configuration is private if you need it please get it from the MeilisearchVariableProvider of RenderingContext.
      */
     protected ?TypoScriptConfiguration $typoScriptConfiguration = null;
 
@@ -80,7 +80,7 @@ abstract class AbstractBaseController extends ActionController
         return $this->contentObjectRenderer;
     }
 
-    public function injectSolrConfigurationManager(SolrConfigurationManager $configurationManager): void
+    public function injectMeilisearchConfigurationManager(MeilisearchConfigurationManager $configurationManager): void
     {
         $this->solrConfigurationManager = $configurationManager;
     }
@@ -113,7 +113,7 @@ abstract class AbstractBaseController extends ActionController
 
         $this->typoScriptConfiguration = $this->solrConfigurationManager->getTypoScriptConfiguration();
         if ($pluginSettings !== []) {
-            $this->typoScriptConfiguration->mergeSolrConfiguration(
+            $this->typoScriptConfiguration->mergeMeilisearchConfiguration(
                 $typoScriptService->convertPlainArrayToTypoScriptArray($pluginSettings),
                 true,
                 false
@@ -151,7 +151,7 @@ abstract class AbstractBaseController extends ActionController
     }
 
     /**
-     * Initialize the Solr connection and
+     * Initialize the Meilisearch connection and
      * test the connection through a ping
      */
     protected function initializeSearch(): void
@@ -169,8 +169,8 @@ abstract class AbstractBaseController extends ActionController
                 $this->typoScriptConfiguration,
                 $search
             );
-        } catch (NoSolrConnectionFoundException) {
-            $this->logSolrUnavailable();
+        } catch (NoMeilisearchConnectionFoundException) {
+            $this->logMeilisearchUnavailable();
         }
     }
 
@@ -186,11 +186,11 @@ abstract class AbstractBaseController extends ActionController
     /**
      * Called when the solr server is unavailable.
      */
-    protected function logSolrUnavailable(): void
+    protected function logMeilisearchUnavailable(): void
     {
         if ($this->typoScriptConfiguration->getLoggingExceptions()) {
-            $logger = GeneralUtility::makeInstance(SolrLogManager::class, __CLASS__);
-            $logger->error('Solr server is not available');
+            $logger = GeneralUtility::makeInstance(MeilisearchLogManager::class, __CLASS__);
+            $logger->error('Meilisearch server is not available');
         }
     }
 }

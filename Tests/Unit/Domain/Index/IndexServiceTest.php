@@ -22,7 +22,7 @@ use WapplerSystems\Meilisearch\IndexQueue\Indexer;
 use WapplerSystems\Meilisearch\IndexQueue\Item;
 use WapplerSystems\Meilisearch\IndexQueue\Queue;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use Exception;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -36,7 +36,7 @@ class IndexServiceTest extends SetUpUnitTestCase
     protected Site|MockObject $siteMock;
     protected Queue|MockObject $queueMock;
     protected EventDispatcher|MockObject $eventDispatcherMock;
-    protected SolrLogManager|MockObject $logManagerMock;
+    protected MeilisearchLogManager|MockObject $logManagerMock;
 
     protected function setUp(): void
     {
@@ -48,7 +48,7 @@ class IndexServiceTest extends SetUpUnitTestCase
             ->getMock();
         $this->eventDispatcherMock->method('dispatch')
             ->willReturnArgument(0);
-        $this->logManagerMock = $this->createMock(SolrLogManager::class);
+        $this->logManagerMock = $this->createMock(MeilisearchLogManager::class);
         parent::setUp();
     }
 

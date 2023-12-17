@@ -19,7 +19,7 @@ namespace WapplerSystems\Meilisearch\IndexQueue\FrontendHelper;
 
 use WapplerSystems\Meilisearch\IndexQueue\PageIndexerRequest;
 use WapplerSystems\Meilisearch\IndexQueue\PageIndexerResponse;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Core\Domain\Repository\PageRepositoryGetPageHookInterface;
 use TYPO3\CMS\Core\Domain\Repository\PageRepositoryGetPageOverlayHookInterface;
@@ -61,7 +61,7 @@ class UserGroupDetector implements
      */
     protected array $frontendGroups = [];
 
-    protected ?SolrLogManager $logger = null;
+    protected ?MeilisearchLogManager $logger = null;
     // activation
 
     /**
@@ -77,7 +77,7 @@ class UserGroupDetector implements
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_page.php']['getPageOverlay'][__CLASS__] = UserGroupDetector::class;
 
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_content.php']['postInit'][__CLASS__] = UserGroupDetector::class;
-        $this->logger = GeneralUtility::makeInstance(SolrLogManager::class, __CLASS__);
+        $this->logger = GeneralUtility::makeInstance(MeilisearchLogManager::class, __CLASS__);
     }
 
     /**

@@ -15,7 +15,7 @@
 
 namespace WapplerSystems\Meilisearch;
 
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use DOMDocument;
 use DOMXPath;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -29,7 +29,7 @@ use function libxml_use_internal_errors;
  */
 class Typo3PageContentExtractor extends HtmlContentExtractor
 {
-    protected ?SolrLogManager $logger;
+    protected ?MeilisearchLogManager $logger;
 
     /**
      * Shortcut method to retrieve the raw content marked for indexing.
@@ -59,7 +59,7 @@ class Typo3PageContentExtractor extends HtmlContentExtractor
 
         $indexableContent = $this->excludeContentByClass($indexableContent);
         if (empty($indexableContent) && $this->getConfiguration()->getLoggingIndexingMissingTypo3SearchMarkers()) {
-            $this->logger = GeneralUtility::makeInstance(SolrLogManager::class, __CLASS__);
+            $this->logger = GeneralUtility::makeInstance(MeilisearchLogManager::class, __CLASS__);
             $this->logger->warning('No TYPO3SEARCH markers found.');
         }
 
@@ -112,7 +112,7 @@ class Typo3PageContentExtractor extends HtmlContentExtractor
     /**
      * Returns the cleaned indexable content from the page's HTML markup.
      *
-     * The content is cleaned from HTML tags and control chars Solr could
+     * The content is cleaned from HTML tags and control chars Meilisearch could
      * stumble on.
      *
      * @return string Indexable, cleaned content ready for indexing.

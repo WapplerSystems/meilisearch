@@ -94,13 +94,13 @@ abstract class AbstractFacetParser implements FacetParserInterface
     }
 
     /**
-     * Returns merged facet value from search request and Apache Solr response
+     * Returns merged facet value from search request and Apache Meilisearch response
      */
-    protected function getMergedFacetValueFromSearchRequestAndSolrResponse(
-        array $facetValuesFromSolrResponse,
+    protected function getMergedFacetValueFromSearchRequestAndMeilisearchResponse(
+        array $facetValuesFromMeilisearchResponse,
         array $facetValuesFromSearchRequest,
     ): array {
-        $facetValueItemsToCreate = $facetValuesFromSolrResponse;
+        $facetValueItemsToCreate = $facetValuesFromMeilisearchResponse;
 
         foreach ($facetValuesFromSearchRequest as $valueFromRequest) {
             // if we have options in the request that have not been in the response we add them with a count of 0

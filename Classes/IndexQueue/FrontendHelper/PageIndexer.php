@@ -17,7 +17,7 @@ namespace WapplerSystems\Meilisearch\IndexQueue\FrontendHelper;
 
 use WapplerSystems\Meilisearch\Access\Rootline;
 use WapplerSystems\Meilisearch\ConnectionManager;
-use WapplerSystems\Meilisearch\Domain\Search\ApacheSolrDocument\Builder;
+use WapplerSystems\Meilisearch\Domain\Search\ApacheMeilisearchDocument\Builder;
 use WapplerSystems\Meilisearch\Event\Indexing\AfterPageDocumentIsCreatedForIndexingEvent;
 use WapplerSystems\Meilisearch\Event\Indexing\BeforeDocumentsAreIndexedEvent;
 use WapplerSystems\Meilisearch\Event\Indexing\BeforePageDocumentIsProcessedForIndexingEvent;
@@ -29,9 +29,9 @@ use WapplerSystems\Meilisearch\IndexQueue\PageIndexerResponse;
 use WapplerSystems\Meilisearch\IndexQueue\Queue;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 use WapplerSystems\Meilisearch\System\Logging\DebugWriter;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
-use WapplerSystems\Meilisearch\System\Solr\Document\Document;
-use WapplerSystems\Meilisearch\System\Solr\SolrConnection;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
+use WapplerSystems\Meilisearch\System\Meilisearch\Document\Document;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchConnection;
 use WapplerSystems\Meilisearch\Util;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LogLevel;
@@ -72,18 +72,18 @@ class PageIndexer implements FrontendHelper, SingletonInterface
     protected array $responseData = [];
 
     /**
-     * Solr server connection.
+     * Meilisearch server connection.
      */
-    protected ?SolrConnection $solrConnection = null;
+    protected ?MeilisearchConnection $solrConnection = null;
 
     /**
-     * Documents that have been sent to Solr
+     * Documents that have been sent to Meilisearch
      */
-    protected array $documentsSentToSolr = [];
+    protected array $documentsSentToMeilisearch = [];
 
     protected ?TypoScriptConfiguration $configuration = null;
 
-    protected ?SolrLogManager $logger = null;
+    protected ?MeilisearchLogManager $logger = null;
 
     /**
      * Activates a frontend helper by registering for hooks and other
@@ -93,7 +93,7 @@ class PageIndexer implements FrontendHelper, SingletonInterface
      */
     public function activate(): void
     {
-        $this->logger = GeneralUtility::makeInstance(SolrLogManager::class, __CLASS__);
+        $this->logger = GeneralUtility::makeInstance(MeilisearchLogManager::class, __CLASS__);
         $this->activated = true;
     }
 
@@ -196,7 +196,7 @@ class PageIndexer implements FrontendHelper, SingletonInterface
      */
     protected function index(Item $indexQueueItem, TypoScriptFrontendController $tsfe): void
     {
-        $this->solrConnection = $this->getSolrConnection($indexQueueItem, $tsfe->getLanguage(), $this->configuration->getLoggingExceptions());
+        $this->solrConnection = $this->getMeilisearchConnection($indexQueueItem, $tsfe->getLanguage(), $this->configuration->getLoggingExceptions());
 
         $document = $this->getPageDocument($tsfe, $this->generatePageUrl($tsfe), $this->getAccessRootline(), $tsfe->MP);
         $document = $this->substitutePageDocument($document, $tsfe->page, $indexQueueItem, $tsfe);
@@ -209,8 +209,8 @@ class PageIndexer implements FrontendHelper, SingletonInterface
             'meilisearch' => $this->solrConnection->getEndpoint('write')->getCoreBaseUri(),
         ];
 
-        foreach ($this->documentsSentToSolr as $document) {
-            $this->responseData['documentsSentToSolr'][] = (array)$document;
+        foreach ($this->documentsSentToMeilisearch as $document) {
+            $this->responseData['documentsSentToMeilisearch'][] = (array)$document;
         }
     }
 
@@ -218,14 +218,14 @@ class PageIndexer implements FrontendHelper, SingletonInterface
      * Gets the solr connection to use for indexing the page based on the
      * Index Queue item's properties.
      */
-    protected function getSolrConnection(Item $indexQueueItem, SiteLanguage $siteLanguage, bool $logExceptions): SolrConnection
+    protected function getMeilisearchConnection(Item $indexQueueItem, SiteLanguage $siteLanguage, bool $logExceptions): MeilisearchConnection
     {
         $connectionManager = GeneralUtility::makeInstance(ConnectionManager::class);
         try {
             $solrConnection = $connectionManager->getConnectionByRootPageId($indexQueueItem->getRootPageUid(), $siteLanguage->getLanguageId());
             if (!$solrConnection->getWriteService()->ping()) {
                 throw new Exception(
-                    'Could not connect to Solr server.',
+                    'Could not connect to Meilisearch server.',
                     1323946472
                 );
             }
@@ -262,7 +262,7 @@ class PageIndexer implements FrontendHelper, SingletonInterface
      * created by this indexer.
      *
      * @param Document $pageDocument The page document created by this indexer.
-     * @return Document An Apache Solr document representing the currently indexed page
+     * @return Document An Apache Meilisearch document representing the currently indexed page
      */
     protected function substitutePageDocument(
         Document $pageDocument,
@@ -276,7 +276,7 @@ class PageIndexer implements FrontendHelper, SingletonInterface
     }
 
     /**
-     * Builds the Solr document for the current page.
+     * Builds the Meilisearch document for the current page.
      *
      * @return Document A document representing the page
      */
@@ -306,8 +306,8 @@ class PageIndexer implements FrontendHelper, SingletonInterface
         $event = $this->getEventDispatcher()->dispatch($event);
         $documents = $event->getDocuments();
 
-        $pageIndexed = $this->addDocumentsToSolrIndex($documents);
-        $this->documentsSentToSolr = $documents;
+        $pageIndexed = $this->addDocumentsToMeilisearchIndex($documents);
+        $this->documentsSentToMeilisearch = $documents;
 
         return $pageIndexed;
     }
@@ -328,12 +328,12 @@ class PageIndexer implements FrontendHelper, SingletonInterface
     }
 
     /**
-     * Adds the collected documents to the Solr index.
+     * Adds the collected documents to the Meilisearch index.
      *
      * @param Document[] $documents An array of Document objects.
      * @return bool TRUE if documents were added successfully, FALSE otherwise
      */
-    protected function addDocumentsToSolrIndex(array $documents): bool
+    protected function addDocumentsToMeilisearchIndex(array $documents): bool
     {
         $documentsAdded = false;
 
@@ -349,8 +349,8 @@ class PageIndexer implements FrontendHelper, SingletonInterface
             foreach ($documentChunks as $documentChunk) {
                 $response = $this->solrConnection->getWriteService()->addDocuments($documentChunk);
                 if ($response->getHttpStatus() != 200) {
-                    $this->logger->error('Solr could not index page.', [$response->getRawResponse()]);
-                    throw new \RuntimeException('Solr Request failed.', 1331834983);
+                    $this->logger->error('Meilisearch could not index page.', [$response->getRawResponse()]);
+                    throw new \RuntimeException('Meilisearch Request failed.', 1331834983);
                 }
             }
 
@@ -369,13 +369,13 @@ class PageIndexer implements FrontendHelper, SingletonInterface
     /**
      * Initialize PageIndexer
      *
-     * As the Solr configuration initialization might affect the request
+     * As the Meilisearch configuration initialization might affect the request
      * we cannot initialize the configuration directly on activation
      */
     protected function setupConfiguration(): void
     {
-        $this->logger = new SolrLogManager(__CLASS__, GeneralUtility::makeInstance(DebugWriter::class));
-        $this->configuration = Util::getSolrConfiguration();
+        $this->logger = new MeilisearchLogManager(__CLASS__, GeneralUtility::makeInstance(DebugWriter::class));
+        $this->configuration = Util::getMeilisearchConfiguration();
     }
 
     protected function getEventDispatcher(): EventDispatcherInterface

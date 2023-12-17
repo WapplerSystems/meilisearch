@@ -21,7 +21,7 @@ use WapplerSystems\Meilisearch\Exception\InvalidArgumentException;
 use WapplerSystems\Meilisearch\GarbageCollectorPostProcessor;
 use WapplerSystems\Meilisearch\IndexQueue\Queue;
 use WapplerSystems\Meilisearch\IndexQueue\QueueInterface;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use Doctrine\DBAL\Exception as DBALException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use UnexpectedValueException;
@@ -64,7 +64,7 @@ abstract class AbstractStrategy
      *
      * @throws DBALException
      */
-    protected function deleteInSolrAndRemoveFromIndexQueue(string $table, int $uid): void
+    protected function deleteInMeilisearchAndRemoveFromIndexQueue(string $table, int $uid): void
     {
         $this->deleteIndexDocuments($table, $uid);
         $this->queue->deleteItem($table, $uid);
@@ -76,7 +76,7 @@ abstract class AbstractStrategy
      * @throws DBALException
      * @throws UnexpectedTYPO3SiteInitializationException
      */
-    protected function deleteInSolrAndUpdateIndexQueue(string $table, int $uid): void
+    protected function deleteInMeilisearchAndUpdateIndexQueue(string $table, int $uid): void
     {
         $this->deleteIndexDocuments($table, $uid);
         $this->queue->updateItem($table, $uid);
@@ -104,21 +104,21 @@ abstract class AbstractStrategy
                 continue;
             }
 
-            $enableCommitsSetting = $site->getSolrConfiguration()->getEnableCommits();
+            $enableCommitsSetting = $site->getMeilisearchConfiguration()->getEnableCommits();
             $siteHash = $site->getSiteHash();
             // a site can have multiple connections (cores / languages)
             $solrConnections = $this->connectionManager->getConnectionsBySite($site);
             if ($language > 0 && isset($solrConnections[$language])) {
                 $solrConnections = [$language => $solrConnections[$language]];
             }
-            $this->deleteRecordInAllSolrConnections($table, $uid, $solrConnections, $siteHash, $enableCommitsSetting);
+            $this->deleteRecordInAllMeilisearchConnections($table, $uid, $solrConnections, $siteHash, $enableCommitsSetting);
         }
     }
 
     /**
      * Deletes the record in all solr connections from that site.
      */
-    protected function deleteRecordInAllSolrConnections(
+    protected function deleteRecordInAllMeilisearchConnections(
         string $table,
         int $uid,
         array $solrConnections,
@@ -130,7 +130,7 @@ abstract class AbstractStrategy
             $response = $solr->getWriteService()->deleteByQuery($query);
 
             if ($response->getHttpStatus() !== 200) {
-                $logger = GeneralUtility::makeInstance(SolrLogManager::class, __CLASS__);
+                $logger = GeneralUtility::makeInstance(MeilisearchLogManager::class, __CLASS__);
                 $logger->error(
                     'Couldn\'t delete index document',
                     [

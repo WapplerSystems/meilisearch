@@ -13,17 +13,17 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace WapplerSystems\Meilisearch\Domain\Search\ApacheSolrDocument;
+namespace WapplerSystems\Meilisearch\Domain\Search\ApacheMeilisearchDocument;
 
 use WapplerSystems\Meilisearch\ConnectionManager;
 use WapplerSystems\Meilisearch\Domain\Search\Query\QueryBuilder;
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Result\Parser\DocumentEscapeService;
-use WapplerSystems\Meilisearch\NoSolrConnectionFoundException;
+use WapplerSystems\Meilisearch\NoMeilisearchConnectionFoundException;
 use WapplerSystems\Meilisearch\Search;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
-use WapplerSystems\Meilisearch\System\Solr\Document\Document;
-use WapplerSystems\Meilisearch\System\Solr\SolrCommunicationException;
-use WapplerSystems\Meilisearch\System\Solr\SolrConnection;
+use WapplerSystems\Meilisearch\System\Meilisearch\Document\Document;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchCommunicationException;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchConnection;
 use WapplerSystems\Meilisearch\Util;
 use Doctrine\DBAL\Exception as DBALException;
 use TYPO3\CMS\Core\SingletonInterface;
@@ -52,7 +52,7 @@ class Repository implements SingletonInterface
         TypoScriptConfiguration $typoScriptConfiguration = null,
         QueryBuilder $queryBuilder = null
     ) {
-        $this->typoScriptConfiguration = $typoScriptConfiguration ?? Util::getSolrConfiguration();
+        $this->typoScriptConfiguration = $typoScriptConfiguration ?? Util::getMeilisearchConfiguration();
         $this->documentEscapeService = $documentEscapeService ?? GeneralUtility::makeInstance(DocumentEscapeService::class, $typoScriptConfiguration);
         $this->queryBuilder = $queryBuilder ?? GeneralUtility::makeInstance(QueryBuilder::class, $this->typoScriptConfiguration);
     }
@@ -69,7 +69,7 @@ class Repository implements SingletonInterface
     }
 
     /**
-     * Returns all found \WapplerSystems\Meilisearch\System\Solr\Document\Document[] by given page id and language id.
+     * Returns all found \WapplerSystems\Meilisearch\System\Meilisearch\Document\Document[] by given page id and language id.
      * Returns empty array if nothing found, e.g. if no language or no page(or no index for page) is present.
      *
      * @return Document[]
@@ -82,7 +82,7 @@ class Repository implements SingletonInterface
             $this->initializeSearch($pageId, $languageId);
             $pageQuery = $this->queryBuilder->buildPageQuery($pageId);
             $response = $this->search->search($pageQuery, 0, 10000);
-        } catch (NoSolrConnectionFoundException|SolrCommunicationException) {
+        } catch (NoMeilisearchConnectionFoundException|MeilisearchCommunicationException) {
             return [];
         }
         $data = $response->getParsedData();
@@ -105,7 +105,7 @@ class Repository implements SingletonInterface
             $this->initializeSearch($pageId, $languageId);
             $recordQuery = $this->queryBuilder->buildRecordQuery($type, $uid, $pageId);
             $response = $this->search->search($recordQuery, 0, 10000);
-        } catch (NoSolrConnectionFoundException|SolrCommunicationException) {
+        } catch (NoMeilisearchConnectionFoundException|MeilisearchCommunicationException) {
             return [];
         }
         $data = $response->getParsedData();
@@ -117,7 +117,7 @@ class Repository implements SingletonInterface
      * Initializes Search for given language
      *
      * @throws DBALException
-     * @throws NoSolrConnectionFoundException
+     * @throws NoMeilisearchConnectionFoundException
      */
     protected function initializeSearch(int $pageId, int $languageId = 0): void
     {
@@ -130,7 +130,7 @@ class Repository implements SingletonInterface
     /**
      * Retrieves an instance of the Search object.
      */
-    protected function getSearch(SolrConnection $solrConnection): Search
+    protected function getSearch(MeilisearchConnection $solrConnection): Search
     {
         return  GeneralUtility::makeInstance(Search::class, $solrConnection);
     }

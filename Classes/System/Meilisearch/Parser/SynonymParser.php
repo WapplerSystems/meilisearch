@@ -13,7 +13,7 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace WapplerSystems\Meilisearch\System\Solr\Parser;
+namespace WapplerSystems\Meilisearch\System\Meilisearch\Parser;
 
 /**
  * Class to parse the synonyms from a solr response.

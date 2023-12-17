@@ -19,7 +19,7 @@ namespace WapplerSystems\Meilisearch\Middleware;
 
 use WapplerSystems\Meilisearch\IndexQueue\PageIndexerRequest;
 use WapplerSystems\Meilisearch\IndexQueue\PageIndexerRequestHandler;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -44,7 +44,7 @@ class PageIndexerInitialization implements MiddlewareInterface
             $jsonEncodedParameters = $request->getHeader(PageIndexerRequest::SOLR_INDEX_HEADER)[0];
             $pageIndexerRequest = GeneralUtility::makeInstance(PageIndexerRequest::class, $jsonEncodedParameters);
             if (!$pageIndexerRequest->isAuthenticated()) {
-                $logger = GeneralUtility::makeInstance(SolrLogManager::class, self::class);
+                $logger = GeneralUtility::makeInstance(MeilisearchLogManager::class, self::class);
                 $logger->error(
                     'Invalid Index Queue Frontend Request detected!',
                     [

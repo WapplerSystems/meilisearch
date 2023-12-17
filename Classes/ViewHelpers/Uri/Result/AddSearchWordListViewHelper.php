@@ -18,7 +18,7 @@ declare(strict_types=1);
 namespace WapplerSystems\Meilisearch\ViewHelpers\Uri\Result;
 
 use WapplerSystems\Meilisearch\Domain\Search\Highlight\SiteHighlighterUrlModifier;
-use WapplerSystems\Meilisearch\ViewHelpers\AbstractSolrFrontendViewHelper;
+use WapplerSystems\Meilisearch\ViewHelpers\AbstractMeilisearchFrontendViewHelper;
 use Closure;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
@@ -29,7 +29,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
  *
  * @author Timo Hund <timo.hund@dkd.de>
  */
-class AddSearchWordListViewHelper extends AbstractSolrFrontendViewHelper
+class AddSearchWordListViewHelper extends AbstractMeilisearchFrontendViewHelper
 {
     use CompileWithRenderStatic;
 

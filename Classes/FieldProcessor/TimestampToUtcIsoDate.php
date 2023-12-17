@@ -21,7 +21,7 @@ use WapplerSystems\Meilisearch\System\DateTime\FormatService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * A field processor that converts timestamps to ISO dates as needed by Solr
+ * A field processor that converts timestamps to ISO dates as needed by Meilisearch
  *
  * @author Andreas Allacher <andreas.allacher@cyberhouse.at>
  * @copyright (c) 2009-2015 Andreas Allacher <andreas.allacher@cyberhouse.at>
@@ -29,7 +29,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class TimestampToUtcIsoDate implements FieldProcessor
 {
     /**
-     * Expects a timestamp and converts it to an ISO 8601 date in UTC as needed by Solr.
+     * Expects a timestamp and converts it to an ISO 8601 date in UTC as needed by Meilisearch.
      *
      * Example date output format: 1995-12-31T23:59:59Z
      * The trailing "Z" designates UTC time and is mandatory

@@ -22,7 +22,7 @@ use WapplerSystems\Meilisearch\Event\Indexing\AfterPageDocumentIsCreatedForIndex
 use WapplerSystems\Meilisearch\IndexQueue\AbstractIndexer;
 use WapplerSystems\Meilisearch\IndexQueue\InvalidFieldNameException;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
-use WapplerSystems\Meilisearch\System\Solr\Document\Document;
+use WapplerSystems\Meilisearch\System\Meilisearch\Document\Document;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
@@ -99,7 +99,7 @@ class PageFieldMappingIndexer
      * Allows to put the page record through cObj processing if wanted / needed.
      * Otherwise, the plain page record field value is used.
      *
-     * @param string $solrFieldName The Solr field name to resolve the value from the item's record
+     * @param string $solrFieldName The Meilisearch field name to resolve the value from the item's record
      * @return string|array The resolved value to be indexed
      */
     protected function resolveFieldValue(string $solrFieldName, Document $pageDocument, array $pageRecord): mixed

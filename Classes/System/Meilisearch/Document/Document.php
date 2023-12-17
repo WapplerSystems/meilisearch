@@ -15,7 +15,7 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace WapplerSystems\Meilisearch\System\Solr\Document;
+namespace WapplerSystems\Meilisearch\System\Meilisearch\Document;
 
 use RuntimeException;
 use Solarium\QueryType\Update\Query\Document as SolariumDocument;

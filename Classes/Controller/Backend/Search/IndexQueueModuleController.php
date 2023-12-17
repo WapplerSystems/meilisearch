@@ -93,7 +93,7 @@ class IndexQueueModuleController extends AbstractModuleController
             return false;
         }
 
-        $enabledIndexQueueConfigurationNames = $this->selectedSite->getSolrConfiguration()->getEnabledIndexQueueConfigurationNames();
+        $enabledIndexQueueConfigurationNames = $this->selectedSite->getMeilisearchConfiguration()->getEnabledIndexQueueConfigurationNames();
         if (empty($enabledIndexQueueConfigurationNames)) {
             return false;
         }
@@ -129,7 +129,7 @@ class IndexQueueModuleController extends AbstractModuleController
         if ((!empty($indexingConfigurationsToInitialize)) && (is_array($indexingConfigurationsToInitialize))) {
             $initializationService = GeneralUtility::makeInstance(QueueInitializationService::class);
             foreach ($indexingConfigurationsToInitialize as $configurationToInitialize) {
-                $indexQueueClass = $this->selectedSite->getSolrConfiguration()->getIndexQueueClassByConfigurationName($configurationToInitialize);
+                $indexQueueClass = $this->selectedSite->getMeilisearchConfiguration()->getIndexQueueClassByConfigurationName($configurationToInitialize);
                 $indexQueue = $this->enabledIndexQueues[$indexQueueClass];
 
                 try {
@@ -318,7 +318,7 @@ class IndexQueueModuleController extends AbstractModuleController
     protected function getIndexQueues(): array
     {
         $queues = [];
-        $configuration = $this->selectedSite->getSolrConfiguration();
+        $configuration = $this->selectedSite->getMeilisearchConfiguration();
         foreach ($configuration->getEnabledIndexQueueConfigurationNames() as $indexingConfiguration) {
             $indexQueueClass = $configuration->getIndexQueueClassByConfigurationName($indexingConfiguration);
             if (!isset($queues[$indexQueueClass])) {

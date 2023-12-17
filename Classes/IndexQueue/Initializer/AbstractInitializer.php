@@ -19,7 +19,7 @@ namespace WapplerSystems\Meilisearch\IndexQueue\Initializer;
 
 use WapplerSystems\Meilisearch\Domain\Index\Queue\QueueItemRepository;
 use WapplerSystems\Meilisearch\Domain\Site\Site;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\System\Records\Pages\PagesRepository;
 use Doctrine\DBAL\Exception as DBALException;
 use Psr\Log\LogLevel;
@@ -62,7 +62,7 @@ abstract class AbstractInitializer implements IndexQueueInitializer
      */
     protected FlashMessageQueue $flashMessageQueue;
 
-    protected SolrLogManager $logger;
+    protected MeilisearchLogManager $logger;
 
     protected QueueItemRepository $queueItemRepository;
 
@@ -75,7 +75,7 @@ abstract class AbstractInitializer implements IndexQueueInitializer
         QueueItemRepository $queueItemRepository = null,
         PagesRepository $pagesRepository = null
     ) {
-        $this->logger = GeneralUtility::makeInstance(SolrLogManager::class, __CLASS__);
+        $this->logger = GeneralUtility::makeInstance(MeilisearchLogManager::class, __CLASS__);
         $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
         $this->flashMessageQueue = $flashMessageService->getMessageQueueByIdentifier('solr.queue.initializer');
         $this->queueItemRepository = $queueItemRepository ?? GeneralUtility::makeInstance(QueueItemRepository::class);
@@ -381,7 +381,7 @@ abstract class AbstractInitializer implements IndexQueueInitializer
      */
     protected function logInitialization(array $logData): void
     {
-        if (!$this->site->getSolrConfiguration()->getLoggingIndexingIndexQueueInitialization()) {
+        if (!$this->site->getMeilisearchConfiguration()->getLoggingIndexingIndexQueueInitialization()) {
             return;
         }
 

@@ -36,7 +36,7 @@ use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
  *
  * @noinspection PhpUnused
  */
-class FrequentlySearchedViewHelper extends AbstractSolrViewHelper
+class FrequentlySearchedViewHelper extends AbstractMeilisearchViewHelper
 {
     /**
      * @inheritdoc

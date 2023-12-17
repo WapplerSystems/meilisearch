@@ -42,11 +42,11 @@ class TypoScript implements SingletonInterface
      * Language usage may be disabled to get the default TypoScript
      * configuration.
      *
-     * @param int $pageId The page id of the (root) page to get the Solr configuration from.
+     * @param int $pageId The page id of the (root) page to get the Meilisearch configuration from.
      * @param string $path The TypoScript configuration path to retrieve.
      * @param int $language System language uid, optional, defaults to 0
      *
-     * @return TypoScriptConfiguration The Solr configuration for the requested tree.
+     * @return TypoScriptConfiguration The Meilisearch configuration for the requested tree.
      *
      * @throws DBALException
      */

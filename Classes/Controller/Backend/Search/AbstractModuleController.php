@@ -22,7 +22,7 @@ use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
 use WapplerSystems\Meilisearch\Exception\InvalidArgumentException;
 use WapplerSystems\Meilisearch\IndexQueue\QueueInterface;
 use WapplerSystems\Meilisearch\System\Mvc\Backend\Service\ModuleDataStorageService;
-use WapplerSystems\Meilisearch\System\Solr\SolrConnection as SolrCoreConnection;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchConnection as MeilisearchCoreConnection;
 use Doctrine\DBAL\Exception as DBALException;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Template\Components\Menu\Menu;
@@ -52,7 +52,7 @@ abstract class AbstractModuleController extends ActionController
 
     protected ?Site $selectedSite = null;
 
-    protected ?SolrCoreConnection $selectedSolrCoreConnection = null;
+    protected ?MeilisearchCoreConnection $selectedMeilisearchCoreConnection = null;
 
     protected ?Menu $coreSelectorMenu = null;
 
@@ -194,7 +194,7 @@ abstract class AbstractModuleController extends ActionController
             $uriToRedirectTo = $this->uriBuilder->reset()->uriFor();
         }
 
-        $this->initializeSelectedSolrCoreConnection();
+        $this->initializeSelectedMeilisearchCoreConnection();
         $cores = $this->solrConnectionManager->getConnectionsBySite($site);
         foreach ($cores as $core) {
             $coreAdmin = $core->getAdminService();
@@ -209,7 +209,7 @@ abstract class AbstractModuleController extends ActionController
             );
             $menuItem->setHref($uri);
 
-            if ($coreAdmin->getCorePath() == $this->selectedSolrCoreConnection->getAdminService()->getCorePath()) {
+            if ($coreAdmin->getCorePath() == $this->selectedMeilisearchCoreConnection->getAdminService()->getCorePath()) {
                 $menuItem->setActive(true);
             }
             $this->coreSelectorMenu->addMenuItem($menuItem);
@@ -269,38 +269,38 @@ abstract class AbstractModuleController extends ActionController
      * Initializes the solr core connection considerately to the components state.
      * Uses and persists default core connection if persisted core in Site does not exist.
      */
-    private function initializeSelectedSolrCoreConnection(): void
+    private function initializeSelectedMeilisearchCoreConnection(): void
     {
         $moduleData = $this->moduleDataStorageService->loadModuleData();
 
         $solrCoreConnections = $this->solrConnectionManager->getConnectionsBySite($this->selectedSite);
-        $currentSolrCorePath = $moduleData->getCore();
-        if (empty($currentSolrCorePath)) {
-            $this->initializeFirstAvailableSolrCoreConnection($solrCoreConnections, $moduleData);
+        $currentMeilisearchCorePath = $moduleData->getCore();
+        if (empty($currentMeilisearchCorePath)) {
+            $this->initializeFirstAvailableMeilisearchCoreConnection($solrCoreConnections, $moduleData);
             return;
         }
         foreach ($solrCoreConnections as $solrCoreConnection) {
-            if ($solrCoreConnection->getAdminService()->getCorePath() == $currentSolrCorePath) {
-                $this->selectedSolrCoreConnection = $solrCoreConnection;
+            if ($solrCoreConnection->getAdminService()->getCorePath() == $currentMeilisearchCorePath) {
+                $this->selectedMeilisearchCoreConnection = $solrCoreConnection;
             }
         }
-        if (!$this->selectedSolrCoreConnection instanceof SolrCoreConnection && count($solrCoreConnections) > 0) {
-            $this->initializeFirstAvailableSolrCoreConnection($solrCoreConnections, $moduleData);
-            $message = LocalizationUtility::translate('coreselector_switched_to_default_core', 'meilisearch', [$currentSolrCorePath, $this->selectedSite->getLabel(), $this->selectedSolrCoreConnection->getAdminService()->getCorePath()]);
+        if (!$this->selectedMeilisearchCoreConnection instanceof MeilisearchCoreConnection && count($solrCoreConnections) > 0) {
+            $this->initializeFirstAvailableMeilisearchCoreConnection($solrCoreConnections, $moduleData);
+            $message = LocalizationUtility::translate('coreselector_switched_to_default_core', 'meilisearch', [$currentMeilisearchCorePath, $this->selectedSite->getLabel(), $this->selectedMeilisearchCoreConnection->getAdminService()->getCorePath()]);
             $this->addFlashMessage($message, '', ContextualFeedbackSeverity::NOTICE);
         }
     }
 
     /**
-     * @param SolrCoreConnection[] $solrCoreConnections
+     * @param MeilisearchCoreConnection[] $solrCoreConnections
      */
-    private function initializeFirstAvailableSolrCoreConnection(array $solrCoreConnections, $moduleData): void
+    private function initializeFirstAvailableMeilisearchCoreConnection(array $solrCoreConnections, $moduleData): void
     {
         if (empty($solrCoreConnections)) {
             return;
         }
-        $this->selectedSolrCoreConnection = array_shift($solrCoreConnections);
-        $moduleData->setCore($this->selectedSolrCoreConnection->getAdminService()->getCorePath());
+        $this->selectedMeilisearchCoreConnection = array_shift($solrCoreConnections);
+        $moduleData->setCore($this->selectedMeilisearchCoreConnection->getAdminService()->getCorePath());
         $this->moduleDataStorageService->persistModuleData($moduleData);
     }
 }

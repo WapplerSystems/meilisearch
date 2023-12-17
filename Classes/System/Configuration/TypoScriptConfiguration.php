@@ -202,7 +202,7 @@ class TypoScriptConfiguration
      * @param bool $includeEmptyValues If set, values from $overrule will overrule if they are empty or zero.
      * @param bool $enableUnsetFeature If set, special values "__UNSET" can be used in overruled array in order to unset array keys in the original array.
      */
-    public function mergeSolrConfiguration(array $configurationToMerge, bool $addKeys = true, bool $includeEmptyValues = true, bool $enableUnsetFeature = true): TypoScriptConfiguration
+    public function mergeMeilisearchConfiguration(array $configurationToMerge, bool $addKeys = true, bool $includeEmptyValues = true, bool $enableUnsetFeature = true): TypoScriptConfiguration
     {
         $data = $this->configurationAccess->getData();
         ArrayUtility::mergeRecursiveWithOverrule(

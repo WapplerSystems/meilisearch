@@ -18,6 +18,6 @@ declare(strict_types=1);
 namespace WapplerSystems\Meilisearch;
 
 /**
- * Generic Apache Solr for TYPO3 exception
+ * Generic Apache Meilisearch for TYPO3 exception
  */
 class Exception extends \Exception {}

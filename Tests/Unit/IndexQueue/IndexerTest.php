@@ -25,7 +25,7 @@ use WapplerSystems\Meilisearch\FrontendEnvironment;
 use WapplerSystems\Meilisearch\IndexQueue\Exception\IndexingException;
 use WapplerSystems\Meilisearch\IndexQueue\Indexer;
 use WapplerSystems\Meilisearch\IndexQueue\Item;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\System\Records\Pages\PagesRepository;
 use WapplerSystems\Meilisearch\System\Solr\Document\Document;
 use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
@@ -250,7 +250,7 @@ class IndexerTest extends SetUpUnitTestCase
                 $this->createMock(Builder::class),
                 $this->createMock(ConnectionManager::class),
                 $frontendEnvironment,
-                $this->createMock(SolrLogManager::class),
+                $this->createMock(MeilisearchLogManager::class),
             ])
             ->onlyMethods([
                 'getFullItemRecord',

@@ -18,7 +18,7 @@ declare(strict_types=1);
 namespace WapplerSystems\Meilisearch\Event\Variants;
 
 use WapplerSystems\Meilisearch\Domain\Site\Site;
-use WapplerSystems\Meilisearch\System\Solr\Document\Document;
+use WapplerSystems\Meilisearch\System\Meilisearch\Document\Document;
 
 /**
  * Event which is fired after the ID (string) for a variant was created.

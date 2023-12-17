@@ -27,7 +27,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
  * @author Frans Saris <frans@beech.it>
  * @author Timo Hund <timo.hund@dkd.de>
  */
-class PageBrowserRangeViewHelper extends AbstractSolrFrontendViewHelper
+class PageBrowserRangeViewHelper extends AbstractMeilisearchFrontendViewHelper
 {
     use CompileWithRenderStatic;
 

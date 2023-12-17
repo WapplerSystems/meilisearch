@@ -25,11 +25,11 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Scheduler task to empty the indexes of a site and re-initialize the
- * Solr Index Queue thus making the indexer re-index the site.
+ * Meilisearch Index Queue thus making the indexer re-index the site.
  *
  * @author Christoph Moeller <support@network-publishing.de>
  */
-class ReIndexTask extends AbstractSolrTask
+class ReIndexTask extends AbstractMeilisearchTask
 {
     /**
      * Indexing configurations to re-initialize.
@@ -37,7 +37,7 @@ class ReIndexTask extends AbstractSolrTask
     protected array $indexingConfigurationsToReIndex = [];
 
     /**
-     * Purges/commits all Solr indexes, initializes the Index Queue
+     * Purges/commits all Meilisearch indexes, initializes the Index Queue
      * and returns TRUE if the execution was successful
      *
      * @return bool Returns TRUE on success, FALSE on failure.
@@ -71,7 +71,7 @@ class ReIndexTask extends AbstractSolrTask
     protected function cleanUpIndex(): bool
     {
         $cleanUpResult = true;
-        $solrConfiguration = $this->getSite()->getSolrConfiguration();
+        $solrConfiguration = $this->getSite()->getMeilisearchConfiguration();
         $solrServers = GeneralUtility::makeInstance(ConnectionManager::class)->getConnectionsBySite($this->getSite());
         $typesToCleanUp = [];
         $enableCommitsSetting = $solrConfiguration->getEnableCommits();

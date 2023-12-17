@@ -25,7 +25,7 @@ use WapplerSystems\Meilisearch\IndexQueue\Item;
 use WapplerSystems\Meilisearch\IndexQueue\PageIndexer;
 use WapplerSystems\Meilisearch\IndexQueue\PageIndexerRequest;
 use WapplerSystems\Meilisearch\IndexQueue\PageIndexerResponse;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\System\Records\Pages\PagesRepository;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -36,7 +36,7 @@ class PageIndexerTest extends SetUpUnitTestCase
     protected PageIndexer|MockObject $pageIndexer;
     protected PagesRepository|MockObject $pagesRepositoryMock;
     protected Builder|MockObject $documentBuilderMock;
-    protected SolrLogManager|MockObject $solrLogManagerMock;
+    protected MeilisearchLogManager|MockObject $solrLogManagerMock;
     protected ConnectionManager|MockObject $connectionManagerMock;
     protected PageIndexerRequest|MockObject $pageIndexerRequestMock;
     protected PageUriBuilder|MockObject $uriBuilderMock;
@@ -46,7 +46,7 @@ class PageIndexerTest extends SetUpUnitTestCase
     {
         $this->pagesRepositoryMock = $this->createMock(PagesRepository::class);
         $this->documentBuilderMock = $this->createMock(Builder::class);
-        $this->solrLogManagerMock = $this->createMock(SolrLogManager::class);
+        $this->solrLogManagerMock = $this->createMock(MeilisearchLogManager::class);
         $this->connectionManagerMock = $this->createMock(ConnectionManager::class);
         $this->pageIndexerRequestMock = $this->createMock(PageIndexerRequest::class);
         $this->uriBuilderMock = $this->createMock(PageUriBuilder::class);

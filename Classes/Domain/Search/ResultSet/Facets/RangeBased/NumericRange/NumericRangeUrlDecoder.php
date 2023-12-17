@@ -21,7 +21,7 @@ use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\FacetUrlDecoderInt
 use WapplerSystems\Meilisearch\Exception\InvalidArgumentException;
 
 /**
- * Parser to build Solr range queries from tx_solr[filter]
+ * Parser to build Meilisearch range queries from tx_solr[filter]
  *
  * @author Markus Goldbach <markus.goldbach@dkd.de>
  * @author Ingo Renner <ingo@typo3.org>
@@ -35,13 +35,13 @@ class NumericRangeUrlDecoder implements FacetUrlDecoderInterface
     public const DELIMITER = '-';
 
     /**
-     * Parses the given range from a GET parameter and returns a Solr range
+     * Parses the given range from a GET parameter and returns a Meilisearch range
      * filter.
      *
      * @param string $value The range filter from the URL.
      * @param array $configuration Facet configuration
      *
-     * @return string Lucene query language filter to be used for querying Solr
+     * @return string Lucene query language filter to be used for querying Meilisearch
      *
      * @throws InvalidArgumentException
      */

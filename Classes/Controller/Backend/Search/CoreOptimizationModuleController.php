@@ -51,13 +51,13 @@ class CoreOptimizationModuleController extends AbstractModuleController
      */
     public function indexAction(): ResponseInterface
     {
-        if ($this->selectedSolrCoreConnection === null) {
+        if ($this->selectedMeilisearchCoreConnection === null) {
             $this->view->assign('can_not_proceed', true);
             return $this->getModuleTemplateResponse();
         }
 
         $synonyms = [];
-        $coreAdmin = $this->selectedSolrCoreConnection->getAdminService();
+        $coreAdmin = $this->selectedMeilisearchCoreConnection->getAdminService();
         $rawSynonyms = $coreAdmin->getSynonyms();
         foreach ($rawSynonyms as $baseWord => $synonymList) {
             $synonyms[$baseWord] = implode(', ', $synonymList);
@@ -90,7 +90,7 @@ class CoreOptimizationModuleController extends AbstractModuleController
             $baseWord = mb_strtolower($baseWord);
             $synonyms = mb_strtolower($synonyms);
 
-            $coreAdmin = $this->selectedSolrCoreConnection->getAdminService();
+            $coreAdmin = $this->selectedMeilisearchCoreConnection->getAdminService();
             if ($overrideExisting && $coreAdmin->getSynonyms($baseWord)) {
                 $coreAdmin->deleteSynonym($baseWord);
             }
@@ -110,7 +110,7 @@ class CoreOptimizationModuleController extends AbstractModuleController
      */
     public function exportStopWordsAction(string $fileFormat = 'txt'): ResponseInterface
     {
-        $coreAdmin = $this->selectedSolrCoreConnection->getAdminService();
+        $coreAdmin = $this->selectedMeilisearchCoreConnection->getAdminService();
         return $this->exportFile(
             implode(PHP_EOL, $coreAdmin->getStopWords()),
             'stopwords',
@@ -125,7 +125,7 @@ class CoreOptimizationModuleController extends AbstractModuleController
      */
     public function exportSynonymsAction(string $fileFormat = 'txt'): ResponseInterface
     {
-        $coreAdmin = $this->selectedSolrCoreConnection->getAdminService();
+        $coreAdmin = $this->selectedMeilisearchCoreConnection->getAdminService();
         $synonyms = $coreAdmin->getSynonyms();
         return $this->exportFile(ManagedResourcesUtility::exportSynonymsToTxt($synonyms), 'synonyms', $fileFormat);
     }
@@ -145,7 +145,7 @@ class CoreOptimizationModuleController extends AbstractModuleController
         $fileLines = ManagedResourcesUtility::importSynonymsFromPlainTextContents($synonymFileUpload);
         $synonymCount = 0;
 
-        $coreAdmin = $this->selectedSolrCoreConnection->getAdminService();
+        $coreAdmin = $this->selectedMeilisearchCoreConnection->getAdminService();
         foreach ($fileLines as $baseWord => $synonyms) {
             if (empty($baseWord) || empty($synonyms)) {
                 continue;
@@ -183,7 +183,7 @@ class CoreOptimizationModuleController extends AbstractModuleController
     {
         $allSynonymsCouldBeDeleted = $this->deleteAllSynonyms();
 
-        $coreAdmin = $this->selectedSolrCoreConnection->getAdminService();
+        $coreAdmin = $this->selectedMeilisearchCoreConnection->getAdminService();
         $reloadResponse = $coreAdmin->reloadCore();
 
         if ($allSynonymsCouldBeDeleted
@@ -211,7 +211,7 @@ class CoreOptimizationModuleController extends AbstractModuleController
      */
     public function deleteSynonymsAction(string $baseWord): ResponseInterface
     {
-        $coreAdmin = $this->selectedSolrCoreConnection->getAdminService();
+        $coreAdmin = $this->selectedMeilisearchCoreConnection->getAdminService();
         $deleteResponse = $coreAdmin->deleteSynonym($baseWord);
         $reloadResponse = $coreAdmin->reloadCore();
 
@@ -233,7 +233,7 @@ class CoreOptimizationModuleController extends AbstractModuleController
     }
 
     /**
-     * Saves the edited stop word list to Solr
+     * Saves the edited stop word list to Meilisearch
      *
      * @noinspection PhpUnused
      */
@@ -243,7 +243,7 @@ class CoreOptimizationModuleController extends AbstractModuleController
         $newStopWords = mb_strtolower($stopWords);
         $newStopWords = GeneralUtility::trimExplode("\n", $newStopWords, true);
 
-        $coreAdmin = $this->selectedSolrCoreConnection->getAdminService();
+        $coreAdmin = $this->selectedMeilisearchCoreConnection->getAdminService();
         $oldStopWords = $coreAdmin->getStopWords();
 
         if ($replaceStopwords) {
@@ -272,7 +272,7 @@ class CoreOptimizationModuleController extends AbstractModuleController
 
     protected function exportFile(string $content, string $type = 'synonyms', string $fileExtension = 'txt'): ResponseInterface
     {
-        $coreAdmin = $this->selectedSolrCoreConnection->getAdminService();
+        $coreAdmin = $this->selectedMeilisearchCoreConnection->getAdminService();
         return  $this->responseFactory->createResponse()
             ->withHeader('Content-Type', 'text/plain; charset=utf-8')
             ->withHeader('Cache-control', 'public')
@@ -289,7 +289,7 @@ class CoreOptimizationModuleController extends AbstractModuleController
      */
     protected function deleteAllSynonyms(): bool
     {
-        $coreAdmin = $this->selectedSolrCoreConnection->getAdminService();
+        $coreAdmin = $this->selectedMeilisearchCoreConnection->getAdminService();
         $synonyms = $coreAdmin->getSynonyms();
         $allSynonymsCouldBeDeleted = true;
 
@@ -307,7 +307,7 @@ class CoreOptimizationModuleController extends AbstractModuleController
     protected function removeStopsWordsFromIndex($stopwordsToRemove): bool
     {
         $wordsRemoved = true;
-        $coreAdmin = $this->selectedSolrCoreConnection->getAdminService();
+        $coreAdmin = $this->selectedMeilisearchCoreConnection->getAdminService();
 
         foreach ($stopwordsToRemove as $word) {
             $response = $coreAdmin->deleteStopWord($word);
@@ -333,7 +333,7 @@ class CoreOptimizationModuleController extends AbstractModuleController
         bool $deleteSynonymsBefore,
         string $baseWord,
     ): void {
-        $coreAdmin = $this->selectedSolrCoreConnection->getAdminService();
+        $coreAdmin = $this->selectedMeilisearchCoreConnection->getAdminService();
 
         if (!$deleteSynonymsBefore &&
             $overrideExisting &&

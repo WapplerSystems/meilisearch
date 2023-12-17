@@ -86,7 +86,7 @@ class SiteHashService
         $sites = $this->siteFinder->getAllSites();
         $domains = [];
         foreach ($sites as $typo3Site) {
-            $connections = SiteUtility::getAllSolrConnectionConfigurations($typo3Site);
+            $connections = SiteUtility::getAllMeilisearchConnectionConfigurations($typo3Site);
             if (!empty($connections)) {
                 $domains[] = $typo3Site->getBase()->getHost();
             }

@@ -261,7 +261,7 @@ class RootPageResolver implements SingletonInterface
         $allSites = $siteRepository->getAvailableSites();
 
         foreach ($allSites as $site) {
-            $solrConfiguration = $site->getSolrConfiguration();
+            $solrConfiguration = $site->getMeilisearchConfiguration();
             $indexingConfigurationName = $this->recordService->getIndexingConfigurationName($table, $uid, $solrConfiguration);
             if ($indexingConfigurationName === null) {
                 continue;

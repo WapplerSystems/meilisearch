@@ -20,7 +20,7 @@ namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\OptionBased\
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\FacetUrlDecoderInterface;
 
 /**
- * Filter encoder to build Solr hierarchy queries from tx_solr[filter]
+ * Filter encoder to build Meilisearch hierarchy queries from tx_solr[filter]
  *
  * @author Ingo Renner <ingo@typo3.org>
  */
@@ -32,11 +32,11 @@ class HierarchyUrlDecoder implements FacetUrlDecoderInterface
     public const DELIMITER = '/';
 
     /**
-     * Parses the given hierarchy filter and returns a Solr filter query.
+     * Parses the given hierarchy filter and returns a Meilisearch filter query.
      *
      * @param string $value The hierarchy filter query.
      * @param array $configuration Facet configuration
-     * @return string Lucene query language filter to be used for querying Solr
+     * @return string Lucene query language filter to be used for querying Meilisearch
      */
     public function decode(string $value, array $configuration = []): string
     {

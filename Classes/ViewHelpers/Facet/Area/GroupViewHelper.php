@@ -16,7 +16,7 @@
 namespace WapplerSystems\Meilisearch\ViewHelpers\Facet\Area;
 
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\FacetCollection;
-use WapplerSystems\Meilisearch\ViewHelpers\AbstractSolrFrontendViewHelper;
+use WapplerSystems\Meilisearch\ViewHelpers\AbstractMeilisearchFrontendViewHelper;
 use Closure;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
@@ -27,7 +27,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
  * @author Frans Saris <frans@beech.it>
  * @author Timo Hund <timo.hund@dkd.de> *
  */
-class GroupViewHelper extends AbstractSolrFrontendViewHelper
+class GroupViewHelper extends AbstractMeilisearchFrontendViewHelper
 {
     use CompileWithRenderStatic;
 

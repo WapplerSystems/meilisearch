@@ -35,7 +35,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  *
  * then we get a rootline 1/10/100/111
  *
- * In Solr hierarchy notation, we get
+ * In Meilisearch hierarchy notation, we get
  *
  * 0-1
  * 1-1/10
@@ -59,7 +59,7 @@ class CategoryUidToHierarchy extends AbstractHierarchyProcessor implements Field
     }
 
     /**
-     * Expects an uid ID of a category. Returns a Solr hierarchy notation for the
+     * Expects an uid ID of a category. Returns a Meilisearch hierarchy notation for the
      * rootline of the category ID.
      *
      * @param array $values Array of values, an array because of multivalued fields
@@ -75,7 +75,7 @@ class CategoryUidToHierarchy extends AbstractHierarchyProcessor implements Field
         foreach ($values as $value) {
             $results = array_merge(
                 $results,
-                $this->getSolrRootlineForCategoryId((int)$value)
+                $this->getMeilisearchRootlineForCategoryId((int)$value)
             );
         }
 
@@ -83,18 +83,18 @@ class CategoryUidToHierarchy extends AbstractHierarchyProcessor implements Field
     }
 
     /**
-     * Returns a Solr hierarchy notation string for rootline of given category uid.
+     * Returns a Meilisearch hierarchy notation string for rootline of given category uid.
      *
-     * @param int $categoryId Category ID to get a rootline as Solr hierarchy for
+     * @param int $categoryId Category ID to get a rootline as Meilisearch hierarchy for
      *
-     * @return array Rootline as Solr hierarchy array
+     * @return array Rootline as Meilisearch hierarchy array
      *
      * @throws DBALException
      */
-    protected function getSolrRootlineForCategoryId(int $categoryId): array
+    protected function getMeilisearchRootlineForCategoryId(int $categoryId): array
     {
         $categoryIdRootline = $this->buildCategoryIdRootline($categoryId);
-        return $this->buildSolrHierarchyFromIdRootline($categoryIdRootline);
+        return $this->buildMeilisearchHierarchyFromIdRootline($categoryIdRootline);
     }
 
     /**

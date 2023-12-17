@@ -36,7 +36,7 @@ class SuggestQuery extends Query
     public function __construct(string $keywords, TypoScriptConfiguration $solrConfiguration = null)
     {
         parent::__construct();
-        $solrConfiguration = $solrConfiguration ?? Util::getSolrConfiguration();
+        $solrConfiguration = $solrConfiguration ?? Util::getMeilisearchConfiguration();
 
         $this->setQuery($keywords);
         $this->configuration = $solrConfiguration->getObjectByPathOrDefault('plugin.tx_solr.suggest.');

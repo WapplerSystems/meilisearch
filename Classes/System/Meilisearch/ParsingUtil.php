@@ -15,7 +15,7 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace WapplerSystems\Meilisearch\System\Solr;
+namespace WapplerSystems\Meilisearch\System\Meilisearch;
 
 use UnexpectedValueException;
 

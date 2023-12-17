@@ -28,7 +28,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  *
  * @author Thomas Hohn <tho@systime.dk>
  */
-class SolrLogManager implements LoggerInterface
+class MeilisearchLogManager implements LoggerInterface
 {
     use LoggerTrait;
 

@@ -30,7 +30,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class SiteSelectorField
 {
     /**
-     * Creates a dropdown selector of available TYPO3 sites with Solr configured.
+     * Creates a dropdown selector of available TYPO3 sites with Meilisearch configured.
      *
      * @param string $selectorName Name to be used in the selects name attribute
      * @param Site|null $selectedSite Optional, currently selected site

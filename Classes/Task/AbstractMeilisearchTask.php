@@ -20,7 +20,7 @@ namespace WapplerSystems\Meilisearch\Task;
 use WapplerSystems\Meilisearch\Domain\Site\Site;
 use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
 use WapplerSystems\Meilisearch\Exception\InvalidArgumentException;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use Doctrine\DBAL\Exception as DBALException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Scheduler\Task\AbstractTask;
@@ -29,7 +29,7 @@ use TYPO3\CMS\Scheduler\Task\AbstractTask;
  * Abstract scheduler task for solr scheduler tasks, contains the logic to
  * retrieve the site, avoids serialization of site, when scheduler task is saved.
  */
-abstract class AbstractSolrTask extends AbstractTask
+abstract class AbstractMeilisearchTask extends AbstractTask
 {
     /**
      * The site this task is supposed to initialize the index queue for.
@@ -66,7 +66,7 @@ abstract class AbstractSolrTask extends AbstractTask
             $siteRepository = GeneralUtility::makeInstance(SiteRepository::class);
             $this->site = $siteRepository->getSiteByRootPageId((int)$this->rootPageId);
         } catch (InvalidArgumentException) {
-            $logger = GeneralUtility::makeInstance(SolrLogManager::class, __CLASS__);
+            $logger = GeneralUtility::makeInstance(MeilisearchLogManager::class, __CLASS__);
             $logger->error('Scheduler task tried to get invalid site');
         }
 

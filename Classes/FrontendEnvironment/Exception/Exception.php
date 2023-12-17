@@ -15,10 +15,10 @@
 
 namespace WapplerSystems\Meilisearch\FrontendEnvironment\Exception;
 
-use WapplerSystems\Meilisearch\Exception as ExtSolrException;
+use WapplerSystems\Meilisearch\Exception as ExtMeilisearchException;
 
 /**
  * Exception that is thrown on initialization of EXT:meilisearch FrontendEnvironment.
  * This exception should be used for any errors on indexing .
  */
-class Exception extends ExtSolrException {}
+class Exception extends ExtMeilisearchException {}

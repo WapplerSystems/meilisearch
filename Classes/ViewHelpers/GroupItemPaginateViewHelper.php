@@ -30,7 +30,7 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 /**
  * Class GroupItemPaginateViewHelper
  */
-class GroupItemPaginateViewHelper extends AbstractSolrViewHelper
+class GroupItemPaginateViewHelper extends AbstractMeilisearchViewHelper
 {
     protected $escapeChildren = false;
     protected $escapeOutput = false;

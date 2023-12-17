@@ -18,7 +18,7 @@ declare(strict_types=1);
 namespace WapplerSystems\Meilisearch\IndexQueue;
 
 use WapplerSystems\Meilisearch\System\Configuration\ExtensionConfiguration;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use Exception;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
@@ -35,7 +35,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class PageIndexerRequest
 {
-    public const SOLR_INDEX_HEADER = 'X-Tx-Solr-Iq';
+    public const SOLR_INDEX_HEADER = 'X-Tx-Meilisearch-Iq';
 
     /**
      * List of actions to perform during page rendering.
@@ -77,7 +77,7 @@ class PageIndexerRequest
      */
     protected float $timeout;
 
-    protected SolrLogManager $logger;
+    protected MeilisearchLogManager $logger;
 
     protected ExtensionConfiguration $extensionConfiguration;
 
@@ -87,15 +87,15 @@ class PageIndexerRequest
      * PageIndexerRequest constructor.
      */
     public function __construct(
-        string $jsonEncodedParameters = null,
-        SolrLogManager $solrLogManager = null,
+        string                 $jsonEncodedParameters = null,
+        MeilisearchLogManager  $solrLogManager = null,
         ExtensionConfiguration $extensionConfiguration = null,
-        RequestFactory $requestFactory = null
+        RequestFactory         $requestFactory = null
     ) {
         $this->requestId = uniqid();
         $this->timeout = (float)ini_get('default_socket_timeout');
 
-        $this->logger = $solrLogManager ?? GeneralUtility::makeInstance(SolrLogManager::class, __CLASS__);
+        $this->logger = $solrLogManager ?? GeneralUtility::makeInstance(MeilisearchLogManager::class, __CLASS__);
         $this->extensionConfiguration = $extensionConfiguration ?? GeneralUtility::makeInstance(ExtensionConfiguration::class);
         $this->requestFactory = $requestFactory ?? GeneralUtility::makeInstance(RequestFactory::class);
 

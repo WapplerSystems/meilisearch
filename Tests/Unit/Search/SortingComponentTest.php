@@ -23,7 +23,7 @@ use WapplerSystems\Meilisearch\Event\Search\AfterSearchQueryHasBeenPreparedEvent
 use WapplerSystems\Meilisearch\Search;
 use WapplerSystems\Meilisearch\Search\SortingComponent;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -49,7 +49,7 @@ class SortingComponentTest extends SetUpUnitTestCase
 
         $queryBuilder = new QueryBuilder(
             $this->createMock(TypoScriptConfiguration::class),
-            $this->createMock(SolrLogManager::class),
+            $this->createMock(MeilisearchLogManager::class),
             $this->createMock(SiteHashService::class)
         );
 

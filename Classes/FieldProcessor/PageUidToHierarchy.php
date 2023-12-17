@@ -36,7 +36,7 @@ use TYPO3\CMS\Core\Utility\RootlineUtility;
  *
  * then we get a rootline 1/10/100/111
  *
- * In Solr hierarchy notation, we get
+ * In Meilisearch hierarchy notation, we get
  *
  * 0-1/
  * 1-1/10/
@@ -50,7 +50,7 @@ use TYPO3\CMS\Core\Utility\RootlineUtility;
 class PageUidToHierarchy extends AbstractHierarchyProcessor implements FieldProcessor
 {
     /**
-     * Expects a page ID of a page. Returns a Solr hierarchy notation for the
+     * Expects a page ID of a page. Returns a Meilisearch hierarchy notation for the
      * rootline of the page ID.
      *
      * @param array $values Array of values, an array because of multivalued fields
@@ -63,7 +63,7 @@ class PageUidToHierarchy extends AbstractHierarchyProcessor implements FieldProc
 
         foreach ($values as $value) {
             $rootPageUidAndMountPoint = GeneralUtility::trimExplode(',', $value, true, 2);
-            $results[] = $this->getSolrRootlineForPageId(
+            $results[] = $this->getMeilisearchRootlineForPageId(
                 (int)$rootPageUidAndMountPoint[0],
                 $rootPageUidAndMountPoint[1] ?? ''
             );
@@ -73,17 +73,17 @@ class PageUidToHierarchy extends AbstractHierarchyProcessor implements FieldProc
     }
 
     /**
-     * Returns a Solr hierarchy notation string for rootline of given PID.
+     * Returns a Meilisearch hierarchy notation string for rootline of given PID.
      *
-     * @param int $pageId Page ID to get a rootline as Solr hierarchy for
+     * @param int $pageId Page ID to get a rootline as Meilisearch hierarchy for
      * @param string $mountPoint The mount point parameter that will be used for building the rootline.
      *
-     * @return array Rootline as Solr hierarchy array
+     * @return array Rootline as Meilisearch hierarchy array
      */
-    protected function getSolrRootlineForPageId(int $pageId, string $mountPoint = ''): array
+    protected function getMeilisearchRootlineForPageId(int $pageId, string $mountPoint = ''): array
     {
         $pageIdRootline = $this->buildPageIdRootline($pageId, $mountPoint);
-        return $this->buildSolrHierarchyFromIdRootline($pageIdRootline);
+        return $this->buildMeilisearchHierarchyFromIdRootline($pageIdRootline);
     }
 
     /**

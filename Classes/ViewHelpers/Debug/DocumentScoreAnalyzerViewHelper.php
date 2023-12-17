@@ -20,7 +20,7 @@ namespace WapplerSystems\Meilisearch\ViewHelpers\Debug;
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Result\SearchResult;
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSet;
 use WapplerSystems\Meilisearch\Domain\Search\Score\ScoreCalculationService;
-use WapplerSystems\Meilisearch\ViewHelpers\AbstractSolrFrontendViewHelper;
+use WapplerSystems\Meilisearch\ViewHelpers\AbstractMeilisearchFrontendViewHelper;
 use Closure;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
@@ -36,7 +36,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
  *
  * @noinspection PhpUnused Used in {@link Resources/Private/Partials/Result/Document.html}
  */
-class DocumentScoreAnalyzerViewHelper extends AbstractSolrFrontendViewHelper
+class DocumentScoreAnalyzerViewHelper extends AbstractMeilisearchFrontendViewHelper
 {
     use CompileWithRenderStatic;
 

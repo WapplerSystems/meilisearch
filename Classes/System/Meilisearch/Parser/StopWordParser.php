@@ -13,7 +13,7 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace WapplerSystems\Meilisearch\System\Solr\Parser;
+namespace WapplerSystems\Meilisearch\System\Meilisearch\Parser;
 
 use WapplerSystems\Meilisearch\Exception\InvalidArgumentException;
 

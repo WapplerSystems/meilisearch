@@ -18,7 +18,7 @@ declare(strict_types=1);
 namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet\Result\Parser;
 
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
-use WapplerSystems\Meilisearch\System\Solr\Document\Document;
+use WapplerSystems\Meilisearch\System\Meilisearch\Document\Document;
 use WapplerSystems\Meilisearch\Util;
 
 /**
@@ -33,7 +33,7 @@ class DocumentEscapeService
      */
     public function __construct(TypoScriptConfiguration $typoScriptConfiguration = null)
     {
-        $this->typoScriptConfiguration = $typoScriptConfiguration ?? Util::getSolrConfiguration();
+        $this->typoScriptConfiguration = $typoScriptConfiguration ?? Util::getMeilisearchConfiguration();
     }
 
     /**
@@ -45,13 +45,13 @@ class DocumentEscapeService
      */
     public function applyHtmlSpecialCharsOnAllFields(array $documents): array
     {
-        $trustedSolrFields = $this->typoScriptConfiguration->getSearchTrustedFieldsArray();
+        $trustedMeilisearchFields = $this->typoScriptConfiguration->getSearchTrustedFieldsArray();
 
         foreach ($documents as $key => $document) {
             $fieldNames = array_keys($document->getFields() ?? []);
 
             foreach ($fieldNames as $fieldName) {
-                if (is_array($trustedSolrFields) && in_array($fieldName, $trustedSolrFields)) {
+                if (is_array($trustedMeilisearchFields) && in_array($fieldName, $trustedMeilisearchFields)) {
                     // we skip this field, since it was marked as secure
                     continue;
                 }

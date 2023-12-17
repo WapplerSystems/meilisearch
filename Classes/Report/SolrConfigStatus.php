@@ -19,7 +19,7 @@ namespace WapplerSystems\Meilisearch\Report;
 
 use WapplerSystems\Meilisearch\ConnectionManager;
 use WapplerSystems\Meilisearch\Domain\Site\Exception\UnexpectedTYPO3SiteInitializationException;
-use WapplerSystems\Meilisearch\System\Solr\SolrConnection;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchConnection;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Reports\Status;
@@ -30,7 +30,7 @@ use TYPO3\CMS\Reports\Status;
  *
  * @author Ingo Renner <ingo@typo3.org>
  */
-class SolrConfigStatus extends AbstractSolrStatus
+class MeilisearchConfigStatus extends AbstractMeilisearchStatus
 {
     /**
      * The config name property is constructed as follows:
@@ -45,7 +45,7 @@ class SolrConfigStatus extends AbstractSolrStatus
 
     /**
      * Compiles a collection of solrconfig version checks against each configured
-     * Solr server. Only adds an entry if a solrconfig other than the
+     * Meilisearch server. Only adds an entry if a solrconfig other than the
      * recommended one was found.
      *
      * @throws UnexpectedTYPO3SiteInitializationException
@@ -57,8 +57,8 @@ class SolrConfigStatus extends AbstractSolrStatus
         if (empty($solrConnections)) {
             $reports[] = GeneralUtility::makeInstance(
                 Status::class,
-                'Solrconfig Version',
-                'No Solr connections configured',
+                'Meilisearchconfig Version',
+                'No Meilisearch connections configured',
                 '',
                 ContextualFeedbackSeverity::WARNING
             );
@@ -66,13 +66,13 @@ class SolrConfigStatus extends AbstractSolrStatus
             return $reports;
         }
 
-        /** @var SolrConnection $solrConnection */
+        /** @var MeilisearchConnection $solrConnection */
         foreach ($solrConnections as $solrConnection) {
             $adminService = $solrConnection->getAdminService();
             if (!$adminService->ping()) {
                 $reports[] = GeneralUtility::makeInstance(
                     Status::class,
-                    'Solrconfig Version',
+                    'Meilisearchconfig Version',
                     'Couldn\'t connect to ' . $adminService->__toString(),
                     '',
                     ContextualFeedbackSeverity::WARNING
@@ -81,12 +81,12 @@ class SolrConfigStatus extends AbstractSolrStatus
                 continue;
             }
 
-            if ($adminService->getSolrconfigName() != self::RECOMMENDED_SOLRCONFIG_VERSION) {
+            if ($adminService->getMeilisearchconfigName() != self::RECOMMENDED_SOLRCONFIG_VERSION) {
                 $variables = ['meilisearch' => $adminService, 'recommendedVersion' => self::RECOMMENDED_SOLRCONFIG_VERSION];
-                $report = $this->getRenderedReport('SolrConfigStatus.html', $variables);
+                $report = $this->getRenderedReport('MeilisearchConfigStatus.html', $variables);
                 $status = GeneralUtility::makeInstance(
                     Status::class,
-                    'Solrconfig Version',
+                    'Meilisearchconfig Version',
                     'Unsupported solrconfig.xml',
                     $report,
                     ContextualFeedbackSeverity::WARNING
@@ -99,7 +99,7 @@ class SolrConfigStatus extends AbstractSolrStatus
         if (empty($reports)) {
             $reports[] = GeneralUtility::makeInstance(
                 Status::class,
-                'Solrconfig Version',
+                'Meilisearchconfig Version',
                 'OK',
                 '',
                 ContextualFeedbackSeverity::OK

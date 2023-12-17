@@ -35,7 +35,7 @@ use WapplerSystems\Meilisearch\Domain\Site\SiteHashService;
 use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
 use WapplerSystems\Meilisearch\FieldProcessor\PageUidToHierarchy;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
-use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\Util;
 use Doctrine\DBAL\Exception as DBALException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -55,17 +55,17 @@ class QueryBuilder extends AbstractQueryBuilder
 
     protected TypoScriptConfiguration $typoScriptConfiguration;
 
-    protected SolrLogManager $logger;
+    protected MeilisearchLogManager $logger;
 
     protected SiteHashService $siteHashService;
 
     public function __construct(
         TypoScriptConfiguration $configuration = null,
-        SolrLogManager $solrLogManager = null,
-        SiteHashService $siteHashService = null,
+        MeilisearchLogManager   $solrLogManager = null,
+        SiteHashService         $siteHashService = null,
     ) {
-        $this->typoScriptConfiguration = $configuration ?? Util::getSolrConfiguration();
-        $this->logger = $solrLogManager ?? GeneralUtility::makeInstance(SolrLogManager::class, __CLASS__);
+        $this->typoScriptConfiguration = $configuration ?? Util::getMeilisearchConfiguration();
+        $this->logger = $solrLogManager ?? GeneralUtility::makeInstance(MeilisearchLogManager::class, __CLASS__);
         $this->siteHashService = $siteHashService ?? GeneralUtility::makeInstance(SiteHashService::class);
     }
 
