@@ -126,7 +126,7 @@
       "dev-main": "12.0.x-dev"
     },
     "typo3/cms": {
-      "extension-key": "meilisearch",
+      "extension-key": "meilisearch"
     },
     "TYPO3-Solr": {
       "version-matrix": {
