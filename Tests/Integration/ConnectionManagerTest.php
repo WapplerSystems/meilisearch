@@ -73,7 +73,7 @@ class ConnectionManagerTest extends IntegrationTest
         foreach ([0, 1, 2] as $languageID) {
             $meilisearchService = $connectionManager->getConnectionByRootPageId($rootPageId, $languageID);
             self::assertInstanceOf(MeilisearchConnection::class, $meilisearchService, vsprintf('Should find meilisearch connection for root page "%s" and language "%s"', [$rootPageId, $languageID]));
-            self::assertEquals($expectedMeilisearchHost, $meilisearchService->getEndpoint('read')->getHost(), vsprintf('Apache Meilisearch host must be the same as configured.' .
+            self::assertEquals($expectedMeilisearchHost, $meilisearchService->getEndpoint('read')->getHost(), vsprintf('Meilisearch host must be the same as configured.' .
                 ' Wrong connection is used. I expected "%s" as Host for "%s" Site with Root-Page ID "%s".', [$expectedMeilisearchHost, $siteName, $rootPageId]));
         }
     }
@@ -120,7 +120,7 @@ class ConnectionManagerTest extends IntegrationTest
         foreach ([0, 1, 2] as $languageID) {
             $meilisearchService = $connectionManager->getConnectionByPageId($pageId, $languageID);
             self::assertInstanceOf(MeilisearchConnection::class, $meilisearchService, vsprintf('Should find meilisearch connection for page id "%s" and language "%s"', [$pageId, $languageID]));
-            self::assertEquals($expectedMeilisearchHost, $meilisearchService->getEndpoint('read')->getHost(), vsprintf('Apache Meilisearch host must be the same as configured.' .
+            self::assertEquals($expectedMeilisearchHost, $meilisearchService->getEndpoint('read')->getHost(), vsprintf('Meilisearch host must be the same as configured.' .
                 ' Wrong connection is used. I expected "%s" as Host for "%s" Site with Root-Page ID "%s".', [$expectedMeilisearchHost, $siteName, $pageId]));
         }
     }

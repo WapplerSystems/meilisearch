@@ -23,7 +23,7 @@ use Doctrine\DBAL\Exception as DBALException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Service class that modifies fields in an Apache Meilisearch Document, used for
+ * Service class that modifies fields in an Meilisearch Document, used for
  * common field processing during indexing or resolving
  *
  * @author Daniel Poetzinger <poetzinger@aoemedia.de>

@@ -1,7 +1,7 @@
 {
   "name": "wapplersystems/meilisearch",
   "type": "typo3-cms-extension",
-  "description": "Apache Meilisearch for TYPO3",
+  "description": "Meilisearch for TYPO3",
   "license": "GPL-3.0-or-later",
   "keywords": ["typo3", "TYPO3 CMS", "meilisearch", "search"],
   "homepage": "https://www.typo3-meilisearch.com",

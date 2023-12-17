@@ -68,7 +68,7 @@ class InfoModuleController extends AbstractModuleController
     }
 
     /**
-     * Renders the details of Apache Meilisearch documents
+     * Renders the details of Meilisearch documents
      *
      * @noinspection PhpUnused
      * @throws DBALException
@@ -233,7 +233,7 @@ class InfoModuleController extends AbstractModuleController
 
                 $this->addFlashMessage(
                     '',
-                    'Unable to contact Apache Meilisearch server: ' . $this->selectedSite->getLabel() . ' ' . $coreAdmin->getCorePath(),
+                    'Unable to contact Meilisearch server: ' . $this->selectedSite->getLabel() . ' ' . $coreAdmin->getCorePath(),
                     ContextualFeedbackSeverity::ERROR
                 );
             }

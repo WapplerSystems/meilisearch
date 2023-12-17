@@ -24,7 +24,7 @@ namespace WapplerSystems\Meilisearch\Domain\Search\Score;
 class ScoreCalculationService
 {
     /**
-     * Renders an overview in HTML of how the score for a certain document has been calculated by Apache Meilisearch using debug data.
+     * Renders an overview in HTML of how the score for a certain document has been calculated by Meilisearch using debug data.
      *
      * @param string $meilisearchDebugData debug data from the meilisearch response
      * @return string The HTML showing the score analysis

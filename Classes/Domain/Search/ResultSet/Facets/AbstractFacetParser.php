@@ -94,7 +94,7 @@ abstract class AbstractFacetParser implements FacetParserInterface
     }
 
     /**
-     * Returns merged facet value from search request and Apache Meilisearch response
+     * Returns merged facet value from search request and Meilisearch response
      */
     protected function getMergedFacetValueFromSearchRequestAndMeilisearchResponse(
         array $facetValuesFromMeilisearchResponse,

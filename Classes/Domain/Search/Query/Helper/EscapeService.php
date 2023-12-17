@@ -18,7 +18,7 @@ declare(strict_types=1);
 namespace WapplerSystems\Meilisearch\Domain\Search\Query\Helper;
 
 /**
- * The EscapeService is responsible to escape the querystring as expected for Apache Meilisearch.
+ * The EscapeService is responsible to escape the querystring as expected for Meilisearch.
  *
  * This class should have no dependencies since it only contains static functions
  *

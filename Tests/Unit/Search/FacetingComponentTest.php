@@ -614,7 +614,7 @@ class FacetingComponentTest extends SetUpUnitTestCase
                 ]
             ),
             'The assoc parameters/keys for parameters of selected facets are not as expected.' . PHP_EOL
-            . 'Probably they are not delegated to Apache Meilisearch query, which leads to a non functional faceting.'
+            . 'Probably they are not delegated to Meilisearch query, which leads to a non functional faceting.'
         );
     }
 }

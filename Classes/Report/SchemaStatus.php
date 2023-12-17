@@ -60,7 +60,7 @@ class SchemaStatus extends AbstractMeilisearchStatus
         if (empty($meilisearchConnections)) {
             $reports[] = GeneralUtility::makeInstance(
                 Status::class,
-                'Apache Meilisearch Version / Schema Version',
+                'Meilisearch Version / Schema Version',
                 'No Meilisearch connections configured',
                 '',
                 ContextualFeedbackSeverity::WARNING
@@ -77,7 +77,7 @@ class SchemaStatus extends AbstractMeilisearchStatus
                 $pingFailedMsg = 'Could not ping meilisearch server, can not check version ' . $url;
                 $status = GeneralUtility::makeInstance(
                     Status::class,
-                    'Apache Meilisearch Version',
+                    'Meilisearch Version',
                     'Not accessible',
                     $pingFailedMsg,
                     ContextualFeedbackSeverity::ERROR
@@ -104,7 +104,7 @@ class SchemaStatus extends AbstractMeilisearchStatus
         if (empty($reports)) {
             $reports[] = GeneralUtility::makeInstance(
                 Status::class,
-                'Apache Meilisearch Version / Schema Version',
+                'Meilisearch Version / Schema Version',
                 'OK',
                 '',
                 ContextualFeedbackSeverity::OK

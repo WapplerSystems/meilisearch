@@ -210,7 +210,7 @@ class SearchResultSetService
     }
 
     /**
-     * Executes the search and builds a fake response for a current bug in Apache Meilisearch 6.3
+     * Executes the search and builds a fake response for a current bug in Meilisearch 6.3
      *
      * @throws MeilisearchIncompleteResponseException
      */

@@ -66,7 +66,7 @@
     <h2>Site: {site.label}</h2>
 
     <f:if condition="{connectedHosts}">
-        <f:be.infobox title="Following Apache Meilisearch servers have been contacted:" state="0">
+        <f:be.infobox title="Following Meilisearch servers have been contacted:" state="0">
             <ul>
                 <f:for each="{connectedHosts}" as="connectedHost">
                     <li>{connectedHost}</li>
@@ -76,7 +76,7 @@
     </f:if>
 
     <f:if condition="{missingHosts}">
-        <f:be.infobox title="Unable to contact following Apache Meilisearch servers:" state="2">
+        <f:be.infobox title="Unable to contact following Meilisearch servers:" state="2">
             <ul>
                 <f:for each="{missingHosts}" as="missingHost">
                     <li>{missingHost}</li>

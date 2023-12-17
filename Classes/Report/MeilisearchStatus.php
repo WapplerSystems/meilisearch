@@ -82,8 +82,8 @@ class MeilisearchStatus extends AbstractMeilisearchStatus
         if (empty($reports)) {
             $reports[] = GeneralUtility::makeInstance(
                 Status::class,
-                'Apache Meilisearch connection',
-                'No Apache Meilisearch connection configured',
+                'Meilisearch connection',
+                'No Meilisearch connection configured',
                 '',
                 ContextualFeedbackSeverity::WARNING
             );
@@ -109,7 +109,7 @@ class MeilisearchStatus extends AbstractMeilisearchStatus
      */
     protected function getConnectionStatus(Site $site, array $meilisearchConnection): Status
     {
-        $header = 'Your site has contacted the Apache Meilisearch server.';
+        $header = 'Your site has contacted the Meilisearch server.';
         $this->responseStatus = ContextualFeedbackSeverity::OK;
 
         $meilisearchAdmin = $this->connectionManager
@@ -142,7 +142,7 @@ class MeilisearchStatus extends AbstractMeilisearchStatus
         $report = $this->getRenderedReport('MeilisearchStatus.html', $variables);
         return GeneralUtility::makeInstance(
             Status::class,
-            'Apache Meilisearch Connection',
+            'Meilisearch Connection',
             $header,
             $report,
             $this->responseStatus
@@ -228,12 +228,12 @@ class MeilisearchStatus extends AbstractMeilisearchStatus
     }
 
     /**
-     * Formats the Apache Meilisearch server version number. By default, this is going
+     * Formats the Meilisearch server version number. By default, this is going
      * to be the simple major.minor.patch-level version. Custom Builds provide
      * more information though, in case of custom-builds, their complete
      * version will be added, too.
      *
-     * @param string $meilisearchVersion Unformatted Apache Meilisearch version number a provided by Meilisearch.
+     * @param string $meilisearchVersion Unformatted Meilisearch version number a provided by Meilisearch.
      * @return string formatted short version number, in case of custom-builds followed by the complete version number
      */
     protected function formatMeilisearchVersion(string $meilisearchVersion): string

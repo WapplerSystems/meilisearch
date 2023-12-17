@@ -109,7 +109,7 @@ class OptionsFacetParser extends AbstractFacetParser
     }
 
     /**
-     * Converts Apache Meilisearch Response to facets options array.
+     * Converts Meilisearch Response to facets options array.
      */
     protected function getOptionsFromMeilisearchResponse(string $facetName, ResponseAdapter $response): array
     {
@@ -128,7 +128,7 @@ class OptionsFacetParser extends AbstractFacetParser
     }
 
     /**
-     * Converts Apache Meilisearch Response to facets metrics array.
+     * Converts Meilisearch Response to facets metrics array.
      */
     protected function getMetricsFromMeilisearchResponse(string $facetName, ResponseAdapter $response): array
     {

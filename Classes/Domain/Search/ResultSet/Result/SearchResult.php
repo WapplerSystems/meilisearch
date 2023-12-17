@@ -150,7 +150,7 @@ class SearchResult extends Document
     }
 
     /**
-     * Note: The id field on Apache Meilisearch document is a string.
+     * Note: The id field on Meilisearch document is a string.
      */
     public function getId(): string
     {

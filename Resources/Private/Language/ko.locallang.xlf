@@ -72,12 +72,12 @@
 
 			<!-- From ModuleAdministration/locallang.xlf //-->
 			<trans-unit id="mlang_labels_tablabel" xml:space="preserve">
-				<source>Apache Meilisearch Search Administration</source>
-				<target>Apache Meilisearch 검색 관리</target>
+				<source>Meilisearch Search Administration</source>
+				<target>Meilisearch 검색 관리</target>
 			</trans-unit>
 			<trans-unit id="mlang_labels_tabdescr" xml:space="preserve">
-				<source>Allows you to manage Apache Meilisearch from TYPO3.&lt;br /&gt;&lt;em&gt;Access for 'admin' users only!&lt;/em&gt;</source>
-				<target>TYPO3에서  Apache Meilisearch를 관리하도록 허용합니다.&lt;br /&gt;&lt;em&gt;&apos;admin&apos; 사용자 전용 액세스!&lt;/em&gt;</target>
+				<source>Allows you to manage Meilisearch from TYPO3.&lt;br /&gt;&lt;em&gt;Access for 'admin' users only!&lt;/em&gt;</source>
+				<target>TYPO3에서  Meilisearch를 관리하도록 허용합니다.&lt;br /&gt;&lt;em&gt;&apos;admin&apos; 사용자 전용 액세스!&lt;/em&gt;</target>
 			</trans-unit>
 			<trans-unit id="mlang_tabs_tab" xml:space="preserve">
 				<source>Search</source>
@@ -86,16 +86,16 @@
 
 			<!-- From ModuleReports/locallang.xlf //-->
 			<trans-unit id="index_title" xml:space="preserve">
-				<source>Apache Meilisearch Index</source>
-				<target>Apache Meilisearch Index</target>
+				<source>Meilisearch Index</source>
+				<target>Meilisearch Index</target>
 			</trans-unit>
 			<trans-unit id="index_description" xml:space="preserve">
 				<source>View the number of documents and fields in your index</source>
 				<target>인덱스의 문서 수와 필드 보기</target>
 			</trans-unit>
 			<trans-unit id="statistics_title" xml:space="preserve">
-				<source>Apache Meilisearch Statistics</source>
-				<target>Apache Meilisearch 통계</target>
+				<source>Meilisearch Statistics</source>
+				<target>Meilisearch 통계</target>
 			</trans-unit>
 			<trans-unit id="statistics_description" xml:space="preserve">
 				<source>Provides several Meilisearch usage statistics</source>

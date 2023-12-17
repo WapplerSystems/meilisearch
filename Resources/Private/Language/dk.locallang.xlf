@@ -5,16 +5,16 @@
 		<body>
 			<!-- From ModuleReports/locallang.xlf //-->
 			<trans-unit id="index_title" xml:space="preserve" approved="yes">
-				<source>Apache Meilisearch Index</source>
-				<target>Apache Meilisearch Index</target>
+				<source>Meilisearch Index</source>
+				<target>Meilisearch Index</target>
 			</trans-unit>
 			<trans-unit id="index_description" xml:space="preserve" approved="yes">
 				<source>View the number of documents and fields in your index</source>
 				<target>Se antallet af dokumenter og felter i dit index</target>
 			</trans-unit>
 			<trans-unit id="statistics_title" xml:space="preserve" approved="yes">
-				<source>Apache Meilisearch Statistics</source>
-				<target>Apache Meilisearch Statistik</target>
+				<source>Meilisearch Statistics</source>
+				<target>Meilisearch Statistik</target>
 			</trans-unit>
 			<trans-unit id="statistics_description" xml:space="preserve" approved="yes">
 				<source>Provides several Meilisearch usage statistics</source>

@@ -39,7 +39,7 @@ class QueryGroupFacetParser extends AbstractFacetParser
     }
 
     /**
-     * Parses group params for Apache Meilisearch query
+     * Parses group params for Meilisearch query
      */
     public function parse(SearchResultSet $resultSet, string $facetName, array $facetConfiguration): ?AbstractFacet
     {

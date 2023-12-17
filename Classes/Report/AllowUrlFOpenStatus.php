@@ -43,7 +43,7 @@ class AllowUrlFOpenStatus extends AbstractMeilisearchStatus
             $severity = ContextualFeedbackSeverity::ERROR;
             $value = 'Off';
             $message = 'allow_url_fopen must be enabled in php.ini to allow
-				communication between TYPO3 and the Apache Meilisearch server.
+				communication between TYPO3 and the Meilisearch server.
 				Indexing pages using the Index Queue will also not work with
 				this setting disabled.';
         }

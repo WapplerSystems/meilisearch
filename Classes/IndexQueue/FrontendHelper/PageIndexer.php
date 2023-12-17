@@ -262,7 +262,7 @@ class PageIndexer implements FrontendHelper, SingletonInterface
      * created by this indexer.
      *
      * @param Document $pageDocument The page document created by this indexer.
-     * @return Document An Apache Meilisearch document representing the currently indexed page
+     * @return Document An Meilisearch document representing the currently indexed page
      */
     protected function substitutePageDocument(
         Document $pageDocument,

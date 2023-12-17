@@ -105,12 +105,12 @@ plugin.tx_meilisearch {
       // https://meilisearch.pl/en/2010/07/14/meilisearch-and-phrasequery-phrase-bonus-in-query-stage/
 
       // see https://lucene.apache.org/meilisearch/guide/7_0/the-dismax-query-parser.html#TheDisMaxQueryParser-Thepf_PhraseFields_Parameter
-      // EXT:Meilisearch configures Schemas from Apache Meilisearch to use content field with boost of 2.0 per default.
-      // By enabling of phrase search, Apache Meilisearch will build a phrase queries for a list of defined fields(phrase.fields) and boost the documents containing the terms in defined proximity(phrase.slop).
+      // EXT:Meilisearch configures Schemas from Meilisearch to use content field with boost of 2.0 per default.
+      // By enabling of phrase search, Meilisearch will build a phrase queries for a list of defined fields(phrase.fields) and boost the documents containing the terms in defined proximity(phrase.slop).
       // phrase.querySlop
       phrase = 0
       phrase {
-        // Note: Those are field for implicit phrase searching. On explicit "phrase searching" Apache Meilisearch uses queryFields("qf" parameter)
+        // Note: Those are field for implicit phrase searching. On explicit "phrase searching" Meilisearch uses queryFields("qf" parameter)
         fields = content^10.0, title^10.0, tagsH1^10.0, tagsH2H3^10.0, tagsH4H5H6^10.0, tagsInline^10.0, description^10.0, abstract^10.0, subtitle^10.0, navtitle^10.0
         // The number of words between words in query phrase is the slop-value.
         // e.g. on query phrase "Hello World"

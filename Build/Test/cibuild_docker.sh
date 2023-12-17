@@ -204,7 +204,7 @@ assertDataPathIsCreatedByMeilisearch ()
     ((iteration++))
     # wait 10 seconds(80 times 0.125s)
     if [[ $iteration -gt 80 ]] ; then
-      echo -ne "${RED}"'\nTimeout by awaiting of data directory.\nApache Meilisearch would normally have to do this.\n\n'"${NC}"
+      echo -ne "${RED}"'\nTimeout by awaiting of data directory.\nMeilisearch would normally have to do this.\n\n'"${NC}"
       cleanUp
       exit 1;
     fi

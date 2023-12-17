@@ -41,9 +41,9 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 abstract class AbstractBaseController extends ActionController
 {
     /**
-     * The HTTP message for 503 error from Apache Meilisearch server.
+     * The HTTP message for 503 error from Meilisearch server.
      */
-    protected const STATUS_503_MESSAGE = 'Apache Meilisearch Server is not available.';
+    protected const STATUS_503_MESSAGE = 'Meilisearch Server is not available.';
 
     private ?ContentObjectRenderer $contentObjectRenderer = null;
 

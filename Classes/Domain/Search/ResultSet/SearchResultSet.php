@@ -30,7 +30,7 @@ use WapplerSystems\Meilisearch\Search;
 use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
 
 /**
- * The SearchResultSet is used to provide access to the Apache Meilisearch Response and
+ * The SearchResultSet is used to provide access to the Meilisearch Response and
  * other relevant information, like the used Query and Request objects.
  *
  * @author Timo Schmidt <timo.schmidt@dkd.de>

@@ -3,7 +3,7 @@
 /**
  * Global Meilisearch Connection Settings
  */
-$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_enabled_read'] = [
+$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_enabled'] = [
     'label' => 'Enable Meilisearch for this site',
     'onChange' => 'reload',
     'config' => [
@@ -20,7 +20,7 @@ $GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_enabled_read'] = [
     ],
 ];
 
-$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_scheme_read'] = [
+$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_scheme'] = [
     'label' => 'Scheme',
     'config' => [
         'type' => 'input',
@@ -33,10 +33,10 @@ $GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_scheme_read'] = [
         ],
         'placeholder' => 'http',
     ],
-    'displayCond' => 'FIELD:meilisearch_enabled_read:=:1',
+    'displayCond' => 'FIELD:meilisearch_enabled:=:1',
 ];
 
-$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_host_read'] = [
+$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_host'] = [
     'label' => 'Host',
     'config' => [
         'type' => 'input',
@@ -44,29 +44,29 @@ $GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_host_read'] = [
         'placeholder' => 'localhost',
         'size' => 50,
     ],
-    'displayCond' => 'FIELD:meilisearch_enabled_read:=:1',
+    'displayCond' => 'FIELD:meilisearch_enabled:=:1',
 ];
 
-$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_port_read'] = [
+$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_port'] = [
     'label' => 'Port',
     'config' => [
         'type' => 'input',
         'required' => true,
         'size' => 5,
-        'default' => 8983,
+        'default' => 7700,
     ],
-    'displayCond' => 'FIELD:meilisearch_enabled_read:=:1',
+    'displayCond' => 'FIELD:meilisearch_enabled:=:1',
 ];
 
-$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_path_read'] = [
-    'label' => 'URL path to Apache Meilisearch server',
+$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_path'] = [
+    'label' => 'URL path to Meilisearch server',
     'description' => 'Must not contain "/meilisearch/"! Unless you have an additional "meilisearch" segment in your path like "http://localhost:8983/meilisearch/meilisearch/core_en".',
     'config' => [
         'type' => 'input',
         'eval' => 'trim',
         'default' => '/',
     ],
-    'displayCond' => 'FIELD:meilisearch_enabled_read:=:1',
+    'displayCond' => 'FIELD:meilisearch_enabled:=:1',
 ];
 
 $GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_use_write_connection'] = [
@@ -84,34 +84,18 @@ $GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_use_write_connecti
             ],
         ],
     ],
-    'displayCond' => 'FIELD:meilisearch_enabled_read:=:1',
+    'displayCond' => 'FIELD:meilisearch_enabled:=:1',
 ];
 
-// write TCA
-$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_scheme_write'] = $GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_scheme_read'];
-$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_scheme_write']['displayCond'] = 'FIELD:meilisearch_use_write_connection:=:1';
 
-$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_port_write'] = $GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_port_read'];
-$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_port_write']['config']['eval'] = '';
-$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_port_write']['displayCond'] = 'FIELD:meilisearch_use_write_connection:=:1';
+$GLOBALS['SiteConfiguration']['site']['palettes']['meilisearch']['showitem'] = 'meilisearch_scheme, meilisearch_port, --linebreak--, meilisearch_host, meilisearch_path';
 
-$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_host_write'] = $GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_host_read'];
-$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_host_write']['config']['eval'] = '';
-$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_host_write']['displayCond'] = 'FIELD:meilisearch_use_write_connection:=:1';
-
-$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_path_write'] = $GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_path_read'];
-$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_path_write']['config']['eval'] = '';
-$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_path_write']['displayCond'] = 'FIELD:meilisearch_use_write_connection:=:1';
-
-$GLOBALS['SiteConfiguration']['site']['palettes']['meilisearch_read']['showitem'] = 'meilisearch_scheme_read, meilisearch_port_read, --linebreak--, meilisearch_host_read, meilisearch_path_read';
-$GLOBALS['SiteConfiguration']['site']['palettes']['meilisearch_write']['showitem'] = 'meilisearch_scheme_write, meilisearch_port_write, --linebreak--, meilisearch_host_write, meilisearch_path_write';
-
-$GLOBALS['SiteConfiguration']['site']['types']['0']['showitem'] .= ',--div--;Meilisearch,meilisearch_enabled_read,--palette--;;meilisearch_read, meilisearch_use_write_connection,--palette--;;meilisearch_write';
+$GLOBALS['SiteConfiguration']['site']['types']['0']['showitem'] .= ',--div--;Meilisearch,meilisearch_enabled,--palette--;;meilisearch';
 
 /**
  * Language specific core configuration
  */
-$GLOBALS['SiteConfiguration']['site_language']['columns']['meilisearch_core_read'] = [
+$GLOBALS['SiteConfiguration']['site_language']['columns']['meilisearch_core'] = [
     'label' => 'Corename',
     'config' => [
         'type' => 'input',
@@ -164,6 +148,6 @@ $GLOBALS['SiteConfiguration']['site_language']['columns']['meilisearch_core_read
 
 $GLOBALS['SiteConfiguration']['site_language']['types']['1']['showitem'] = str_replace(
     'flag',
-    'flag, meilisearch_core_read, ',
+    'flag, meilisearch_core, ',
     $GLOBALS['SiteConfiguration']['site_language']['types']['1']['showitem']
 );

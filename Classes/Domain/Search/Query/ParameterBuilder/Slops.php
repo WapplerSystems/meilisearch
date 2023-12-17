@@ -29,25 +29,25 @@ class Slops implements ParameterBuilderInterface
     public const NO_SLOP = null;
 
     /**
-     * Represents the Apache Meilisearch parameter: qs
+     * Represents the Meilisearch parameter: qs
      * See: https://meilisearch.apache.org/guide/meilisearch/latest/query-guide/dismax-query-parser.html#qs-query-phrase-slop-parameter
      */
     protected ?int $querySlop = self::NO_SLOP;
 
     /**
-     * Represents the Apache Meilisearch parameter: ps
+     * Represents the Meilisearch parameter: ps
      * See: https://meilisearch.apache.org/guide/meilisearch/latest/query-guide/edismax-query-parser.html
      */
     protected ?int $phraseSlop = self::NO_SLOP;
 
     /**
-     * Represents the Apache Meilisearch parameter: ps2
+     * Represents the Meilisearch parameter: ps2
      * See: https://meilisearch.apache.org/guide/meilisearch/latest/query-guide/edismax-query-parser.html
      */
     protected ?int $bigramPhraseSlop = self::NO_SLOP;
 
     /**
-     * Represents the Apache Meilisearch parameter: ps3
+     * Represents the Meilisearch parameter: ps3
      * See: https://meilisearch.apache.org/guide/meilisearch/latest/query-guide/edismax-query-parser.html
      */
     protected ?int $trigramPhraseSlop = self::NO_SLOP;

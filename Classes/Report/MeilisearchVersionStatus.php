@@ -55,7 +55,7 @@ class MeilisearchVersionStatus extends AbstractMeilisearchStatus
                 $pingFailedMsg = 'Could not ping Meilisearch server, can not check version ' . $url;
                 $status = GeneralUtility::makeInstance(
                     Status::class,
-                    'Apache Meilisearch Version',
+                    'Meilisearch Version',
                     'Not accessible',
                     $pingFailedMsg,
                     ContextualFeedbackSeverity::ERROR
@@ -70,7 +70,7 @@ class MeilisearchVersionStatus extends AbstractMeilisearchStatus
             if (!$isOutdatedVersion) {
                 $reports[] = GeneralUtility::makeInstance(
                     Status::class,
-                    'Apache Meilisearch Version',
+                    'Meilisearch Version',
                     'OK',
                     'Version of ' . $coreAdmin->__toString() . ' is ok: ' . $meilisearchVersion,
                     ContextualFeedbackSeverity::OK
@@ -83,7 +83,7 @@ class MeilisearchVersionStatus extends AbstractMeilisearchStatus
             $report = $this->getRenderedReport('MeilisearchVersionStatus.html', $variables);
             $status = GeneralUtility::makeInstance(
                 Status::class,
-                'Apache Meilisearch Version',
+                'Meilisearch Version',
                 'Outdated, Unsupported',
                 $report,
                 ContextualFeedbackSeverity::ERROR
@@ -107,7 +107,7 @@ class MeilisearchVersionStatus extends AbstractMeilisearchStatus
      * Gets the clean Meilisearch version in case of a custom build which may have
      * additional information in the version string.
      *
-     * @param string $meilisearchVersion Unformatted Apache Meilisearch version number a provided by Meilisearch.
+     * @param string $meilisearchVersion Unformatted Meilisearch version number a provided by Meilisearch.
      * @return string Clean Meilisearch version number: mayor.minor.patch-level
      */
     protected function getCleanMeilisearchVersion(string $meilisearchVersion): string
@@ -120,12 +120,12 @@ class MeilisearchVersionStatus extends AbstractMeilisearchStatus
     }
 
     /**
-     * Formats the Apache Meilisearch server version number. By default, this is going
+     * Formats the Meilisearch server version number. By default, this is going
      * to be the simple major.minor.patch-level version. Custom Builds provide
      * more information though, in case of custom-builds, their complete
      * version will be added, too.
      *
-     * @param string $meilisearchVersion Unformatted Apache Meilisearch version number a provided by Meilisearch.
+     * @param string $meilisearchVersion Unformatted Meilisearch version number a provided by Meilisearch.
      * @return string formatted short version number, in case of custom-builds followed by the complete version number
      */
     protected function formatMeilisearchVersion(string $meilisearchVersion): string
