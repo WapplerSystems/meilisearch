@@ -15,6 +15,6 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\Query;
+namespace WapplerSystems\Meilisearch\Domain\Search\Query;
 
 class SearchQuery extends Query {}

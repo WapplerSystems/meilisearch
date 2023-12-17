@@ -13,12 +13,12 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Integration;
+namespace WapplerSystems\Meilisearch\Tests\Integration;
 
-use ApacheSolrForTypo3\Solr\Access\Rootline;
-use ApacheSolrForTypo3\Solr\Exception\InvalidArgumentException;
-use ApacheSolrForTypo3\Solr\IndexQueue\Item;
-use ApacheSolrForTypo3\Solr\IndexQueue\PageIndexerRequest;
+use WapplerSystems\Meilisearch\Access\Rootline;
+use WapplerSystems\Meilisearch\Exception\InvalidArgumentException;
+use WapplerSystems\Meilisearch\IndexQueue\Item;
+use WapplerSystems\Meilisearch\IndexQueue\PageIndexerRequest;
 use Psr\Http\Message\ResponseInterface;
 use ReflectionClass;
 use ReflectionException;
@@ -35,7 +35,7 @@ use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequestCon
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 /**
- * Base class for all integration tests in the EXT:solr project
+ * Base class for all integration tests in the EXT:meilisearch project
  *
  * @author Timo Schmidt
  */
@@ -254,7 +254,7 @@ abstract class IntegrationTest extends FunctionalTestCase
         error_reporting(error_reporting() & ~E_USER_DEPRECATED);
         set_error_handler(function (int $id, string $msg, string $file, int $line): bool {
             if ($id === E_USER_DEPRECATED && str_starts_with($msg, 'solr:deprecation: ')) {
-                $this->fail('Executed deprecated EXT:solr code: ' . $msg);
+                $this->fail('Executed deprecated EXT:meilisearch code: ' . $msg);
             }
             return true;
         });

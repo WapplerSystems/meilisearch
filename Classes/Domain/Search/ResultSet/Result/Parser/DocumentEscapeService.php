@@ -15,11 +15,11 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Result\Parser;
+namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet\Result\Parser;
 
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
-use ApacheSolrForTypo3\Solr\System\Solr\Document\Document;
-use ApacheSolrForTypo3\Solr\Util;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\System\Solr\Document\Document;
+use WapplerSystems\Meilisearch\Util;
 
 /**
  * Applies htmlspecialschars on documents of a solr response.

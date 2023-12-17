@@ -15,15 +15,15 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr;
+namespace WapplerSystems\Meilisearch;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\Query;
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
-use ApacheSolrForTypo3\Solr\System\Logging\DebugWriter;
-use ApacheSolrForTypo3\Solr\System\Logging\SolrLogManager;
-use ApacheSolrForTypo3\Solr\System\Solr\ResponseAdapter;
-use ApacheSolrForTypo3\Solr\System\Solr\SolrCommunicationException;
-use ApacheSolrForTypo3\Solr\System\Solr\SolrConnection;
+use WapplerSystems\Meilisearch\Domain\Search\Query\Query;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\System\Logging\DebugWriter;
+use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Solr\SolrCommunicationException;
+use WapplerSystems\Meilisearch\System\Solr\SolrConnection;
 use Doctrine\DBAL\Exception as DBALException;
 use stdClass;
 use Throwable;
@@ -86,7 +86,7 @@ class Search
     /**
      * Sets the Solr connection used by this search.
      *
-     * Since ApacheSolrForTypo3\Solr\Search is a \TYPO3\CMS\Core\SingletonInterface, this is needed to
+     * Since WapplerSystems\Meilisearch\Search is a \TYPO3\CMS\Core\SingletonInterface, this is needed to
      * be able to switch between multiple cores/connections during
      * one request
      */

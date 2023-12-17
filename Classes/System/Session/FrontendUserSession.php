@@ -15,7 +15,7 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\System\Session;
+namespace WapplerSystems\Meilisearch\System\Session;
 
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 

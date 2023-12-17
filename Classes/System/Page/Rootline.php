@@ -15,9 +15,9 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\System\Page;
+namespace WapplerSystems\Meilisearch\System\Page;
 
-use ApacheSolrForTypo3\Solr\System\Util\SiteUtility;
+use WapplerSystems\Meilisearch\System\Util\SiteUtility;
 
 /**
  * Rootline class. This class is used to perform operations on a rootline array.

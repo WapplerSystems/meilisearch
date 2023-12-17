@@ -13,15 +13,15 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Index\Queue\GarbageRemover;
+namespace WapplerSystems\Meilisearch\Domain\Index\Queue\GarbageRemover;
 
-use ApacheSolrForTypo3\Solr\ConnectionManager;
-use ApacheSolrForTypo3\Solr\Domain\Site\Exception\UnexpectedTYPO3SiteInitializationException;
-use ApacheSolrForTypo3\Solr\Exception\InvalidArgumentException;
-use ApacheSolrForTypo3\Solr\GarbageCollectorPostProcessor;
-use ApacheSolrForTypo3\Solr\IndexQueue\Queue;
-use ApacheSolrForTypo3\Solr\IndexQueue\QueueInterface;
-use ApacheSolrForTypo3\Solr\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\ConnectionManager;
+use WapplerSystems\Meilisearch\Domain\Site\Exception\UnexpectedTYPO3SiteInitializationException;
+use WapplerSystems\Meilisearch\Exception\InvalidArgumentException;
+use WapplerSystems\Meilisearch\GarbageCollectorPostProcessor;
+use WapplerSystems\Meilisearch\IndexQueue\Queue;
+use WapplerSystems\Meilisearch\IndexQueue\QueueInterface;
+use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
 use Doctrine\DBAL\Exception as DBALException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use UnexpectedValueException;
@@ -156,11 +156,11 @@ abstract class AbstractStrategy
      */
     protected function callPostProcessGarbageCollectorHook(string $table, int $uid): void
     {
-        if (!is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['solr']['postProcessGarbageCollector'] ?? null)) {
+        if (!is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['meilisearch']['postProcessGarbageCollector'] ?? null)) {
             return;
         }
 
-        foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['solr']['postProcessGarbageCollector'] as $classReference) {
+        foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['meilisearch']['postProcessGarbageCollector'] as $classReference) {
             $garbageCollectorPostProcessor = GeneralUtility::makeInstance($classReference);
 
             if ($garbageCollectorPostProcessor instanceof GarbageCollectorPostProcessor) {

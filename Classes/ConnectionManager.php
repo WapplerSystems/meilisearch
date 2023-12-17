@@ -15,16 +15,17 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr;
+namespace WapplerSystems\Meilisearch;
 
-use ApacheSolrForTypo3\Solr\Domain\Site\Exception\UnexpectedTYPO3SiteInitializationException;
-use ApacheSolrForTypo3\Solr\Domain\Site\Site;
-use ApacheSolrForTypo3\Solr\Domain\Site\SiteRepository;
-use ApacheSolrForTypo3\Solr\Exception\InvalidArgumentException;
-use ApacheSolrForTypo3\Solr\Exception\InvalidConnectionException;
-use ApacheSolrForTypo3\Solr\System\Records\Pages\PagesRepository as PagesRepositoryAtExtSolr;
-use ApacheSolrForTypo3\Solr\System\Solr\SolrConnection;
-use ApacheSolrForTypo3\Solr\System\Util\SiteUtility;
+use MeiliSearch\Client;
+use WapplerSystems\Meilisearch\Domain\Site\Exception\UnexpectedTYPO3SiteInitializationException;
+use WapplerSystems\Meilisearch\Domain\Site\Site;
+use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
+use WapplerSystems\Meilisearch\Exception\InvalidArgumentException;
+use WapplerSystems\Meilisearch\Exception\InvalidConnectionException;
+use WapplerSystems\Meilisearch\System\Records\Pages\PagesRepository as PagesRepositoryAtExtSolr;
+use WapplerSystems\Meilisearch\System\Solr\SolrConnection;
+use WapplerSystems\Meilisearch\System\Util\SiteUtility;
 use Doctrine\DBAL\Exception as DBALException;
 use Solarium\Core\Client\Endpoint;
 use TYPO3\CMS\Core\SingletonInterface;
@@ -236,4 +237,11 @@ class ConnectionManager implements SingletonInterface
             1575396474
         );
     }
+
+
+    private function createClientFromArray(array $configuration)
+    {
+        return new Client(($configuration['scheme'] ?? 'http') . '://' . $configuration['host'] . ':' . $configuration['port'], $configuration['apiKey'] ?? null, new \TYPO3\CMS\Core\Http\Client(\TYPO3\CMS\Core\Http\Client\GuzzleClientFactory::getClient()));
+    }
+
 }

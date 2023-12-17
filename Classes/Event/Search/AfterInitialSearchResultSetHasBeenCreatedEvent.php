@@ -15,18 +15,18 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Event\Search;
+namespace WapplerSystems\Meilisearch\Event\Search;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\SearchResultSet;
-use ApacheSolrForTypo3\Solr\Domain\Search\SearchRequest;
-use ApacheSolrForTypo3\Solr\Search;
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSet;
+use WapplerSystems\Meilisearch\Domain\Search\SearchRequest;
+use WapplerSystems\Meilisearch\Search;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 
 /**
  * Event which is used when the searchResultSet has been created and by the SearchQuery.
  *
  * Previously used via
- * $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['solr']['beforeSearch']
+ * $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['meilisearch']['beforeSearch']
  */
 final class AfterInitialSearchResultSetHasBeenCreatedEvent
 {

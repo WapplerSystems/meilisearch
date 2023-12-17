@@ -13,7 +13,7 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Backend;
+namespace WapplerSystems\Meilisearch\Backend;
 
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Backend\View\Event\PageContentPreviewRenderingEvent;
@@ -26,7 +26,7 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 use function str_starts_with;
 
 /**
- * Summary to display flexform settings of EXT:solr plugin in BE page module.
+ * Summary to display flexform settings of EXT:meilisearch plugin in BE page module.
  */
 class SettingsPreviewOnPlugins
 {
@@ -60,7 +60,7 @@ class SettingsPreviewOnPlugins
         /** @var StandaloneView $standaloneView */
         $standaloneView = GeneralUtility::makeInstance(StandaloneView::class);
         $standaloneView->setTemplatePathAndFilename(
-            GeneralUtility::getFileAbsFileName('EXT:solr/Resources/Private/Templates/Backend/PageModule/Summary.html')
+            GeneralUtility::getFileAbsFileName('EXT:meilisearch/Resources/Private/Templates/Backend/PageModule/Summary.html')
         );
 
         $standaloneView->assignMultiple([

@@ -13,7 +13,7 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Index\Queue\GarbageRemover;
+namespace WapplerSystems\Meilisearch\Domain\Index\Queue\GarbageRemover;
 
 use Doctrine\DBAL\Exception as DBALException;
 use TYPO3\CMS\Backend\Utility\BackendUtility;

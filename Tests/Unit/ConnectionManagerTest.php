@@ -13,14 +13,14 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit;
+namespace WapplerSystems\Meilisearch\Tests\Unit;
 
-use ApacheSolrForTypo3\Solr\ConnectionManager;
-use ApacheSolrForTypo3\Solr\Domain\Site\SiteRepository;
-use ApacheSolrForTypo3\Solr\Exception\InvalidConnectionException;
-use ApacheSolrForTypo3\Solr\System\Configuration\ConfigurationManager;
-use ApacheSolrForTypo3\Solr\System\Logging\SolrLogManager;
-use ApacheSolrForTypo3\Solr\System\Records\Pages\PagesRepository;
+use WapplerSystems\Meilisearch\ConnectionManager;
+use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
+use WapplerSystems\Meilisearch\Exception\InvalidConnectionException;
+use WapplerSystems\Meilisearch\System\Configuration\ConfigurationManager;
+use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Records\Pages\PagesRepository;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Client\ClientInterface;

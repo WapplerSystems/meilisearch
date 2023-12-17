@@ -13,15 +13,15 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\System\Configuration;
+namespace WapplerSystems\Meilisearch\System\Configuration;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\SearchRequest;
-use ApacheSolrForTypo3\Solr\Exception\InvalidArgumentException;
-use ApacheSolrForTypo3\Solr\IndexQueue\Indexer;
-use ApacheSolrForTypo3\Solr\IndexQueue\Initializer\Record;
-use ApacheSolrForTypo3\Solr\IndexQueue\Queue;
-use ApacheSolrForTypo3\Solr\System\ContentObject\ContentObjectService;
-use ApacheSolrForTypo3\Solr\System\Util\ArrayAccessor;
+use WapplerSystems\Meilisearch\Domain\Search\SearchRequest;
+use WapplerSystems\Meilisearch\Exception\InvalidArgumentException;
+use WapplerSystems\Meilisearch\IndexQueue\Indexer;
+use WapplerSystems\Meilisearch\IndexQueue\Initializer\Record;
+use WapplerSystems\Meilisearch\IndexQueue\Queue;
+use WapplerSystems\Meilisearch\System\ContentObject\ContentObjectService;
+use WapplerSystems\Meilisearch\System\Util\ArrayAccessor;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -417,7 +417,7 @@ class TypoScriptConfiguration
 
     /**
      * Returns the configured indexer class that should be used for a certain indexingConfiguration.
-     * By default, "ApacheSolrForTypo3\Solr\IndexQueue\Indexer" will be returned.
+     * By default, "WapplerSystems\Meilisearch\IndexQueue\Indexer" will be returned.
      *
      * plugin.tx_solr.index.queue.<configurationName>.indexer
      */

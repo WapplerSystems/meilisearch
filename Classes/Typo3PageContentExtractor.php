@@ -13,9 +13,9 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr;
+namespace WapplerSystems\Meilisearch;
 
-use ApacheSolrForTypo3\Solr\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
 use DOMDocument;
 use DOMXPath;
 use TYPO3\CMS\Core\Utility\GeneralUtility;

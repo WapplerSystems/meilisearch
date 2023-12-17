@@ -15,13 +15,13 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Event\IndexQueue;
+namespace WapplerSystems\Meilisearch\Event\IndexQueue;
 
 /**
  * Event which is fired after an index queue item has been updated.
  *
  * Previously available as:
- * $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['solr']['postProcessIndexQueueUpdateItem']
+ * $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['meilisearch']['postProcessIndexQueueUpdateItem']
  */
 final class AfterIndexQueueItemHasBeenMarkedForReindexingEvent
 {

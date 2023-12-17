@@ -15,9 +15,9 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\Domain\Search\ResultSet\Facets\TestPackage;
+namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Search\ResultSet\Facets\TestPackage;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\AbstractFacetPackage;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\AbstractFacetPackage;
 
 class TestPackage extends AbstractFacetPackage
 {

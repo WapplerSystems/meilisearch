@@ -13,13 +13,13 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\ViewHelpers\Facet\Options\Group\Prefix;
+namespace WapplerSystems\Meilisearch\Tests\Unit\ViewHelpers\Facet\Options\Group\Prefix;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\OptionBased\OptionCollection;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\OptionBased\Options\Option;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\OptionBased\Options\OptionsFacet;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
-use ApacheSolrForTypo3\Solr\ViewHelpers\Facet\Options\Group\Prefix\LabelFilterViewHelper;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\OptionBased\OptionCollection;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\OptionBased\Options\Option;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\OptionBased\Options\OptionsFacet;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\ViewHelpers\Facet\Options\Group\Prefix\LabelFilterViewHelper;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\Variables\StandardVariableProvider;
 

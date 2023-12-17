@@ -13,14 +13,14 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Integration\Controller\Backend\Search;
+namespace WapplerSystems\Meilisearch\Tests\Integration\Controller\Backend\Search;
 
-use ApacheSolrForTypo3\Solr\ConnectionManager;
-use ApacheSolrForTypo3\Solr\Controller\Backend\Search\IndexAdministrationModuleController;
-use ApacheSolrForTypo3\Solr\Domain\Site\SiteRepository;
-use ApacheSolrForTypo3\Solr\IndexQueue\Queue;
-use ApacheSolrForTypo3\Solr\System\Mvc\Backend\Service\ModuleDataStorageService;
-use ApacheSolrForTypo3\Solr\Tests\Integration\IntegrationTest;
+use WapplerSystems\Meilisearch\ConnectionManager;
+use WapplerSystems\Meilisearch\Controller\Backend\Search\IndexAdministrationModuleController;
+use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
+use WapplerSystems\Meilisearch\IndexQueue\Queue;
+use WapplerSystems\Meilisearch\System\Mvc\Backend\Service\ModuleDataStorageService;
+use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Imaging\IconFactory;

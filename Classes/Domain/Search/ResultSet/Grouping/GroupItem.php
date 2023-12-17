@@ -15,11 +15,11 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Grouping;
+namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet\Grouping;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Result\SearchResultCollection;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\SearchResultSet;
-use ApacheSolrForTypo3\Solr\Domain\Search\SearchRequest;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Result\SearchResultCollection;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSet;
+use WapplerSystems\Meilisearch\Domain\Search\SearchRequest;
 
 /**
  * Class GroupItem

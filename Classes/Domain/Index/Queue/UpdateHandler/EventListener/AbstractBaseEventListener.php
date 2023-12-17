@@ -15,14 +15,14 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\EventListener;
+namespace WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\EventListener;
 
-use ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\DataUpdateHandler;
-use ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\EventListener\Events\ProcessingFinishedEventInterface;
-use ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events\DataUpdateEventInterface;
-use ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\GarbageHandler;
-use ApacheSolrForTypo3\Solr\Exception\InvalidArgumentException;
-use ApacheSolrForTypo3\Solr\System\Configuration\ExtensionConfiguration;
+use WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\DataUpdateHandler;
+use WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\EventListener\Events\ProcessingFinishedEventInterface;
+use WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\DataUpdateEventInterface;
+use WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\GarbageHandler;
+use WapplerSystems\Meilisearch\Exception\InvalidArgumentException;
+use WapplerSystems\Meilisearch\System\Configuration\ExtensionConfiguration;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 

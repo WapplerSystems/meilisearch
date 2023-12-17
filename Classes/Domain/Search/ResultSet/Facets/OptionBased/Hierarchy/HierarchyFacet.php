@@ -13,11 +13,11 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\OptionBased\Hierarchy;
+namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\OptionBased\Hierarchy;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\AbstractFacet;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\AbstractFacetItemCollection;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\SearchResultSet;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\AbstractFacet;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\AbstractFacetItemCollection;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSet;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**

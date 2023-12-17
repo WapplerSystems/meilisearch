@@ -13,10 +13,10 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Eid;
+namespace WapplerSystems\Meilisearch\Eid;
 
-use ApacheSolrForTypo3\Solr\Api;
-use ApacheSolrForTypo3\Solr\Domain\Site\SiteHashService;
+use WapplerSystems\Meilisearch\Api;
+use WapplerSystems\Meilisearch\Domain\Site\SiteHashService;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Http\ImmediateResponseException;

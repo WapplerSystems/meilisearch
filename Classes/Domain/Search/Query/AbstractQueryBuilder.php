@@ -15,23 +15,23 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\Query;
+namespace WapplerSystems\Meilisearch\Domain\Search\Query;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\BigramPhraseFields;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\Elevation;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\Faceting;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\FieldCollapsing;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\Grouping;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\Highlighting;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\Operator;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\PhraseFields;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\QueryFields;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\ReturnFields;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\Slops;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\Sorting;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\Sortings;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\Spellchecking;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\TrigramPhraseFields;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\BigramPhraseFields;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\Elevation;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\Faceting;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\FieldCollapsing;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\Grouping;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\Highlighting;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\Operator;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\PhraseFields;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\QueryFields;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\ReturnFields;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\Slops;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\Sorting;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\Sortings;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\Spellchecking;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\TrigramPhraseFields;
 use Closure;
 
 /**

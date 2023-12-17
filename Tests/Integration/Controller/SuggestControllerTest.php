@@ -13,10 +13,10 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Integration\Controller;
+namespace WapplerSystems\Meilisearch\Tests\Integration\Controller;
 
-use ApacheSolrForTypo3\Solr\Controller\SuggestController;
-use ApacheSolrForTypo3\Solr\Tests\Integration\IntegrationTest;
+use WapplerSystems\Meilisearch\Controller\SuggestController;
+use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use TYPO3\CMS\Core\Http\Response;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
 
@@ -40,7 +40,7 @@ class SuggestControllerTest extends IntegrationTest
             page = PAGE
             page.typeNum = 0
             # include suggest feature
-            @import \'EXT:solr/Configuration/TypoScript/Examples/Suggest/setup.typoscript\'
+            @import \'EXT:meilisearch/Configuration/TypoScript/Examples/Suggest/setup.typoscript\'
             '
         );
     }

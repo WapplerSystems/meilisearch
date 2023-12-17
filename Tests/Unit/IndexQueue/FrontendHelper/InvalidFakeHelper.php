@@ -1,5 +1,5 @@
 <?php
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\IndexQueue\FrontendHelper;
+namespace WapplerSystems\Meilisearch\Tests\Unit\IndexQueue\FrontendHelper;
 
 class InvalidFakeHelper {}

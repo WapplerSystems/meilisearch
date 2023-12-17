@@ -13,10 +13,10 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\Domain\Search\LastSearches;
+namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Search\LastSearches;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\LastSearches\LastSearchesRepository;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\Domain\Search\LastSearches\LastSearchesRepository;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class LastSearchesRepositoryTest extends SetUpUnitTestCase

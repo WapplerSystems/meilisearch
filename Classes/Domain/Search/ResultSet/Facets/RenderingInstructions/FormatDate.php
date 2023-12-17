@@ -13,9 +13,9 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\RenderingInstructions;
+namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\RenderingInstructions;
 
-use ApacheSolrForTypo3\Solr\System\DateTime\FormatService;
+use WapplerSystems\Meilisearch\System\DateTime\FormatService;
 use Exception;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 

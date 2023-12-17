@@ -3,11 +3,11 @@
 defined('TYPO3') or die('Access denied.');
 
 // Register the plugins
-$pluginSignature = 'solr_pi_search';
+$pluginSignature = 'meilisearch_pi_search';
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-    'solr',
+    'meilisearch',
     'pi_search',
-    'LLL:EXT:solr/Resources/Private/Language/locallang.xlf:tt_content.list_type_pi_search'
+    'LLL:EXT:meilisearch/Resources/Private/Language/locallang.xlf:tt_content.list_type_pi_search'
 );
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$pluginSignature]
     = 'layout,select_key,pages,recursive';
@@ -15,23 +15,23 @@ $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignat
     = 'pi_flexform';
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
     $pluginSignature,
-    'FILE:EXT:solr/Configuration/FlexForms/Form.xml'
+    'FILE:EXT:meilisearch/Configuration/FlexForms/Form.xml'
 );
 
-$pluginSignature = 'solr_pi_frequentlysearched';
+$pluginSignature = 'meilisearch_pi_frequentlysearched';
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-    'solr',
+    'meilisearch',
     'pi_frequentlySearched',
-    'LLL:EXT:solr/Resources/Private/Language/locallang.xlf:tt_content.list_type_pi_frequentsearches'
+    'LLL:EXT:meilisearch/Resources/Private/Language/locallang.xlf:tt_content.list_type_pi_frequentsearches'
 );
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$pluginSignature]
     = 'layout,select_key,pages,recursive';
 
-$pluginSignature = 'solr_pi_results';
+$pluginSignature = 'meilisearch_pi_results';
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-    'solr',
+    'meilisearch',
     'pi_results',
-    'LLL:EXT:solr/Resources/Private/Language/locallang.xlf:tt_content.list_type_pi_results'
+    'LLL:EXT:meilisearch/Resources/Private/Language/locallang.xlf:tt_content.list_type_pi_results'
 );
 
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$pluginSignature]
@@ -41,5 +41,5 @@ $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignat
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
     $pluginSignature,
-    'FILE:EXT:solr/Configuration/FlexForms/Results.xml'
+    'FILE:EXT:meilisearch/Configuration/FlexForms/Results.xml'
 );

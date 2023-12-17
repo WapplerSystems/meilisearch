@@ -1,27 +1,27 @@
 <?php
 /**
- * Definitions for modules provided by EXT:solr
+ * Definitions for modules provided by EXT:meilisearch
  */
 
-use ApacheSolrForTypo3\Solr\Controller\Backend\Search\CoreOptimizationModuleController;
-use ApacheSolrForTypo3\Solr\Controller\Backend\Search\IndexAdministrationModuleController;
-use ApacheSolrForTypo3\Solr\Controller\Backend\Search\IndexQueueModuleController;
-use ApacheSolrForTypo3\Solr\Controller\Backend\Search\InfoModuleController;
+use WapplerSystems\Meilisearch\Controller\Backend\Search\CoreOptimizationModuleController;
+use WapplerSystems\Meilisearch\Controller\Backend\Search\IndexAdministrationModuleController;
+use WapplerSystems\Meilisearch\Controller\Backend\Search\IndexQueueModuleController;
+use WapplerSystems\Meilisearch\Controller\Backend\Search\InfoModuleController;
 
 return [
     'searchbackend' => [
-        'labels' => 'LLL:EXT:solr/Resources/Private/Language/locallang_mod.xlf',
-        'iconIdentifier' => 'extensions-solr-module-main',
+        'labels' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_mod.xlf',
+        'iconIdentifier' => 'extensions-meilisearch-module-main',
         'navigationComponent' => '@typo3/backend/page-tree/page-tree-element',
-        'extensionName' => 'Solr',
+        'extensionName' => 'Meilisearch',
     ],
     'searchbackend_info' => [
         'parent' => 'searchbackend',
         'access' => 'user,group',
         'path' => '/module/searchbackend/info',
-        'iconIdentifier' => 'extensions-solr-module-info',
-        'labels' => 'LLL:EXT:solr/Resources/Private/Language/locallang_mod_info.xlf',
-        'extensionName' => 'Solr',
+        'iconIdentifier' => 'extensions-meilisearch-module-info',
+        'labels' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_mod_info.xlf',
+        'extensionName' => 'Meilisearch',
         'controllerActions' => [
             InfoModuleController::class => [
                 'index', 'switchSite', 'switchCore', 'documentsDetails',
@@ -32,9 +32,9 @@ return [
         'parent' => 'searchbackend',
         'access' => 'user,group',
         'path' => '/module/searchbackend/core-optimization',
-        'iconIdentifier' => 'extensions-solr-module-solr-core-optimization',
-        'labels' => 'LLL:EXT:solr/Resources/Private/Language/locallang_mod_coreoptimize.xlf',
-        'extensionName' => 'Solr',
+        'iconIdentifier' => 'extensions-meilisearch-module-meilisearch-core-optimization',
+        'labels' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_mod_coreoptimize.xlf',
+        'extensionName' => 'Meilisearch',
         'controllerActions' => [
             CoreOptimizationModuleController::class => [
                 'index',
@@ -48,9 +48,9 @@ return [
         'parent' => 'searchbackend',
         'access' => 'user,group',
         'path' => '/module/searchbackend/index-queue',
-        'iconIdentifier' => 'extensions-solr-module-index-queue',
-        'labels' => 'LLL:EXT:solr/Resources/Private/Language/locallang_mod_indexqueue.xlf',
-        'extensionName' => 'Solr',
+        'iconIdentifier' => 'extensions-meilisearch-module-index-queue',
+        'labels' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_mod_indexqueue.xlf',
+        'extensionName' => 'Meilisearch',
         'controllerActions' => [
             IndexQueueModuleController::class => [
                 'index', 'initializeIndexQueue', 'clearIndexQueue', 'requeueDocument',
@@ -62,9 +62,9 @@ return [
         'parent' => 'searchbackend',
         'access' => 'user,group',
         'path' => '/module/searchbackend/index-administration',
-        'iconIdentifier' => 'extensions-solr-module-index-administration',
-        'labels' => 'LLL:EXT:solr/Resources/Private/Language/locallang_mod_indexadmin.xlf',
-        'extensionName' => 'Solr',
+        'iconIdentifier' => 'extensions-meilisearch-module-index-administration',
+        'labels' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_mod_indexadmin.xlf',
+        'extensionName' => 'Meilisearch',
         'controllerActions' => [
             IndexAdministrationModuleController::class => [
                 'index', 'emptyIndex', 'clearIndexQueue', 'reloadIndexConfiguration', 'switchSite',

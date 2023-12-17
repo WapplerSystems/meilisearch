@@ -15,10 +15,10 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Integration\Report;
+namespace WapplerSystems\Meilisearch\Tests\Integration\Report;
 
-use ApacheSolrForTypo3\Solr\Report\SolrConfigurationStatus;
-use ApacheSolrForTypo3\Solr\Tests\Integration\IntegrationTest;
+use WapplerSystems\Meilisearch\Report\SolrConfigurationStatus;
+use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 

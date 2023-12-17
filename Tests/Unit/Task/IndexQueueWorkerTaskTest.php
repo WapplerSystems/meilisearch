@@ -13,10 +13,10 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\Task;
+namespace WapplerSystems\Meilisearch\Tests\Unit\Task;
 
-use ApacheSolrForTypo3\Solr\Task\IndexQueueWorkerTask;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\Task\IndexQueueWorkerTask;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use TYPO3\CMS\Core\Core\Environment;
 
 /**

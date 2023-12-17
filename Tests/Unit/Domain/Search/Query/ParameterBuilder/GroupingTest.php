@@ -13,11 +13,11 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\Domain\Search\Query\ParameterBuilder;
+namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Search\Query\ParameterBuilder;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\Grouping;
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\Grouping;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 
 /**
  * @author Timo Hund <timo.hund@dkd.de>

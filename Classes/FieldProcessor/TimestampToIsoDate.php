@@ -15,9 +15,9 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\FieldProcessor;
+namespace WapplerSystems\Meilisearch\FieldProcessor;
 
-use ApacheSolrForTypo3\Solr\System\DateTime\FormatService;
+use WapplerSystems\Meilisearch\System\DateTime\FormatService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**

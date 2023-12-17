@@ -13,12 +13,12 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\ViewHelpers;
+namespace WapplerSystems\Meilisearch\Tests\Unit\ViewHelpers;
 
-use ApacheSolrForTypo3\Solr\Controller\SearchController;
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
-use ApacheSolrForTypo3\Solr\ViewHelpers\SearchFormViewHelper;
+use WapplerSystems\Meilisearch\Controller\SearchController;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\ViewHelpers\SearchFormViewHelper;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Http\ServerRequest;
 use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;

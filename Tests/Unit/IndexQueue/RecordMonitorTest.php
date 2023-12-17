@@ -13,15 +13,15 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\IndexQueue;
+namespace WapplerSystems\Meilisearch\Tests\Unit\IndexQueue;
 
-use ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events\ContentElementDeletedEvent;
-use ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events\RecordMovedEvent;
-use ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events\RecordUpdatedEvent;
-use ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events\VersionSwappedEvent;
-use ApacheSolrForTypo3\Solr\IndexQueue\RecordMonitor;
-use ApacheSolrForTypo3\Solr\System\Configuration\ExtensionConfiguration;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\ContentElementDeletedEvent;
+use WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\RecordMovedEvent;
+use WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\RecordUpdatedEvent;
+use WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\VersionSwappedEvent;
+use WapplerSystems\Meilisearch\IndexQueue\RecordMonitor;
+use WapplerSystems\Meilisearch\System\Configuration\ExtensionConfiguration;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;

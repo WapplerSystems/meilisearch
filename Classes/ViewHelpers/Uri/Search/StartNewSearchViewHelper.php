@@ -13,9 +13,9 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\ViewHelpers\Uri\Search;
+namespace WapplerSystems\Meilisearch\ViewHelpers\Uri\Search;
 
-use ApacheSolrForTypo3\Solr\ViewHelpers\Uri\AbstractUriViewHelper;
+use WapplerSystems\Meilisearch\ViewHelpers\Uri\AbstractUriViewHelper;
 use Closure;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 

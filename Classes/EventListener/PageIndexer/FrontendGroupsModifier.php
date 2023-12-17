@@ -15,12 +15,12 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\EventListener\PageIndexer;
+namespace WapplerSystems\Meilisearch\EventListener\PageIndexer;
 
-use ApacheSolrForTypo3\Solr\Access\Rootline;
-use ApacheSolrForTypo3\Solr\IndexQueue\FrontendHelper\AuthorizationService;
-use ApacheSolrForTypo3\Solr\IndexQueue\PageIndexerRequest;
-use ApacheSolrForTypo3\Solr\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\Access\Rootline;
+use WapplerSystems\Meilisearch\IndexQueue\FrontendHelper\AuthorizationService;
+use WapplerSystems\Meilisearch\IndexQueue\PageIndexerRequest;
+use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
 use TYPO3\CMS\Core\Http\JsonResponse;
 use TYPO3\CMS\Core\Http\PropagateResponseException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;

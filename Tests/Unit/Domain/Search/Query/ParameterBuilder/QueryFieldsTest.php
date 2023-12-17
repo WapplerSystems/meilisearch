@@ -13,10 +13,10 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\Domain\Search\Query\ParameterBuilder;
+namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Search\Query\ParameterBuilder;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\QueryFields;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\QueryFields;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 
 /**
  * @author Timo Hund <timo.hund@dkd.de>

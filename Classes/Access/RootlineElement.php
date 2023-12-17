@@ -13,7 +13,7 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Access;
+namespace WapplerSystems\Meilisearch\Access;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 

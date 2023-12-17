@@ -13,15 +13,15 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Utility;
+namespace WapplerSystems\Meilisearch\Utility;
 
 /**
  * Utility class to sort parameters
  *
  * This class is used in places building URI for links, facets etc.
  *
- * @see \ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\UrlFacetContainer::getActiveFacets
- * @see \ApacheSolrForTypo3\Solr\Domain\Search\Uri\SearchUriBuilder::getAddFacetValueUri
+ * @see \WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\UrlFacetContainer::getActiveFacets
+ * @see \WapplerSystems\Meilisearch\Domain\Search\Uri\SearchUriBuilder::getAddFacetValueUri
  */
 class ParameterSortingUtility
 {

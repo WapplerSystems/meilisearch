@@ -15,11 +15,11 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\OptionBased;
+namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\OptionBased;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\AbstractFacetItemCollection;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\OptionBased\Options\Option;
-use ApacheSolrForTypo3\Solr\System\Data\AbstractCollection;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\AbstractFacetItemCollection;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\OptionBased\Options\Option;
+use WapplerSystems\Meilisearch\System\Data\AbstractCollection;
 
 /**
  * Collection for facet options.

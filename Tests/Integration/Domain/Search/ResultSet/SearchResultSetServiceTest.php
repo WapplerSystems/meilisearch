@@ -13,17 +13,17 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Integration\Domain\Search\ResultSet;
+namespace WapplerSystems\Meilisearch\Tests\Integration\Domain\Search\ResultSet;
 
-use ApacheSolrForTypo3\Solr\ConnectionManager;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Result\SearchResult;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Result\SearchResultCollection;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\SearchResultSetService;
-use ApacheSolrForTypo3\Solr\Domain\Search\SearchRequest;
-use ApacheSolrForTypo3\Solr\Search;
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
-use ApacheSolrForTypo3\Solr\Tests\Integration\IntegrationTest;
-use ApacheSolrForTypo3\Solr\Util;
+use WapplerSystems\Meilisearch\ConnectionManager;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Result\SearchResult;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Result\SearchResultCollection;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSetService;
+use WapplerSystems\Meilisearch\Domain\Search\SearchRequest;
+use WapplerSystems\Meilisearch\Search;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
+use WapplerSystems\Meilisearch\Util;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\UserAspect;
 use TYPO3\CMS\Core\Utility\GeneralUtility;

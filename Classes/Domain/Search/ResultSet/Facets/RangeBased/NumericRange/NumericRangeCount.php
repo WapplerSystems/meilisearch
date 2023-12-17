@@ -20,7 +20,7 @@
  * @author Timo Hund <timo.hund@dkd.de>
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\RangeBased\NumericRange;
+namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\RangeBased\NumericRange;
 
 class NumericRangeCount
 {

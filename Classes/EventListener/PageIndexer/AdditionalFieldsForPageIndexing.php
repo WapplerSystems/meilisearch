@@ -15,10 +15,10 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\EventListener\PageIndexer;
+namespace WapplerSystems\Meilisearch\EventListener\PageIndexer;
 
-use ApacheSolrForTypo3\Solr\Event\Indexing\AfterPageDocumentIsCreatedForIndexingEvent;
-use ApacheSolrForTypo3\Solr\System\ContentObject\ContentObjectService;
+use WapplerSystems\Meilisearch\Event\Indexing\AfterPageDocumentIsCreatedForIndexingEvent;
+use WapplerSystems\Meilisearch\System\ContentObject\ContentObjectService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**

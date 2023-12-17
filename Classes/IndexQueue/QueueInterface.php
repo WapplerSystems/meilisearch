@@ -15,10 +15,10 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\IndexQueue;
+namespace WapplerSystems\Meilisearch\IndexQueue;
 
-use ApacheSolrForTypo3\Solr\Domain\Index\Queue\Statistic\QueueStatistic;
-use ApacheSolrForTypo3\Solr\Domain\Site\Site;
+use WapplerSystems\Meilisearch\Domain\Index\Queue\Statistic\QueueStatistic;
+use WapplerSystems\Meilisearch\Domain\Site\Site;
 
 /**
  * This interface defines which methods are required by a index queue.

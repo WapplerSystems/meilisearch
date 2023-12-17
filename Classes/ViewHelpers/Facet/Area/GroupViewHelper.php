@@ -13,10 +13,10 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\ViewHelpers\Facet\Area;
+namespace WapplerSystems\Meilisearch\ViewHelpers\Facet\Area;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\FacetCollection;
-use ApacheSolrForTypo3\Solr\ViewHelpers\AbstractSolrFrontendViewHelper;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\FacetCollection;
+use WapplerSystems\Meilisearch\ViewHelpers\AbstractSolrFrontendViewHelper;
 use Closure;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;

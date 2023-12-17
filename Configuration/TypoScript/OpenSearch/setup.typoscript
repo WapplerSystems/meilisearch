@@ -15,7 +15,7 @@ page {
 			<link rel="search"
 				  type="application/opensearchdescription+xml"
 				  href="|"
-				  title="{$plugin.tx_solr.OpenSearch.shortName}"
+				  title="{$plugin.tx_meilisearch.OpenSearch.shortName}"
 			/>
 		)
 	}
@@ -39,8 +39,8 @@ OpenSearch {
 	10.value (
 <?xml version="1.0" encoding="UTF-8"?>
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
-	<ShortName>{$plugin.tx_solr.OpenSearch.shortName}</ShortName>
-	<Description>{$plugin.tx_solr.OpenSearch.description}</Description>
+	<ShortName>{$plugin.tx_meilisearch.OpenSearch.shortName}</ShortName>
+	<Description>{$plugin.tx_meilisearch.OpenSearch.description}</Description>
 	<InputEncoding>UTF-8</InputEncoding>
 	<OutputEncoding>UTF-8</OutputEncoding>
 
@@ -71,7 +71,7 @@ OpenSearch {
 	30.value (
 	<Url type="text/html"
 		 method="GET"
-		 template="{getIndpEnv:TYPO3_SITE_URL}index.php?id={$plugin.tx_solr.search.targetPage}&amp;L={siteLanguage:languageId}
+		 template="{getIndpEnv:TYPO3_SITE_URL}index.php?id={$plugin.tx_meilisearch.search.targetPage}&amp;L={siteLanguage:languageId}
 	)
 
 	31 = TEXT
@@ -86,7 +86,7 @@ OpenSearch {
 	40.value (
 	<Url type="application/x-suggestions+json"
 		 rel="suggestions"
-		 template="{getIndpEnv:TYPO3_SITE_URL}index.php?id={$plugin.tx_solr.search.targetPage}&amp;L={siteLanguage:languageId}&amp;eID=tx_solr_suggest&amp;format=OpenSearch
+		 template="{getIndpEnv:TYPO3_SITE_URL}index.php?id={$plugin.tx_meilisearch.search.targetPage}&amp;L={siteLanguage:languageId}&amp;eID=tx_meilisearch_suggest&amp;format=OpenSearch
 	)
 
 	41 = TEXT

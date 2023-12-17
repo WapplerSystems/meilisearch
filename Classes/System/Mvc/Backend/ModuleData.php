@@ -15,9 +15,9 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\System\Mvc\Backend;
+namespace WapplerSystems\Meilisearch\System\Mvc\Backend;
 
-use ApacheSolrForTypo3\Solr\Domain\Site\Site;
+use WapplerSystems\Meilisearch\Domain\Site\Site;
 
 /**
  * Represents the state of needed for backend module components e.g. selected option from select menu, enabled or disabled button, etc..

@@ -13,7 +13,7 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit;
+namespace WapplerSystems\Meilisearch\Tests\Unit;
 
 use ReflectionClass;
 use ReflectionException;

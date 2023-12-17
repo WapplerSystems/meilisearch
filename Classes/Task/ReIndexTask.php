@@ -15,10 +15,10 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Task;
+namespace WapplerSystems\Meilisearch\Task;
 
-use ApacheSolrForTypo3\Solr\ConnectionManager;
-use ApacheSolrForTypo3\Solr\Domain\Index\Queue\QueueInitializationService;
+use WapplerSystems\Meilisearch\ConnectionManager;
+use WapplerSystems\Meilisearch\Domain\Index\Queue\QueueInitializationService;
 use Doctrine\DBAL\ConnectionException as DBALConnectionException;
 use Doctrine\DBAL\Exception as DBALException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;

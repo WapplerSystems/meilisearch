@@ -15,11 +15,11 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\Domain\Search\ResultSet\Facets\RangeBased\NumericRange;
+namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Search\ResultSet\Facets\RangeBased\NumericRange;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\RangeBased\NumericRange\NumericRangeFacet;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\RangeBased\NumericRange\NumericRangeFacetParser;
-use ApacheSolrForTypo3\Solr\Tests\Unit\Domain\Search\ResultSet\Facets\SetUpFacetParser;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\RangeBased\NumericRange\NumericRangeFacet;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\RangeBased\NumericRange\NumericRangeFacetParser;
+use WapplerSystems\Meilisearch\Tests\Unit\Domain\Search\ResultSet\Facets\SetUpFacetParser;
 
 /**
  * Class DateRangeFacetParserTest

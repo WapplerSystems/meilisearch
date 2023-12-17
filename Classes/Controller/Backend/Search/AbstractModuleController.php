@@ -13,16 +13,16 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Controller\Backend\Search;
+namespace WapplerSystems\Meilisearch\Controller\Backend\Search;
 
-use ApacheSolrForTypo3\Solr\ConnectionManager;
-use ApacheSolrForTypo3\Solr\Domain\Site\Exception\UnexpectedTYPO3SiteInitializationException;
-use ApacheSolrForTypo3\Solr\Domain\Site\Site;
-use ApacheSolrForTypo3\Solr\Domain\Site\SiteRepository;
-use ApacheSolrForTypo3\Solr\Exception\InvalidArgumentException;
-use ApacheSolrForTypo3\Solr\IndexQueue\QueueInterface;
-use ApacheSolrForTypo3\Solr\System\Mvc\Backend\Service\ModuleDataStorageService;
-use ApacheSolrForTypo3\Solr\System\Solr\SolrConnection as SolrCoreConnection;
+use WapplerSystems\Meilisearch\ConnectionManager;
+use WapplerSystems\Meilisearch\Domain\Site\Exception\UnexpectedTYPO3SiteInitializationException;
+use WapplerSystems\Meilisearch\Domain\Site\Site;
+use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
+use WapplerSystems\Meilisearch\Exception\InvalidArgumentException;
+use WapplerSystems\Meilisearch\IndexQueue\QueueInterface;
+use WapplerSystems\Meilisearch\System\Mvc\Backend\Service\ModuleDataStorageService;
+use WapplerSystems\Meilisearch\System\Solr\SolrConnection as SolrCoreConnection;
 use Doctrine\DBAL\Exception as DBALException;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Template\Components\Menu\Menu;
@@ -231,7 +231,7 @@ abstract class AbstractModuleController extends ActionController
         $this->addFlashMessage(
             LocalizationUtility::translate(
                 'solr.backend.index_administration.success.queue_emptied',
-                'Solr',
+                'Meilisearch',
                 [$this->selectedSite->getLabel()]
             )
         );
@@ -251,7 +251,7 @@ abstract class AbstractModuleController extends ActionController
         $moduleData->setCore($corePath);
 
         $this->moduleDataStorageService->persistModuleData($moduleData);
-        $message = LocalizationUtility::translate('coreselector_switched_successfully', 'solr', [$corePath]);
+        $message = LocalizationUtility::translate('coreselector_switched_successfully', 'meilisearch', [$corePath]);
         $this->addFlashMessage($message);
         return new RedirectResponse($uriToRedirectTo, 303);
     }
@@ -286,7 +286,7 @@ abstract class AbstractModuleController extends ActionController
         }
         if (!$this->selectedSolrCoreConnection instanceof SolrCoreConnection && count($solrCoreConnections) > 0) {
             $this->initializeFirstAvailableSolrCoreConnection($solrCoreConnections, $moduleData);
-            $message = LocalizationUtility::translate('coreselector_switched_to_default_core', 'solr', [$currentSolrCorePath, $this->selectedSite->getLabel(), $this->selectedSolrCoreConnection->getAdminService()->getCorePath()]);
+            $message = LocalizationUtility::translate('coreselector_switched_to_default_core', 'meilisearch', [$currentSolrCorePath, $this->selectedSite->getLabel(), $this->selectedSolrCoreConnection->getAdminService()->getCorePath()]);
             $this->addFlashMessage($message, '', ContextualFeedbackSeverity::NOTICE);
         }
     }

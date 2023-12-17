@@ -13,10 +13,10 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\System\Configuration;
+namespace WapplerSystems\Meilisearch\Tests\Unit\System\Configuration;
 
-use ApacheSolrForTypo3\Solr\System\Configuration\ExtensionConfiguration;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\System\Configuration\ExtensionConfiguration;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
 
@@ -31,7 +31,7 @@ class ExtensionConfigurationTest extends SetUpUnitTestCase
 {
     protected function setUp(): void
     {
-        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['solr'] = [];
+        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['meilisearch'] = [];
         parent::setUp();
     }
 

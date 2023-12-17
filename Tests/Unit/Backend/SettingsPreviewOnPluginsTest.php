@@ -15,10 +15,10 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\Backend;
+namespace WapplerSystems\Meilisearch\Tests\Unit\Backend;
 
-use ApacheSolrForTypo3\Solr\Backend\SettingsPreviewOnPlugins;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\Backend\SettingsPreviewOnPlugins;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Backend\View\Event\PageContentPreviewRenderingEvent;
 use TYPO3\CMS\Backend\View\PageLayoutContext;
@@ -26,7 +26,7 @@ use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Service\FlexFormService;
 
 /**
- * EXT:solr offers a summary in the BE on search plugins, that summarizes the extension
+ * EXT:meilisearch offers a summary in the BE on search plugins, that summarizes the extension
  * configuration.
  * This testcase checks if the SummaryController produces the expected output.
  */

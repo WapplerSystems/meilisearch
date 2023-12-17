@@ -1,28 +1,28 @@
 <?php
 
-use ApacheSolrForTypo3\Solr\Controller\SearchController;
-use ApacheSolrForTypo3\Solr\Controller\SuggestController;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Result\Parser\GroupedResultParser;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Result\Parser\ResultParserRegistry;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Result\SearchResult;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\SearchResultSet;
-use ApacheSolrForTypo3\Solr\Eid\ApiEid;
-use ApacheSolrForTypo3\Solr\GarbageCollector;
-use ApacheSolrForTypo3\Solr\IndexQueue\FrontendHelper\AuthorizationService;
-use ApacheSolrForTypo3\Solr\IndexQueue\FrontendHelper\Manager;
-use ApacheSolrForTypo3\Solr\IndexQueue\FrontendHelper\PageIndexer;
-use ApacheSolrForTypo3\Solr\IndexQueue\FrontendHelper\UserGroupDetector;
-use ApacheSolrForTypo3\Solr\IndexQueue\RecordMonitor;
-use ApacheSolrForTypo3\Solr\Routing\Enhancer\SolrFacetMaskAndCombineEnhancer;
-use ApacheSolrForTypo3\Solr\System\Configuration\ExtensionConfiguration;
-use ApacheSolrForTypo3\Solr\Task\EventQueueWorkerTask;
-use ApacheSolrForTypo3\Solr\Task\EventQueueWorkerTaskAdditionalFieldProvider;
-use ApacheSolrForTypo3\Solr\Task\IndexQueueWorkerTask;
-use ApacheSolrForTypo3\Solr\Task\IndexQueueWorkerTaskAdditionalFieldProvider;
-use ApacheSolrForTypo3\Solr\Task\OptimizeIndexTask;
-use ApacheSolrForTypo3\Solr\Task\OptimizeIndexTaskAdditionalFieldProvider;
-use ApacheSolrForTypo3\Solr\Task\ReIndexTask;
-use ApacheSolrForTypo3\Solr\Task\ReIndexTaskAdditionalFieldProvider;
+use WapplerSystems\Meilisearch\Controller\SearchController;
+use WapplerSystems\Meilisearch\Controller\SuggestController;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Result\Parser\GroupedResultParser;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Result\Parser\ResultParserRegistry;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Result\SearchResult;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSet;
+use WapplerSystems\Meilisearch\Eid\ApiEid;
+use WapplerSystems\Meilisearch\GarbageCollector;
+use WapplerSystems\Meilisearch\IndexQueue\FrontendHelper\AuthorizationService;
+use WapplerSystems\Meilisearch\IndexQueue\FrontendHelper\Manager;
+use WapplerSystems\Meilisearch\IndexQueue\FrontendHelper\PageIndexer;
+use WapplerSystems\Meilisearch\IndexQueue\FrontendHelper\UserGroupDetector;
+use WapplerSystems\Meilisearch\IndexQueue\RecordMonitor;
+use WapplerSystems\Meilisearch\Routing\Enhancer\SolrFacetMaskAndCombineEnhancer;
+use WapplerSystems\Meilisearch\System\Configuration\ExtensionConfiguration;
+use WapplerSystems\Meilisearch\Task\EventQueueWorkerTask;
+use WapplerSystems\Meilisearch\Task\EventQueueWorkerTaskAdditionalFieldProvider;
+use WapplerSystems\Meilisearch\Task\IndexQueueWorkerTask;
+use WapplerSystems\Meilisearch\Task\IndexQueueWorkerTaskAdditionalFieldProvider;
+use WapplerSystems\Meilisearch\Task\OptimizeIndexTask;
+use WapplerSystems\Meilisearch\Task\OptimizeIndexTaskAdditionalFieldProvider;
+use WapplerSystems\Meilisearch\Task\ReIndexTask;
+use WapplerSystems\Meilisearch\Task\ReIndexTaskAdditionalFieldProvider;
 use Psr\Log\LogLevel;
 use TYPO3\CMS\Core\Cache\Backend\Typo3DatabaseBackend;
 use TYPO3\CMS\Core\Core\Environment;
@@ -60,30 +60,30 @@ defined('TYPO3') or die('Access denied.');
     // adding scheduler tasks
 
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][OptimizeIndexTask::class] = [
-        'extension' => 'solr',
-        'title' => 'LLL:EXT:solr/Resources/Private/Language/locallang.xlf:optimizeindex_title',
-        'description' => 'LLL:EXT:solr/Resources/Private/Language/locallang.xlf:optimizeindex_description',
+        'extension' => 'meilisearch',
+        'title' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang.xlf:optimizeindex_title',
+        'description' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang.xlf:optimizeindex_description',
         'additionalFields' => OptimizeIndexTaskAdditionalFieldProvider::class,
     ];
 
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][ReIndexTask::class] = [
-        'extension' => 'solr',
-        'title' => 'LLL:EXT:solr/Resources/Private/Language/locallang.xlf:reindex_title',
-        'description' => 'LLL:EXT:solr/Resources/Private/Language/locallang.xlf:reindex_description',
+        'extension' => 'meilisearch',
+        'title' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang.xlf:reindex_title',
+        'description' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang.xlf:reindex_description',
         'additionalFields' => ReIndexTaskAdditionalFieldProvider::class,
     ];
 
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][IndexQueueWorkerTask::class] = [
-        'extension' => 'solr',
-        'title' => 'LLL:EXT:solr/Resources/Private/Language/locallang.xlf:indexqueueworker_title',
-        'description' => 'LLL:EXT:solr/Resources/Private/Language/locallang.xlf:indexqueueworker_description',
+        'extension' => 'meilisearch',
+        'title' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang.xlf:indexqueueworker_title',
+        'description' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang.xlf:indexqueueworker_description',
         'additionalFields' => IndexQueueWorkerTaskAdditionalFieldProvider::class,
     ];
 
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][EventQueueWorkerTask::class] = [
-        'extension' => 'solr',
-        'title' => 'LLL:EXT:solr/Resources/Private/Language/locallang_be.xlf:task.eventQueueWorkerTask.title',
-        'description' => 'LLL:EXT:solr/Resources/Private/Language/locallang_be.xlf:task.eventQueueWorkerTask.description',
+        'extension' => 'meilisearch',
+        'title' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_be.xlf:task.eventQueueWorkerTask.title',
+        'description' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_be.xlf:task.eventQueueWorkerTask.description',
         'additionalFields' => EventQueueWorkerTaskAdditionalFieldProvider::class,
     ];
 
@@ -143,15 +143,15 @@ defined('TYPO3') or die('Access denied.');
 
     // ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- #
 
-    if (!isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['solr']['searchResultClassName '])) {
-        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['solr']['searchResultClassName '] = SearchResult::class;
+    if (!isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['meilisearch']['searchResultClassName '])) {
+        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['meilisearch']['searchResultClassName '] = SearchResult::class;
     }
 
-    if (!isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['solr']['searchResultSetClassName '])) {
-        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['solr']['searchResultSetClassName '] = SearchResultSet::class;
+    if (!isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['meilisearch']['searchResultSetClassName '])) {
+        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['meilisearch']['searchResultSetClassName '] = SearchResultSet::class;
     }
 
-    if (!isset($GLOBALS['TYPO3_CONF_VARS']['LOG']['ApacheSolrForTypo3']['Solr']['writerConfiguration'])) {
+    if (!isset($GLOBALS['TYPO3_CONF_VARS']['LOG']['WapplerSystems']['Meilisearch']['writerConfiguration'])) {
         $context = Environment::getContext();
         if ($context->isProduction()) {
             $logLevel = LogLevel::ERROR;
@@ -160,10 +160,10 @@ defined('TYPO3') or die('Access denied.');
         } else {
             $logLevel = LogLevel::INFO;
         }
-        $GLOBALS['TYPO3_CONF_VARS']['LOG']['ApacheSolrForTypo3']['Solr']['writerConfiguration'] = [
+        $GLOBALS['TYPO3_CONF_VARS']['LOG']['WapplerSystems']['Meilisearch']['writerConfiguration'] = [
             $logLevel => [
                 FileWriter::class => [
-                    'logFileInfix' => 'solr',
+                    'logFileInfix' => 'meilisearch',
                 ],
             ],
         ];
@@ -172,7 +172,7 @@ defined('TYPO3') or die('Access denied.');
     // ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- #
 
     ExtensionUtility::configurePlugin(
-        'Solr',
+        'Meilisearch',
         'pi_results',
         [
             SearchController::class => 'results,form,detail',
@@ -183,7 +183,7 @@ defined('TYPO3') or die('Access denied.');
     );
 
     ExtensionUtility::configurePlugin(
-        'Solr',
+        'Meilisearch',
         'pi_search',
         [
             SearchController::class => 'form',
@@ -191,7 +191,7 @@ defined('TYPO3') or die('Access denied.');
     );
 
     ExtensionUtility::configurePlugin(
-        'Solr',
+        'Meilisearch',
         'pi_frequentlySearched',
         [
             SearchController::class => 'frequentlySearched',
@@ -202,7 +202,7 @@ defined('TYPO3') or die('Access denied.');
     );
 
     ExtensionUtility::configurePlugin(
-        'Solr',
+        'Meilisearch',
         'pi_suggest',
         [
             SuggestController::class => 'suggest',
@@ -212,8 +212,8 @@ defined('TYPO3') or die('Access denied.');
         ]
     );
 
-    // register the Fluid namespace 'solr' globally
-    $GLOBALS['TYPO3_CONF_VARS']['SYS']['fluid']['namespaces']['solr'] = ['ApacheSolrForTypo3\\Solr\\ViewHelpers'];
+    // register the Fluid namespace 'meilisearch' globally
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['fluid']['namespaces']['meilisearch'] = ['WapplerSystems\\Meilisearch\\ViewHelpers'];
 
     /*
      * Solr route enhancer configuration
@@ -232,7 +232,7 @@ defined('TYPO3') or die('Access denied.');
      * access protected pages.
      */
     ExtensionManagementUtility::addService(
-        'solr',
+        'meilisearch',
         'auth',
         AuthorizationService::class,
         [// service meta data
@@ -249,7 +249,6 @@ defined('TYPO3') or die('Access denied.');
         ]
     );
 
-    // ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- #
 
     // Register Solr Grouping feature
     $parserRegistry = GeneralUtility::makeInstance(ResultParserRegistry::class);
@@ -261,6 +260,6 @@ defined('TYPO3') or die('Access denied.');
 $isComposerMode = defined('TYPO3_COMPOSER_MODE') && TYPO3_COMPOSER_MODE;
 if (!$isComposerMode) {
     // we load the autoloader for our libraries
-    $dir = ExtensionManagementUtility::extPath('solr');
+    $dir = ExtensionManagementUtility::extPath('meilisearch');
     require $dir . '/Resources/Private/Php/ComposerLibraries/vendor/autoload.php';
 }

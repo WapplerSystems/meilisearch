@@ -13,22 +13,22 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Integration\IndexQueue;
+namespace WapplerSystems\Meilisearch\Tests\Integration\IndexQueue;
 
-use ApacheSolrForTypo3\Solr\Domain\Index\Queue\RecordMonitor\Helper\ConfigurationAwareRecordService;
-use ApacheSolrForTypo3\Solr\Domain\Index\Queue\RecordMonitor\Helper\MountPagesUpdater;
-use ApacheSolrForTypo3\Solr\Domain\Index\Queue\RecordMonitor\Helper\RootPageResolver;
-use ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\DataUpdateHandler;
-use ApacheSolrForTypo3\Solr\FrontendEnvironment;
-use ApacheSolrForTypo3\Solr\IndexQueue\Item;
-use ApacheSolrForTypo3\Solr\IndexQueue\Queue;
-use ApacheSolrForTypo3\Solr\IndexQueue\RecordMonitor;
-use ApacheSolrForTypo3\Solr\System\Logging\SolrLogManager;
-use ApacheSolrForTypo3\Solr\System\Records\Pages\PagesRepository;
-use ApacheSolrForTypo3\Solr\System\Records\Queue\EventQueueItemRepository;
-use ApacheSolrForTypo3\Solr\System\TCA\TCAService;
-use ApacheSolrForTypo3\Solr\Task\EventQueueWorkerTask;
-use ApacheSolrForTypo3\Solr\Tests\Integration\IntegrationTest;
+use WapplerSystems\Meilisearch\Domain\Index\Queue\RecordMonitor\Helper\ConfigurationAwareRecordService;
+use WapplerSystems\Meilisearch\Domain\Index\Queue\RecordMonitor\Helper\MountPagesUpdater;
+use WapplerSystems\Meilisearch\Domain\Index\Queue\RecordMonitor\Helper\RootPageResolver;
+use WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\DataUpdateHandler;
+use WapplerSystems\Meilisearch\FrontendEnvironment;
+use WapplerSystems\Meilisearch\IndexQueue\Item;
+use WapplerSystems\Meilisearch\IndexQueue\Queue;
+use WapplerSystems\Meilisearch\IndexQueue\RecordMonitor;
+use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Records\Pages\PagesRepository;
+use WapplerSystems\Meilisearch\System\Records\Queue\EventQueueItemRepository;
+use WapplerSystems\Meilisearch\System\TCA\TCAService;
+use WapplerSystems\Meilisearch\Task\EventQueueWorkerTask;
+use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use Psr\Log\LogLevel;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
@@ -52,7 +52,7 @@ class RecordMonitorTest extends IntegrationTest
 
     protected array $testExtensionsToLoad = [
         'typo3conf/ext/solr',
-        '../vendor/apache-solr-for-typo3/solr/Tests/Integration/Fixtures/Extensions/fake_extension',
+        '../vendor/wapplersystems/meilisearch/Tests/Integration/Fixtures/Extensions/fake_extension',
     ];
 
     /**
@@ -91,7 +91,7 @@ class RecordMonitorTest extends IntegrationTest
         $this->indexQueue = GeneralUtility::makeInstance(Queue::class);
         $this->extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class);
         $this->eventQueue = GeneralUtility::makeInstance(EventQueueItemRepository::class);
-        $this->extensionConfiguration->set('solr', ['monitoringType' => 0]);
+        $this->extensionConfiguration->set('meilisearch', ['monitoringType' => 0]);
         // fake that a backend user is logged in
         $this->importCSVDataSet(__DIR__ . '/../Fixtures/sites_setup_and_data_set/be_users.csv');
         $this->backendUser = $this->setUpBackendUser(1);
@@ -224,7 +224,7 @@ class RecordMonitorTest extends IntegrationTest
      */
     public function canUseCorrectIndexingConfigurationForANewNonPagesRecordInDelayedProcessingMode(): void
     {
-        $this->extensionConfiguration->set('solr', ['monitoringType' => 1]);
+        $this->extensionConfiguration->set('meilisearch', ['monitoringType' => 1]);
         $this->prepareCanUseCorrectIndexingConfigurationForANewNonPagesRecord();
 
         $this->assertEmptyIndexQueue();
@@ -250,7 +250,7 @@ class RecordMonitorTest extends IntegrationTest
      */
     public function canIgnoreCorrectIndexingConfigurationForANewNonPagesRecordInNoProcessingMode(): void
     {
-        $this->extensionConfiguration->set('solr', ['monitoringType' => 2]);
+        $this->extensionConfiguration->set('meilisearch', ['monitoringType' => 2]);
         $this->prepareCanUseCorrectIndexingConfigurationForANewNonPagesRecord();
 
         $this->assertEmptyIndexQueue();
@@ -324,7 +324,7 @@ class RecordMonitorTest extends IntegrationTest
      */
     public function canQueueSubPagesWhenExtendToSubPagesWasSetAndHiddenFlagWasRemovedInDelayedMode(): void
     {
-        $this->extensionConfiguration->set('solr', ['monitoringType' => 1]);
+        $this->extensionConfiguration->set('meilisearch', ['monitoringType' => 1]);
         $this->prepareCanQueueSubPagesWhenExtendToSubPagesWasSetAndHiddenFlagWasRemoved();
 
         $this->assertEmptyIndexQueue();
@@ -375,7 +375,7 @@ class RecordMonitorTest extends IntegrationTest
      */
     public function canQueueSubPagesWhenHiddenFlagIsSetAndExtendToSubPagesFlagWasRemovedInDelayedMode(): void
     {
-        $this->extensionConfiguration->set('solr', ['monitoringType' => 1]);
+        $this->extensionConfiguration->set('meilisearch', ['monitoringType' => 1]);
         $this->prepareCanQueueSubPagesWhenHiddenFlagIsSetAndExtendToSubPagesFlagWasRemoved();
 
         $this->assertEmptyIndexQueue();
@@ -425,7 +425,7 @@ class RecordMonitorTest extends IntegrationTest
      */
     public function canQueueSubPagesWhenHiddenAndExtendToSubPagesFlagsWereRemovedInDelayedMode(): void
     {
-        $this->extensionConfiguration->set('solr', ['monitoringType' => 1]);
+        $this->extensionConfiguration->set('meilisearch', ['monitoringType' => 1]);
         $this->prepareCanQueueSubPagesWhenHiddenAndExtendToSubPagesFlagsWereRemoved();
 
         $this->assertEmptyIndexQueue();
@@ -473,7 +473,7 @@ class RecordMonitorTest extends IntegrationTest
      */
     public function queueIsNotFilledWhenItemIsSetToHiddenInDelayedMode(): void
     {
-        $this->extensionConfiguration->set('solr', ['monitoringType' => 1]);
+        $this->extensionConfiguration->set('meilisearch', ['monitoringType' => 1]);
         $this->prepareQueueIsNotFilledWhenItemIsSetToHidden();
 
         $this->assertEmptyIndexQueue();
@@ -596,7 +596,7 @@ class RecordMonitorTest extends IntegrationTest
      */
     public function queueEntryIsRemovedWhenUnExistingRecordWasUpdatedInDelayedMode(): void
     {
-        $this->extensionConfiguration->set('solr', ['monitoringType' => 1]);
+        $this->extensionConfiguration->set('meilisearch', ['monitoringType' => 1]);
         $this->prepareQueueEntryIsRemovedWhenUnExistingRecordWasUpdated();
 
         $this->assertIndexQueueContainsItemAmount(1);
@@ -658,9 +658,9 @@ class RecordMonitorTest extends IntegrationTest
 
                 custom_page_type = 1
                 custom_page_type {
-                    initialization = ApacheSolrForTypo3\Solr\IndexQueue\Initializer\Page
+                    initialization = WapplerSystems\Meilisearch\IndexQueue\Initializer\Page
                     allowedPageTypes = 130
-                    indexer = ApacheSolrForTypo3\Solr\IndexQueue\PageIndexer
+                    indexer = WapplerSystems\Meilisearch\IndexQueue\PageIndexer
                     table = pages
                     additionalWhereClause = doktype = 130 AND no_search = 0
 
@@ -738,7 +738,7 @@ class RecordMonitorTest extends IntegrationTest
      */
     public function canQueueUpdatePagesWithCustomPageTypeInDelayedMode(): void
     {
-        $this->extensionConfiguration->set('solr', ['monitoringType' => 1]);
+        $this->extensionConfiguration->set('meilisearch', ['monitoringType' => 1]);
         $this->prepareCanQueueUpdatePagesWithCustomPageType();
 
         $this->assertEmptyIndexQueue();
@@ -773,9 +773,9 @@ class RecordMonitorTest extends IntegrationTest
              plugin.tx_solr.index.queue {
                 custom_page_type = 1
                 custom_page_type {
-                    initialization = ApacheSolrForTypo3\Solr\IndexQueue\Initializer\Page
+                    initialization = WapplerSystems\Meilisearch\IndexQueue\Initializer\Page
                     allowedPageTypes = 130
-                    indexer = ApacheSolrForTypo3\Solr\IndexQueue\PageIndexer
+                    indexer = WapplerSystems\Meilisearch\IndexQueue\PageIndexer
                     table = pages
                     additionalWhereClause = doktype = 130 AND no_search = 0
 
@@ -880,7 +880,7 @@ class RecordMonitorTest extends IntegrationTest
      */
     public function mountPointIsOnlyAddedOnceForEachTreeInDelayedMode(): void
     {
-        $this->extensionConfiguration->set('solr', ['monitoringType' => 1]);
+        $this->extensionConfiguration->set('meilisearch', ['monitoringType' => 1]);
         $data = $this->prepareMountPointIsOnlyAddedOnceForEachTree();
 
         $this->assertEmptyIndexQueue();
@@ -961,7 +961,7 @@ class RecordMonitorTest extends IntegrationTest
      */
     public function localizedPageIsAddedToTheQueueInDelayedMode(): void
     {
-        $this->extensionConfiguration->set('solr', ['monitoringType' => 1]);
+        $this->extensionConfiguration->set('meilisearch', ['monitoringType' => 1]);
         $this->prepareLocalizedPageIsAddedToTheQueue();
 
         $this->assertEmptyIndexQueue();
@@ -1107,7 +1107,7 @@ class RecordMonitorTest extends IntegrationTest
      */
     public function pageIsQueuedWhenTranslatedContentElementIsChangedInDelayedMode(): void
     {
-        $this->extensionConfiguration->set('solr', ['monitoringType' => 1]);
+        $this->extensionConfiguration->set('meilisearch', ['monitoringType' => 1]);
         $this->preparePageIsQueuedWhenTranslatedContentElementIsChanged();
 
         $this->assertEmptyIndexQueue();
@@ -1160,7 +1160,7 @@ class RecordMonitorTest extends IntegrationTest
      */
     public function updateRootPageWithRecursiveUpdateFieldsConfiguredForTitleInDelayedMode(): void
     {
-        $this->extensionConfiguration->set('solr', ['monitoringType' => 1]);
+        $this->extensionConfiguration->set('meilisearch', ['monitoringType' => 1]);
         $this->prepareUpdateRootPageWithRecursiveUpdateFieldsConfiguredForTitle();
 
         $this->assertEmptyIndexQueue();
@@ -1247,7 +1247,7 @@ class RecordMonitorTest extends IntegrationTest
      */
     public function updateSubSubChildPageWithRecursiveUpdateFieldsConfiguredForTitleInDelayedMode(): void
     {
-        $this->extensionConfiguration->set('solr', ['monitoringType' => 1]);
+        $this->extensionConfiguration->set('meilisearch', ['monitoringType' => 1]);
         $this->prepareUpdateSubSubChildPageWithRecursiveUpdateFieldsConfiguredForTitle();
 
         $this->assertEmptyIndexQueue();
@@ -1303,7 +1303,7 @@ class RecordMonitorTest extends IntegrationTest
      */
     public function updateRootPageWithRecursiveUpdateFieldsConfiguredForDokTypeInDelayedMode(): void
     {
-        $this->extensionConfiguration->set('solr', ['monitoringType' => 1]);
+        $this->extensionConfiguration->set('meilisearch', ['monitoringType' => 1]);
         $this->prepareUpdateRootPageWithRecursiveUpdateFieldsConfiguredForDokType();
 
         $this->assertEmptyIndexQueue();
@@ -1447,7 +1447,7 @@ class RecordMonitorTest extends IntegrationTest
      */
     public function updateSubChildPageWithoutRecursiveUpdateFieldsConfiguredInDelayedMode(): void
     {
-        $this->extensionConfiguration->set('solr', ['monitoringType' => 1]);
+        $this->extensionConfiguration->set('meilisearch', ['monitoringType' => 1]);
         $this->prepareUpdateSubChildPageWithoutRecursiveUpdateFieldsConfigured();
 
         $this->assertEmptyIndexQueue();
@@ -1552,7 +1552,7 @@ class RecordMonitorTest extends IntegrationTest
      */
     public function updateRecordOutsideSiteRootWithAdditionalWhereClauseInDelayedMode(int $uid, int $root): void
     {
-        $this->extensionConfiguration->set('solr', ['monitoringType' => 1]);
+        $this->extensionConfiguration->set('meilisearch', ['monitoringType' => 1]);
         $this->prepareUpdateRecordOutsideSiteRootWithAdditionalWhereClause($uid);
 
         $this->assertEmptyIndexQueue();
@@ -1671,7 +1671,7 @@ class RecordMonitorTest extends IntegrationTest
      */
     public function updateRecordOutsideSiteRootReferencedInTwoSitesInDelayedMode(): void
     {
-        $this->extensionConfiguration->set('solr', ['monitoringType' => 1]);
+        $this->extensionConfiguration->set('meilisearch', ['monitoringType' => 1]);
         $this->prepareUpdateRecordOutsideSiteRootReferencedInTwoSites();
 
         $this->assertEmptyIndexQueue();
@@ -1874,7 +1874,7 @@ class RecordMonitorTest extends IntegrationTest
         $this->assertEmptyIndexQueue();
 
         $this->extensionConfiguration->set(
-            'solr',
+            'meilisearch',
             ['monitoringType' => $monitoringType, 'useConfigurationMonitorTables' => $useConfigurationMonitorTables]
         );
 

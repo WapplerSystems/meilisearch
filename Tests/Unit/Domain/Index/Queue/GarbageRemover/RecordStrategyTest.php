@@ -13,9 +13,9 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\Domain\Index\Queue\GarbageRemover;
+namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Index\Queue\GarbageRemover;
 
-use ApacheSolrForTypo3\Solr\Domain\Index\Queue\GarbageRemover\RecordStrategy;
+use WapplerSystems\Meilisearch\Domain\Index\Queue\GarbageRemover\RecordStrategy;
 
 /**
  * RecordStrategy tests

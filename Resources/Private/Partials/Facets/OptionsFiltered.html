@@ -14,7 +14,7 @@
 
 		<ul class="list-group list-group-flush facet-option-list facet-type-options fluidfacet collapse show" data-facet-name="{facet.name}" data-facet-label="{facet.label}" id="facet{facet.name}">
 			<li class="list-group-item">
-				<input id="facetfilter{facet.name}" class="form-control facet-filter-box" type="search" placeholder="{f:translate(key: 'faceting_filter', default: 'filter', extensionName: 'solr')}..." />
+				<input id="facetfilter{facet.name}" class="form-control facet-filter-box" type="search" placeholder="{f:translate(key: 'faceting_filter', default: 'filter', extensionName: 'meilisearch')}..." />
 			</li>
 
 			<f:for each="{facet.options}" as="option" iteration="iteration">
@@ -27,7 +27,7 @@
 
 			<f:if condition="{facet.options -> f:count()} > {facetOptionLimit}">
 				<li class="list-group-item">
-					<a href="#" class="tx-solr-facet-show-all" data-label-more="{f:translate(key: 'faceting_showMore', extensionName: 'solr')}" data-label-less="{f:translate(key: 'faceting_showFewer', extensionName: 'solr')}">
+					<a href="#" class="tx-solr-facet-show-all" data-label-more="{f:translate(key: 'faceting_showMore', extensionName: 'meilisearch')}" data-label-less="{f:translate(key: 'faceting_showFewer', extensionName: 'meilisearch')}">
 						<f:translate key="faceting_showMore" extensionName="solr">Show more</f:translate>
 					</a>
 				</li>

@@ -2,19 +2,19 @@
 
 /** @noinspection PhpFullyQualifiedNameUsageInspection */
 $requestMiddlewares = [
-    'apache-solr-for-typo3/page-indexer-initialization' => [
-        'target' => \ApacheSolrForTypo3\Solr\Middleware\PageIndexerInitialization::class,
+    'apache-meilisearch-for-typo3/page-indexer-initialization' => [
+        'target' => \WapplerSystems\Meilisearch\Middleware\PageIndexerInitialization::class,
         'before' => ['typo3/cms-frontend/tsfe', 'typo3/cms-frontend/authentication'],
         'after' => ['typo3/cms-core/normalized-params-attribute'],
     ],
 ];
 
 $extensionConfiguration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-    \ApacheSolrForTypo3\Solr\System\Configuration\ExtensionConfiguration::class
+    \WapplerSystems\Meilisearch\System\Configuration\ExtensionConfiguration::class
 );
 if ($extensionConfiguration->getIsRouteEnhancerEnabled()) {
-    $requestMiddlewares['apache-solr-for-typo3/solr-route-enhancer'] = [
-        'target' => \ApacheSolrForTypo3\Solr\Middleware\SolrRoutingMiddleware::class,
+    $requestMiddlewares['wapplersystems/meilisearch-route-enhancer'] = [
+        'target' => \WapplerSystems\Meilisearch\Middleware\SolrRoutingMiddleware::class,
         'before' => [
             'typo3/cms-frontend/site',
         ],

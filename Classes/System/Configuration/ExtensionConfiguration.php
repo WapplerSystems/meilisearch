@@ -15,7 +15,7 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\System\Configuration;
+namespace WapplerSystems\Meilisearch\System\Configuration;
 
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
@@ -43,7 +43,7 @@ class ExtensionConfiguration
     public function __construct(array $configurationToUse = [])
     {
         if (empty($configurationToUse)) {
-            $this->configuration = GeneralUtility::makeInstance(CoreExtensionConfiguration::class)->get('solr');
+            $this->configuration = GeneralUtility::makeInstance(CoreExtensionConfiguration::class)->get('meilisearch');
         } else {
             $this->configuration = $configurationToUse;
         }
@@ -91,7 +91,7 @@ class ExtensionConfiguration
     }
 
     /**
-     * Returns a list of available/whitelisted EXT:solr plugin namespaces.
+     * Returns a list of available/whitelisted EXT:meilisearch plugin namespaces.
      * Builds from "pluginNamespaces" extension configuration setting.
      */
     public function getAvailablePluginNamespaces(): array
@@ -103,7 +103,7 @@ class ExtensionConfiguration
     }
 
     /**
-     * Returns a list of cacheHash-excludedParameters matching the EXT:solr plugin namespaces.
+     * Returns a list of cacheHash-excludedParameters matching the EXT:meilisearch plugin namespaces.
      *
      * Builds from "pluginNamespaces" and takes "includeGlobalQParameterInCacheHash"
      * extension configuration settings into account.

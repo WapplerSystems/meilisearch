@@ -15,13 +15,13 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit;
+namespace WapplerSystems\Meilisearch\Tests\Unit;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\SearchQuery;
-use ApacheSolrForTypo3\Solr\Search;
-use ApacheSolrForTypo3\Solr\System\Solr\ResponseAdapter;
-use ApacheSolrForTypo3\Solr\System\Solr\Service\SolrReadService;
-use ApacheSolrForTypo3\Solr\System\Solr\SolrConnection;
+use WapplerSystems\Meilisearch\Domain\Search\Query\SearchQuery;
+use WapplerSystems\Meilisearch\Search;
+use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Solr\Service\SolrReadService;
+use WapplerSystems\Meilisearch\System\Solr\SolrConnection;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class SearchTest extends SetUpUnitTestCase

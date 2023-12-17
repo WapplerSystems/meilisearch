@@ -15,12 +15,12 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr;
+namespace WapplerSystems\Meilisearch;
 
-use ApacheSolrForTypo3\Solr\Domain\Index\Queue\RecordMonitor\Helper\RootPageResolver;
-use ApacheSolrForTypo3\Solr\Domain\Site\SiteRepository;
-use ApacheSolrForTypo3\Solr\System\Configuration\ConfigurationManager;
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\Domain\Index\Queue\RecordMonitor\Helper\RootPageResolver;
+use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
+use WapplerSystems\Meilisearch\System\Configuration\ConfigurationManager;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 use Doctrine\DBAL\Exception as DBALException;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Context\Context;
@@ -99,7 +99,7 @@ class Util
     }
 
     /**
-     * Shortcut to retrieve the TypoScript configuration for EXT:solr
+     * Shortcut to retrieve the TypoScript configuration for EXT:meilisearch
      */
     public static function getSolrConfiguration(): TypoScriptConfiguration
     {

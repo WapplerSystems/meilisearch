@@ -15,16 +15,16 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Event\Variants;
+namespace WapplerSystems\Meilisearch\Event\Variants;
 
-use ApacheSolrForTypo3\Solr\Domain\Site\Site;
-use ApacheSolrForTypo3\Solr\System\Solr\Document\Document;
+use WapplerSystems\Meilisearch\Domain\Site\Site;
+use WapplerSystems\Meilisearch\System\Solr\Document\Document;
 
 /**
  * Event which is fired after the ID (string) for a variant was created.
  *
- * Previously used with $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['solr']['modifyVariantId']
- * and the ApacheSolrForTypo3\Solr\Domain\Variants\IdModifier interface.
+ * Previously used with $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['meilisearch']['modifyVariantId']
+ * and the WapplerSystems\Meilisearch\Domain\Variants\IdModifier interface.
  */
 final class AfterVariantIdWasBuiltEvent
 {

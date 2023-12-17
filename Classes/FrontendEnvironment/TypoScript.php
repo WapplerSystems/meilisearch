@@ -15,11 +15,11 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\FrontendEnvironment;
+namespace WapplerSystems\Meilisearch\FrontendEnvironment;
 
-use ApacheSolrForTypo3\Solr\System\Cache\TwoLevelCache;
-use ApacheSolrForTypo3\Solr\System\Configuration\ConfigurationManager;
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\System\Cache\TwoLevelCache;
+use WapplerSystems\Meilisearch\System\Configuration\ConfigurationManager;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 use Doctrine\DBAL\Exception as DBALException;
 use TYPO3\CMS\Core\Error\Http\InternalServerErrorException;
 use TYPO3\CMS\Core\Error\Http\ServiceUnavailableException;

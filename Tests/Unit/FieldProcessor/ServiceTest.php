@@ -13,11 +13,11 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\FieldProcessor;
+namespace WapplerSystems\Meilisearch\Tests\Unit\FieldProcessor;
 
-use ApacheSolrForTypo3\Solr\FieldProcessor\Service;
-use ApacheSolrForTypo3\Solr\System\Solr\Document\Document;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\FieldProcessor\Service;
+use WapplerSystems\Meilisearch\System\Solr\Document\Document;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 
 /**
  * tests the processing Service class
@@ -128,7 +128,7 @@ class ServiceTest extends SetUpUnitTestCase
         $this->documentMock->setField('stringField', 'foo');
         $configuration = ['stringField' => 'turnFooIntoBar'];
 
-        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['solr']['fieldProcessor']['turnFooIntoBar'] = TestFieldProcessor::class;
+        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['meilisearch']['fieldProcessor']['turnFooIntoBar'] = TestFieldProcessor::class;
 
         $this->service->processDocument($this->documentMock, $configuration);
         self::assertEquals(

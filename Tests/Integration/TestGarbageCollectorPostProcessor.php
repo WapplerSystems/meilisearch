@@ -1,8 +1,8 @@
 <?php
 
-namespace ApacheSolrForTypo3\Solr\Tests\Integration;
+namespace WapplerSystems\Meilisearch\Tests\Integration;
 
-use ApacheSolrForTypo3\Solr\GarbageCollectorPostProcessor;
+use WapplerSystems\Meilisearch\GarbageCollectorPostProcessor;
 use TYPO3\CMS\Core\SingletonInterface;
 
 /**
@@ -15,7 +15,7 @@ class TestGarbageCollectorPostProcessor implements SingletonInterface, GarbageCo
     /**
      * Post-processing of garbage collector
      *
-     * @see \ApacheSolrForTypo3\Solr\GarbageCollector::collectGarbage()
+     * @see \WapplerSystems\Meilisearch\GarbageCollector::collectGarbage()
      */
     public function postProcessGarbageCollector(string $table, int $uid): void
     {

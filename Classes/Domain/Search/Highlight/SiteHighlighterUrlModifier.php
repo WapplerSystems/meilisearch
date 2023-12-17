@@ -13,16 +13,16 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\Highlight;
+namespace WapplerSystems\Meilisearch\Domain\Search\Highlight;
 
-use ApacheSolrForTypo3\Solr\System\Url\UrlHelper;
+use WapplerSystems\Meilisearch\System\Url\UrlHelper;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Class SiteHighlighterUrlModifier provides highlighting of the search words on the document's actual page by
  * adding parameters to a document's URL property.
  *
- * Initial code from ApacheSolrForTypo3\Solr\ResultDocumentModifier\SiteHighlighter
+ * Initial code from WapplerSystems\Meilisearch\ResultDocumentModifier\SiteHighlighter
  *
  * @author Stefan Sprenger <stefan.sprenger@dkd.de>
  * @author Timo Hund <timo.hund@dkd.de>

@@ -13,17 +13,17 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\Domain\Search\Statistics;
+namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Search\Statistics;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\Query;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\SearchResultSet;
-use ApacheSolrForTypo3\Solr\Domain\Search\SearchRequest;
-use ApacheSolrForTypo3\Solr\Domain\Search\Statistics\StatisticsRepository;
-use ApacheSolrForTypo3\Solr\Domain\Search\Statistics\StatisticsWriterProcessor;
-use ApacheSolrForTypo3\Solr\Domain\Site\Site;
-use ApacheSolrForTypo3\Solr\Domain\Site\SiteRepository;
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\Domain\Search\Query\Query;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSet;
+use WapplerSystems\Meilisearch\Domain\Search\SearchRequest;
+use WapplerSystems\Meilisearch\Domain\Search\Statistics\StatisticsRepository;
+use WapplerSystems\Meilisearch\Domain\Search\Statistics\StatisticsWriterProcessor;
+use WapplerSystems\Meilisearch\Domain\Site\Site;
+use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;

@@ -13,21 +13,21 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\IndexQueue;
+namespace WapplerSystems\Meilisearch\Tests\Unit\IndexQueue;
 
-use ApacheSolrForTypo3\Solr\Access\Rootline;
-use ApacheSolrForTypo3\Solr\ConnectionManager;
-use ApacheSolrForTypo3\Solr\Domain\Index\PageIndexer\PageUriBuilder;
-use ApacheSolrForTypo3\Solr\Domain\Search\ApacheSolrDocument\Builder;
-use ApacheSolrForTypo3\Solr\Domain\Site\Site;
-use ApacheSolrForTypo3\Solr\FrontendEnvironment;
-use ApacheSolrForTypo3\Solr\IndexQueue\Item;
-use ApacheSolrForTypo3\Solr\IndexQueue\PageIndexer;
-use ApacheSolrForTypo3\Solr\IndexQueue\PageIndexerRequest;
-use ApacheSolrForTypo3\Solr\IndexQueue\PageIndexerResponse;
-use ApacheSolrForTypo3\Solr\System\Logging\SolrLogManager;
-use ApacheSolrForTypo3\Solr\System\Records\Pages\PagesRepository;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\Access\Rootline;
+use WapplerSystems\Meilisearch\ConnectionManager;
+use WapplerSystems\Meilisearch\Domain\Index\PageIndexer\PageUriBuilder;
+use WapplerSystems\Meilisearch\Domain\Search\ApacheSolrDocument\Builder;
+use WapplerSystems\Meilisearch\Domain\Site\Site;
+use WapplerSystems\Meilisearch\FrontendEnvironment;
+use WapplerSystems\Meilisearch\IndexQueue\Item;
+use WapplerSystems\Meilisearch\IndexQueue\PageIndexer;
+use WapplerSystems\Meilisearch\IndexQueue\PageIndexerRequest;
+use WapplerSystems\Meilisearch\IndexQueue\PageIndexerResponse;
+use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Records\Pages\PagesRepository;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
@@ -80,7 +80,7 @@ class PageIndexerTest extends SetUpUnitTestCase
      */
     public function testIndexPageItemIsSendingFrontendRequestsToExpectedUrls(): void
     {
-        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['solr'] = [];
+        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['meilisearch'] = [];
         $siteMock = $this->createMock(Site::class);
         $siteMock->expects(self::once())->method('getAllSolrConnectionConfigurations')->willReturn([
             ['rootPageUid' => 88, 'language' => 0],

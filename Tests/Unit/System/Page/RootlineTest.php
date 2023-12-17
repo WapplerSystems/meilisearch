@@ -13,10 +13,10 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\System\Page;
+namespace WapplerSystems\Meilisearch\Tests\Unit\System\Page;
 
-use ApacheSolrForTypo3\Solr\System\Page\Rootline;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\System\Page\Rootline;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 
 /**
  * Testcase for the ArrayAccessor helper class.

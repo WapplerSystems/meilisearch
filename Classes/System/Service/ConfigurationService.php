@@ -15,9 +15,9 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\System\Service;
+namespace WapplerSystems\Meilisearch\System\Service;
 
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 use TYPO3\CMS\Core\Service\FlexFormService;
 use TYPO3\CMS\Core\TypoScript\TypoScriptService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;

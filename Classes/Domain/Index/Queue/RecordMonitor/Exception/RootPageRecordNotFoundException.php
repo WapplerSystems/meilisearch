@@ -13,9 +13,9 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Index\Queue\RecordMonitor\Exception;
+namespace WapplerSystems\Meilisearch\Domain\Index\Queue\RecordMonitor\Exception;
 
-use ApacheSolrForTypo3\Solr\Exception;
+use WapplerSystems\Meilisearch\Exception;
 
 /**
  * Exception that is thrown if the record of the root page couldn't be found

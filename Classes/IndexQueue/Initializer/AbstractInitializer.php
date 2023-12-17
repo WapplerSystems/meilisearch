@@ -15,12 +15,12 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\IndexQueue\Initializer;
+namespace WapplerSystems\Meilisearch\IndexQueue\Initializer;
 
-use ApacheSolrForTypo3\Solr\Domain\Index\Queue\QueueItemRepository;
-use ApacheSolrForTypo3\Solr\Domain\Site\Site;
-use ApacheSolrForTypo3\Solr\System\Logging\SolrLogManager;
-use ApacheSolrForTypo3\Solr\System\Records\Pages\PagesRepository;
+use WapplerSystems\Meilisearch\Domain\Index\Queue\QueueItemRepository;
+use WapplerSystems\Meilisearch\Domain\Site\Site;
+use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Records\Pages\PagesRepository;
 use Doctrine\DBAL\Exception as DBALException;
 use Psr\Log\LogLevel;
 use TYPO3\CMS\Backend\Utility\BackendUtility;

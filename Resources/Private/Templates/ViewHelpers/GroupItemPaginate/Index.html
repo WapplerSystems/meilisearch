@@ -9,7 +9,7 @@
 		<f:if condition="{pagination.previousPageNumber}">
 			<li class="page-item">
 				<a class="page-link solr-ajaxified" href="{s:uri.paginate.groupItemPage(groupItem: groupItem, page: pagination.previousPageNumber)}">
-					<f:if condition="{f:translate(key: 'paginate_previous', extensionName: 'solr')}">
+					<f:if condition="{f:translate(key: 'paginate_previous', extensionName: 'meilisearch')}">
 						<f:then><f:translate key="paginate_previous" extensionName="solr"/></f:then>
 						<f:else>&laquo;</f:else>
 					</f:if>
@@ -48,7 +48,7 @@
 		<f:if condition="{pagination.nextPageNumber}">
 			<li class="page-item">
 				<a class="page-link solr-ajaxified" href="{s:uri.paginate.groupItemPage(groupItem: groupItem, page: pagination.nextPageNumber)}">
-					<f:if condition="{f:translate(key: 'paginate_next', extensionName: 'solr')}">
+					<f:if condition="{f:translate(key: 'paginate_next', extensionName: 'meilisearch')}">
 						<f:then><f:translate key="paginate_next" extensionName="solr" /></f:then>
 						<f:else>&raquo;</f:else>
 					</f:if>

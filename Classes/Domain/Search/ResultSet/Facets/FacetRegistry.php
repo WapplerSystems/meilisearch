@@ -15,14 +15,14 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets;
+namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\OptionBased\Hierarchy\HierarchyPackage;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\OptionBased\Options\OptionsPackage;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\OptionBased\QueryGroup\QueryGroupPackage;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\RangeBased\DateRange\DateRangePackage;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\RangeBased\NumericRange\NumericRangePackage;
-use ApacheSolrForTypo3\Solr\System\Object\AbstractClassRegistry;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\OptionBased\Hierarchy\HierarchyPackage;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\OptionBased\Options\OptionsPackage;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\OptionBased\QueryGroup\QueryGroupPackage;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\RangeBased\DateRange\DateRangePackage;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\RangeBased\NumericRange\NumericRangePackage;
+use WapplerSystems\Meilisearch\System\Object\AbstractClassRegistry;
 
 /**
  * Class FacetRegistry

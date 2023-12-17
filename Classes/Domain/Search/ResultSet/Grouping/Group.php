@@ -15,7 +15,7 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Grouping;
+namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet\Grouping;
 
 /**
  * A group is identified by a groupName and can contain multiple groupItems (that reference the search results).

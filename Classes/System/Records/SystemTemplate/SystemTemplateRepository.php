@@ -15,9 +15,9 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\System\Records\SystemTemplate;
+namespace WapplerSystems\Meilisearch\System\Records\SystemTemplate;
 
-use ApacheSolrForTypo3\Solr\System\Records\AbstractRepository;
+use WapplerSystems\Meilisearch\System\Records\AbstractRepository;
 use Doctrine\DBAL\Exception as DBALException;
 
 /**

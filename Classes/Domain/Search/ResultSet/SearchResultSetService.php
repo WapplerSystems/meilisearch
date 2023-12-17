@@ -15,26 +15,26 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\ResultSet;
+namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\QueryFields;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\Query;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\QueryBuilder;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\SearchQuery;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Result\Parser\ResultParserRegistry;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Result\SearchResult;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Result\SearchResultBuilder;
-use ApacheSolrForTypo3\Solr\Domain\Search\SearchRequest;
-use ApacheSolrForTypo3\Solr\Domain\Variants\VariantsProcessor;
-use ApacheSolrForTypo3\Solr\Event\Search\AfterInitialSearchResultSetHasBeenCreatedEvent;
-use ApacheSolrForTypo3\Solr\Event\Search\AfterSearchHasBeenExecutedEvent;
-use ApacheSolrForTypo3\Solr\Event\Search\AfterSearchQueryHasBeenPreparedEvent;
-use ApacheSolrForTypo3\Solr\Search;
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
-use ApacheSolrForTypo3\Solr\System\Logging\SolrLogManager;
-use ApacheSolrForTypo3\Solr\System\Solr\Document\Document;
-use ApacheSolrForTypo3\Solr\System\Solr\ResponseAdapter;
-use ApacheSolrForTypo3\Solr\System\Solr\SolrIncompleteResponseException;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\QueryFields;
+use WapplerSystems\Meilisearch\Domain\Search\Query\Query;
+use WapplerSystems\Meilisearch\Domain\Search\Query\QueryBuilder;
+use WapplerSystems\Meilisearch\Domain\Search\Query\SearchQuery;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Result\Parser\ResultParserRegistry;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Result\SearchResult;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Result\SearchResultBuilder;
+use WapplerSystems\Meilisearch\Domain\Search\SearchRequest;
+use WapplerSystems\Meilisearch\Domain\Variants\VariantsProcessor;
+use WapplerSystems\Meilisearch\Event\Search\AfterInitialSearchResultSetHasBeenCreatedEvent;
+use WapplerSystems\Meilisearch\Event\Search\AfterSearchHasBeenExecutedEvent;
+use WapplerSystems\Meilisearch\Event\Search\AfterSearchQueryHasBeenPreparedEvent;
+use WapplerSystems\Meilisearch\Search;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Solr\Document\Document;
+use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Solr\SolrIncompleteResponseException;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use UnexpectedValueException;
@@ -97,7 +97,7 @@ class SearchResultSetService
 
     protected function getResultSetClassName(): string
     {
-        return $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['solr']['searchResultSetClassName '] ?? SearchResultSet::class;
+        return $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['meilisearch']['searchResultSetClassName '] ?? SearchResultSet::class;
     }
 
     /**

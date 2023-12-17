@@ -13,7 +13,7 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\IndexQueue\Exception;
+namespace WapplerSystems\Meilisearch\IndexQueue\Exception;
 
 /**
  * Exception that is thrown on TYPO3 side in indexing process.

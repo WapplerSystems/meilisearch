@@ -15,9 +15,9 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Sorting;
+namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet\Sorting;
 
-use ApacheSolrForTypo3\Solr\Exception\InvalidArgumentException;
+use WapplerSystems\Meilisearch\Exception\InvalidArgumentException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**

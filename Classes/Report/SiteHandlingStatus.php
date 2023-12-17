@@ -15,12 +15,12 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Report;
+namespace WapplerSystems\Meilisearch\Report;
 
-use ApacheSolrForTypo3\Solr\Domain\Site\Exception\UnexpectedTYPO3SiteInitializationException;
-use ApacheSolrForTypo3\Solr\Domain\Site\Site;
-use ApacheSolrForTypo3\Solr\Domain\Site\SiteRepository;
-use ApacheSolrForTypo3\Solr\System\Configuration\ExtensionConfiguration;
+use WapplerSystems\Meilisearch\Domain\Site\Exception\UnexpectedTYPO3SiteInitializationException;
+use WapplerSystems\Meilisearch\Domain\Site\Site;
+use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
+use WapplerSystems\Meilisearch\System\Configuration\ExtensionConfiguration;
 use Psr\Http\Message\UriInterface;
 use TYPO3\CMS\Core\Site\Entity\Site as Typo3Site;
 use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
@@ -138,7 +138,7 @@ class SiteHandlingStatus extends AbstractSolrStatus
      */
     public function getLabel(): string
     {
-        return 'LLL:EXT:solr/Resources/Private/Language/locallang_reports.xlf:status_solr_site-handling';
+        return 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_reports.xlf:status_solr_site-handling';
     }
 
     /**

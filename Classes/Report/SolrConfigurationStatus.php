@@ -15,11 +15,11 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Report;
+namespace WapplerSystems\Meilisearch\Report;
 
-use ApacheSolrForTypo3\Solr\FrontendEnvironment;
-use ApacheSolrForTypo3\Solr\System\Configuration\ExtensionConfiguration;
-use ApacheSolrForTypo3\Solr\System\Records\Pages\PagesRepository;
+use WapplerSystems\Meilisearch\FrontendEnvironment;
+use WapplerSystems\Meilisearch\System\Configuration\ExtensionConfiguration;
+use WapplerSystems\Meilisearch\System\Records\Pages\PagesRepository;
 use Doctrine\DBAL\Exception as DBALException;
 use RuntimeException;
 use TYPO3\CMS\Core\Error\Http\ServiceUnavailableException;
@@ -71,7 +71,7 @@ class SolrConfigurationStatus extends AbstractSolrStatus
      */
     public function getLabel(): string
     {
-        return 'LLL:EXT:solr/Resources/Private/Language/locallang_reports.xlf:status_solr_configuration';
+        return 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_reports.xlf:status_solr_configuration';
     }
 
     /**
@@ -136,7 +136,7 @@ class SolrConfigurationStatus extends AbstractSolrStatus
     }
 
     /**
-     * Returns an array of rootPages where the indexing is off and EXT:solr is enabled.
+     * Returns an array of rootPages where the indexing is off and EXT:meilisearch is enabled.
      *
      * @throws DBALException
      */

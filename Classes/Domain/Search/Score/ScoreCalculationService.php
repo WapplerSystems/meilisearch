@@ -13,7 +13,7 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\Score;
+namespace WapplerSystems\Meilisearch\Domain\Search\Score;
 
 /**
  * Provides the functionality to calculate scores and renders them in a minimalistic template.

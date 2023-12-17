@@ -1,6 +1,6 @@
 {
   "name": "non-composer-typo3-mode-libs-for/ext-solr",
-  "description": "This file contains the wanted by EXT:solr libraries. Note: in replace defined libs are provided by TYPO3 source.",
+  "description": "This file contains the wanted by EXT:meilisearch libraries. Note: in replace defined libs are provided by TYPO3 source.",
   "config": {
     "platform": {
       "php": "8.1"

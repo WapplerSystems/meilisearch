@@ -13,7 +13,7 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Routing\Enhancer;
+namespace WapplerSystems\Meilisearch\Routing\Enhancer;
 
 /**
  * This interface uses to determine if an enhancer handle Solr specific requests

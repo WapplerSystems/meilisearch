@@ -15,14 +15,14 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\System\Solr;
+namespace WapplerSystems\Meilisearch\System\Solr;
 
-use ApacheSolrForTypo3\Solr\System\Solr\Document\Document;
+use WapplerSystems\Meilisearch\System\Solr\Document\Document;
 use Countable;
 use stdClass;
 
 /**
- * In EXT:solr 9 we have switched from the SolrPhpClient to the solarium api.
+ * In EXT:meilisearch 9 we have switched from the SolrPhpClient to the solarium api.
  *
  * In many places of the code the class Apache_Solr_Response and the property Apache_Solr_Response::response is used.
  * To be able to refactor this we need to have a replacement for Apache_Solr_Response that behaves like the original class,

@@ -15,10 +15,10 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\ViewHelpers\Facet\Options\Group\Prefix;
+namespace WapplerSystems\Meilisearch\ViewHelpers\Facet\Options\Group\Prefix;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\OptionBased\OptionCollection;
-use ApacheSolrForTypo3\Solr\ViewHelpers\AbstractSolrFrontendViewHelper;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\OptionBased\OptionCollection;
+use WapplerSystems\Meilisearch\ViewHelpers\AbstractSolrFrontendViewHelper;
 use Closure;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;

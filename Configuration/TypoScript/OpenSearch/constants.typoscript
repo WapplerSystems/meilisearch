@@ -1,10 +1,10 @@
 
-plugin.tx_solr.OpenSearch {
+plugin.tx_meilisearch.OpenSearch {
 
-	# cat=plugin.solr: OpenSearch/10; type=text; label=Short Name: Brief title of the search, up to 16 characters.
+	# cat=plugin.meilisearch: OpenSearch/10; type=text; label=Short Name: Brief title of the search, up to 16 characters.
 	shortName = Website Search
 
-	# cat=plugin.solr: OpenSearch/20; type=text; label=Description: Textual description of the search.
+	# cat=plugin.meilisearch: OpenSearch/20; type=text; label=Description: Textual description of the search.
 	description = Search this website
 
 }

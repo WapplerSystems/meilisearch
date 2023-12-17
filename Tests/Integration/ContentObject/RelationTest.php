@@ -15,10 +15,10 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Integration\ContentObject;
+namespace WapplerSystems\Meilisearch\Tests\Integration\ContentObject;
 
-use ApacheSolrForTypo3\Solr\ContentObject\Relation;
-use ApacheSolrForTypo3\Solr\Tests\Integration\IntegrationTest;
+use WapplerSystems\Meilisearch\ContentObject\Relation;
+use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use PHPUnit\Framework\MockObject\MockObject;
 use Traversable;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -34,7 +34,7 @@ class RelationTest extends IntegrationTest
 {
     protected array $testExtensionsToLoad = [
         'typo3conf/ext/solr',
-        '../vendor/apache-solr-for-typo3/solr/Tests/Integration/Fixtures/Extensions/fake_extension',
+        '../vendor/wapplersystems/meilisearch/Tests/Integration/Fixtures/Extensions/fake_extension',
     ];
 
     /**

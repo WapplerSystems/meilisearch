@@ -13,17 +13,17 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Controller;
+namespace WapplerSystems\Meilisearch\Controller;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\InvalidFacetPackageException;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\SearchResultSet;
-use ApacheSolrForTypo3\Solr\Event\Search\AfterFrequentlySearchHasBeenExecutedEvent;
-use ApacheSolrForTypo3\Solr\Event\Search\BeforeSearchFormIsShownEvent;
-use ApacheSolrForTypo3\Solr\Event\Search\BeforeSearchResultIsShownEvent;
-use ApacheSolrForTypo3\Solr\Mvc\Variable\SolrVariableProvider;
-use ApacheSolrForTypo3\Solr\Pagination\ResultsPagination;
-use ApacheSolrForTypo3\Solr\Pagination\ResultsPaginator;
-use ApacheSolrForTypo3\Solr\System\Solr\SolrUnavailableException;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\InvalidFacetPackageException;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSet;
+use WapplerSystems\Meilisearch\Event\Search\AfterFrequentlySearchHasBeenExecutedEvent;
+use WapplerSystems\Meilisearch\Event\Search\BeforeSearchFormIsShownEvent;
+use WapplerSystems\Meilisearch\Event\Search\BeforeSearchResultIsShownEvent;
+use WapplerSystems\Meilisearch\Mvc\Variable\SolrVariableProvider;
+use WapplerSystems\Meilisearch\Pagination\ResultsPagination;
+use WapplerSystems\Meilisearch\Pagination\ResultsPaginator;
+use WapplerSystems\Meilisearch\System\Solr\SolrUnavailableException;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;

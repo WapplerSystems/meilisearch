@@ -13,9 +13,9 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\IndexQueue\Initializer;
+namespace WapplerSystems\Meilisearch\IndexQueue\Initializer;
 
-use ApacheSolrForTypo3\Solr\Domain\Site\Site;
+use WapplerSystems\Meilisearch\Domain\Site\Site;
 
 /**
  * Interface to initialize items in the Index Queue.

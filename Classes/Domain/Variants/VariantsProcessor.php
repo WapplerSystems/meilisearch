@@ -15,14 +15,14 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Variants;
+namespace WapplerSystems\Meilisearch\Domain\Variants;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Result\SearchResult;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Result\SearchResultBuilder;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\SearchResultSet;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\SearchResultSetProcessor;
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
-use ApacheSolrForTypo3\Solr\System\Solr\ResponseAdapter;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Result\SearchResult;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Result\SearchResultBuilder;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSet;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSetProcessor;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**

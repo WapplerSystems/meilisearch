@@ -15,13 +15,13 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\OptionBased\Options;
+namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\OptionBased\Options;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\AbstractFacet;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\AbstractFacetParser;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\SearchResultSet;
-use ApacheSolrForTypo3\Solr\Event\Parser\AfterFacetIsParsedEvent;
-use ApacheSolrForTypo3\Solr\System\Solr\ResponseAdapter;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\AbstractFacet;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\AbstractFacetParser;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSet;
+use WapplerSystems\Meilisearch\Event\Parser\AfterFacetIsParsedEvent;
+use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 

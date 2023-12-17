@@ -1,8 +1,8 @@
 <?php
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\FieldProcessor;
+namespace WapplerSystems\Meilisearch\Tests\Unit\FieldProcessor;
 
-use ApacheSolrForTypo3\Solr\FieldProcessor\FieldProcessor;
+use WapplerSystems\Meilisearch\FieldProcessor\FieldProcessor;
 
 class TestFieldProcessor implements FieldProcessor
 {

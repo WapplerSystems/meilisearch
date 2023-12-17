@@ -15,7 +15,7 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\IndexQueue;
+namespace WapplerSystems\Meilisearch\IndexQueue;
 
 /**
  * Interface defining required queue methods for mount point support

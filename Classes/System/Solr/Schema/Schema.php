@@ -13,7 +13,7 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\System\Solr\Schema;
+namespace WapplerSystems\Meilisearch\System\Solr\Schema;
 
 /**
  * Object representation of the solr schema.

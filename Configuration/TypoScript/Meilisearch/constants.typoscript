@@ -1,5 +1,5 @@
-plugin.tx_solr {
-  # cat=solr: basic/10/enable; type=boolean; label=Enable/disable Solr extension: EXT:solr should only be enabled for relevant sys_languages, to avoid unnecessary connections and overwritten contents.
+plugin.tx_meilisearch {
+  # cat=meilisearch: basic/10/enable; type=boolean; label=Enable/disable Solr extension: EXT:meilisearch should only be enabled for relevant sys_languages, to avoid unnecessary connections and overwritten contents.
   enabled = 1
 
   view {
@@ -13,6 +13,7 @@ plugin.tx_solr {
     results {
       resultsPerPage = 10
     }
+
     faceting {
       limit = 10
 

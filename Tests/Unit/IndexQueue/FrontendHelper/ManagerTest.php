@@ -13,10 +13,10 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\IndexQueue\FrontendHelper;
+namespace WapplerSystems\Meilisearch\Tests\Unit\IndexQueue\FrontendHelper;
 
-use ApacheSolrForTypo3\Solr\IndexQueue\FrontendHelper\Manager;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\IndexQueue\FrontendHelper\Manager;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 
 /**
  * @author Timo Hund <timo.hund@dkd.de>
@@ -50,7 +50,7 @@ class ManagerTest extends SetUpUnitTestCase
     {
         Manager::registerFrontendHelper('test', InvalidFakeHelper::class);
         $this->expectException(\RuntimeException::class);
-        $message = InvalidFakeHelper::class . ' is not an implementation of ApacheSolrForTypo3\Solr\IndexQueue\FrontendHelper\FrontendHelper';
+        $message = InvalidFakeHelper::class . ' is not an implementation of WapplerSystems\Meilisearch\IndexQueue\FrontendHelper\FrontendHelper';
         $this->expectExceptionMessage($message);
         $handler = $this->manager->resolveAction('test');
     }

@@ -15,11 +15,11 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Middleware;
+namespace WapplerSystems\Meilisearch\Middleware;
 
-use ApacheSolrForTypo3\Solr\IndexQueue\PageIndexerRequest;
-use ApacheSolrForTypo3\Solr\IndexQueue\PageIndexerRequestHandler;
-use ApacheSolrForTypo3\Solr\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\IndexQueue\PageIndexerRequest;
+use WapplerSystems\Meilisearch\IndexQueue\PageIndexerRequestHandler;
+use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;

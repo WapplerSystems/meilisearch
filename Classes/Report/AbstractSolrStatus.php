@@ -15,7 +15,7 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Report;
+namespace WapplerSystems\Meilisearch\Report;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
@@ -33,7 +33,7 @@ abstract class AbstractSolrStatus implements StatusProviderInterface
      */
     protected function getRenderedReport(string $templateFilename = '', array $variables = []): string
     {
-        $templatePath = 'EXT:solr/Resources/Private/Templates/Backend/Reports/' . $templateFilename;
+        $templatePath = 'EXT:meilisearch/Resources/Private/Templates/Backend/Reports/' . $templateFilename;
         $standaloneView = $this->getFluidStandaloneViewWithTemplate($templatePath);
         $standaloneView->assignMultiple($variables);
 

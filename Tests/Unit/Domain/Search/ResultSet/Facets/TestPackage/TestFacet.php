@@ -1,10 +1,10 @@
 <?php
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\Domain\Search\ResultSet\Facets\TestPackage;
+namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Search\ResultSet\Facets\TestPackage;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\AbstractFacet;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\AbstractFacetItemCollection;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\OptionBased\Hierarchy\NodeCollection;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\AbstractFacet;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\AbstractFacetItemCollection;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\OptionBased\Hierarchy\NodeCollection;
 
 class TestFacet extends AbstractFacet
 {

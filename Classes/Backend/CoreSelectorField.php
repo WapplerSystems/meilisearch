@@ -13,9 +13,9 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Backend;
+namespace WapplerSystems\Meilisearch\Backend;
 
-use ApacheSolrForTypo3\Solr\Domain\Site\Site;
+use WapplerSystems\Meilisearch\Domain\Site\Site;
 use TYPO3\CMS\Backend\Form\Exception as BackendFormException;
 use TYPO3\CMS\Backend\Form\FormResultCompiler;
 use TYPO3\CMS\Backend\Form\NodeFactory;

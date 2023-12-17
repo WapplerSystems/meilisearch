@@ -13,15 +13,15 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\System\Solr;
+namespace WapplerSystems\Meilisearch\Tests\Unit\System\Solr;
 
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
-use ApacheSolrForTypo3\Solr\System\Logging\SolrLogManager;
-use ApacheSolrForTypo3\Solr\System\Solr\Parser\SchemaParser;
-use ApacheSolrForTypo3\Solr\System\Solr\Parser\StopWordParser;
-use ApacheSolrForTypo3\Solr\System\Solr\Parser\SynonymParser;
-use ApacheSolrForTypo3\Solr\System\Solr\SolrConnection;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Solr\Parser\SchemaParser;
+use WapplerSystems\Meilisearch\System\Solr\Parser\StopWordParser;
+use WapplerSystems\Meilisearch\System\Solr\Parser\SynonymParser;
+use WapplerSystems\Meilisearch\System\Solr\SolrConnection;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;

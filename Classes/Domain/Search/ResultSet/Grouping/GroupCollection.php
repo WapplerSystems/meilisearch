@@ -13,9 +13,9 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Grouping;
+namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet\Grouping;
 
-use ApacheSolrForTypo3\Solr\System\Data\AbstractCollection;
+use WapplerSystems\Meilisearch\System\Data\AbstractCollection;
 
 /**
  * The Group contains the Group objects.

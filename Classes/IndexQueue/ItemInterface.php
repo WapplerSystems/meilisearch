@@ -15,9 +15,9 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\IndexQueue;
+namespace WapplerSystems\Meilisearch\IndexQueue;
 
-use ApacheSolrForTypo3\Solr\Domain\Site\Site;
+use WapplerSystems\Meilisearch\Domain\Site\Site;
 
 /**
  * The presentation of an index queue item

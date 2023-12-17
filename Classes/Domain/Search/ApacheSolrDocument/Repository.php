@@ -13,18 +13,18 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\ApacheSolrDocument;
+namespace WapplerSystems\Meilisearch\Domain\Search\ApacheSolrDocument;
 
-use ApacheSolrForTypo3\Solr\ConnectionManager;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\QueryBuilder;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Result\Parser\DocumentEscapeService;
-use ApacheSolrForTypo3\Solr\NoSolrConnectionFoundException;
-use ApacheSolrForTypo3\Solr\Search;
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
-use ApacheSolrForTypo3\Solr\System\Solr\Document\Document;
-use ApacheSolrForTypo3\Solr\System\Solr\SolrCommunicationException;
-use ApacheSolrForTypo3\Solr\System\Solr\SolrConnection;
-use ApacheSolrForTypo3\Solr\Util;
+use WapplerSystems\Meilisearch\ConnectionManager;
+use WapplerSystems\Meilisearch\Domain\Search\Query\QueryBuilder;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Result\Parser\DocumentEscapeService;
+use WapplerSystems\Meilisearch\NoSolrConnectionFoundException;
+use WapplerSystems\Meilisearch\Search;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\System\Solr\Document\Document;
+use WapplerSystems\Meilisearch\System\Solr\SolrCommunicationException;
+use WapplerSystems\Meilisearch\System\Solr\SolrConnection;
+use WapplerSystems\Meilisearch\Util;
 use Doctrine\DBAL\Exception as DBALException;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -69,7 +69,7 @@ class Repository implements SingletonInterface
     }
 
     /**
-     * Returns all found \ApacheSolrForTypo3\Solr\System\Solr\Document\Document[] by given page id and language id.
+     * Returns all found \WapplerSystems\Meilisearch\System\Solr\Document\Document[] by given page id and language id.
      * Returns empty array if nothing found, e.g. if no language or no page(or no index for page) is present.
      *
      * @return Document[]

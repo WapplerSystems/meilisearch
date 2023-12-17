@@ -13,12 +13,12 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\Domain\Search\ResultSet\Facets\OptionBased\Hierarchy;
+namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Search\ResultSet\Facets\OptionBased\Hierarchy;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\OptionBased\Hierarchy\HierarchyFacet;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\OptionBased\Hierarchy\HierarchyFacetParser;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\OptionBased\Hierarchy\Node;
-use ApacheSolrForTypo3\Solr\Tests\Unit\Domain\Search\ResultSet\Facets\SetUpFacetParser;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\OptionBased\Hierarchy\HierarchyFacet;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\OptionBased\Hierarchy\HierarchyFacetParser;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\OptionBased\Hierarchy\Node;
+use WapplerSystems\Meilisearch\Tests\Unit\Domain\Search\ResultSet\Facets\SetUpFacetParser;
 
 /**
  * Class HierarchyFacetParserTest

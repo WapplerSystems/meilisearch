@@ -13,26 +13,26 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\IndexQueue\FrontendHelper;
+namespace WapplerSystems\Meilisearch\IndexQueue\FrontendHelper;
 
-use ApacheSolrForTypo3\Solr\Access\Rootline;
-use ApacheSolrForTypo3\Solr\ConnectionManager;
-use ApacheSolrForTypo3\Solr\Domain\Search\ApacheSolrDocument\Builder;
-use ApacheSolrForTypo3\Solr\Event\Indexing\AfterPageDocumentIsCreatedForIndexingEvent;
-use ApacheSolrForTypo3\Solr\Event\Indexing\BeforeDocumentsAreIndexedEvent;
-use ApacheSolrForTypo3\Solr\Event\Indexing\BeforePageDocumentIsProcessedForIndexingEvent;
-use ApacheSolrForTypo3\Solr\Exception;
-use ApacheSolrForTypo3\Solr\FieldProcessor\Service;
-use ApacheSolrForTypo3\Solr\IndexQueue\Item;
-use ApacheSolrForTypo3\Solr\IndexQueue\PageIndexerRequest;
-use ApacheSolrForTypo3\Solr\IndexQueue\PageIndexerResponse;
-use ApacheSolrForTypo3\Solr\IndexQueue\Queue;
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
-use ApacheSolrForTypo3\Solr\System\Logging\DebugWriter;
-use ApacheSolrForTypo3\Solr\System\Logging\SolrLogManager;
-use ApacheSolrForTypo3\Solr\System\Solr\Document\Document;
-use ApacheSolrForTypo3\Solr\System\Solr\SolrConnection;
-use ApacheSolrForTypo3\Solr\Util;
+use WapplerSystems\Meilisearch\Access\Rootline;
+use WapplerSystems\Meilisearch\ConnectionManager;
+use WapplerSystems\Meilisearch\Domain\Search\ApacheSolrDocument\Builder;
+use WapplerSystems\Meilisearch\Event\Indexing\AfterPageDocumentIsCreatedForIndexingEvent;
+use WapplerSystems\Meilisearch\Event\Indexing\BeforeDocumentsAreIndexedEvent;
+use WapplerSystems\Meilisearch\Event\Indexing\BeforePageDocumentIsProcessedForIndexingEvent;
+use WapplerSystems\Meilisearch\Exception;
+use WapplerSystems\Meilisearch\FieldProcessor\Service;
+use WapplerSystems\Meilisearch\IndexQueue\Item;
+use WapplerSystems\Meilisearch\IndexQueue\PageIndexerRequest;
+use WapplerSystems\Meilisearch\IndexQueue\PageIndexerResponse;
+use WapplerSystems\Meilisearch\IndexQueue\Queue;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\System\Logging\DebugWriter;
+use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Solr\Document\Document;
+use WapplerSystems\Meilisearch\System\Solr\SolrConnection;
+use WapplerSystems\Meilisearch\Util;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LogLevel;
 use Throwable;
@@ -206,7 +206,7 @@ class PageIndexer implements FrontendHelper, SingletonInterface
         $this->responseData['solrConnection'] = [
             'rootPage' => $indexQueueItem->getRootPageUid(),
             'sys_language_uid' => $tsfe->getLanguage()->getLanguageId(),
-            'solr' => $this->solrConnection->getEndpoint('write')->getCoreBaseUri(),
+            'meilisearch' => $this->solrConnection->getEndpoint('write')->getCoreBaseUri(),
         ];
 
         foreach ($this->documentsSentToSolr as $document) {

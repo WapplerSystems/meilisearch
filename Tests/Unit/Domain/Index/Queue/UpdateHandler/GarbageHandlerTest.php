@@ -13,11 +13,11 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\Domain\Index\Queue\UpdateHandler;
+namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Index\Queue\UpdateHandler;
 
-use ApacheSolrForTypo3\Solr\Domain\Index\Queue\GarbageRemover\PageStrategy;
-use ApacheSolrForTypo3\Solr\Domain\Index\Queue\GarbageRemover\RecordStrategy;
-use ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\GarbageHandler;
+use WapplerSystems\Meilisearch\Domain\Index\Queue\GarbageRemover\PageStrategy;
+use WapplerSystems\Meilisearch\Domain\Index\Queue\GarbageRemover\RecordStrategy;
+use WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\GarbageHandler;
 use Doctrine\DBAL\Result;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\Query\Restriction\QueryRestrictionContainerInterface;

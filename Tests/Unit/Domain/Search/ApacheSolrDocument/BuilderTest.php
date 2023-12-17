@@ -15,15 +15,15 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\Domain\Search\ApacheSolrDocument;
+namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Search\ApacheSolrDocument;
 
-use ApacheSolrForTypo3\Solr\Access\Rootline;
-use ApacheSolrForTypo3\Solr\Domain\Search\ApacheSolrDocument\Builder;
-use ApacheSolrForTypo3\Solr\Domain\Site\Site;
-use ApacheSolrForTypo3\Solr\Domain\Variants\IdBuilder;
-use ApacheSolrForTypo3\Solr\System\Solr\Document\Document;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
-use ApacheSolrForTypo3\Solr\Typo3PageContentExtractor;
+use WapplerSystems\Meilisearch\Access\Rootline;
+use WapplerSystems\Meilisearch\Domain\Search\ApacheSolrDocument\Builder;
+use WapplerSystems\Meilisearch\Domain\Site\Site;
+use WapplerSystems\Meilisearch\Domain\Variants\IdBuilder;
+use WapplerSystems\Meilisearch\System\Solr\Document\Document;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\Typo3PageContentExtractor;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
@@ -167,7 +167,7 @@ class BuilderTest extends SetUpUnitTestCase
         self::assertSame('r:0', $document->access, 'Access field was not set as expected');
         self::assertSame('testSiteHash/news/4711', $document->id, 'Id field was not set as expected');
         self::assertSame('news', $document->type, 'Type field was not set as expected');
-        self::assertSame('EXT:solr', $document->appKey, 'appKey field was not set as expected');
+        self::assertSame('EXT:meilisearch', $document->appKey, 'appKey field was not set as expected');
     }
 
     protected function fakePageDocumentId(string $documentId): void

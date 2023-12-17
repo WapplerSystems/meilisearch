@@ -15,9 +15,9 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
 */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets;
+namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets;
 
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 
 class DefaultFacetQueryBuilder implements FacetQueryBuilderInterface
 {

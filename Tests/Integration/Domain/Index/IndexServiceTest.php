@@ -13,13 +13,13 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Integration\Domain\Index;
+namespace WapplerSystems\Meilisearch\Tests\Integration\Domain\Index;
 
-use ApacheSolrForTypo3\Solr\Domain\Index\IndexService;
-use ApacheSolrForTypo3\Solr\Domain\Site\SiteRepository;
-use ApacheSolrForTypo3\Solr\IndexQueue\Queue;
-use ApacheSolrForTypo3\Solr\System\Environment\CliEnvironment;
-use ApacheSolrForTypo3\Solr\Tests\Integration\IntegrationTest;
+use WapplerSystems\Meilisearch\Domain\Index\IndexService;
+use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
+use WapplerSystems\Meilisearch\IndexQueue\Queue;
+use WapplerSystems\Meilisearch\System\Environment\CliEnvironment;
+use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -38,7 +38,7 @@ class IndexServiceTest extends IntegrationTest
 
     protected array $testExtensionsToLoad = [
         'typo3conf/ext/solr',
-        '../vendor/apache-solr-for-typo3/solr/Tests/Integration/Fixtures/Extensions/fake_extension2',
+        '../vendor/wapplersystems/meilisearch/Tests/Integration/Fixtures/Extensions/fake_extension2',
     ];
 
     protected ?Queue $indexQueue = null;

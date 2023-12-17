@@ -15,7 +15,7 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\Query\Helper;
+namespace WapplerSystems\Meilisearch\Domain\Search\Query\Helper;
 
 /**
  * The EscapeService is responsible to escape the querystring as expected for Apache Solr.

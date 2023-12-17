@@ -15,11 +15,11 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Index\PageIndexer;
+namespace WapplerSystems\Meilisearch\Domain\Index\PageIndexer;
 
-use ApacheSolrForTypo3\Solr\Event\Indexing\AfterFrontendPageUriForIndexingHasBeenGeneratedEvent;
-use ApacheSolrForTypo3\Solr\IndexQueue\Item;
-use ApacheSolrForTypo3\Solr\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\Event\Indexing\AfterFrontendPageUriForIndexingHasBeenGeneratedEvent;
+use WapplerSystems\Meilisearch\IndexQueue\Item;
+use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\UriInterface;
 use TYPO3\CMS\Core\Exception\SiteNotFoundException;
@@ -30,7 +30,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * This class is used to build the indexing url for a TYPO3 frontend.
  * These sites have the pageId and language information encoded in the speaking url.
  *
- * EXT:solr will then extend the URL with additional header information to actually
+ * EXT:meilisearch will then extend the URL with additional header information to actually
  * trigger a frontend request to index a page.
  */
 class PageUriBuilder

@@ -7,6 +7,6 @@ defined('TYPO3') or die('Access denied.');
 $isComposerMode = defined('TYPO3_COMPOSER_MODE') && TYPO3_COMPOSER_MODE;
 if (!$isComposerMode) {
     // we load the autoloader for our libraries
-    $dir = ExtensionManagementUtility::extPath('solr');
+    $dir = ExtensionManagementUtility::extPath('meilisearch');
     require $dir . '/Resources/Private/Php/ComposerLibraries/vendor/autoload.php';
 }

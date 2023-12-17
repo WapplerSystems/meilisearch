@@ -13,7 +13,7 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\IndexQueue\FrontendHelper;
+namespace WapplerSystems\Meilisearch\IndexQueue\FrontendHelper;
 
 use RuntimeException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -63,7 +63,7 @@ class Manager
 
         $frontendHelper = GeneralUtility::makeInstance(self::$frontendHelperRegistry[$action]);
         if (!$frontendHelper instanceof FrontendHelper) {
-            $message = self::$frontendHelperRegistry[$action] . ' is not an implementation of ApacheSolrForTypo3\Solr\IndexQueue\FrontendHelper\FrontendHelper';
+            $message = self::$frontendHelperRegistry[$action] . ' is not an implementation of WapplerSystems\Meilisearch\IndexQueue\FrontendHelper\FrontendHelper';
             throw new RuntimeException($message, 1292497896);
         }
 

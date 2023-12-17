@@ -13,9 +13,9 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Access;
+namespace WapplerSystems\Meilisearch\Access;
 
-use ApacheSolrForTypo3\Solr\Exception\InvalidArgumentException;
+use WapplerSystems\Meilisearch\Exception\InvalidArgumentException;
 
 /**
  * Signals a wrong format for the access definition of a page or the content.

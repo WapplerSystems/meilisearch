@@ -15,14 +15,14 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\IndexQueue;
+namespace WapplerSystems\Meilisearch\IndexQueue;
 
-use ApacheSolrForTypo3\Solr\Access\Rootline;
-use ApacheSolrForTypo3\Solr\Access\RootlineElement;
-use ApacheSolrForTypo3\Solr\Domain\Index\PageIndexer\PageUriBuilder;
-use ApacheSolrForTypo3\Solr\NoSolrConnectionFoundException;
-use ApacheSolrForTypo3\Solr\System\Solr\SolrConnection;
-use ApacheSolrForTypo3\Solr\System\Util\SiteUtility;
+use WapplerSystems\Meilisearch\Access\Rootline;
+use WapplerSystems\Meilisearch\Access\RootlineElement;
+use WapplerSystems\Meilisearch\Domain\Index\PageIndexer\PageUriBuilder;
+use WapplerSystems\Meilisearch\NoSolrConnectionFoundException;
+use WapplerSystems\Meilisearch\System\Solr\SolrConnection;
+use WapplerSystems\Meilisearch\System\Util\SiteUtility;
 use Doctrine\DBAL\Exception as DBALException;
 use Exception;
 use Psr\Log\LogLevel;

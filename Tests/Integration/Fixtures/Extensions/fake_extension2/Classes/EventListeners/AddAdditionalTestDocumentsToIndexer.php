@@ -15,10 +15,10 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\SolrFakeExtension2\EventListeners;
+namespace WapplerSystems\MeilisearchFakeExtension2\EventListeners;
 
-use ApacheSolrForTypo3\Solr\Event\Indexing\BeforeDocumentIsProcessedForIndexingEvent;
-use ApacheSolrForTypo3\Solr\System\Solr\Document\Document;
+use WapplerSystems\Meilisearch\Event\Indexing\BeforeDocumentIsProcessedForIndexingEvent;
+use WapplerSystems\Meilisearch\System\Solr\Document\Document;
 
 final class AddAdditionalTestDocumentsToIndexer
 {

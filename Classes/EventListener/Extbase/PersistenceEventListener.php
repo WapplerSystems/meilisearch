@@ -15,12 +15,12 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\EventListener\Extbase;
+namespace WapplerSystems\Meilisearch\EventListener\Extbase;
 
-use ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events\RecordDeletedEvent;
-use ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events\RecordGarbageCheckEvent;
-use ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events\RecordUpdatedEvent;
-use ApacheSolrForTypo3\Solr\Traits\SkipMonitoringTrait;
+use WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\RecordDeletedEvent;
+use WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\RecordGarbageCheckEvent;
+use WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\RecordUpdatedEvent;
+use WapplerSystems\Meilisearch\Traits\SkipMonitoringTrait;
 use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
 use TYPO3\CMS\Extbase\Event\Persistence\EntityPersistedEvent;
 use TYPO3\CMS\Extbase\Event\Persistence\EntityRemovedFromPersistenceEvent;

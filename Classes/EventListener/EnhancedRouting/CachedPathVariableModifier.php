@@ -15,10 +15,10 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\EventListener\EnhancedRouting;
+namespace WapplerSystems\Meilisearch\EventListener\EnhancedRouting;
 
-use ApacheSolrForTypo3\Solr\Event\Routing\BeforeCachedVariablesAreProcessedEvent;
-use ApacheSolrForTypo3\Solr\Routing\RoutingService;
+use WapplerSystems\Meilisearch\Event\Routing\BeforeCachedVariablesAreProcessedEvent;
+use WapplerSystems\Meilisearch\Routing\RoutingService;
 use Psr\Http\Message\UriInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -51,7 +51,7 @@ class CachedPathVariableModifier
 
         $this->routingService = GeneralUtility::makeInstance(
             RoutingService::class,
-            $enhancerConfiguration['solr'] ?? [],
+            $enhancerConfiguration['meilisearch'] ?? [],
             (string)$enhancerConfiguration['extensionKey']
         );
 

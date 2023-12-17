@@ -13,7 +13,7 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\System\Validator;
+namespace WapplerSystems\Meilisearch\System\Validator;
 
 /**
  * Class Path is used for Solr Path related methods

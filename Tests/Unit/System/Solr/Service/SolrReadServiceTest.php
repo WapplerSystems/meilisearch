@@ -13,16 +13,16 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\System\Solr\Service;
+namespace WapplerSystems\Meilisearch\Tests\Unit\System\Solr\Service;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\SearchQuery;
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
-use ApacheSolrForTypo3\Solr\System\Logging\SolrLogManager;
-use ApacheSolrForTypo3\Solr\System\Solr\Service\SolrReadService;
-use ApacheSolrForTypo3\Solr\System\Solr\SolrCommunicationException;
-use ApacheSolrForTypo3\Solr\System\Solr\SolrInternalServerErrorException;
-use ApacheSolrForTypo3\Solr\System\Solr\SolrUnavailableException;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\Domain\Search\Query\SearchQuery;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Solr\Service\SolrReadService;
+use WapplerSystems\Meilisearch\System\Solr\SolrCommunicationException;
+use WapplerSystems\Meilisearch\System\Solr\SolrInternalServerErrorException;
+use WapplerSystems\Meilisearch\System\Solr\SolrUnavailableException;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Solarium\Client;
 use Solarium\Core\Client\Request;
@@ -31,7 +31,7 @@ use Solarium\Exception\HttpException;
 use Solarium\QueryType\Ping\Query as PingQuery;
 
 /**
- * Tests the ApacheSolrForTypo3\Solr\SolrService class
+ * Tests the WapplerSystems\Meilisearch\SolrService class
  *
  * @author Timo Hund <timo.hund@dkd.de>
  */

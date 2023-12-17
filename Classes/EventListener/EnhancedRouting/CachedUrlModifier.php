@@ -15,9 +15,9 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\EventListener\EnhancedRouting;
+namespace WapplerSystems\Meilisearch\EventListener\EnhancedRouting;
 
-use ApacheSolrForTypo3\Solr\Event\Routing\BeforeVariableInCachedUrlAreReplacedEvent;
+use WapplerSystems\Meilisearch\Event\Routing\BeforeVariableInCachedUrlAreReplacedEvent;
 
 /**
  * This modifier is in use if the URL processed by a route enhancer

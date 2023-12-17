@@ -15,7 +15,7 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\PHPUnitExtensions;
+namespace WapplerSystems\Meilisearch\Tests\PHPUnitExtensions;
 
 use DG\BypassFinals as DGBypassFinals;
 use PHPUnit\Runner\BeforeTestHook;

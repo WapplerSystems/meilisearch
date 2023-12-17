@@ -13,10 +13,10 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\ViewHelpers\Backend;
+namespace WapplerSystems\Meilisearch\Tests\Unit\ViewHelpers\Backend;
 
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
-use ApacheSolrForTypo3\Solr\ViewHelpers\Backend\IsStringViewHelper;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\ViewHelpers\Backend\IsStringViewHelper;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 
 /**

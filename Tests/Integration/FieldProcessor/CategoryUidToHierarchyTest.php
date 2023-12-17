@@ -13,10 +13,10 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Integration\FieldProcessor;
+namespace WapplerSystems\Meilisearch\Tests\Integration\FieldProcessor;
 
-use ApacheSolrForTypo3\Solr\FieldProcessor\CategoryUidToHierarchy;
-use ApacheSolrForTypo3\Solr\Tests\Integration\IntegrationTest;
+use WapplerSystems\Meilisearch\FieldProcessor\CategoryUidToHierarchy;
+use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**

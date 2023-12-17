@@ -15,10 +15,10 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\RangeBased\NumericRange;
+namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\RangeBased\NumericRange;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\FacetUrlDecoderInterface;
-use ApacheSolrForTypo3\Solr\Exception\InvalidArgumentException;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\FacetUrlDecoderInterface;
+use WapplerSystems\Meilisearch\Exception\InvalidArgumentException;
 
 /**
  * Parser to build Solr range queries from tx_solr[filter]

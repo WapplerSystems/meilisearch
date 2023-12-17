@@ -15,11 +15,11 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Search;
+namespace WapplerSystems\Meilisearch\Search;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\QueryBuilder;
-use ApacheSolrForTypo3\Solr\Event\Search\AfterSearchQueryHasBeenPreparedEvent;
-use ApacheSolrForTypo3\Solr\Util;
+use WapplerSystems\Meilisearch\Domain\Search\Query\QueryBuilder;
+use WapplerSystems\Meilisearch\Event\Search\AfterSearchQueryHasBeenPreparedEvent;
+use WapplerSystems\Meilisearch\Util;
 use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
 
 /**

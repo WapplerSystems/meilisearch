@@ -13,12 +13,12 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\Domain\Search\FrequentSearches;
+namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Search\FrequentSearches;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\FrequentSearches\FrequentSearchesService;
-use ApacheSolrForTypo3\Solr\Domain\Search\Statistics\StatisticsRepository;
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\Domain\Search\FrequentSearches\FrequentSearchesService;
+use WapplerSystems\Meilisearch\Domain\Search\Statistics\StatisticsRepository;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Cache\Frontend\AbstractFrontend;
 use TYPO3\CMS\Core\TypoScript\TemplateService;

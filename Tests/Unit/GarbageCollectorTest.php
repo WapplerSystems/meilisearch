@@ -13,14 +13,14 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit;
+namespace WapplerSystems\Meilisearch\Tests\Unit;
 
-use ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events\PageMovedEvent;
-use ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events\RecordDeletedEvent;
-use ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events\RecordGarbageCheckEvent;
-use ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\GarbageHandler;
-use ApacheSolrForTypo3\Solr\GarbageCollector;
-use ApacheSolrForTypo3\Solr\System\TCA\TCAService;
+use WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\PageMovedEvent;
+use WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\RecordDeletedEvent;
+use WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\RecordGarbageCheckEvent;
+use WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\GarbageHandler;
+use WapplerSystems\Meilisearch\GarbageCollector;
+use WapplerSystems\Meilisearch\System\TCA\TCAService;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;

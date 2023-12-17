@@ -15,15 +15,15 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Index\Queue;
+namespace WapplerSystems\Meilisearch\Domain\Index\Queue;
 
-use ApacheSolrForTypo3\Solr\Domain\Site\Site;
-use ApacheSolrForTypo3\Solr\Event\IndexQueue\AfterRecordsForIndexQueueItemsHaveBeenRetrievedEvent;
-use ApacheSolrForTypo3\Solr\IndexQueue\Item;
-use ApacheSolrForTypo3\Solr\IndexQueue\ItemInterface;
-use ApacheSolrForTypo3\Solr\System\Logging\SolrLogManager;
-use ApacheSolrForTypo3\Solr\System\Records\AbstractRepository;
-use ApacheSolrForTypo3\Solr\System\Util\SiteUtility;
+use WapplerSystems\Meilisearch\Domain\Site\Site;
+use WapplerSystems\Meilisearch\Event\IndexQueue\AfterRecordsForIndexQueueItemsHaveBeenRetrievedEvent;
+use WapplerSystems\Meilisearch\IndexQueue\Item;
+use WapplerSystems\Meilisearch\IndexQueue\ItemInterface;
+use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Records\AbstractRepository;
+use WapplerSystems\Meilisearch\System\Util\SiteUtility;
 use Doctrine\DBAL\Exception as DBALException;
 use PDO;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -663,7 +663,7 @@ class QueueItemRepository extends AbstractRepository
     }
 
     /**
-     * Creates an array of ApacheSolrForTypo3\Solr\IndexQueue\Item objects from an array of
+     * Creates an array of WapplerSystems\Meilisearch\IndexQueue\Item objects from an array of
      * index queue records.
      *
      * @return Item[]

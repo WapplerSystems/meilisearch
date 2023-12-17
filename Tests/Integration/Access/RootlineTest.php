@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace ApacheSolrForTypo3\Solr\Tests\Integration\Access;
+namespace WapplerSystems\Meilisearch\Tests\Integration\Access;
 
-use ApacheSolrForTypo3\Solr\Access\Rootline;
-use ApacheSolrForTypo3\Solr\Tests\Integration\IntegrationTest;
+use WapplerSystems\Meilisearch\Access\Rootline;
+use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 
 /**
  * Class RootlineTest

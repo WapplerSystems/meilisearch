@@ -13,12 +13,12 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Index\Queue\RecordMonitor\Helper;
+namespace WapplerSystems\Meilisearch\Domain\Index\Queue\RecordMonitor\Helper;
 
-use ApacheSolrForTypo3\Solr\Domain\Site\SiteRepository;
-use ApacheSolrForTypo3\Solr\IndexQueue\Initializer\Page;
-use ApacheSolrForTypo3\Solr\System\Page\Rootline;
-use ApacheSolrForTypo3\Solr\System\Records\Pages\PagesRepository;
+use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
+use WapplerSystems\Meilisearch\IndexQueue\Initializer\Page;
+use WapplerSystems\Meilisearch\System\Page\Rootline;
+use WapplerSystems\Meilisearch\System\Records\Pages\PagesRepository;
 use Doctrine\DBAL\Exception as DBALException;
 use RuntimeException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;

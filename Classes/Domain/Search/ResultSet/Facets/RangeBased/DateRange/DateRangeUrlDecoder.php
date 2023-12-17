@@ -15,10 +15,10 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\RangeBased\DateRange;
+namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\RangeBased\DateRange;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\FacetUrlDecoderInterface;
-use ApacheSolrForTypo3\Solr\System\DateTime\FormatService;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\FacetUrlDecoderInterface;
+use WapplerSystems\Meilisearch\System\DateTime\FormatService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**

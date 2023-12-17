@@ -15,7 +15,7 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Index\Queue\GarbageRemover;
+namespace WapplerSystems\Meilisearch\Domain\Index\Queue\GarbageRemover;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 

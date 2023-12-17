@@ -15,15 +15,15 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Event\IndexQueue;
+namespace WapplerSystems\Meilisearch\Event\IndexQueue;
 
-use ApacheSolrForTypo3\Solr\Domain\Site\Site;
-use ApacheSolrForTypo3\Solr\IndexQueue\Initializer\AbstractInitializer;
+use WapplerSystems\Meilisearch\Domain\Site\Site;
+use WapplerSystems\Meilisearch\IndexQueue\Initializer\AbstractInitializer;
 
 /**
  * PSR-14 Event which is fired after a index queue has been (re-) initialized.
  *
- * Previously used via $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['solr']['postProcessIndexQueueInitialization']
+ * Previously used via $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['meilisearch']['postProcessIndexQueueInitialization']
  * and InitializationPostProcessor interface.
  */
 final class AfterIndexQueueHasBeenInitializedEvent

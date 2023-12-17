@@ -13,9 +13,9 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\OptionBased\Options;
+namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\OptionBased\Options;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\OptionBased\AbstractOptionsFacet;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\OptionBased\AbstractOptionsFacet;
 
 /**
  * Value object that represent an options facet.

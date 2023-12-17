@@ -13,10 +13,10 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\ContentObject;
+namespace WapplerSystems\Meilisearch\ContentObject;
 
-use ApacheSolrForTypo3\Solr\System\Language\FrontendOverlayService;
-use ApacheSolrForTypo3\Solr\System\TCA\TCAService;
+use WapplerSystems\Meilisearch\System\Language\FrontendOverlayService;
+use WapplerSystems\Meilisearch\System\TCA\TCAService;
 use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\DBAL\Result;
 use TYPO3\CMS\Core\Database\ConnectionPool;

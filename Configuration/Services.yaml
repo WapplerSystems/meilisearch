@@ -3,19 +3,19 @@ services:
     autowire: false
     autoconfigure: false
 
-  ApacheSolrForTypo3\Solr\:
+  WapplerSystems\Meilisearch\:
     resource: '../Classes/*'
     exclude: '../Classes/Eid/*'
 
   controller:
-    namespace: ApacheSolrForTypo3\Solr\Controller\
+    namespace: WapplerSystems\Meilisearch\Controller\
     resource: '../Classes/Controller/*'
     public: true
     autowire: true
     shared: false
 
   facets:
-    namespace: ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\
+    namespace: WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\
     resource: '../Classes/Domain/Search/ResultSet/Facets/*'
     exclude:
       - '../Classes/Domain/Search/ResultSet/Facets/{OptionBased/Hierarchy/Node.php,*/Abstract*}'
@@ -26,307 +26,307 @@ services:
     shared: false
 
   viewhelper:
-    namespace: ApacheSolrForTypo3\Solr\ViewHelpers\
+    namespace: WapplerSystems\Meilisearch\ViewHelpers\
     resource: '../Classes/ViewHelpers/*'
     public: true
     autowire: true
 
   backend_controller:
-    namespace: ApacheSolrForTypo3\Solr\Controller\Backend\Search\
+    namespace: WapplerSystems\Meilisearch\Controller\Backend\Search\
     resource: '../Classes/Controller/Backend/Search/*'
     public: true
     autowire: true
     tags: ['backend.controller']
 
-  ApacheSolrForTypo3\Solr\Domain\Search\ApacheSolrDocument\Builder:
+  WapplerSystems\Meilisearch\Domain\Search\ApacheSolrDocument\Builder:
     public: true
     autowire: true
 
-  ApacheSolrForTypo3\Solr\Domain\Search\Uri\SearchUriBuilder:
+  WapplerSystems\Meilisearch\Domain\Search\Uri\SearchUriBuilder:
     public: true
     autowire: true
 
-  ApacheSolrForTypo3\Solr\Domain\Variants\IdBuilder:
+  WapplerSystems\Meilisearch\Domain\Variants\IdBuilder:
     public: true
     autowire: true
 
   # BE modules, plugins
-  ApacheSolrForTypo3\Solr\Backend\SettingsPreviewOnPlugins:
+  WapplerSystems\Meilisearch\Backend\SettingsPreviewOnPlugins:
     arguments:
       $flexFormService: '@TYPO3\CMS\Core\Service\FlexFormService'
     tags:
       - name: event.listener
-        identifier: 'solr.plugin.be.settings.preview'
+        identifier: 'meilisearch.plugin.be.settings.preview'
         event: TYPO3\CMS\Backend\View\Event\PageContentPreviewRenderingEvent
   # END: BE modules
 
   viewhelpers_backend:
-    namespace: ApacheSolrForTypo3\Solr\ViewHelpers\Backend\
+    namespace: WapplerSystems\Meilisearch\ViewHelpers\Backend\
     resource: '../Classes/ViewHelpers/Backend/*'
     public: true
     autowire: true
 
-  ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\DataUpdateHandler:
+  WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\DataUpdateHandler:
     public: true
     arguments:
-      $recordService: '@ApacheSolrForTypo3\Solr\Domain\Index\Queue\RecordMonitor\Helper\ConfigurationAwareRecordService'
-      $frontendEnvironment: '@ApacheSolrForTypo3\Solr\FrontendEnvironment'
-      $tcaService: '@ApacheSolrForTypo3\Solr\System\TCA\TCAService'
-      $indexQueue: '@ApacheSolrForTypo3\Solr\IndexQueue\Queue'
-      $mountPageUpdater: '@ApacheSolrForTypo3\Solr\Domain\Index\Queue\RecordMonitor\Helper\MountPagesUpdater'
-      $rootPageResolver: '@ApacheSolrForTypo3\Solr\Domain\Index\Queue\RecordMonitor\Helper\RootPageResolver'
-      $pagesRepository: '@ApacheSolrForTypo3\Solr\System\Records\Pages\PagesRepository'
+      $recordService: '@WapplerSystems\Meilisearch\Domain\Index\Queue\RecordMonitor\Helper\ConfigurationAwareRecordService'
+      $frontendEnvironment: '@WapplerSystems\Meilisearch\FrontendEnvironment'
+      $tcaService: '@WapplerSystems\Meilisearch\System\TCA\TCAService'
+      $indexQueue: '@WapplerSystems\Meilisearch\IndexQueue\Queue'
+      $mountPageUpdater: '@WapplerSystems\Meilisearch\Domain\Index\Queue\RecordMonitor\Helper\MountPagesUpdater'
+      $rootPageResolver: '@WapplerSystems\Meilisearch\Domain\Index\Queue\RecordMonitor\Helper\RootPageResolver'
+      $pagesRepository: '@WapplerSystems\Meilisearch\System\Records\Pages\PagesRepository'
       $dataHandler: '@TYPO3\CMS\Core\DataHandling\DataHandler'
-  ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\GarbageHandler:
+  WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\GarbageHandler:
     public: true
     arguments:
-      $recordService: '@ApacheSolrForTypo3\Solr\Domain\Index\Queue\RecordMonitor\Helper\ConfigurationAwareRecordService'
-      $frontendEnvironment: '@ApacheSolrForTypo3\Solr\FrontendEnvironment'
-      $tcaService: '@ApacheSolrForTypo3\Solr\System\TCA\TCAService'
-      $indexQueue: '@ApacheSolrForTypo3\Solr\IndexQueue\Queue'
+      $recordService: '@WapplerSystems\Meilisearch\Domain\Index\Queue\RecordMonitor\Helper\ConfigurationAwareRecordService'
+      $frontendEnvironment: '@WapplerSystems\Meilisearch\FrontendEnvironment'
+      $tcaService: '@WapplerSystems\Meilisearch\System\TCA\TCAService'
+      $indexQueue: '@WapplerSystems\Meilisearch\IndexQueue\Queue'
 
-  ApacheSolrForTypo3\Solr\Domain\Site\SiteHashService:
-    public: true
-    autowire: true
-
-  ApacheSolrForTypo3\Solr\IndexQueue\PageIndexerRequestHandler:
+  WapplerSystems\Meilisearch\Domain\Site\SiteHashService:
     public: true
     autowire: true
 
-  ApacheSolrForTypo3\Solr\EventListener\EnhancedRouting\CachedUrlModifier:
+  WapplerSystems\Meilisearch\IndexQueue\PageIndexerRequestHandler:
+    public: true
+    autowire: true
+
+  WapplerSystems\Meilisearch\EventListener\EnhancedRouting\CachedUrlModifier:
     tags:
       - name: event.listener
-        identifier: 'solr.routing.cachedurl-modifier'
-        event: ApacheSolrForTypo3\Solr\Event\Routing\BeforeVariableInCachedUrlAreReplacedEvent
-  ApacheSolrForTypo3\Solr\EventListener\EnhancedRouting\CachedPathVariableModifier:
+        identifier: 'meilisearch.routing.cachedurl-modifier'
+        event: WapplerSystems\Meilisearch\Event\Routing\BeforeVariableInCachedUrlAreReplacedEvent
+  WapplerSystems\Meilisearch\EventListener\EnhancedRouting\CachedPathVariableModifier:
     tags:
       - name: event.listener
-        identifier: 'solr.routing.cachedurl-modifier'
-        event: ApacheSolrForTypo3\Solr\Event\Routing\BeforeCachedVariablesAreProcessedEvent
-  ApacheSolrForTypo3\Solr\EventListener\EnhancedRouting\PostEnhancedUriProcessor:
+        identifier: 'meilisearch.routing.cachedurl-modifier'
+        event: WapplerSystems\Meilisearch\Event\Routing\BeforeCachedVariablesAreProcessedEvent
+  WapplerSystems\Meilisearch\EventListener\EnhancedRouting\PostEnhancedUriProcessor:
     tags:
       - name: event.listener
-        identifier: 'solr.routing.postenhanceduriprocessor-modifier'
-        event: ApacheSolrForTypo3\Solr\Event\Routing\AfterUriIsProcessedEvent
-  ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\EventListener\NoProcessingEventListener:
+        identifier: 'meilisearch.routing.postenhanceduriprocessor-modifier'
+        event: WapplerSystems\Meilisearch\Event\Routing\AfterUriIsProcessedEvent
+  WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\EventListener\NoProcessingEventListener:
     arguments:
-      $extensionConfiguration: '@ApacheSolrForTypo3\Solr\System\Configuration\ExtensionConfiguration'
+      $extensionConfiguration: '@WapplerSystems\Meilisearch\System\Configuration\ExtensionConfiguration'
       $eventDispatcher: '@Psr\EventDispatcher\EventDispatcherInterface'
     tags:
       - name: event.listener
-        identifier: 'solr.index.updatehandler.noprocessingeventlistener'
-        before: 'solr.index.updatehandler.immediateprocessingeventlistener,solr.index.updatehandler.delayedprocessingeventlistener'
-        event: ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events\ContentElementDeletedEvent
+        identifier: 'meilisearch.index.updatehandler.noprocessingeventlistener'
+        before: 'meilisearch.index.updatehandler.immediateprocessingeventlistener,meilisearch.index.updatehandler.delayedprocessingeventlistener'
+        event: WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\ContentElementDeletedEvent
       - name: event.listener
-        identifier: 'solr.index.updatehandler.noprocessingeventlistener'
-        before: 'solr.index.updatehandler.immediateprocessingeventlistener,solr.index.updatehandler.delayedprocessingeventlistener'
-        event: ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events\RecordMovedEvent
+        identifier: 'meilisearch.index.updatehandler.noprocessingeventlistener'
+        before: 'meilisearch.index.updatehandler.immediateprocessingeventlistener,meilisearch.index.updatehandler.delayedprocessingeventlistener'
+        event: WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\RecordMovedEvent
       - name: event.listener
-        identifier: 'solr.index.updatehandler.noprocessingeventlistener'
-        before: 'solr.index.updatehandler.immediateprocessingeventlistener,solr.index.updatehandler.delayedprocessingeventlistener'
-        event: ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events\RecordUpdatedEvent
+        identifier: 'meilisearch.index.updatehandler.noprocessingeventlistener'
+        before: 'meilisearch.index.updatehandler.immediateprocessingeventlistener,meilisearch.index.updatehandler.delayedprocessingeventlistener'
+        event: WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\RecordUpdatedEvent
       - name: event.listener
-        identifier: 'solr.index.updatehandler.noprocessingeventlistener'
-        before: 'solr.index.updatehandler.immediateprocessingeventlistener,solr.index.updatehandler.delayedprocessingeventlistener'
-        event: ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events\VersionSwappedEvent
+        identifier: 'meilisearch.index.updatehandler.noprocessingeventlistener'
+        before: 'meilisearch.index.updatehandler.immediateprocessingeventlistener,meilisearch.index.updatehandler.delayedprocessingeventlistener'
+        event: WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\VersionSwappedEvent
       - name: event.listener
-        identifier: 'solr.index.updatehandler.noprocessingeventlistener'
-        before: 'solr.index.updatehandler.immediateprocessingeventlistener,solr.index.updatehandler.delayedprocessingeventlistener'
-        event: ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events\RecordDeletedEvent
+        identifier: 'meilisearch.index.updatehandler.noprocessingeventlistener'
+        before: 'meilisearch.index.updatehandler.immediateprocessingeventlistener,meilisearch.index.updatehandler.delayedprocessingeventlistener'
+        event: WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\RecordDeletedEvent
       - name: event.listener
-        identifier: 'solr.index.updatehandler.noprocessingeventlistener'
-        before: 'solr.index.updatehandler.immediateprocessingeventlistener,solr.index.updatehandler.delayedprocessingeventlistener'
-        event: ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events\PageMovedEvent
+        identifier: 'meilisearch.index.updatehandler.noprocessingeventlistener'
+        before: 'meilisearch.index.updatehandler.immediateprocessingeventlistener,meilisearch.index.updatehandler.delayedprocessingeventlistener'
+        event: WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\PageMovedEvent
       - name: event.listener
-        identifier: 'solr.index.updatehandler.noprocessingeventlistener'
-        before: 'solr.index.updatehandler.immediateprocessingeventlistener,solr.index.updatehandler.delayedprocessingeventlistener'
-        event: ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events\RecordGarbageCheckEvent
-  ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\EventListener\ImmediateProcessingEventListener:
+        identifier: 'meilisearch.index.updatehandler.noprocessingeventlistener'
+        before: 'meilisearch.index.updatehandler.immediateprocessingeventlistener,meilisearch.index.updatehandler.delayedprocessingeventlistener'
+        event: WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\RecordGarbageCheckEvent
+  WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\EventListener\ImmediateProcessingEventListener:
     arguments:
-      $extensionConfiguration: '@ApacheSolrForTypo3\Solr\System\Configuration\ExtensionConfiguration'
+      $extensionConfiguration: '@WapplerSystems\Meilisearch\System\Configuration\ExtensionConfiguration'
       $eventDispatcher: '@Psr\EventDispatcher\EventDispatcherInterface'
     tags:
       - name: event.listener
-        identifier: 'solr.index.updatehandler.immediateprocessingeventlistener'
-        before: 'solr.index.updatehandler.delayedprocessingeventlistener'
-        event: ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events\ContentElementDeletedEvent
+        identifier: 'meilisearch.index.updatehandler.immediateprocessingeventlistener'
+        before: 'meilisearch.index.updatehandler.delayedprocessingeventlistener'
+        event: WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\ContentElementDeletedEvent
       - name: event.listener
-        identifier: 'solr.index.updatehandler.immediateprocessingeventlistener'
-        before: 'solr.index.updatehandler.delayedprocessingeventlistener'
-        event: ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events\RecordMovedEvent
+        identifier: 'meilisearch.index.updatehandler.immediateprocessingeventlistener'
+        before: 'meilisearch.index.updatehandler.delayedprocessingeventlistener'
+        event: WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\RecordMovedEvent
       - name: event.listener
-        identifier: 'solr.index.updatehandler.immediateprocessingeventlistener'
-        before: 'solr.index.updatehandler.delayedprocessingeventlistener'
-        event: ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events\RecordUpdatedEvent
+        identifier: 'meilisearch.index.updatehandler.immediateprocessingeventlistener'
+        before: 'meilisearch.index.updatehandler.delayedprocessingeventlistener'
+        event: WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\RecordUpdatedEvent
       - name: event.listener
-        identifier: 'solr.index.updatehandler.immediateprocessingeventlistener'
-        before: 'solr.index.updatehandler.delayedprocessingeventlistener'
-        event: ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events\VersionSwappedEvent
+        identifier: 'meilisearch.index.updatehandler.immediateprocessingeventlistener'
+        before: 'meilisearch.index.updatehandler.delayedprocessingeventlistener'
+        event: WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\VersionSwappedEvent
       - name: event.listener
-        identifier: 'solr.index.updatehandler.immediateprocessingeventlistener'
-        before: 'solr.index.updatehandler.delayedprocessingeventlistener'
-        event: ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events\RecordDeletedEvent
+        identifier: 'meilisearch.index.updatehandler.immediateprocessingeventlistener'
+        before: 'meilisearch.index.updatehandler.delayedprocessingeventlistener'
+        event: WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\RecordDeletedEvent
       - name: event.listener
-        identifier: 'solr.index.updatehandler.immediateprocessingeventlistener'
-        before: 'solr.index.updatehandler.delayedprocessingeventlistener'
-        event: ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events\PageMovedEvent
+        identifier: 'meilisearch.index.updatehandler.immediateprocessingeventlistener'
+        before: 'meilisearch.index.updatehandler.delayedprocessingeventlistener'
+        event: WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\PageMovedEvent
       - name: event.listener
-        identifier: 'solr.index.updatehandler.immediateprocessingeventlistener'
-        before: 'solr.index.updatehandler.delayedprocessingeventlistener'
-        event: ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events\RecordGarbageCheckEvent
-  ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\EventListener\DelayedProcessingEventListener:
+        identifier: 'meilisearch.index.updatehandler.immediateprocessingeventlistener'
+        before: 'meilisearch.index.updatehandler.delayedprocessingeventlistener'
+        event: WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\RecordGarbageCheckEvent
+  WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\EventListener\DelayedProcessingEventListener:
     arguments:
-      $extensionConfiguration: '@ApacheSolrForTypo3\Solr\System\Configuration\ExtensionConfiguration'
+      $extensionConfiguration: '@WapplerSystems\Meilisearch\System\Configuration\ExtensionConfiguration'
       $eventDispatcher: '@Psr\EventDispatcher\EventDispatcherInterface'
     tags:
       - name: event.listener
-        identifier: 'solr.index.updatehandler.delayedprocessingeventlistener'
-        event: ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events\ContentElementDeletedEvent
+        identifier: 'meilisearch.index.updatehandler.delayedprocessingeventlistener'
+        event: WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\ContentElementDeletedEvent
       - name: event.listener
-        identifier: 'solr.index.updatehandler.delayedprocessingeventlistener'
-        event: ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events\RecordMovedEvent
+        identifier: 'meilisearch.index.updatehandler.delayedprocessingeventlistener'
+        event: WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\RecordMovedEvent
       - name: event.listener
-        identifier: 'solr.index.updatehandler.delayedprocessingeventlistener'
-        event: ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events\RecordUpdatedEvent
+        identifier: 'meilisearch.index.updatehandler.delayedprocessingeventlistener'
+        event: WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\RecordUpdatedEvent
       - name: event.listener
-        identifier: 'solr.index.updatehandler.delayedprocessingeventlistener'
-        event: ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events\VersionSwappedEvent
+        identifier: 'meilisearch.index.updatehandler.delayedprocessingeventlistener'
+        event: WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\VersionSwappedEvent
       - name: event.listener
-        identifier: 'solr.index.updatehandler.delayedprocessingeventlistener'
-        event: ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events\RecordDeletedEvent
+        identifier: 'meilisearch.index.updatehandler.delayedprocessingeventlistener'
+        event: WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\RecordDeletedEvent
       - name: event.listener
-        identifier: 'solr.index.updatehandler.delayedprocessingeventlistener'
-        event: ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events\PageMovedEvent
+        identifier: 'meilisearch.index.updatehandler.delayedprocessingeventlistener'
+        event: WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\PageMovedEvent
       - name: event.listener
-        identifier: 'solr.index.updatehandler.delayedprocessingeventlistener'
-        event: ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events\RecordGarbageCheckEvent
+        identifier: 'meilisearch.index.updatehandler.delayedprocessingeventlistener'
+        event: WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\RecordGarbageCheckEvent
 
   # Register search components
-  ApacheSolrForTypo3\Solr\Search\AccessComponent:
+  WapplerSystems\Meilisearch\Search\AccessComponent:
     autowire: true
     tags:
       - name: event.listener
-        identifier: 'solr.search-component.access'
-  ApacheSolrForTypo3\Solr\Search\AnalysisComponent:
+        identifier: 'meilisearch.search-component.access'
+  WapplerSystems\Meilisearch\Search\AnalysisComponent:
     autowire: true
     tags:
       - name: event.listener
-        identifier: 'solr.search-component.analysis'
-  ApacheSolrForTypo3\Solr\Search\DebugComponent:
+        identifier: 'meilisearch.search-component.analysis'
+  WapplerSystems\Meilisearch\Search\DebugComponent:
     autowire: true
     tags:
       - name: event.listener
-        identifier: 'solr.search-component.debug'
-  ApacheSolrForTypo3\Solr\Search\ElevationComponent:
+        identifier: 'meilisearch.search-component.debug'
+  WapplerSystems\Meilisearch\Search\ElevationComponent:
     autowire: true
     tags:
       - name: event.listener
-        identifier: 'solr.search-component.elevation'
-  ApacheSolrForTypo3\Solr\Search\GroupingComponent:
+        identifier: 'meilisearch.search-component.elevation'
+  WapplerSystems\Meilisearch\Search\GroupingComponent:
     autowire: true
     tags:
       - name: event.listener
-        identifier: 'solr.search-component.grouping'
-  ApacheSolrForTypo3\Solr\Search\FacetingComponent:
+        identifier: 'meilisearch.search-component.grouping'
+  WapplerSystems\Meilisearch\Search\FacetingComponent:
     autowire: true
     tags:
       - name: event.listener
-        identifier: 'solr.search-component.faceting'
-  ApacheSolrForTypo3\Solr\Search\HighlightingComponent:
+        identifier: 'meilisearch.search-component.faceting'
+  WapplerSystems\Meilisearch\Search\HighlightingComponent:
     autowire: true
     tags:
       - name: event.listener
-        identifier: 'solr.search-component.highlighting'
-  ApacheSolrForTypo3\Solr\Search\LastSearchesComponent:
+        identifier: 'meilisearch.search-component.highlighting'
+  WapplerSystems\Meilisearch\Search\LastSearchesComponent:
     autowire: true
     tags:
       - name: event.listener
-        identifier: 'solr.search-component.last-searches'
-  ApacheSolrForTypo3\Solr\Search\RelevanceComponent:
+        identifier: 'meilisearch.search-component.last-searches'
+  WapplerSystems\Meilisearch\Search\RelevanceComponent:
     autowire: true
     tags:
       - name: event.listener
-        identifier: 'solr.search-component.relevance'
-  ApacheSolrForTypo3\Solr\Search\SortingComponent:
+        identifier: 'meilisearch.search-component.relevance'
+  WapplerSystems\Meilisearch\Search\SortingComponent:
     autowire: true
     tags:
       - name: event.listener
-        identifier: 'solr.search-component.sorting'
-  ApacheSolrForTypo3\Solr\Search\SpellcheckingComponent:
+        identifier: 'meilisearch.search-component.sorting'
+  WapplerSystems\Meilisearch\Search\SpellcheckingComponent:
     autowire: true
     tags:
       - name: event.listener
-        identifier: 'solr.search-component.spellchecking'
-  ApacheSolrForTypo3\Solr\Search\StatisticsComponent:
+        identifier: 'meilisearch.search-component.spellchecking'
+  WapplerSystems\Meilisearch\Search\StatisticsComponent:
     autowire: true
     tags:
       - name: event.listener
-        identifier: 'solr.search-component.statistics'
+        identifier: 'meilisearch.search-component.statistics'
       - name: event.listener
-        identifier: 'solr.search-component.statistics-writer'
+        identifier: 'meilisearch.search-component.statistics-writer'
         method: 'writeStatisticsAfterSearch'
 
   ### Indexing
-  ApacheSolrForTypo3\Solr\EventListener\PageIndexer\FrontendGroupsModifier:
+  WapplerSystems\Meilisearch\EventListener\PageIndexer\FrontendGroupsModifier:
     autowire: true
     tags:
       - name: event.listener
-        identifier: 'solr.index.PageIndexer.FrontendUserAuthenticator'
+        identifier: 'meilisearch.index.PageIndexer.FrontendUserAuthenticator'
 
-  ApacheSolrForTypo3\Solr\IndexQueue\FrontendHelper\PageIndexer:
+  WapplerSystems\Meilisearch\IndexQueue\FrontendHelper\PageIndexer:
     autowire: true
     tags:
       - name: event.listener
-        identifier: 'solr.index.FrontendHelper.PageIndexer.indexPageContentAfterCacheableContentIsGenerated'
-  ApacheSolrForTypo3\Solr\Task\IndexQueueWorkerTaskAdditionalFieldProvider:
+        identifier: 'meilisearch.index.FrontendHelper.PageIndexer.indexPageContentAfterCacheableContentIsGenerated'
+  WapplerSystems\Meilisearch\Task\IndexQueueWorkerTaskAdditionalFieldProvider:
     public: true
     arguments:
-      $siteRepository: '@ApacheSolrForTypo3\Solr\Domain\Site\SiteRepository'
+      $siteRepository: '@WapplerSystems\Meilisearch\Domain\Site\SiteRepository'
 
-  ApacheSolrForTypo3\Solr\EventListener\PageIndexer\AdditionalFieldsForPageIndexing:
+  WapplerSystems\Meilisearch\EventListener\PageIndexer\AdditionalFieldsForPageIndexing:
     autowire: true
     tags:
       - name: event.listener
-        identifier: 'solr.index.AdditionalFieldsForPageIndexing'
+        identifier: 'meilisearch.index.AdditionalFieldsForPageIndexing'
 
-  ApacheSolrForTypo3\Solr\IndexQueue\FrontendHelper\PageFieldMappingIndexer:
+  WapplerSystems\Meilisearch\IndexQueue\FrontendHelper\PageFieldMappingIndexer:
     autowire: true
     tags:
       - name: event.listener
-        identifier: 'solr.index.PageFieldMappingIndexer'
+        identifier: 'meilisearch.index.PageFieldMappingIndexer'
 
-  ApacheSolrForTypo3\Solr\EventListener\Extbase\PersistenceEventListener:
+  WapplerSystems\Meilisearch\EventListener\Extbase\PersistenceEventListener:
     autowire: true
     tags:
       - name: event.listener
-        identifier: 'solr.index.ExtbaseEntityPersisted'
+        identifier: 'meilisearch.index.ExtbaseEntityPersisted'
         method: 'entityPersisted'
       - name: event.listener
-        identifier: 'solr.index.ExtbaseEntityRemoved'
+        identifier: 'meilisearch.index.ExtbaseEntityRemoved'
         method: 'entityRemoved'
 
-  ###  EXT:solr content objects
-  ApacheSolrForTypo3\Solr\ContentObject\Classification:
+  ###  EXT:meilisearch content objects
+  WapplerSystems\Meilisearch\ContentObject\Classification:
     tags:
       - name: frontend.contentobject
         identifier: 'SOLR_CLASSIFICATION'
-  ApacheSolrForTypo3\Solr\ContentObject\Content:
+  WapplerSystems\Meilisearch\ContentObject\Content:
     tags:
       - name: frontend.contentobject
         identifier: 'SOLR_CONTENT'
-  ApacheSolrForTypo3\Solr\ContentObject\Multivalue:
+  WapplerSystems\Meilisearch\ContentObject\Multivalue:
     tags:
       - name: frontend.contentobject
         identifier: 'SOLR_MULTIVALUE'
-  ApacheSolrForTypo3\Solr\ContentObject\Relation:
+  WapplerSystems\Meilisearch\ContentObject\Relation:
     arguments:
-      $tcaService: '@ApacheSolrForTypo3\Solr\System\TCA\TCAService'
+      $tcaService: '@WapplerSystems\Meilisearch\System\TCA\TCAService'
     tags:
       - name: frontend.contentobject
         identifier: 'SOLR_RELATION'
 
 
   # Reports: Status
-  ApacheSolrForTypo3\Solr\Report\:
+  WapplerSystems\Meilisearch\Report\:
     resource: '../Classes/Report/*'
     autoconfigure: true

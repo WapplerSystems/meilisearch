@@ -15,10 +15,10 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\FieldProcessor;
+namespace WapplerSystems\Meilisearch\FieldProcessor;
 
-use ApacheSolrForTypo3\Solr\Exception as ExtSolrException;
-use ApacheSolrForTypo3\Solr\System\Solr\Document\Document;
+use WapplerSystems\Meilisearch\Exception as ExtSolrException;
+use WapplerSystems\Meilisearch\System\Solr\Document\Document;
 use Doctrine\DBAL\Exception as DBALException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -95,7 +95,7 @@ class Service
                         $fieldValue = array_map('mb_strtoupper', $fieldValue);
                         break;
                     default:
-                        $classReference = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['solr']['fieldProcessor'][$instruction] ?? false;
+                        $classReference = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['meilisearch']['fieldProcessor'][$instruction] ?? false;
                         if ($classReference) {
                             $customFieldProcessor = GeneralUtility::makeInstance($classReference);
                             if ($customFieldProcessor instanceof FieldProcessor) {

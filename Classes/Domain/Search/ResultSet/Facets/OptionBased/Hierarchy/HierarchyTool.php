@@ -13,7 +13,7 @@
  * The TYPO3 project - inspiring people to share!
 */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\OptionBased\Hierarchy;
+namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\OptionBased\Hierarchy;
 
 class HierarchyTool
 {

@@ -15,10 +15,10 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets;
+namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets;
 
 /**
- * The facet url encode is responsible to encode and decode values for EXT:solr urls.
+ * The facet url encode is responsible to encode and decode values for EXT:meilisearch urls.
  *
  * @author Ingo Renner <ingo@typo3.org>
  * @author Timo Hund <timo.hund@dkd.de>

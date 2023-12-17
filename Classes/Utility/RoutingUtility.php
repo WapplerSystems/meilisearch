@@ -15,7 +15,7 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Utility;
+namespace WapplerSystems\Meilisearch\Utility;
 
 /**
  * This utility class contains several functions used inside the middleware and enhancer for routing purposes

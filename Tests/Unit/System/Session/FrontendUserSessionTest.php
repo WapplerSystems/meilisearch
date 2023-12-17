@@ -13,10 +13,10 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\System\Session;
+namespace WapplerSystems\Meilisearch\Tests\Unit\System\Session;
 
-use ApacheSolrForTypo3\Solr\System\Session\FrontendUserSession;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\System\Session\FrontendUserSession;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
@@ -65,7 +65,7 @@ class FrontendUserSessionTest extends SetUpUnitTestCase
      */
     public function canSetLastSearchesInSession(): void
     {
-        $lastSearches = ['TYPO3', 'solr'];
+        $lastSearches = ['TYPO3', 'meilisearch'];
         $this->feUserMock->expects(self::once())->method('setKey')->with('ses', 'tx_solr_lastSearches', $lastSearches);
         $this->session->setLastSearches($lastSearches);
     }

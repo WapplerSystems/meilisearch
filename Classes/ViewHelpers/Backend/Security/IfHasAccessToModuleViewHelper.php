@@ -15,9 +15,9 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\ViewHelpers\Backend\Security;
+namespace WapplerSystems\Meilisearch\ViewHelpers\Backend\Security;
 
-use ApacheSolrForTypo3\Solr\Exception\InvalidArgumentException;
+use WapplerSystems\Meilisearch\Exception\InvalidArgumentException;
 use RuntimeException;
 use TYPO3\CMS\Backend\Module\ModuleProvider;
 use TYPO3\CMS\Core\Utility\GeneralUtility;

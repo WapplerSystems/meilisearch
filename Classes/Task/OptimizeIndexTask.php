@@ -15,9 +15,9 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Task;
+namespace WapplerSystems\Meilisearch\Task;
 
-use ApacheSolrForTypo3\Solr\ConnectionManager;
+use WapplerSystems\Meilisearch\ConnectionManager;
 use Doctrine\DBAL\Exception as DBALException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 

@@ -15,11 +15,11 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder;
+namespace WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\AbstractQueryBuilder;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\SortingExpression;
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\Domain\Search\Query\AbstractQueryBuilder;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\SortingExpression;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 
 /**
  * The Faceting ParameterProvider is responsible to build the solr query parameters

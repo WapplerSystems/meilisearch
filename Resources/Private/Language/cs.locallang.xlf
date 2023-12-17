@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" target-language="cs" datatype="plaintext" original="EXT:solr/Resources/Private/Language/locallang.xlf"  date="2021-12-17T10:22:00Z">
+	<file source-language="en" target-language="cs" datatype="plaintext" original="EXT:meilisearch/Resources/Private/Language/locallang.xlf"  date="2021-12-17T10:22:00Z">
 		<header>
 			<generator>LFEditor</generator>
 		</header>

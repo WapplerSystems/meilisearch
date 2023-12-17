@@ -15,12 +15,12 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Task;
+namespace WapplerSystems\Meilisearch\Task;
 
-use ApacheSolrForTypo3\Solr\Domain\Index\IndexService;
-use ApacheSolrForTypo3\Solr\Domain\Site\Site;
-use ApacheSolrForTypo3\Solr\System\Environment\CliEnvironment;
-use ApacheSolrForTypo3\Solr\System\Environment\WebRootAllReadyDefinedException;
+use WapplerSystems\Meilisearch\Domain\Index\IndexService;
+use WapplerSystems\Meilisearch\Domain\Site\Site;
+use WapplerSystems\Meilisearch\System\Environment\CliEnvironment;
+use WapplerSystems\Meilisearch\System\Environment\WebRootAllReadyDefinedException;
 use Doctrine\DBAL\ConnectionException;
 use Doctrine\DBAL\Exception as DBALException;
 use TYPO3\CMS\Core\Core\Environment;

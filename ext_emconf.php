@@ -22,7 +22,7 @@ $EM_CONF[$_EXTKEY] = [
             'Resources/Private/Php/',
         ],
         'psr-4' => [
-            'ApacheSolrForTypo3\\Solr\\' => 'Classes/',
+            'WapplerSystems\\Meilisearch\\' => 'Classes/',
         ],
     ],
 ];

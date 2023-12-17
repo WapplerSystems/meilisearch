@@ -13,7 +13,7 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\FieldProcessor;
+namespace WapplerSystems\Meilisearch\FieldProcessor;
 
 /**
  * Field Processor interface

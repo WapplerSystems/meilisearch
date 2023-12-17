@@ -1,9 +1,9 @@
 <?php
 
-namespace ApacheSolrForTypo3\Solr\Tests\Integration\FrontendEnvironment;
+namespace WapplerSystems\Meilisearch\Tests\Integration\FrontendEnvironment;
 
-use ApacheSolrForTypo3\Solr\FrontendEnvironment\Tsfe;
-use ApacheSolrForTypo3\Solr\Tests\Integration\IntegrationTest;
+use WapplerSystems\Meilisearch\FrontendEnvironment\Tsfe;
+use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use RuntimeException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;

@@ -15,15 +15,15 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\ApacheSolrDocument;
+namespace WapplerSystems\Meilisearch\Domain\Search\ApacheSolrDocument;
 
-use ApacheSolrForTypo3\Solr\Access\Rootline;
-use ApacheSolrForTypo3\Solr\Domain\Site\Site;
-use ApacheSolrForTypo3\Solr\Domain\Site\SiteRepository;
-use ApacheSolrForTypo3\Solr\Domain\Variants\IdBuilder;
-use ApacheSolrForTypo3\Solr\System\Solr\Document\Document;
-use ApacheSolrForTypo3\Solr\Typo3PageContentExtractor;
-use ApacheSolrForTypo3\Solr\Util;
+use WapplerSystems\Meilisearch\Access\Rootline;
+use WapplerSystems\Meilisearch\Domain\Site\Site;
+use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
+use WapplerSystems\Meilisearch\Domain\Variants\IdBuilder;
+use WapplerSystems\Meilisearch\System\Solr\Document\Document;
+use WapplerSystems\Meilisearch\Typo3PageContentExtractor;
+use WapplerSystems\Meilisearch\Util;
 use Doctrine\DBAL\Exception as DBALException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
@@ -31,7 +31,7 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 /**
  * Builder class to build an ApacheSolrDocument
  *
- * Responsible to build \ApacheSolrForTypo3\Solr\System\Solr\Document\Document
+ * Responsible to build \WapplerSystems\Meilisearch\System\Solr\Document\Document
  *
  * @author Timo Hund <timo.hund@dkd.de>
  */
@@ -62,7 +62,7 @@ class Builder
         $document->setField('id', $documentId);
         $document->setField('site', $site->getDomain());
         $document->setField('siteHash', $site->getSiteHash());
-        $document->setField('appKey', 'EXT:solr');
+        $document->setField('appKey', 'EXT:meilisearch');
         $document->setField('type', 'pages');
 
         // system fields
@@ -119,7 +119,7 @@ class Builder
         // required fields
         $document->setField('id', $documentId);
         $document->setField('type', $type);
-        $document->setField('appKey', 'EXT:solr');
+        $document->setField('appKey', 'EXT:meilisearch');
 
         // site, siteHash
         $document->setField('site', $site->getDomain());

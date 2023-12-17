@@ -13,21 +13,21 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Index;
+namespace WapplerSystems\Meilisearch\Domain\Index;
 
-use ApacheSolrForTypo3\Solr\ConnectionManager;
-use ApacheSolrForTypo3\Solr\Domain\Site\Site;
-use ApacheSolrForTypo3\Solr\Event\Indexing\AfterItemHasBeenIndexedEvent;
-use ApacheSolrForTypo3\Solr\Event\Indexing\AfterItemsHaveBeenIndexedEvent;
-use ApacheSolrForTypo3\Solr\Event\Indexing\BeforeItemIsIndexedEvent;
-use ApacheSolrForTypo3\Solr\Event\Indexing\BeforeItemsAreIndexedEvent;
-use ApacheSolrForTypo3\Solr\IndexQueue\Indexer;
-use ApacheSolrForTypo3\Solr\IndexQueue\Item;
-use ApacheSolrForTypo3\Solr\IndexQueue\Queue;
-use ApacheSolrForTypo3\Solr\IndexQueue\QueueInterface;
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
-use ApacheSolrForTypo3\Solr\System\Logging\SolrLogManager;
-use ApacheSolrForTypo3\Solr\Task\IndexQueueWorkerTask;
+use WapplerSystems\Meilisearch\ConnectionManager;
+use WapplerSystems\Meilisearch\Domain\Site\Site;
+use WapplerSystems\Meilisearch\Event\Indexing\AfterItemHasBeenIndexedEvent;
+use WapplerSystems\Meilisearch\Event\Indexing\AfterItemsHaveBeenIndexedEvent;
+use WapplerSystems\Meilisearch\Event\Indexing\BeforeItemIsIndexedEvent;
+use WapplerSystems\Meilisearch\Event\Indexing\BeforeItemsAreIndexedEvent;
+use WapplerSystems\Meilisearch\IndexQueue\Indexer;
+use WapplerSystems\Meilisearch\IndexQueue\Item;
+use WapplerSystems\Meilisearch\IndexQueue\Queue;
+use WapplerSystems\Meilisearch\IndexQueue\QueueInterface;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\Task\IndexQueueWorkerTask;
 use Doctrine\DBAL\ConnectionException;
 use Doctrine\DBAL\Exception as DBALException;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -180,9 +180,9 @@ class IndexService
      * A factory method to get an indexer depending on an item's configuration.
      *
      * By default, all items are indexed using the default indexer
-     * (ApacheSolrForTypo3\Solr\IndexQueue\Indexer) coming with EXT:solr. Pages by default are
+     * (WapplerSystems\Meilisearch\IndexQueue\Indexer) coming with EXT:meilisearch. Pages by default are
      * configured to be indexed through a dedicated indexer
-     * (ApacheSolrForTypo3\Solr\IndexQueue\PageIndexer). In all other cases a dedicated indexer
+     * (WapplerSystems\Meilisearch\IndexQueue\PageIndexer). In all other cases a dedicated indexer
      * can be specified through TypoScript if needed.
      */
     protected function getIndexerByItem(
@@ -195,7 +195,7 @@ class IndexService
         $indexer = GeneralUtility::makeInstance($indexerClass, $indexerConfiguration);
         if (!($indexer instanceof Indexer)) {
             throw new RuntimeException(
-                'The indexer class "' . $indexerClass . '" for indexing configuration "' . $indexingConfigurationName . '" is not a valid indexer. Must be a subclass of ApacheSolrForTypo3\Solr\IndexQueue\Indexer.',
+                'The indexer class "' . $indexerClass . '" for indexing configuration "' . $indexingConfigurationName . '" is not a valid indexer. Must be a subclass of WapplerSystems\Meilisearch\IndexQueue\Indexer.',
                 1260463206
             );
         }

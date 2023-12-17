@@ -13,6 +13,6 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\IndexQueue;
+namespace WapplerSystems\Meilisearch\Tests\Unit\IndexQueue;
 
 class InvalidSerializedValueDetector {}

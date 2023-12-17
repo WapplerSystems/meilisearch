@@ -15,10 +15,10 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Result;
+namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet\Result;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Grouping\GroupCollection;
-use ApacheSolrForTypo3\Solr\System\Data\AbstractCollection;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Grouping\GroupCollection;
+use WapplerSystems\Meilisearch\System\Data\AbstractCollection;
 
 /**
  * The SearchResultCollection contains the SearchResult object and related objects. e.g. groups.

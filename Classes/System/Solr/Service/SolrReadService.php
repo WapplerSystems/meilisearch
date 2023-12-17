@@ -15,13 +15,13 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\System\Solr\Service;
+namespace WapplerSystems\Meilisearch\System\Solr\Service;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\Query;
-use ApacheSolrForTypo3\Solr\System\Solr\ResponseAdapter;
-use ApacheSolrForTypo3\Solr\System\Solr\SolrCommunicationException;
-use ApacheSolrForTypo3\Solr\System\Solr\SolrInternalServerErrorException;
-use ApacheSolrForTypo3\Solr\System\Solr\SolrUnavailableException;
+use WapplerSystems\Meilisearch\Domain\Search\Query\Query;
+use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Solr\SolrCommunicationException;
+use WapplerSystems\Meilisearch\System\Solr\SolrInternalServerErrorException;
+use WapplerSystems\Meilisearch\System\Solr\SolrUnavailableException;
 use RuntimeException;
 
 /**

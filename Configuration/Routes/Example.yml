@@ -3,15 +3,15 @@ routeEnhancers:
     type: SolrFacetMaskAndCombineEnhancer
     limitToPages:
       - 10
-    extensionKey: tx_solr
-    solr:
+    extensionKey: tx_meilisearch
+    meilisearch:
       multiValueSeparator: '+'
       replaceCharacters:
         ' ': '_'
       query:
         # To reduce the amount of parameters you can force Solr to concat the values.
         # For example you have following filter:
-        #   tx_solr[filter][0]=taste:sweet&tx_solr[filter][1]=taste:sour&tx_solr[filter][2]=taste:matcha
+        #   tx_meilisearch[filter][0]=taste:sweet&tx_meilisearch[filter][1]=taste:sour&tx_meilisearch[filter][2]=taste:matcha
         #
         # Concat will:
         # 1. collect all filters of the same type
@@ -19,7 +19,7 @@ routeEnhancers:
         # 3. join the values together
         #
         # As a result the query will modified into:
-        #   tx_solr[filter][0]=taste:matcha,sour,sweet
+        #   tx_meilisearch[filter][0]=taste:matcha,sour,sweet
         #
         # Note: If you activate the mask option, the concat feature turn on automatically
         #
@@ -29,10 +29,10 @@ routeEnhancers:
         # You can tell Solr to mask query facets. This feature require the map below
         #
         # For example you have following filter:
-        #   tx_solr[filter][0]=taste:sweet&tx_solr[filter][1]=taste:sour&tx_solr[filter][2]=taste:matcha
+        #   tx_meilisearch[filter][0]=taste:sweet&tx_meilisearch[filter][1]=taste:sour&tx_meilisearch[filter][2]=taste:matcha
         # Mask will:
         # 1. implode all values into a single string and sort it -> matcha,sour,sweet
-        # 2. replace tx_solr[filter][]=taste: with taste=
+        # 2. replace tx_meilisearch[filter][]=taste: with taste=
         #
         # As a result the query will modified into:
         # taste=matcha,sour,sweet
@@ -49,8 +49,8 @@ routeEnhancers:
         map:
           taste: taste
     routePath: '/{taste}'
-    # Note: All arguments inside of namespace tx_solr. See -> extensionKey
-    # Example: Argument 'taste' define as 'filter-taste' will convert into 'tx_solr/filter-taste'
+    # Note: All arguments inside of namespace tx_meilisearch. See -> extensionKey
+    # Example: Argument 'taste' define as 'filter-taste' will convert into 'tx_meilisearch/filter-taste'
     _arguments:
       taste: filter-taste
     requirements:

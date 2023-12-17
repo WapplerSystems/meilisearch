@@ -13,10 +13,10 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\System\UserFunctions;
+namespace WapplerSystems\Meilisearch\Tests\Unit\System\UserFunctions;
 
-use ApacheSolrForTypo3\Solr\System\UserFunctions\FlexFormUserFunctions;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\System\UserFunctions\FlexFormUserFunctions;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 
 /**
  * @author Timo Hund <timo.hund@dkd.de>

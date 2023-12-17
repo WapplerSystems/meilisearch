@@ -13,10 +13,10 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\FieldProcessor;
+namespace WapplerSystems\Meilisearch\Tests\Unit\FieldProcessor;
 
-use ApacheSolrForTypo3\Solr\FieldProcessor\PathToHierarchy;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\FieldProcessor\PathToHierarchy;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 
 /**
  * tests the path to hierarchy processing

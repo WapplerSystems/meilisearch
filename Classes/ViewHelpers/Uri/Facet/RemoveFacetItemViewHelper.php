@@ -13,7 +13,7 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\ViewHelpers\Uri\Facet;
+namespace WapplerSystems\Meilisearch\ViewHelpers\Uri\Facet;
 
 use Closure;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;

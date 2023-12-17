@@ -1,5 +1,5 @@
 {
-  "name": "apache-solr-for-typo3/solr-fake-extension",
+  "name": "wapplersystems/meilisearch-fake-extension",
   "type": "typo3-cms-extension",
   "description": "Fake Extension Test",
   "license": "GPL-2.0-or-later",

@@ -13,20 +13,20 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Integration;
+namespace WapplerSystems\Meilisearch\Tests\Integration;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\BigramPhraseFields;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\PhraseFields;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\QueryFields;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\Slops;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\TrigramPhraseFields;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\Query;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\QueryBuilder;
-use ApacheSolrForTypo3\Solr\IndexQueue\FrontendHelper\PageIndexer;
-use ApacheSolrForTypo3\Solr\IndexQueue\PageIndexerRequest;
-use ApacheSolrForTypo3\Solr\Search;
-use ApacheSolrForTypo3\Solr\System\Configuration\ConfigurationManager;
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\BigramPhraseFields;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\PhraseFields;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\QueryFields;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\Slops;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\TrigramPhraseFields;
+use WapplerSystems\Meilisearch\Domain\Search\Query\Query;
+use WapplerSystems\Meilisearch\Domain\Search\Query\QueryBuilder;
+use WapplerSystems\Meilisearch\IndexQueue\FrontendHelper\PageIndexer;
+use WapplerSystems\Meilisearch\IndexQueue\PageIndexerRequest;
+use WapplerSystems\Meilisearch\Search;
+use WapplerSystems\Meilisearch\System\Configuration\ConfigurationManager;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 use TYPO3\CMS\Core\Http\ServerRequest;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
@@ -426,7 +426,7 @@ class SearchTest extends IntegrationTest
         $this->addTypoScriptToTemplateRecord(1, 'config.index_enable = 1');
         $this->fillIndexForPhraseSearchTests();
 
-        /** @var \ApacheSolrForTypo3\Solr\Search $searchInstance */
+        /** @var \WapplerSystems\Meilisearch\Search $searchInstance */
         $searchInstance = GeneralUtility::makeInstance(Search::class);
 
         $query = $this->getSearchQueryForSolr();

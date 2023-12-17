@@ -1,17 +1,16 @@
-
-plugin.tx_solr.index.queue {
-	news {
-		fields {
-			content {
-				cObject {
-					20 = SOLR_RELATION
-					20 {
-						localField = content_elements
-						foreignLabelField = bodytext
-						singleValueGlue = | |
-					}
-				}
-			}
-		}
-	}
+plugin.tx_meilisearch.index.queue {
+  news {
+    fields {
+      content {
+        cObject {
+          20 = SOLR_RELATION
+          20 {
+            localField = content_elements
+            foreignLabelField = bodytext
+            singleValueGlue = | |
+          }
+        }
+      }
+    }
+  }
 }

@@ -13,11 +13,11 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Integration\System\Solr\Service;
+namespace WapplerSystems\Meilisearch\Tests\Integration\System\Solr\Service;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ExtractingQuery;
-use ApacheSolrForTypo3\Solr\System\Solr\Service\SolrWriteService;
-use ApacheSolrForTypo3\Solr\Tests\Integration\IntegrationTest;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ExtractingQuery;
+use WapplerSystems\Meilisearch\System\Solr\Service\SolrWriteService;
+use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Client\ClientInterface;

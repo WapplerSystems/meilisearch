@@ -13,14 +13,14 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Controller\Backend\Search;
+namespace WapplerSystems\Meilisearch\Controller\Backend\Search;
 
-use ApacheSolrForTypo3\Solr\Api;
-use ApacheSolrForTypo3\Solr\Domain\Search\ApacheSolrDocument\Repository as ApacheSolrDocumentRepository;
-use ApacheSolrForTypo3\Solr\Domain\Search\Statistics\StatisticsRepository;
-use ApacheSolrForTypo3\Solr\Domain\Site\Exception\UnexpectedTYPO3SiteInitializationException;
-use ApacheSolrForTypo3\Solr\System\Solr\ResponseAdapter;
-use ApacheSolrForTypo3\Solr\System\Validator\Path;
+use WapplerSystems\Meilisearch\Api;
+use WapplerSystems\Meilisearch\Domain\Search\ApacheSolrDocument\Repository as ApacheSolrDocumentRepository;
+use WapplerSystems\Meilisearch\Domain\Search\Statistics\StatisticsRepository;
+use WapplerSystems\Meilisearch\Domain\Site\Exception\UnexpectedTYPO3SiteInitializationException;
+use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Validator\Path;
 use Doctrine\DBAL\Exception as DBALException;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
@@ -137,7 +137,7 @@ class InfoModuleController extends AbstractModuleController
     {
         $frameWorkConfiguration = $this->configurationManager->getConfiguration(
             ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT,
-            'solr'
+            'meilisearch'
         );
         $statisticsConfig = $frameWorkConfiguration['plugin.']['tx_solr.']['statistics.'] ?? [];
 

@@ -15,12 +15,12 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\IndexQueue;
+namespace WapplerSystems\Meilisearch\IndexQueue;
 
-use ApacheSolrForTypo3\Solr\ContentObject\Classification;
-use ApacheSolrForTypo3\Solr\ContentObject\Multivalue;
-use ApacheSolrForTypo3\Solr\ContentObject\Relation;
-use ApacheSolrForTypo3\Solr\System\Solr\Document\Document;
+use WapplerSystems\Meilisearch\ContentObject\Classification;
+use WapplerSystems\Meilisearch\ContentObject\Multivalue;
+use WapplerSystems\Meilisearch\ContentObject\Relation;
+use WapplerSystems\Meilisearch\System\Solr\Document\Document;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -251,11 +251,11 @@ abstract class AbstractIndexer
      */
     protected static function isSerializedResultFromRegisteredHook(array $indexingConfiguration, string $solrFieldName): bool
     {
-        if (!is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['solr']['detectSerializedValue'] ?? null)) {
+        if (!is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['meilisearch']['detectSerializedValue'] ?? null)) {
             return false;
         }
 
-        foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['solr']['detectSerializedValue'] as $classReference) {
+        foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['meilisearch']['detectSerializedValue'] as $classReference) {
             $serializedValueDetector = GeneralUtility::makeInstance($classReference);
             if (!$serializedValueDetector instanceof SerializedValueDetector) {
                 $message = get_class($serializedValueDetector) . ' must implement interface ' . SerializedValueDetector::class;

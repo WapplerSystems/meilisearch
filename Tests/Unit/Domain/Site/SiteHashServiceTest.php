@@ -13,10 +13,10 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\Domain\Site;
+namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Site;
 
-use ApacheSolrForTypo3\Solr\Domain\Site\SiteHashService;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\Domain\Site\SiteHashService;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use Psr\Http\Message\UriInterface;
 use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Core\Site\Entity\SiteLanguage;

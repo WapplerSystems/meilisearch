@@ -1,5 +1,5 @@
 {
-  "name": "apache-solr-for-typo3/solr-fake-extension3",
+  "name": "wapplersystems/meilisearch-fake-extension3",
   "type": "typo3-cms-extension",
   "description": "Fake Extension 3 Test",
   "license": "GPL-2.0-or-later",
@@ -8,7 +8,7 @@
   },
   "autoload": {
     "psr-4": {
-      "ApacheSolrForTypo3\\SolrFakeExtension3\\": "Classes/"
+      "WapplerSystems\\MeilisearchFakeExtension3\\": "Classes/"
     }
   },
   "extra": {

@@ -15,9 +15,9 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\System\Mvc\Backend\Service;
+namespace WapplerSystems\Meilisearch\System\Mvc\Backend\Service;
 
-use ApacheSolrForTypo3\Solr\System\Mvc\Backend\ModuleData;
+use WapplerSystems\Meilisearch\System\Mvc\Backend\ModuleData;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -62,7 +62,7 @@ class ModuleDataStorageService implements SingletonInterface
             $serializedModuleData = '';
             return;
         }
-        if (str_contains($serializedModuleData, 'ApacheSolrForTypo3\\Solr\\Domain\\Model\\ModuleData')
+        if (str_contains($serializedModuleData, 'WapplerSystems\\Meilisearch\\Domain\\Model\\ModuleData')
             || str_contains($serializedModuleData, 'Tx_Solr_Site')) {
             $serializedModuleData = '';
         }

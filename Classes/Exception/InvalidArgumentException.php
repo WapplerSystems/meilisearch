@@ -15,9 +15,9 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Exception;
+namespace WapplerSystems\Meilisearch\Exception;
 
-use ApacheSolrForTypo3\Solr\Exception;
+use WapplerSystems\Meilisearch\Exception;
 
 /**
  * Exception that is thrown if a given argument is invalid.

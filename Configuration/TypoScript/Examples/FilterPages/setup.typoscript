@@ -1,7 +1,7 @@
-plugin.tx_solr.search.query {
+plugin.tx_meilisearch.search.query {
 
-	filter {
-		pagesOnlyFilter = type:pages
-	}
+  filter {
+    pagesOnlyFilter = type:pages
+  }
 
 }

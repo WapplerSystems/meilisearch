@@ -13,10 +13,10 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\ViewHelpers\Uri\Facet;
+namespace WapplerSystems\Meilisearch\ViewHelpers\Uri\Facet;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\AbstractFacet;
-use ApacheSolrForTypo3\Solr\ViewHelpers\Uri\AbstractUriViewHelper;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\AbstractFacet;
+use WapplerSystems\Meilisearch\ViewHelpers\Uri\AbstractUriViewHelper;
 use Closure;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 

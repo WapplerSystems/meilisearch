@@ -15,28 +15,28 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\Domain\Search\Query;
+namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Search\Query;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\BigramPhraseFields;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\Elevation;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\Faceting;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\FieldCollapsing;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\Grouping;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\Highlighting;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\Operator;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\PhraseFields;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\QueryFields;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\ReturnFields;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\Sorting;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\Spellchecking;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\TrigramPhraseFields;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\Query;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\QueryBuilder;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\SearchQuery;
-use ApacheSolrForTypo3\Solr\Domain\Site\SiteHashService;
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
-use ApacheSolrForTypo3\Solr\System\Logging\SolrLogManager;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\BigramPhraseFields;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\Elevation;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\Faceting;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\FieldCollapsing;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\Grouping;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\Highlighting;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\Operator;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\PhraseFields;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\QueryFields;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\ReturnFields;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\Sorting;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\Spellchecking;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\TrigramPhraseFields;
+use WapplerSystems\Meilisearch\Domain\Search\Query\Query;
+use WapplerSystems\Meilisearch\Domain\Search\Query\QueryBuilder;
+use WapplerSystems\Meilisearch\Domain\Search\Query\SearchQuery;
+use WapplerSystems\Meilisearch\Domain\Site\SiteHashService;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Solarium\QueryType\Select\RequestBuilder;
 
@@ -685,7 +685,7 @@ class QueryBuilderTest extends SetUpUnitTestCase
      */
     public function canEnableFaceting(): void
     {
-        /** @var \ApacheSolrForTypo3\Solr\Domain\Search\Query\SearchQuery $query */
+        /** @var \WapplerSystems\Meilisearch\Domain\Search\Query\SearchQuery $query */
         $query = $this->getInitializedTestSearchQuery();
         $faceting = new Faceting(true);
         $this->builder->startFrom($query)->useFaceting($faceting);
@@ -803,7 +803,7 @@ class QueryBuilderTest extends SetUpUnitTestCase
      */
     public function canSetSpellChecking()
     {
-        /** @var \ApacheSolrForTypo3\Solr\Domain\Search\Query\SearchQuery $query */
+        /** @var \WapplerSystems\Meilisearch\Domain\Search\Query\SearchQuery $query */
         $query = $this->getInitializedTestSearchQuery();
 
         $spellchecking = Spellchecking::getEmpty();

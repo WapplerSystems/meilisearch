@@ -15,7 +15,7 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\System\Solr;
+namespace WapplerSystems\Meilisearch\System\Solr;
 
 /**
  * This exception is used when the solr an 500 internal server error is thrown by the solr server

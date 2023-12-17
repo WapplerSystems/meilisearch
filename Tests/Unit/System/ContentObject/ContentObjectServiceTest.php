@@ -15,10 +15,10 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace  ApacheSolrForTypo3\Solr\Tests\Unit\System\ContentObject;
+namespace  WapplerSystems\Meilisearch\Tests\Unit\System\ContentObject;
 
-use ApacheSolrForTypo3\Solr\System\ContentObject\ContentObjectService;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\System\ContentObject\ContentObjectService;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 

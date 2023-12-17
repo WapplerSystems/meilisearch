@@ -15,9 +15,9 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\ContentObject;
+namespace WapplerSystems\Meilisearch\Tests\Unit\ContentObject;
 
-use ApacheSolrForTypo3\Solr\ContentObject\Classification;
+use WapplerSystems\Meilisearch\ContentObject\Classification;
 
 /**
  * Tests for the SOLR_CLASSIFICATION cObj.

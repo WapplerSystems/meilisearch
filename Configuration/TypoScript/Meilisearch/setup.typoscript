@@ -1,6 +1,6 @@
-plugin.tx_solr {
+plugin.tx_meilisearch {
 
-  enabled = {$plugin.tx_solr.enabled}
+  enabled = {$plugin.tx_meilisearch.enabled}
 
   enableDebugMode = 0
 
@@ -27,14 +27,14 @@ plugin.tx_solr {
 
       pages = 1
       pages {
-        initialization = ApacheSolrForTypo3\Solr\IndexQueue\Initializer\Page
+        initialization = WapplerSystems\Meilisearch\IndexQueue\Initializer\Page
 
         // allowed page types (doktype) when indexing records from table "pages"
         allowedPageTypes = 1,7
 
         indexingPriority = 0
 
-        indexer = ApacheSolrForTypo3\Solr\IndexQueue\PageIndexer
+        indexer = WapplerSystems\Meilisearch\IndexQueue\PageIndexer
         indexer {
           // add options for the indexer here
         }
@@ -59,7 +59,7 @@ plugin.tx_solr {
     // characters in the url.
     trustedFields = url
 
-    targetPage = {$plugin.tx_solr.search.targetPage}
+    targetPage = {$plugin.tx_meilisearch.search.targetPage}
 
     initializeWithEmptyQuery = 0
     showResultsOfInitialEmptyQuery = 0
@@ -74,24 +74,24 @@ plugin.tx_solr {
     query {
       allowEmptyQuery = 0
 
-      allowedSites = __solr_current_site
+      allowedSites = __meilisearch_current_site
 
-      // qf parameter http://wiki.apache.org/solr/DisMaxQParserPlugin#qf_.28Query_Fields.29
+      // qf parameter http://wiki.apache.org/meilisearch/DisMaxQParserPlugin#qf_.28Query_Fields.29
       queryFields = content^40.0, title^5.0, keywords^2.0, tagsH1^5.0, tagsH2H3^3.0, tagsH4H5H6^2.0, tagsInline^1.0, description^4.0, abstract^1.0, subtitle^1.0, navtitle^1.0, author^1.0
 
-      // fl parameter http://wiki.apache.org/solr/CommonQueryParameters#fl
+      // fl parameter http://wiki.apache.org/meilisearch/CommonQueryParameters#fl
       returnFields = *, score
 
-      // see http://wiki.apache.org/solr/DisMaxRequestHandler#mm_.28Minimum_.27Should.27_Match.29
+      // see http://wiki.apache.org/meilisearch/DisMaxRequestHandler#mm_.28Minimum_.27Should.27_Match.29
       minimumMatch =
 
-      // see http://wiki.apache.org/solr/DisMaxRequestHandler#bf_.28Boost_Functions.29
+      // see http://wiki.apache.org/meilisearch/DisMaxRequestHandler#bf_.28Boost_Functions.29
       boostFunction =
 
-      // see http://wiki.apache.org/solr/DisMaxQParserPlugin#bq_.28Boost_Query.29
+      // see http://wiki.apache.org/meilisearch/DisMaxQParserPlugin#bq_.28Boost_Query.29
       boostQuery =
 
-      // see http://lucene.apache.org/solr/guide/7_0/the-dismax-query-parser.html#the-tie-tie-breaker-parameter
+      // see http://lucene.apache.org/meilisearch/guide/7_0/the-dismax-query-parser.html#the-tie-tie-breaker-parameter
       tieParameter =
 
       filter {
@@ -101,10 +101,10 @@ plugin.tx_solr {
       sortBy =
 
       // https://www.hathitrust.org/blogs/large-scale-search/slow-queries-and-common-words-part-2
-      // http://blog.thedigitalgroup.com/vijaym/understanding-phrasequery-and-slop-in-solr/
-      // https://solr.pl/en/2010/07/14/solr-and-phrasequery-phrase-bonus-in-query-stage/
+      // http://blog.thedigitalgroup.com/vijaym/understanding-phrasequery-and-slop-in-meilisearch/
+      // https://meilisearch.pl/en/2010/07/14/meilisearch-and-phrasequery-phrase-bonus-in-query-stage/
 
-      // see https://lucene.apache.org/solr/guide/7_0/the-dismax-query-parser.html#TheDisMaxQueryParser-Thepf_PhraseFields_Parameter
+      // see https://lucene.apache.org/meilisearch/guide/7_0/the-dismax-query-parser.html#TheDisMaxQueryParser-Thepf_PhraseFields_Parameter
       // EXT:Solr configures Schemas from Apache Solr to use content field with boost of 2.0 per default.
       // By enabling of phrase search, Apache Solr will build a phrase queries for a list of defined fields(phrase.fields) and boost the documents containing the terms in defined proximity(phrase.slop).
       // phrase.querySlop
@@ -123,7 +123,7 @@ plugin.tx_solr {
         // Also if the user uses double quotes in the search term, then
         // the query slop value is used and
         // the result contains only the documents with those phrase.
-        // see https://lucene.apache.org/solr/guide/7_0/the-extended-dismax-query-parser.html http://lucene.472066.n3.nabble.com/Query-slop-vs-phrase-slop-td1637041.html
+        // see https://lucene.apache.org/meilisearch/guide/7_0/the-extended-dismax-query-parser.html http://lucene.472066.n3.nabble.com/Query-slop-vs-phrase-slop-td1637041.html
         // Note: this value is for explicit "phrase searching"(with double quotes)
         querySlop = 0
       }
@@ -181,7 +181,7 @@ plugin.tx_solr {
       }
       siteHighlighting = 0
 
-      resultsPerPage = {$plugin.tx_solr.search.results.resultsPerPage}
+      resultsPerPage = {$plugin.tx_meilisearch.search.results.resultsPerPage}
       resultsPerPageSwitchOptions = 10, 25, 50
       maxPaginatorLinks = 0
 
@@ -212,7 +212,7 @@ plugin.tx_solr {
 
       select {
         SELECT = keywords as search_term, count(*) as hits
-        FROM = tx_solr_statistics
+        FROM = tx_meilisearch_statistics
         ADD_WHERE = AND num_found != 0
         GROUP_BY = keywords
         ORDER_BY = hits DESC, search_term ASC
@@ -260,11 +260,11 @@ plugin.tx_solr {
     faceting {
       minimumCount = 1
       sortBy = count
-      limit = {$plugin.tx_solr.search.faceting.limit}
+      limit = {$plugin.tx_meilisearch.search.faceting.limit}
       showEmptyFacets = 0
       keepAllFacetsOnSelection = 0
-      urlParameterStyle = {$plugin.tx_solr.search.faceting.urlParameterStyle}
-      urlParameterSort = {$plugin.tx_solr.search.faceting.urlParameterSort}
+      urlParameterStyle = {$plugin.tx_meilisearch.search.faceting.urlParameterStyle}
+      urlParameterSort = {$plugin.tx_meilisearch.search.faceting.urlParameterSort}
       facetLinkUrlParameters =
 
       facets {
@@ -307,22 +307,22 @@ plugin.tx_solr {
   }
 
   view {
-    pluginNamespace = tx_solr
+    pluginNamespace = tx_meilisearch
 
     templateRootPaths {
-      0 = EXT:solr/Resources/Private/Templates/
-      10 = {$plugin.tx_solr.view.templateRootPath}
+      0 = EXT:meilisearch/Resources/Private/Templates/
+      10 = {$plugin.tx_meilisearch.view.templateRootPath}
     }
     partialRootPaths {
-      0 = EXT:solr/Resources/Private/Partials/
-      10 = {$plugin.tx_solr.view.partialRootPath}
+      0 = EXT:meilisearch/Resources/Private/Partials/
+      10 = {$plugin.tx_meilisearch.view.partialRootPath}
     }
     layoutRootPaths {
-      0 = EXT:solr/Resources/Private/Layouts/
-      10 = {$plugin.tx_solr.view.layoutRootPath}
+      0 = EXT:meilisearch/Resources/Private/Layouts/
+      10 = {$plugin.tx_meilisearch.view.layoutRootPath}
     }
 
-    // By convention the templates is loaded from EXT:solr/Resources/Private/Templates/Frontend/Search/(ActionName).html
+    // By convention the templates is loaded from EXT:meilisearch/Resources/Private/Templates/Frontend/Search/(ActionName).html
     // If you want to define a different entry template, you can do this here to overwrite the conventional default template
     // if you want to use FLUID fallbacks you can just configure the template name, otherwise you could also use a full reference EXT:/.../
     // The templates that you configure in availableTemplate can be used in the flexform by the editor to select a template for the concrete plugin instance.
@@ -376,25 +376,25 @@ plugin.tx_solr {
 
   settings {
   faceting {
-    limit = {$plugin.tx_solr.search.faceting.limit}
+    limit = {$plugin.tx_meilisearch.search.faceting.limit}
   }
   }
 }
 
 # Provide typoscript libraries
-lib.solr_extbase_bootstrap = USER
-lib.solr_extbase_bootstrap {
+lib.meilisearch_extbase_bootstrap = USER
+lib.meilisearch_extbase_bootstrap {
   userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
   vendorName = ApacheSolrForTypo3
   extensionName = Solr
-  settings < plugin.tx_solr.settings
-  persistence < plugin.tx_solr.persistence
-  view < plugin.tx_solr.view
+  settings < plugin.tx_meilisearch.settings
+  persistence < plugin.tx_meilisearch.persistence
+  view < plugin.tx_meilisearch.view
 }
 
-plugin.tx_solr_PiResults_Results < lib.solr_extbase_bootstrap
-plugin.tx_solr_PiResults_Results = USER_INT
-plugin.tx_solr_PiResults_Results {
+plugin.tx_meilisearch_PiResults_Results < lib.meilisearch_extbase_bootstrap
+plugin.tx_meilisearch_PiResults_Results = USER_INT
+plugin.tx_meilisearch_PiResults_Results {
   pluginName = pi_results
   switchableControllerActions {
     Search {
@@ -404,8 +404,8 @@ plugin.tx_solr_PiResults_Results {
   }
 }
 
-plugin.tx_solr_PiSearch_Search < lib.solr_extbase_bootstrap
-plugin.tx_solr_PiSearch_Search {
+plugin.tx_meilisearch_PiSearch_Search < lib.meilisearch_extbase_bootstrap
+plugin.tx_meilisearch_PiSearch_Search {
   pluginName = pi_search
   switchableControllerActions {
     Search {
@@ -414,8 +414,8 @@ plugin.tx_solr_PiSearch_Search {
   }
 }
 
-plugin.tx_solr_PiFrequentSearches_FrequentSearches < lib.solr_extbase_bootstrap
-plugin.tx_solr_PiFrequentSearches_FrequentSearches {
+plugin.tx_meilisearch_PiFrequentSearches_FrequentSearches < lib.meilisearch_extbase_bootstrap
+plugin.tx_meilisearch_PiFrequentSearches_FrequentSearches {
   pluginName = pi_frequentlySearched
   switchableControllerActions {
     Search {

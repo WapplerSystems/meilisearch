@@ -15,8 +15,8 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Site\Exception;
+namespace WapplerSystems\Meilisearch\Domain\Site\Exception;
 
-use ApacheSolrForTypo3\Solr\Exception;
+use WapplerSystems\Meilisearch\Exception;
 
 class InvalidSiteConfigurationCombinationException extends Exception {}

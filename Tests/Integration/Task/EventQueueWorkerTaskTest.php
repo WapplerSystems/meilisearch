@@ -13,13 +13,13 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Integration\Task;
+namespace WapplerSystems\Meilisearch\Tests\Integration\Task;
 
-use ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events\RecordUpdatedEvent;
-use ApacheSolrForTypo3\Solr\IndexQueue\Queue;
-use ApacheSolrForTypo3\Solr\System\Records\Queue\EventQueueItemRepository;
-use ApacheSolrForTypo3\Solr\Task\EventQueueWorkerTask;
-use ApacheSolrForTypo3\Solr\Tests\Integration\IntegrationTest;
+use WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\RecordUpdatedEvent;
+use WapplerSystems\Meilisearch\IndexQueue\Queue;
+use WapplerSystems\Meilisearch\System\Records\Queue\EventQueueItemRepository;
+use WapplerSystems\Meilisearch\Task\EventQueueWorkerTask;
+use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Scheduler\Scheduler;
@@ -48,7 +48,7 @@ class EventQueueWorkerTaskTest extends IntegrationTest
         $this->eventQueue = GeneralUtility::makeInstance(EventQueueItemRepository::class);
 
         $extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class);
-        $extConf->set('solr', ['monitoringType' => 1]);
+        $extConf->set('meilisearch', ['monitoringType' => 1]);
     }
 
     /**

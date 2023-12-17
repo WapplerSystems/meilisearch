@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\Domain\Index\PageIndexer;
+namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Index\PageIndexer;
 
-use ApacheSolrForTypo3\Solr\Domain\Index\PageIndexer\PageUriBuilder;
-use ApacheSolrForTypo3\Solr\IndexQueue\Item;
-use ApacheSolrForTypo3\Solr\System\Logging\SolrLogManager;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\Domain\Index\PageIndexer\PageUriBuilder;
+use WapplerSystems\Meilisearch\IndexQueue\Item;
+use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use TYPO3\CMS\Core\EventDispatcher\NoopEventDispatcher;
 use TYPO3\CMS\Core\Http\Uri;
 use TYPO3\CMS\Core\Routing\RouterInterface;

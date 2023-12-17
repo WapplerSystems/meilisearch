@@ -13,10 +13,10 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\IndexQueue;
+namespace WapplerSystems\Meilisearch\Tests\Unit\IndexQueue;
 
-use ApacheSolrForTypo3\Solr\IndexQueue\AbstractIndexer;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\IndexQueue\AbstractIndexer;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use UnexpectedValueException;
 
@@ -27,7 +27,7 @@ class AbstractIndexerTest extends SetUpUnitTestCase
 {
     protected function setUp(): void
     {
-        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['solr']['detectSerializedValue'] = [];
+        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['meilisearch']['detectSerializedValue'] = [];
         parent::setUp();
     }
 
@@ -60,7 +60,7 @@ class AbstractIndexerTest extends SetUpUnitTestCase
     public function isSerializedValueCanHandleCustomInvalidSerializedValueDetector(): void
     {
         // register invalid detector
-        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['solr']['detectSerializedValue'][] = InvalidSerializedValueDetector::class;
+        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['meilisearch']['detectSerializedValue'][] = InvalidSerializedValueDetector::class;
         $this->expectException(UnexpectedValueException::class);
         $this->expectExceptionMessageMatches('/.*InvalidSerializedValueDetector must implement interface.*/');
 
@@ -78,7 +78,7 @@ class AbstractIndexerTest extends SetUpUnitTestCase
     public function isSerializedValueCanHandleCustomValidSerializedValueDetector(): void
     {
         // register invalid detector
-        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['solr']['detectSerializedValue'][] = ValidSerializedValueDetector::class;
+        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['meilisearch']['detectSerializedValue'][] = ValidSerializedValueDetector::class;
 
         $indexingConfiguration = [
             'topic_stringM' => 'SOLR_CLASSIFICATION',

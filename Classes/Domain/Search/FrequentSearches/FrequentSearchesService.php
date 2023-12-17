@@ -15,10 +15,10 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\FrequentSearches;
+namespace WapplerSystems\Meilisearch\Domain\Search\FrequentSearches;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\Statistics\StatisticsRepository;
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\Domain\Search\Statistics\StatisticsRepository;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 use Doctrine\DBAL\Exception as DBALException;
 use TYPO3\CMS\Core\Cache\Frontend\AbstractFrontend;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;

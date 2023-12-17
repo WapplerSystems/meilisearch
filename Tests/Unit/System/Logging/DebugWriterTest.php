@@ -15,10 +15,10 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\System\Logging;
+namespace WapplerSystems\Meilisearch\Tests\Unit\System\Logging;
 
-use ApacheSolrForTypo3\Solr\System\Logging\DebugWriter;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\System\Logging\DebugWriter;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use Psr\Log\LogLevel;
 
 /**

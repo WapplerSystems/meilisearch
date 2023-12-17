@@ -13,10 +13,10 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\LastSearches;
+namespace WapplerSystems\Meilisearch\Domain\Search\LastSearches;
 
-use ApacheSolrForTypo3\Solr\Exception\InvalidArgumentException;
-use ApacheSolrForTypo3\Solr\System\Records\AbstractRepository;
+use WapplerSystems\Meilisearch\Exception\InvalidArgumentException;
+use WapplerSystems\Meilisearch\System\Records\AbstractRepository;
 use Doctrine\DBAL\Exception as DBALException;
 
 use function json_encode;

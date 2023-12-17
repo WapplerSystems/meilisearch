@@ -15,16 +15,16 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\System\Solr\Service;
+namespace WapplerSystems\Meilisearch\System\Solr\Service;
 
-use ApacheSolrForTypo3\Solr\Exception\InvalidArgumentException;
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
-use ApacheSolrForTypo3\Solr\System\Logging\SolrLogManager;
-use ApacheSolrForTypo3\Solr\System\Solr\Parser\SchemaParser;
-use ApacheSolrForTypo3\Solr\System\Solr\Parser\StopWordParser;
-use ApacheSolrForTypo3\Solr\System\Solr\Parser\SynonymParser;
-use ApacheSolrForTypo3\Solr\System\Solr\ResponseAdapter;
-use ApacheSolrForTypo3\Solr\System\Solr\Schema\Schema;
+use WapplerSystems\Meilisearch\Exception\InvalidArgumentException;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Solr\Parser\SchemaParser;
+use WapplerSystems\Meilisearch\System\Solr\Parser\StopWordParser;
+use WapplerSystems\Meilisearch\System\Solr\Parser\SynonymParser;
+use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Solr\Schema\Schema;
 use Solarium\Client;
 use stdClass;
 use TYPO3\CMS\Core\Utility\GeneralUtility;

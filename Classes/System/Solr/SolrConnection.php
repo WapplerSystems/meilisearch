@@ -15,17 +15,17 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\System\Solr;
+namespace WapplerSystems\Meilisearch\System\Solr;
 
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
-use ApacheSolrForTypo3\Solr\System\Logging\SolrLogManager;
-use ApacheSolrForTypo3\Solr\System\Solr\Parser\SchemaParser;
-use ApacheSolrForTypo3\Solr\System\Solr\Parser\StopWordParser;
-use ApacheSolrForTypo3\Solr\System\Solr\Parser\SynonymParser;
-use ApacheSolrForTypo3\Solr\System\Solr\Service\SolrAdminService;
-use ApacheSolrForTypo3\Solr\System\Solr\Service\SolrReadService;
-use ApacheSolrForTypo3\Solr\System\Solr\Service\SolrWriteService;
-use ApacheSolrForTypo3\Solr\Util;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Solr\Parser\SchemaParser;
+use WapplerSystems\Meilisearch\System\Solr\Parser\StopWordParser;
+use WapplerSystems\Meilisearch\System\Solr\Parser\SynonymParser;
+use WapplerSystems\Meilisearch\System\Solr\Service\SolrAdminService;
+use WapplerSystems\Meilisearch\System\Solr\Service\SolrReadService;
+use WapplerSystems\Meilisearch\System\Solr\Service\SolrWriteService;
+use WapplerSystems\Meilisearch\Util;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;

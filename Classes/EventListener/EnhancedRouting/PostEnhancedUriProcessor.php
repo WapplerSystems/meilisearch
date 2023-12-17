@@ -15,10 +15,10 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\EventListener\EnhancedRouting;
+namespace WapplerSystems\Meilisearch\EventListener\EnhancedRouting;
 
-use ApacheSolrForTypo3\Solr\Event\Routing\AfterUriIsProcessedEvent;
-use ApacheSolrForTypo3\Solr\Routing\RoutingService;
+use WapplerSystems\Meilisearch\Event\Routing\AfterUriIsProcessedEvent;
+use WapplerSystems\Meilisearch\Routing\RoutingService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -38,7 +38,7 @@ class PostEnhancedUriProcessor
         /** @var RoutingService $routingService */
         $routingService = GeneralUtility::makeInstance(
             RoutingService::class,
-            $configuration['solr'] ?? [],
+            $configuration['meilisearch'] ?? [],
             (string)$configuration['extensionKey']
         );
 

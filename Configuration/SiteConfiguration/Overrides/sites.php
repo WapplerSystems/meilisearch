@@ -3,7 +3,7 @@
 /**
  * Global Solr Connection Settings
  */
-$GLOBALS['SiteConfiguration']['site']['columns']['solr_enabled_read'] = [
+$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_enabled_read'] = [
     'label' => 'Enable Solr for this site',
     'onChange' => 'reload',
     'config' => [
@@ -20,7 +20,7 @@ $GLOBALS['SiteConfiguration']['site']['columns']['solr_enabled_read'] = [
     ],
 ];
 
-$GLOBALS['SiteConfiguration']['site']['columns']['solr_scheme_read'] = [
+$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_scheme_read'] = [
     'label' => 'Scheme',
     'config' => [
         'type' => 'input',
@@ -33,10 +33,10 @@ $GLOBALS['SiteConfiguration']['site']['columns']['solr_scheme_read'] = [
         ],
         'placeholder' => 'http',
     ],
-    'displayCond' => 'FIELD:solr_enabled_read:=:1',
+    'displayCond' => 'FIELD:meilisearch_enabled_read:=:1',
 ];
 
-$GLOBALS['SiteConfiguration']['site']['columns']['solr_host_read'] = [
+$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_host_read'] = [
     'label' => 'Host',
     'config' => [
         'type' => 'input',
@@ -44,10 +44,10 @@ $GLOBALS['SiteConfiguration']['site']['columns']['solr_host_read'] = [
         'placeholder' => 'localhost',
         'size' => 50,
     ],
-    'displayCond' => 'FIELD:solr_enabled_read:=:1',
+    'displayCond' => 'FIELD:meilisearch_enabled_read:=:1',
 ];
 
-$GLOBALS['SiteConfiguration']['site']['columns']['solr_port_read'] = [
+$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_port_read'] = [
     'label' => 'Port',
     'config' => [
         'type' => 'input',
@@ -55,21 +55,21 @@ $GLOBALS['SiteConfiguration']['site']['columns']['solr_port_read'] = [
         'size' => 5,
         'default' => 8983,
     ],
-    'displayCond' => 'FIELD:solr_enabled_read:=:1',
+    'displayCond' => 'FIELD:meilisearch_enabled_read:=:1',
 ];
 
-$GLOBALS['SiteConfiguration']['site']['columns']['solr_path_read'] = [
+$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_path_read'] = [
     'label' => 'URL path to Apache Solr server',
-    'description' => 'Must not contain "/solr/"! Unless you have an additional "solr" segment in your path like "http://localhost:8983/solr/solr/core_en".',
+    'description' => 'Must not contain "/meilisearch/"! Unless you have an additional "meilisearch" segment in your path like "http://localhost:8983/meilisearch/meilisearch/core_en".',
     'config' => [
         'type' => 'input',
         'eval' => 'trim',
         'default' => '/',
     ],
-    'displayCond' => 'FIELD:solr_enabled_read:=:1',
+    'displayCond' => 'FIELD:meilisearch_enabled_read:=:1',
 ];
 
-$GLOBALS['SiteConfiguration']['site']['columns']['solr_use_write_connection'] = [
+$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_use_write_connection'] = [
     'label' => 'Use different write connection',
     'onChange' => 'reload',
     'config' => [
@@ -84,34 +84,34 @@ $GLOBALS['SiteConfiguration']['site']['columns']['solr_use_write_connection'] = 
             ],
         ],
     ],
-    'displayCond' => 'FIELD:solr_enabled_read:=:1',
+    'displayCond' => 'FIELD:meilisearch_enabled_read:=:1',
 ];
 
 // write TCA
-$GLOBALS['SiteConfiguration']['site']['columns']['solr_scheme_write'] = $GLOBALS['SiteConfiguration']['site']['columns']['solr_scheme_read'];
-$GLOBALS['SiteConfiguration']['site']['columns']['solr_scheme_write']['displayCond'] = 'FIELD:solr_use_write_connection:=:1';
+$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_scheme_write'] = $GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_scheme_read'];
+$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_scheme_write']['displayCond'] = 'FIELD:meilisearch_use_write_connection:=:1';
 
-$GLOBALS['SiteConfiguration']['site']['columns']['solr_port_write'] = $GLOBALS['SiteConfiguration']['site']['columns']['solr_port_read'];
-$GLOBALS['SiteConfiguration']['site']['columns']['solr_port_write']['config']['eval'] = '';
-$GLOBALS['SiteConfiguration']['site']['columns']['solr_port_write']['displayCond'] = 'FIELD:solr_use_write_connection:=:1';
+$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_port_write'] = $GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_port_read'];
+$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_port_write']['config']['eval'] = '';
+$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_port_write']['displayCond'] = 'FIELD:meilisearch_use_write_connection:=:1';
 
-$GLOBALS['SiteConfiguration']['site']['columns']['solr_host_write'] = $GLOBALS['SiteConfiguration']['site']['columns']['solr_host_read'];
-$GLOBALS['SiteConfiguration']['site']['columns']['solr_host_write']['config']['eval'] = '';
-$GLOBALS['SiteConfiguration']['site']['columns']['solr_host_write']['displayCond'] = 'FIELD:solr_use_write_connection:=:1';
+$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_host_write'] = $GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_host_read'];
+$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_host_write']['config']['eval'] = '';
+$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_host_write']['displayCond'] = 'FIELD:meilisearch_use_write_connection:=:1';
 
-$GLOBALS['SiteConfiguration']['site']['columns']['solr_path_write'] = $GLOBALS['SiteConfiguration']['site']['columns']['solr_path_read'];
-$GLOBALS['SiteConfiguration']['site']['columns']['solr_path_write']['config']['eval'] = '';
-$GLOBALS['SiteConfiguration']['site']['columns']['solr_path_write']['displayCond'] = 'FIELD:solr_use_write_connection:=:1';
+$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_path_write'] = $GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_path_read'];
+$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_path_write']['config']['eval'] = '';
+$GLOBALS['SiteConfiguration']['site']['columns']['meilisearch_path_write']['displayCond'] = 'FIELD:meilisearch_use_write_connection:=:1';
 
-$GLOBALS['SiteConfiguration']['site']['palettes']['solr_read']['showitem'] = 'solr_scheme_read, solr_port_read, --linebreak--, solr_host_read, solr_path_read';
-$GLOBALS['SiteConfiguration']['site']['palettes']['solr_write']['showitem'] = 'solr_scheme_write, solr_port_write, --linebreak--, solr_host_write, solr_path_write';
+$GLOBALS['SiteConfiguration']['site']['palettes']['meilisearch_read']['showitem'] = 'meilisearch_scheme_read, meilisearch_port_read, --linebreak--, meilisearch_host_read, meilisearch_path_read';
+$GLOBALS['SiteConfiguration']['site']['palettes']['meilisearch_write']['showitem'] = 'meilisearch_scheme_write, meilisearch_port_write, --linebreak--, meilisearch_host_write, meilisearch_path_write';
 
-$GLOBALS['SiteConfiguration']['site']['types']['0']['showitem'] .= ',--div--;Solr,solr_enabled_read,--palette--;;solr_read, solr_use_write_connection,--palette--;;solr_write';
+$GLOBALS['SiteConfiguration']['site']['types']['0']['showitem'] .= ',--div--;Solr,meilisearch_enabled_read,--palette--;;meilisearch_read, meilisearch_use_write_connection,--palette--;;meilisearch_write';
 
 /**
  * Language specific core configuration
  */
-$GLOBALS['SiteConfiguration']['site_language']['columns']['solr_core_read'] = [
+$GLOBALS['SiteConfiguration']['site_language']['columns']['meilisearch_core_read'] = [
     'label' => 'Corename',
     'config' => [
         'type' => 'input',
@@ -164,6 +164,6 @@ $GLOBALS['SiteConfiguration']['site_language']['columns']['solr_core_read'] = [
 
 $GLOBALS['SiteConfiguration']['site_language']['types']['1']['showitem'] = str_replace(
     'flag',
-    'flag, solr_core_read, ',
+    'flag, meilisearch_core_read, ',
     $GLOBALS['SiteConfiguration']['site_language']['types']['1']['showitem']
 );

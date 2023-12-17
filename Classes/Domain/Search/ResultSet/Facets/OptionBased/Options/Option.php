@@ -15,9 +15,9 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
 */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\OptionBased\Options;
+namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\OptionBased\Options;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\OptionBased\AbstractOptionFacetItem;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\OptionBased\AbstractOptionFacetItem;
 
 /**
  * Value object that represent an option of an options facet.

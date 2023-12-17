@@ -15,10 +15,10 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Event\Indexing;
+namespace WapplerSystems\Meilisearch\Event\Indexing;
 
-use ApacheSolrForTypo3\Solr\IndexQueue\Item;
-use ApacheSolrForTypo3\Solr\System\Solr\Document\Document;
+use WapplerSystems\Meilisearch\IndexQueue\Item;
+use WapplerSystems\Meilisearch\System\Solr\Document\Document;
 use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
@@ -28,7 +28,7 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
  * should be indexed for the current item.
  *
  * Previously used with
- * $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['solr']['IndexQueueIndexer']['indexItemAddDocuments']
+ * $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['meilisearch']['IndexQueueIndexer']['indexItemAddDocuments']
  */
 class BeforeDocumentIsProcessedForIndexingEvent
 {

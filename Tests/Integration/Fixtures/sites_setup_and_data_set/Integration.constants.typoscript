@@ -1,2 +1,2 @@
 @import 'EXT:fluid_styled_content/Configuration/TypoScript/constants.typoscript'
-@import 'EXT:solr/Configuration/TypoScript/Solr/constants.typoscript'
+@import 'EXT:meilisearch/Configuration/TypoScript/Solr/constants.typoscript'

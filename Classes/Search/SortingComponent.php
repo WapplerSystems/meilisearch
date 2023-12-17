@@ -15,18 +15,18 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Search;
+namespace WapplerSystems\Meilisearch\Search;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder\Sortings;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\QueryBuilder;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Sorting\SortingHelper;
-use ApacheSolrForTypo3\Solr\Event\Search\AfterSearchQueryHasBeenPreparedEvent;
+use WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder\Sortings;
+use WapplerSystems\Meilisearch\Domain\Search\Query\QueryBuilder;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Sorting\SortingHelper;
+use WapplerSystems\Meilisearch\Event\Search\AfterSearchQueryHasBeenPreparedEvent;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Sorting search component
  *
- * TODO maybe merge ApacheSolrForTypo3\Solr\Sorting into ApacheSolrForTypo3\Solr\Search\SortingComponent
+ * TODO maybe merge WapplerSystems\Meilisearch\Sorting into WapplerSystems\Meilisearch\Search\SortingComponent
  *
  * @author Ingo Renner <ingo@typo3.org>
  */

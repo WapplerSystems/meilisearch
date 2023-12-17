@@ -13,14 +13,14 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\ResultSet;
+namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\AbstractFacet;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\FacetRegistry;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\InvalidFacetPackageException;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\RequirementsService;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Sorting\Sorting;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Spellchecking\Suggestion;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\AbstractFacet;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\FacetRegistry;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\InvalidFacetPackageException;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\RequirementsService;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Sorting\Sorting;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Spellchecking\Suggestion;
 use stdClass;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;

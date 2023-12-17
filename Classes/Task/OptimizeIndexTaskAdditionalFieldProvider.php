@@ -15,12 +15,12 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Task;
+namespace WapplerSystems\Meilisearch\Task;
 
-use ApacheSolrForTypo3\Solr\Backend\CoreSelectorField;
-use ApacheSolrForTypo3\Solr\Backend\SiteSelectorField;
-use ApacheSolrForTypo3\Solr\Domain\Site\Site;
-use ApacheSolrForTypo3\Solr\Domain\Site\SiteRepository;
+use WapplerSystems\Meilisearch\Backend\CoreSelectorField;
+use WapplerSystems\Meilisearch\Backend\SiteSelectorField;
+use WapplerSystems\Meilisearch\Domain\Site\Site;
+use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
 use Doctrine\DBAL\Exception as DBALException;
 use LogicException;
 use Throwable;
@@ -44,7 +44,7 @@ class OptimizeIndexTaskAdditionalFieldProvider extends AbstractAdditionalFieldPr
     /**
      * Default language file of the extension link validator
      */
-    protected string $languageFile = 'LLL:EXT:solr/Resources/Private/Language/locallang.xlf';
+    protected string $languageFile = 'LLL:EXT:meilisearch/Resources/Private/Language/locallang.xlf';
 
     /**
      * Task information

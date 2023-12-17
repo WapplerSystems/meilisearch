@@ -13,9 +13,9 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit;
+namespace WapplerSystems\Meilisearch\Tests\Unit;
 
-use ApacheSolrForTypo3\Solr\HtmlContentExtractor;
+use WapplerSystems\Meilisearch\HtmlContentExtractor;
 
 /**
  * Tests the HtmlContentExtractor

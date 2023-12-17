@@ -1,4 +1,4 @@
 page.includeCSS {
-	search = EXT:solr/Resources/Public/StyleSheets/Frontend/results.css
-	solr-loader = EXT:solr/Resources/Public/StyleSheets/Frontend/loader.css
+  search = EXT:meilisearch/Resources/Public/StyleSheets/Frontend/results.css
+  meilisearch-loader = EXT:meilisearch/Resources/Public/StyleSheets/Frontend/loader.css
 }

@@ -15,9 +15,9 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\IndexQueue\FrontendHelper;
+namespace WapplerSystems\Meilisearch\IndexQueue\FrontendHelper;
 
-use ApacheSolrForTypo3\Solr\IndexQueue\PageIndexerResponse;
+use WapplerSystems\Meilisearch\IndexQueue\PageIndexerResponse;
 
 /**
  * Index Queue Frontend Helper interface.

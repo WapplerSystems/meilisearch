@@ -15,10 +15,10 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Integration\Controller;
+namespace WapplerSystems\Meilisearch\Tests\Integration\Controller;
 
-use ApacheSolrForTypo3\Solr\Controller\SearchController;
-use ApacheSolrForTypo3\Solr\Tests\Integration\IntegrationTest;
+use WapplerSystems\Meilisearch\Controller\SearchController;
+use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use DOMDocument;
 use Traversable;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
@@ -279,7 +279,7 @@ class SearchControllerTest extends IntegrationTest
         $this->importCSVDataSet(__DIR__ . '/Fixtures/indexing_data.csv');
 
         $extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class);
-        $extensionConfiguration->set('solr', ['enableRouteEnhancer' => $enableRouteEnhancer]);
+        $extensionConfiguration->set('meilisearch', ['enableRouteEnhancer' => $enableRouteEnhancer]);
 
         $this->mergeSiteConfiguration(
             'integration_tree_one',
@@ -895,7 +895,7 @@ class SearchControllerTest extends IntegrationTest
                         categoryPaths_stringM = SOLR_MULTIVALUE
                         categoryPaths_stringM {
                             stdWrap.cObject = USER
-                            stdWrap.cObject.userFunc = ApacheSolrForTypo3\Solr\Tests\Integration\Controller\CategoryPathProvider->getPaths
+                            stdWrap.cObject.userFunc = WapplerSystems\Meilisearch\Tests\Integration\Controller\CategoryPathProvider->getPaths
                             separator = ,
                         }
                     }
@@ -1378,8 +1378,8 @@ class SearchControllerTest extends IntegrationTest
             /* @lang TYPO3_TypoScript */
             '
             plugin.tx_solr.view {
-                templateRootPaths.20 = EXT:solr/Tests/Integration/Controller/Fixtures/customTemplates/
-                partialRootPaths.20 = EXT:solr/Tests/Integration/Controller/Fixtures/customPartials/
+                templateRootPaths.20 = EXT:meilisearch/Tests/Integration/Controller/Fixtures/customTemplates/
+                partialRootPaths.20 = EXT:meilisearch/Tests/Integration/Controller/Fixtures/customPartials/
             }
             '
         );
@@ -1405,8 +1405,8 @@ class SearchControllerTest extends IntegrationTest
             /* @lang TYPO3_TypoScript */
             '
             plugin.tx_solr.view {
-                templateRootPath = EXT:solr/Tests/Integration/Controller/Fixtures/customTemplates/
-                partialRootPath = EXT:solr/Tests/Integration/Controller/Fixtures/customPartials/
+                templateRootPath = EXT:meilisearch/Tests/Integration/Controller/Fixtures/customTemplates/
+                partialRootPath = EXT:meilisearch/Tests/Integration/Controller/Fixtures/customPartials/
             }
             '
         );
@@ -1432,8 +1432,8 @@ class SearchControllerTest extends IntegrationTest
             plugin.tx_solr {
                 settings.foo.bar = mytestsetting
                 view {
-                    templateRootPaths.20 = EXT:solr/Tests/Integration/Controller/Fixtures/customTemplates/
-                    partialRootPaths.20 = EXT:solr/Tests/Integration/Controller/Fixtures/customPartials/
+                    templateRootPaths.20 = EXT:meilisearch/Tests/Integration/Controller/Fixtures/customTemplates/
+                    partialRootPaths.20 = EXT:meilisearch/Tests/Integration/Controller/Fixtures/customPartials/
                 }
             }
             '
@@ -1459,7 +1459,7 @@ class SearchControllerTest extends IntegrationTest
             /* @lang TYPO3_TypoScript */
             '
             plugin.tx_solr.view.templateFiles {
-                results = EXT:solr/Tests/Integration/Controller/Fixtures/customTemplates/Search/MyResults.html
+                results = EXT:meilisearch/Tests/Integration/Controller/Fixtures/customTemplates/Search/MyResults.html
             }
             '
         );

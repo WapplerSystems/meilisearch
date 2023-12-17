@@ -15,25 +15,25 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\Search;
+namespace WapplerSystems\Meilisearch\Tests\Unit\Search;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\QueryBuilder;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\FacetRegistry;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\UrlFacetContainer;
-use ApacheSolrForTypo3\Solr\Domain\Search\SearchRequest;
-use ApacheSolrForTypo3\Solr\Domain\Site\SiteHashService;
-use ApacheSolrForTypo3\Solr\Event\Search\AfterSearchQueryHasBeenPreparedEvent;
-use ApacheSolrForTypo3\Solr\Search;
-use ApacheSolrForTypo3\Solr\Search\FacetingComponent;
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
-use ApacheSolrForTypo3\Solr\System\Logging\SolrLogManager;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\Domain\Search\Query\QueryBuilder;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\FacetRegistry;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\UrlFacetContainer;
+use WapplerSystems\Meilisearch\Domain\Search\SearchRequest;
+use WapplerSystems\Meilisearch\Domain\Site\SiteHashService;
+use WapplerSystems\Meilisearch\Event\Search\AfterSearchQueryHasBeenPreparedEvent;
+use WapplerSystems\Meilisearch\Search;
+use WapplerSystems\Meilisearch\Search\FacetingComponent;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Solarium\QueryType\Select\RequestBuilder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Tests the ApacheSolrForTypo3\Solr\Query\Modifier\Faceting class
+ * Tests the WapplerSystems\Meilisearch\Query\Modifier\Faceting class
  *
  * @author Timo Hund <timo.hund@dkd.de>
  */

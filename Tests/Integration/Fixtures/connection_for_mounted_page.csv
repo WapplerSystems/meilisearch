@@ -52,14 +52,14 @@ plugin.tx_solr {
             // mapping tableName.fields.SolrFieldName => TableFieldName (+ cObj processing)
             pages = 1
             pages {
-                initialization = ApacheSolrForTypo3\Solr\IndexQueue\Initializer\Page
+                initialization = WapplerSystems\Meilisearch\IndexQueue\Initializer\Page
 
                 // allowed page types (doktype) when indexing records from pages
                 allowedPageTypes = 1,7
 
                 indexingPriority = 0
 
-                indexer = ApacheSolrForTypo3\Solr\IndexQueue\PageIndexer
+                indexer = WapplerSystems\Meilisearch\IndexQueue\PageIndexer
                 indexer {
                     // add options for the indexer here
                 }

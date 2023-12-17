@@ -13,10 +13,10 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Integration\Domain\Search\LastSearches;
+namespace WapplerSystems\Meilisearch\Tests\Integration\Domain\Search\LastSearches;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\LastSearches\LastSearchesRepository;
-use ApacheSolrForTypo3\Solr\Tests\Integration\IntegrationTest;
+use WapplerSystems\Meilisearch\Domain\Search\LastSearches\LastSearchesRepository;
+use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class LastSearchesRepositoryTest extends IntegrationTest

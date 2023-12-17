@@ -15,9 +15,9 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\System\Language;
+namespace WapplerSystems\Meilisearch\System\Language;
 
-use ApacheSolrForTypo3\Solr\System\TCA\TCAService;
+use WapplerSystems\Meilisearch\System\TCA\TCAService;
 use Doctrine\DBAL\Exception as DBALException;
 use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
 use TYPO3\CMS\Core\Context\LanguageAspect;

@@ -15,9 +15,9 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Event\Search;
+namespace WapplerSystems\Meilisearch\Event\Search;
 
-use ApacheSolrForTypo3\Solr\Search;
+use WapplerSystems\Meilisearch\Search;
 
 /**
  * This event is triggered before setting the form values

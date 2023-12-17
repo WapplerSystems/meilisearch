@@ -15,11 +15,11 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Search;
+namespace WapplerSystems\Meilisearch\Search;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\LastSearches\LastSearchesService;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\SearchResultSet;
-use ApacheSolrForTypo3\Solr\Event\Search\AfterSearchHasBeenExecutedEvent;
+use WapplerSystems\Meilisearch\Domain\Search\LastSearches\LastSearchesService;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSet;
+use WapplerSystems\Meilisearch\Event\Search\AfterSearchHasBeenExecutedEvent;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**

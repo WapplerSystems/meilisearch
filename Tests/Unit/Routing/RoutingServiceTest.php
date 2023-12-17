@@ -15,10 +15,10 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\Routing;
+namespace WapplerSystems\Meilisearch\Tests\Unit\Routing;
 
-use ApacheSolrForTypo3\Solr\Routing\RoutingService;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\Routing\RoutingService;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use Psr\Log\NullLogger;
 use Symfony\Component\Yaml\Yaml;
 use TYPO3\CMS\Core\Http\ServerRequest;
@@ -49,7 +49,7 @@ class RoutingServiceTest extends SetUpUnitTestCase
 
     /**
      * @test
-     * @covers \ApacheSolrForTypo3\Solr\Routing\RoutingService::getDefaultMultiValueSeparator
+     * @covers \WapplerSystems\Meilisearch\Routing\RoutingService::getDefaultMultiValueSeparator
      */
     public function defaultValueSeparatorIsAvailableTest()
     {
@@ -63,7 +63,7 @@ class RoutingServiceTest extends SetUpUnitTestCase
 
     /**
      * @test
-     * @covers \ApacheSolrForTypo3\Solr\Routing\RoutingService::getDefaultMultiValueSeparator
+     * @covers \WapplerSystems\Meilisearch\Routing\RoutingService::getDefaultMultiValueSeparator
      */
     public function canOverrideValueSeparatorTest()
     {
@@ -81,7 +81,7 @@ class RoutingServiceTest extends SetUpUnitTestCase
 
     /**
      * @test
-     * @covers \ApacheSolrForTypo3\Solr\Routing\RoutingService::facetsToString
+     * @covers \WapplerSystems\Meilisearch\Routing\RoutingService::facetsToString
      */
     public function combinedFacetsAreInAlphabeticOrderTest()
     {
@@ -95,7 +95,7 @@ class RoutingServiceTest extends SetUpUnitTestCase
 
     /**
      * @test
-     * @covers \ApacheSolrForTypo3\Solr\Routing\RoutingService::facetsToString
+     * @covers \WapplerSystems\Meilisearch\Routing\RoutingService::facetsToString
      */
     public function combiningFacetsUsingCustomSeparatorTest()
     {
@@ -113,7 +113,7 @@ class RoutingServiceTest extends SetUpUnitTestCase
 
     /**
      * @test
-     * @covers \ApacheSolrForTypo3\Solr\Routing\RoutingService::convertStringIntoUri
+     * @covers \WapplerSystems\Meilisearch\Routing\RoutingService::convertStringIntoUri
      */
     public function canConvertStringToUriTest()
     {
@@ -130,7 +130,7 @@ class RoutingServiceTest extends SetUpUnitTestCase
     {
         $configuration = Yaml::parse($this->getFixtureContentByName($fixtureName));
         $routingService = new RoutingService(
-            $configuration['routeEnhancers']['example']['solr'],
+            $configuration['routeEnhancers']['example']['meilisearch'],
             (string)$configuration['routeEnhancers']['example']['extensionKey']
         );
         $routingService->setLogger(new NullLogger());
@@ -139,7 +139,7 @@ class RoutingServiceTest extends SetUpUnitTestCase
 
     /**
      * @test
-     * @covers \ApacheSolrForTypo3\Solr\Routing\RoutingService::concatQueryParameter
+     * @covers \WapplerSystems\Meilisearch\Routing\RoutingService::concatQueryParameter
      */
     public function testDeflateFilterQueryParameterTest()
     {
@@ -182,7 +182,7 @@ class RoutingServiceTest extends SetUpUnitTestCase
 
     /**
      * @test
-     * @covers \ApacheSolrForTypo3\Solr\Routing\RoutingService::inflateQueryParameter
+     * @covers \WapplerSystems\Meilisearch\Routing\RoutingService::inflateQueryParameter
      */
     public function testInflateFilterQueryParameterTest()
     {
@@ -225,7 +225,7 @@ class RoutingServiceTest extends SetUpUnitTestCase
 
     /**
      * @test
-     * @covers \ApacheSolrForTypo3\Solr\Routing\RoutingService::maskQueryParameters
+     * @covers \WapplerSystems\Meilisearch\Routing\RoutingService::maskQueryParameters
      */
     public function testIfFilterParametersCanBeMaskedTest()
     {
@@ -264,7 +264,7 @@ class RoutingServiceTest extends SetUpUnitTestCase
 
     /**
      * @test
-     * @covers \ApacheSolrForTypo3\Solr\Routing\RoutingService::maskQueryParameters
+     * @covers \WapplerSystems\Meilisearch\Routing\RoutingService::maskQueryParameters
      */
     public function testIfFilterParametersCanBeUnmaskedTest()
     {
@@ -303,7 +303,7 @@ class RoutingServiceTest extends SetUpUnitTestCase
 
     /**
      * @test
-     * @covers \ApacheSolrForTypo3\Solr\Routing\RoutingService::addPathArgumentsToQuery
+     * @covers \WapplerSystems\Meilisearch\Routing\RoutingService::addPathArgumentsToQuery
      */
     public function testIfPathParametersMovedInfoQueryParameters()
     {
@@ -334,7 +334,7 @@ class RoutingServiceTest extends SetUpUnitTestCase
 
     /**
      * @test
-     * @covers \ApacheSolrForTypo3\Solr\Routing\RoutingService::addPathArgumentsToQuery
+     * @covers \WapplerSystems\Meilisearch\Routing\RoutingService::addPathArgumentsToQuery
      */
     public function testIfMultiplePathParametersMovedInfoQueryParameters()
     {
@@ -365,7 +365,7 @@ class RoutingServiceTest extends SetUpUnitTestCase
 
     /**
      * @test
-     * @covers \ApacheSolrForTypo3\Solr\Routing\RoutingService::addPathArgumentsToQuery
+     * @covers \WapplerSystems\Meilisearch\Routing\RoutingService::addPathArgumentsToQuery
      */
     public function testIfMultiplePathParametersAndMaskedParametersMovedInfoQueryParameters()
     {

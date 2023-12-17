@@ -15,9 +15,9 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Routing;
+namespace WapplerSystems\Meilisearch\Routing;
 
-use ApacheSolrForTypo3\Solr\Routing\Enhancer\SolrRouteEnhancerInterface;
+use WapplerSystems\Meilisearch\Routing\Enhancer\SolrRouteEnhancerInterface;
 use InvalidArgumentException;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
@@ -126,8 +126,8 @@ class RoutingService implements LoggerAwareInterface
             return $this;
         }
 
-        if (isset($routingConfiguration['solr'])) {
-            $this->settings = $routingConfiguration['solr'];
+        if (isset($routingConfiguration['meilisearch'])) {
+            $this->settings = $routingConfiguration['meilisearch'];
             $this->initUrlFacetService();
         }
 
@@ -182,7 +182,7 @@ class RoutingService implements LoggerAwareInterface
 
     /**
      * This returns the plugin namespace
-     * @see https://docs.typo3.org/p/apache-solr-for-typo3/solr/main/en-us/Configuration/Reference/TxSolrView.html#pluginnamespace
+     * @see https://docs.typo3.org/p/wapplersystems/meilisearch/main/en-us/Configuration/Reference/TxSolrView.html#pluginnamespace
      */
     public function getPluginNamespace(): string
     {

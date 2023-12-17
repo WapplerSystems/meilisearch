@@ -15,7 +15,7 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Report;
+namespace WapplerSystems\Meilisearch\Report;
 
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -64,6 +64,6 @@ class AllowUrlFOpenStatus extends AbstractSolrStatus
      */
     public function getLabel(): string
     {
-        return 'LLL:EXT:solr/Resources/Private/Language/locallang_reports.xlf:status_solr_allow-url-open';
+        return 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_reports.xlf:status_solr_allow-url-open';
     }
 }

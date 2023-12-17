@@ -13,9 +13,9 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder;
+namespace WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder;
 
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 
 use function str_starts_with;
 

@@ -13,15 +13,15 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Integration;
+namespace WapplerSystems\Meilisearch\Tests\Integration;
 
-use ApacheSolrForTypo3\Solr\Domain\Site\SiteRepository;
-use ApacheSolrForTypo3\Solr\GarbageCollector;
-use ApacheSolrForTypo3\Solr\IndexQueue\Indexer;
-use ApacheSolrForTypo3\Solr\IndexQueue\Queue;
-use ApacheSolrForTypo3\Solr\IndexQueue\RecordMonitor;
-use ApacheSolrForTypo3\Solr\System\Records\Queue\EventQueueItemRepository;
-use ApacheSolrForTypo3\Solr\Task\EventQueueWorkerTask;
+use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
+use WapplerSystems\Meilisearch\GarbageCollector;
+use WapplerSystems\Meilisearch\IndexQueue\Indexer;
+use WapplerSystems\Meilisearch\IndexQueue\Queue;
+use WapplerSystems\Meilisearch\IndexQueue\RecordMonitor;
+use WapplerSystems\Meilisearch\System\Records\Queue\EventQueueItemRepository;
+use WapplerSystems\Meilisearch\Task\EventQueueWorkerTask;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Database\Connection;
@@ -46,7 +46,7 @@ class GarbageCollectorTest extends IntegrationTest
 
     protected array $testExtensionsToLoad = [
         'typo3conf/ext/solr',
-        '../vendor/apache-solr-for-typo3/solr/Tests/Integration/Fixtures/Extensions/fake_extension',
+        '../vendor/wapplersystems/meilisearch/Tests/Integration/Fixtures/Extensions/fake_extension',
     ];
 
     /**
@@ -97,7 +97,7 @@ class GarbageCollectorTest extends IntegrationTest
         $this->indexer = GeneralUtility::makeInstance(Indexer::class);
         $this->extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class);
         $this->eventQueue = GeneralUtility::makeInstance(EventQueueItemRepository::class);
-        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['solr'] = [];
+        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['meilisearch'] = [];
         $GLOBALS['LANG'] = GeneralUtility::makeInstance(LanguageServiceFactory::class)->create('default');
         // fake that a backend user is logged in
         $this->importCSVDataSet(__DIR__ . '/Fixtures/sites_setup_and_data_set/be_users.csv');
@@ -184,7 +184,7 @@ class GarbageCollectorTest extends IntegrationTest
      */
     public function queueItemStaysWhenOverlayIsSetToHiddenInDelayedProcessingMode(): void
     {
-        $this->extensionConfiguration->set('solr', ['monitoringType' => 1]);
+        $this->extensionConfiguration->set('meilisearch', ['monitoringType' => 1]);
         $this->prepareQueueItemStaysWhenOverlayIsSetToHidden();
         $this->assertEventQueueContainsItemAmount(1);
         $this->processEventQueue();
@@ -245,7 +245,7 @@ class GarbageCollectorTest extends IntegrationTest
      */
     public function canCollectGarbageFromSubPagesWhenPageIsSetToHiddenAndExtendToSubPagesIsSetInDelayedProcessingMode(): void
     {
-        $this->extensionConfiguration->set('solr', ['monitoringType' => 1]);
+        $this->extensionConfiguration->set('meilisearch', ['monitoringType' => 1]);
         $this->prepareCanCollectGarbageFromSubPagesWhenPageIsSetToHiddenAndExtendToSubPagesIsSet();
         $this->assertEventQueueContainsItemAmount(1);
         $this->processEventQueue();
@@ -300,7 +300,7 @@ class GarbageCollectorTest extends IntegrationTest
      */
     public function canCollectGarbageFromSubPagesWhenPageIsSetToHiddenAndExtendToSubPagesIsSetForMultipleSubpagesInDelayedProcessingMode(): void
     {
-        $this->extensionConfiguration->set('solr', ['monitoringType' => 1]);
+        $this->extensionConfiguration->set('meilisearch', ['monitoringType' => 1]);
         $this->prepareCanCollectGarbageFromSubPagesWhenPageIsSetToHiddenAndExtendToSubPagesIsSetForMultipleSubpages();
         $this->assertEventQueueContainsItemAmount(1);
         $this->processEventQueue();
@@ -446,7 +446,7 @@ class GarbageCollectorTest extends IntegrationTest
      */
     public function canRemoveDeletedContentElementInDelayedProcessingMode(): void
     {
-        $this->extensionConfiguration->set('solr', ['monitoringType' => 1]);
+        $this->extensionConfiguration->set('meilisearch', ['monitoringType' => 1]);
         $this->prepareCanRemoveDeletedContentElement();
         $this->assertEventQueueContainsItemAmount(2);
         $this->processEventQueue();
@@ -512,7 +512,7 @@ class GarbageCollectorTest extends IntegrationTest
      */
     public function canRemoveHiddenContentElementInDelayedProcessingMode(): void
     {
-        $this->extensionConfiguration->set('solr', ['monitoringType' => 1]);
+        $this->extensionConfiguration->set('meilisearch', ['monitoringType' => 1]);
         $data = ['tt_content' => ['88' => ['hidden' => 1]]];
         $this->prepareCanRemoveContentElementTests($data);
 
@@ -555,7 +555,7 @@ class GarbageCollectorTest extends IntegrationTest
      */
     public function canRemoveContentElementWithEndTimeSetToPastInDelayedProcessingMode(): void
     {
-        $this->extensionConfiguration->set('solr', ['monitoringType' => 1]);
+        $this->extensionConfiguration->set('meilisearch', ['monitoringType' => 1]);
         $timeStampInPast = time() - (60 * 60 * 24);
         $data = ['tt_content' => ['88' => ['endtime' => $timeStampInPast]]];
         $this->prepareCanRemoveContentElementTests($data);
@@ -601,7 +601,7 @@ class GarbageCollectorTest extends IntegrationTest
      */
     public function doesNotRemoveUpdatedContentElementWithNotSetEndTimeInDelayedProcessingMode(): void
     {
-        $this->extensionConfiguration->set('solr', ['monitoringType' => 1]);
+        $this->extensionConfiguration->set('meilisearch', ['monitoringType' => 1]);
         $data = ['tt_content' => ['88' => ['bodytext' => 'Updated! Will stay after update!' ]]];
         $this->prepareCanRemoveContentElementTests($data, 'does_not_remove_updated_content_element_with_not_set_endtime.csv', [2]);
 
@@ -643,7 +643,7 @@ class GarbageCollectorTest extends IntegrationTest
      */
     public function canRemoveContentElementWithStartDateSetToFutureInDelayedProcessingMode(): void
     {
-        $this->extensionConfiguration->set('solr', ['monitoringType' => 1]);
+        $this->extensionConfiguration->set('meilisearch', ['monitoringType' => 1]);
         $timeStampInPast = time() - (60 * 60 * 24);
         $data = ['tt_content' => ['88' => ['endtime' => $timeStampInPast]]];
         $this->prepareCanRemoveContentElementTests($data);
@@ -726,7 +726,7 @@ class GarbageCollectorTest extends IntegrationTest
      */
     public function canRemovePageWhenPageIsHiddenInDelayedProcessingMode(): void
     {
-        $this->extensionConfiguration->set('solr', ['monitoringType' => 1]);
+        $this->extensionConfiguration->set('meilisearch', ['monitoringType' => 1]);
         $dataMap = ['pages' => ['2' => ['hidden' => 1]]];
 
         $this->assertEmptyEventQueue();
@@ -771,7 +771,7 @@ class GarbageCollectorTest extends IntegrationTest
      */
     public function canRemovePageWhenPageIsDeletedInDelayedProcessingMode(): void
     {
-        $this->extensionConfiguration->set('solr', ['monitoringType' => 1]);
+        $this->extensionConfiguration->set('meilisearch', ['monitoringType' => 1]);
         $cmdMap = ['pages' => [2 => ['delete' => 1 ]]];
 
         $this->assertEmptyEventQueue();
@@ -888,7 +888,7 @@ class GarbageCollectorTest extends IntegrationTest
         self::assertTrue($hook->isHookWasCalled());
 
         // reset the hooks
-        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['solr']['postProcessGarbageCollector'] = [];
+        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['meilisearch']['postProcessGarbageCollector'] = [];
     }
 
     /**
@@ -899,7 +899,7 @@ class GarbageCollectorTest extends IntegrationTest
         /** @var TestGarbageCollectorPostProcessor $hook */
         $hook = GeneralUtility::makeInstance(TestGarbageCollectorPostProcessor::class);
 
-        $this->extensionConfiguration->set('solr', ['monitoringType' => 1]);
+        $this->extensionConfiguration->set('meilisearch', ['monitoringType' => 1]);
         $this->prepareCanTriggerHookAfterRecordDeletion();
         $this->assertEventQueueContainsItemAmount(1);
         self::assertFalse($hook->isHookWasCalled());
@@ -914,7 +914,7 @@ class GarbageCollectorTest extends IntegrationTest
      */
     protected function prepareCanTriggerHookAfterRecordDeletion(): void
     {
-        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['solr']['postProcessGarbageCollector'][] = TestGarbageCollectorPostProcessor::class;
+        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['meilisearch']['postProcessGarbageCollector'][] = TestGarbageCollectorPostProcessor::class;
         $this->importCSVDataSet(__DIR__ . '/Fixtures/custom_record.csv');
 
         $this->addTypoScriptToTemplateRecord(

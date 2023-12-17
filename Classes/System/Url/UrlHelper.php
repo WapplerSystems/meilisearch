@@ -13,7 +13,7 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\System\Url;
+namespace WapplerSystems\Meilisearch\System\Url;
 
 use TYPO3\CMS\Core\Http\Uri;
 

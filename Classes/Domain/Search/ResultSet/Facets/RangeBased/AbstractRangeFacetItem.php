@@ -15,10 +15,10 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
 */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\RangeBased;
+namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\RangeBased;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\AbstractFacet;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\AbstractFacetItem;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\AbstractFacet;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\AbstractFacetItem;
 
 /**
  * Abstract class that is used as base class for range facet items

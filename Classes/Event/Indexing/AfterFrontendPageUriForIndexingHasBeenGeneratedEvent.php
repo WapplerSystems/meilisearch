@@ -15,15 +15,15 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Event\Indexing;
+namespace WapplerSystems\Meilisearch\Event\Indexing;
 
-use ApacheSolrForTypo3\Solr\IndexQueue\Item;
+use WapplerSystems\Meilisearch\IndexQueue\Item;
 use Psr\Http\Message\UriInterface;
 
 /**
  * Event which is fired for the Page Indexer, to define what kind of URL should be submitted.
  *
- * Previously defined via $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['solr']['IndexQueuePageIndexer']['dataUrlModifier']
+ * Previously defined via $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['meilisearch']['IndexQueuePageIndexer']['dataUrlModifier']
  * and the PageIndexerDataUrlModifier interface.
  */
 class AfterFrontendPageUriForIndexingHasBeenGeneratedEvent

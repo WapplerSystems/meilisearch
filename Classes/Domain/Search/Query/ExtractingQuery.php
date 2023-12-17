@@ -13,7 +13,7 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\Query;
+namespace WapplerSystems\Meilisearch\Domain\Search\Query;
 
 use Solarium\QueryType\Extract\Query as SolariumExtractQuery;
 

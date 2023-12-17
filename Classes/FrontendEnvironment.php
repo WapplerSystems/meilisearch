@@ -15,11 +15,11 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr;
+namespace WapplerSystems\Meilisearch;
 
-use ApacheSolrForTypo3\Solr\FrontendEnvironment\Tsfe;
-use ApacheSolrForTypo3\Solr\FrontendEnvironment\TypoScript;
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\FrontendEnvironment\Tsfe;
+use WapplerSystems\Meilisearch\FrontendEnvironment\TypoScript;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 use Doctrine\DBAL\Exception as DBALException;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\SingletonInterface;

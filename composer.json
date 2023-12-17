@@ -1,5 +1,5 @@
 {
-  "name": "apache-solr-for-typo3/solr",
+  "name": "wapplersystems/meilisearch",
   "type": "typo3-cms-extension",
   "description": "Apache Solr for TYPO3",
   "license": "GPL-3.0-or-later",
@@ -18,7 +18,7 @@
     "forum": "https://talk.typo3.org",
     "slack": "https://typo3.slack.com/archives/C02FF05Q4",
     "source": "https://github.com/TYPO3-Solr/ext-solr",
-    "docs": "https://docs.typo3.org/p/apache-solr-for-typo3/solr/main/en-us/"
+    "docs": "https://docs.typo3.org/p/wapplersystems/meilisearch/main/en-us/"
   },
   "require": {
     "php": "^8.1",
@@ -27,7 +27,6 @@
     "ext-libxml": "*",
     "ext-pdo": "*",
     "ext-simplexml": "*",
-    "solarium/solarium": "6.3.2",
     "typo3/cms-backend": "*",
     "typo3/cms-core": "^v12.4.3",
     "typo3/cms-extbase": "*",
@@ -35,7 +34,8 @@
     "typo3/cms-frontend": "*",
     "typo3/cms-reports": "*",
     "typo3/cms-scheduler": "*",
-    "typo3/cms-tstemplate": "*"
+    "typo3/cms-tstemplate": "*",
+    "meilisearch/meilisearch-php": "^v1.5.0"
   },
   "require-dev": {
     "dg/bypass-finals": "^1.4",
@@ -46,24 +46,17 @@
     "phpstan/phpstan": "^1.10",
     "phpstan/phpstan-phpunit": "^1.3"
   },
-  "replace": {
-    "apache-solr-for-typo3/solrfluid": "*",
-    "apache-solr-for-typo3/solrfluidgrouping": "*",
-    "typo3-ter/solr": "self.version",
-    "typo3-ter/solrfluid": "*",
-    "typo3-ter/solrfluidgrouping": "*"
-  },
   "autoload": {
     "psr-4": {
-      "ApacheSolrForTypo3\\Solr\\": "Classes/"
+      "WapplerSystems\\Meilisearch\\": "Classes/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "ApacheSolrForTypo3\\Solr\\Tests\\": "Tests/",
+      "WapplerSystems\\Meilisearch\\Tests\\": "Tests/",
       "ApacheSolrForTypo3\\FakeExtension\\": "Tests/Integration/Fixtures/Extensions/fake_extension/Classes/",
-      "ApacheSolrForTypo3\\SolrFakeExtension2\\": "Tests/Integration/Fixtures/Extensions/fake_extension2/Classes/",
-      "ApacheSolrForTypo3\\SolrFakeExtension3\\": "Tests/Integration/Fixtures/Extensions/fake_extension3/Classes/",
+      "WapplerSystems\\MeilisearchFakeExtension2\\": "Tests/Integration/Fixtures/Extensions/fake_extension2/Classes/",
+      "WapplerSystems\\MeilisearchFakeExtension3\\": "Tests/Integration/Fixtures/Extensions/fake_extension3/Classes/",
       "TYPO3\\CMS\\Core\\Tests\\": ".Build/vendor/typo3/cms-core/Tests/"
     }
   },
@@ -82,7 +75,7 @@
   "scripts": {
     "post-autoload-dump": [
       "mkdir -p .Build/vendor/apache-solr-for-typo3",
-      "[ -L .Build/vendor/apache-solr-for-typo3/solr ] || ln -snvf ../../../. .Build/vendor/apache-solr-for-typo3/solr"
+      "[ -L .Build/vendor/wapplersystems/meilisearch ] || ln -snvf ../../../. .Build/vendor/wapplersystems/meilisearch"
     ],
     "t3:docs:build": [
       "rm -Rf Documentation-GENERATED-temp/",
@@ -133,8 +126,7 @@
       "dev-main": "12.0.x-dev"
     },
     "typo3/cms": {
-      "extension-key": "solr",
-      "web-dir": ".Build/Web"
+      "extension-key": "meilisearch",
     },
     "TYPO3-Solr": {
       "version-matrix": {

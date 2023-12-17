@@ -15,9 +15,9 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Index\Queue;
+namespace WapplerSystems\Meilisearch\Domain\Index\Queue;
 
-use ApacheSolrForTypo3\Solr\System\Records\AbstractRepository;
+use WapplerSystems\Meilisearch\System\Records\AbstractRepository;
 use Doctrine\DBAL\Exception as DBALException;
 use PDO;
 

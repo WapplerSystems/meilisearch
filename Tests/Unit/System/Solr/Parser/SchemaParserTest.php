@@ -13,11 +13,11 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\System\Solr\Parser;
+namespace WapplerSystems\Meilisearch\Tests\Unit\System\Solr\Parser;
 
-use ApacheSolrForTypo3\Solr\System\Solr\Parser\SchemaParser;
-use ApacheSolrForTypo3\Solr\System\Solr\Schema\Schema;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\System\Solr\Parser\SchemaParser;
+use WapplerSystems\Meilisearch\System\Solr\Schema\Schema;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 
 /**
  * Testcase for the SchemaParser class.

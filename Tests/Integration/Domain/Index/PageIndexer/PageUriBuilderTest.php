@@ -15,11 +15,11 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Integration\Domain\Index\PageIndexer;
+namespace WapplerSystems\Meilisearch\Tests\Integration\Domain\Index\PageIndexer;
 
-use ApacheSolrForTypo3\Solr\Domain\Index\PageIndexer\PageUriBuilder;
-use ApacheSolrForTypo3\Solr\IndexQueue\Item;
-use ApacheSolrForTypo3\Solr\Tests\Integration\IntegrationTest;
+use WapplerSystems\Meilisearch\Domain\Index\PageIndexer\PageUriBuilder;
+use WapplerSystems\Meilisearch\IndexQueue\Item;
+use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -29,7 +29,7 @@ class PageUriBuilderTest extends IntegrationTest
 {
     protected array $testExtensionsToLoad = [
         'typo3conf/ext/solr',
-        '../vendor/apache-solr-for-typo3/solr/Tests/Integration/Fixtures/Extensions/fake_extension3',
+        '../vendor/wapplersystems/meilisearch/Tests/Integration/Fixtures/Extensions/fake_extension3',
     ];
 
     protected function setUp(): void

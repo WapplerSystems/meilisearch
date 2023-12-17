@@ -15,10 +15,10 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Middleware;
+namespace WapplerSystems\Meilisearch\Middleware;
 
-use ApacheSolrForTypo3\Solr\IndexQueue\PageIndexerRequest;
-use ApacheSolrForTypo3\Solr\Routing\RoutingService;
+use WapplerSystems\Meilisearch\IndexQueue\PageIndexerRequest;
+use WapplerSystems\Meilisearch\Routing\RoutingService;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
@@ -40,8 +40,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  *
  * return [
  *   'frontend' => [
- *     'apache-solr-for-typo3/solr-route-enhancer' => [
- *       'target' => \ApacheSolrForTypo3\Solr\Middleware\SolrRoutingMiddleware::class,
+ *     'wapplersystems/meilisearch-route-enhancer' => [
+ *       'target' => \WapplerSystems\Meilisearch\Middleware\SolrRoutingMiddleware::class,
  *       'before' => [
  *         'typo3/cms-frontend/site',
  *       ]
@@ -178,7 +178,7 @@ class SolrRoutingMiddleware implements MiddlewareInterface, LoggerAwareInterface
      */
     protected function configure(array $enhancerConfiguration): void
     {
-        $this->settings = $enhancerConfiguration['solr'] ?? [];
+        $this->settings = $enhancerConfiguration['meilisearch'] ?? [];
         $this->namespace = $enhancerConfiguration['extensionKey'] ?? $this->namespace;
         $this->routingService = null;
     }

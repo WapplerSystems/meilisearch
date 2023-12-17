@@ -13,15 +13,15 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\Domain\Search\Uri;
+namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Search\Uri;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Grouping\Group;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Grouping\GroupItem;
-use ApacheSolrForTypo3\Solr\Domain\Search\SearchRequest;
-use ApacheSolrForTypo3\Solr\Domain\Search\Uri\SearchUriBuilder;
-use ApacheSolrForTypo3\Solr\Routing\RoutingService;
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Grouping\Group;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Grouping\GroupItem;
+use WapplerSystems\Meilisearch\Domain\Search\SearchRequest;
+use WapplerSystems\Meilisearch\Domain\Search\Uri\SearchUriBuilder;
+use WapplerSystems\Meilisearch\Routing\RoutingService;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Routing\Exception\InvalidParameterException;
 use Symfony\Component\Yaml\Yaml;
@@ -107,7 +107,7 @@ class SearchUriBuilderTest extends SetUpUnitTestCase
          * This unit test just test the arguments not the path information, the result of the logic within
          * method 'reviseFilterVariables()' will not modify this array!
          *
-         * @see \ApacheSolrForTypo3\Solr\Routing\RoutingService::reviseFilterVariables
+         * @see \WapplerSystems\Meilisearch\Routing\RoutingService::reviseFilterVariables
          */
         $this->routingServiceMock->expects(self::any())
             ->method('reviseFilterVariables')
@@ -172,7 +172,7 @@ class SearchUriBuilderTest extends SetUpUnitTestCase
          * This unit test just test the arguments not the path information, the result of the logic within
          * method 'reviseFilterVariables()' will not modify this array!
          *
-         * @see \ApacheSolrForTypo3\Solr\Routing\RoutingService::reviseFilterVariables
+         * @see \WapplerSystems\Meilisearch\Routing\RoutingService::reviseFilterVariables
          */
         $this->routingServiceMock->expects(self::any())
             ->method('reviseFilterVariables')
@@ -345,7 +345,7 @@ class SearchUriBuilderTest extends SetUpUnitTestCase
          * This unit test just test the arguments not the path information, the result of the logic within
          * method 'reviseFilterVariables()' will not modify this array!
          *
-         * @see \ApacheSolrForTypo3\Solr\Routing\RoutingService::reviseFilterVariables
+         * @see \WapplerSystems\Meilisearch\Routing\RoutingService::reviseFilterVariables
          */
         $this->routingServiceMock->expects(self::any())
             ->method('reviseFilterVariables')

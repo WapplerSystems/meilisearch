@@ -13,12 +13,12 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\Controller\Backend\Search;
+namespace WapplerSystems\Meilisearch\Tests\Unit\Controller\Backend\Search;
 
-use ApacheSolrForTypo3\Solr\Controller\Backend\Search\IndexAdministrationModuleController;
-use ApacheSolrForTypo3\Solr\System\Solr\ResponseAdapter;
-use ApacheSolrForTypo3\Solr\System\Solr\Service\SolrAdminService;
-use ApacheSolrForTypo3\Solr\System\Solr\SolrConnection;
+use WapplerSystems\Meilisearch\Controller\Backend\Search\IndexAdministrationModuleController;
+use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
+use WapplerSystems\Meilisearch\System\Solr\Service\SolrAdminService;
+use WapplerSystems\Meilisearch\System\Solr\SolrConnection;
 use PHPUnit\Framework\MockObject\MockObject;
 use Solarium\Core\Client\Endpoint;
 

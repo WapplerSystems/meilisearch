@@ -15,10 +15,10 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Result;
+namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet\Result;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Grouping\GroupItem;
-use ApacheSolrForTypo3\Solr\System\Solr\Document\Document;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Grouping\GroupItem;
+use WapplerSystems\Meilisearch\System\Solr\Document\Document;
 
 /**
  * Solr document class that should be used in the frontend in the search context.

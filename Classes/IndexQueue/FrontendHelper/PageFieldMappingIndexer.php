@@ -15,14 +15,14 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\IndexQueue\FrontendHelper;
+namespace WapplerSystems\Meilisearch\IndexQueue\FrontendHelper;
 
-// TODO use/extend ApacheSolrForTypo3\Solr\IndexQueue\AbstractIndexer
-use ApacheSolrForTypo3\Solr\Event\Indexing\AfterPageDocumentIsCreatedForIndexingEvent;
-use ApacheSolrForTypo3\Solr\IndexQueue\AbstractIndexer;
-use ApacheSolrForTypo3\Solr\IndexQueue\InvalidFieldNameException;
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
-use ApacheSolrForTypo3\Solr\System\Solr\Document\Document;
+// TODO use/extend WapplerSystems\Meilisearch\IndexQueue\AbstractIndexer
+use WapplerSystems\Meilisearch\Event\Indexing\AfterPageDocumentIsCreatedForIndexingEvent;
+use WapplerSystems\Meilisearch\IndexQueue\AbstractIndexer;
+use WapplerSystems\Meilisearch\IndexQueue\InvalidFieldNameException;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\System\Solr\Document\Document;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 

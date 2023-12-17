@@ -13,12 +13,12 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\FrontendEnvironment\Exception;
+namespace WapplerSystems\Meilisearch\FrontendEnvironment\Exception;
 
-use ApacheSolrForTypo3\Solr\Exception as ExtSolrException;
+use WapplerSystems\Meilisearch\Exception as ExtSolrException;
 
 /**
- * Exception that is thrown on initialization of EXT:solr FrontendEnvironment.
+ * Exception that is thrown on initialization of EXT:meilisearch FrontendEnvironment.
  * This exception should be used for any errors on indexing .
  */
 class Exception extends ExtSolrException {}

@@ -13,12 +13,12 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Routing\Enhancer;
+namespace WapplerSystems\Meilisearch\Routing\Enhancer;
 
-use ApacheSolrForTypo3\Solr\Routing\RoutingService;
-use ApacheSolrForTypo3\Solr\System\Configuration\ExtensionConfiguration;
-use ApacheSolrForTypo3\Solr\System\Logging\SolrLogManager;
-use ApacheSolrForTypo3\Solr\Utility\RoutingUtility;
+use WapplerSystems\Meilisearch\Routing\RoutingService;
+use WapplerSystems\Meilisearch\System\Configuration\ExtensionConfiguration;
+use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\Utility\RoutingUtility;
 use TYPO3\CMS\Core\Routing\Enhancer\AbstractEnhancer;
 use TYPO3\CMS\Core\Routing\Enhancer\RoutingEnhancerInterface;
 use TYPO3\CMS\Core\Routing\Route;
@@ -313,7 +313,7 @@ class SolrFacetMaskAndCombineEnhancer extends AbstractEnhancer implements Routin
         /** @var RoutingService $routingService */
         $routingService = GeneralUtility::makeInstance(
             RoutingService::class,
-            $this->configuration['solr'] ?? [],
+            $this->configuration['meilisearch'] ?? [],
             (string)$this->configuration['extensionKey']
         );
         return $routingService->withPathArguments($this->configuration['_arguments']);

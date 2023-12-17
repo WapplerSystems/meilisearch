@@ -13,14 +13,14 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Controller\Backend\Search;
+namespace WapplerSystems\Meilisearch\Controller\Backend\Search;
 
-use ApacheSolrForTypo3\Solr\Backend\IndexingConfigurationSelectorField;
-use ApacheSolrForTypo3\Solr\Domain\Index\IndexService;
-use ApacheSolrForTypo3\Solr\Domain\Index\Queue\QueueInitializationService;
-use ApacheSolrForTypo3\Solr\Domain\Site\Exception\UnexpectedTYPO3SiteInitializationException;
-use ApacheSolrForTypo3\Solr\IndexQueue\Queue;
-use ApacheSolrForTypo3\Solr\IndexQueue\QueueInterface;
+use WapplerSystems\Meilisearch\Backend\IndexingConfigurationSelectorField;
+use WapplerSystems\Meilisearch\Domain\Index\IndexService;
+use WapplerSystems\Meilisearch\Domain\Index\Queue\QueueInitializationService;
+use WapplerSystems\Meilisearch\Domain\Site\Exception\UnexpectedTYPO3SiteInitializationException;
+use WapplerSystems\Meilisearch\IndexQueue\Queue;
+use WapplerSystems\Meilisearch\IndexQueue\QueueInterface;
 use Doctrine\DBAL\ConnectionException;
 use Doctrine\DBAL\Exception as DBALException;
 use Psr\Http\Message\ResponseInterface;
@@ -147,14 +147,14 @@ class IndexQueueModuleController extends AbstractModuleController
                         sprintf(
                             LocalizationUtility::translate(
                                 'solr.backend.index_queue_module.flashmessage.initialize_failure',
-                                'Solr'
+                                'Meilisearch'
                             ),
                             $e->getMessage(),
                             $e->getCode()
                         ),
                         LocalizationUtility::translate(
                             'solr.backend.index_queue_module.flashmessage.initialize_failure.title',
-                            'Solr'
+                            'Meilisearch'
                         ),
                         ContextualFeedbackSeverity::ERROR
                     );
@@ -164,8 +164,8 @@ class IndexQueueModuleController extends AbstractModuleController
             $messageLabel = 'solr.backend.index_queue_module.flashmessage.initialize.no_selection';
             $titleLabel = 'solr.backend.index_queue_module.flashmessage.not_initialized.title';
             $this->addFlashMessage(
-                LocalizationUtility::translate($messageLabel, 'Solr'),
-                LocalizationUtility::translate($titleLabel, 'Solr'),
+                LocalizationUtility::translate($messageLabel, 'Meilisearch'),
+                LocalizationUtility::translate($titleLabel, 'Meilisearch'),
                 ContextualFeedbackSeverity::WARNING
             );
         }
@@ -179,14 +179,14 @@ class IndexQueueModuleController extends AbstractModuleController
                     sprintf(
                         LocalizationUtility::translate(
                             'solr.backend.index_queue_module.flashmessage.initialize_failure',
-                            'Solr'
+                            'Meilisearch'
                         ),
                         $indexingConfigurationName,
                         1662117020
                     ),
                     LocalizationUtility::translate(
                         'solr.backend.index_queue_module.flashmessage.initialize_failure.title',
-                        'Solr'
+                        'Meilisearch'
                     ),
                     ContextualFeedbackSeverity::ERROR
                 );
@@ -197,8 +197,8 @@ class IndexQueueModuleController extends AbstractModuleController
             $messageLabel = 'solr.backend.index_queue_module.flashmessage.initialize.success';
             $titleLabel = 'solr.backend.index_queue_module.flashmessage.initialize.title';
             $this->addFlashMessage(
-                LocalizationUtility::translate($messageLabel, 'Solr', [implode(', ', $messagesForConfigurations)]),
-                LocalizationUtility::translate($titleLabel, 'Solr'),
+                LocalizationUtility::translate($messageLabel, 'Meilisearch', [implode(', ', $messagesForConfigurations)]),
+                LocalizationUtility::translate($titleLabel, 'Meilisearch'),
                 ContextualFeedbackSeverity::OK
             );
         }
@@ -296,8 +296,8 @@ class IndexQueueModuleController extends AbstractModuleController
         }
 
         $this->addFlashMessage(
-            LocalizationUtility::translate($label, 'Solr'),
-            LocalizationUtility::translate('solr.backend.index_queue_module.flashmessage.index_manual', 'Solr'),
+            LocalizationUtility::translate($label, 'Meilisearch'),
+            LocalizationUtility::translate('solr.backend.index_queue_module.flashmessage.index_manual', 'Meilisearch'),
             $severity
         );
 
@@ -309,7 +309,7 @@ class IndexQueueModuleController extends AbstractModuleController
      */
     protected function addIndexQueueFlashMessage(string $label, ContextualFeedbackSeverity $severity): void
     {
-        $this->addFlashMessage(LocalizationUtility::translate($label, 'Solr'), LocalizationUtility::translate('solr.backend.index_queue_module.flashmessage.title', 'Solr'), $severity);
+        $this->addFlashMessage(LocalizationUtility::translate($label, 'Meilisearch'), LocalizationUtility::translate('solr.backend.index_queue_module.flashmessage.title', 'Meilisearch'), $severity);
     }
 
     /**

@@ -13,13 +13,13 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\Domain\Search\ResultSet\Grouping;
+namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Search\ResultSet\Grouping;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Grouping\Group;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Grouping\GroupItem;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Grouping\GroupItemCollection;
-use ApacheSolrForTypo3\Solr\Domain\Search\SearchRequest;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Grouping\Group;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Grouping\GroupItem;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Grouping\GroupItemCollection;
+use WapplerSystems\Meilisearch\Domain\Search\SearchRequest;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 
 /**
  * Unit test case for the Group class

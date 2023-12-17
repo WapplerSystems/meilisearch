@@ -13,9 +13,9 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Controller\Backend\Search;
+namespace WapplerSystems\Meilisearch\Controller\Backend\Search;
 
-use ApacheSolrForTypo3\Solr\System\Solr\SolrConnection;
+use WapplerSystems\Meilisearch\System\Solr\SolrConnection;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 use TYPO3\CMS\Core\Http\RedirectResponse;
@@ -57,10 +57,10 @@ class IndexAdministrationModuleController extends AbstractModuleController
                 $writeService->commit(false, false);
                 $affectedCores[] = $writeService->getPrimaryEndpoint()->getCore();
             }
-            $message = LocalizationUtility::translate('solr.backend.index_administration.index_emptied_all', 'Solr', [$this->selectedSite->getLabel(), implode(', ', $affectedCores)]);
+            $message = LocalizationUtility::translate('solr.backend.index_administration.index_emptied_all', 'Meilisearch', [$this->selectedSite->getLabel(), implode(', ', $affectedCores)]);
             $this->addFlashMessage($message);
         } catch (Throwable $e) {
-            $this->addFlashMessage(LocalizationUtility::translate('solr.backend.index_administration.error.on_empty_index', 'Solr', [$e->__toString()]), '', ContextualFeedbackSeverity::ERROR);
+            $this->addFlashMessage(LocalizationUtility::translate('solr.backend.index_administration.error.on_empty_index', 'Meilisearch', [$e->__toString()]), '', ContextualFeedbackSeverity::ERROR);
         }
 
         return new RedirectResponse($this->uriBuilder->uriFor('index'), 303);

@@ -1,8 +1,8 @@
 <?php
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Sorting;
+namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet\Sorting;
 
-use ApacheSolrForTypo3\Solr\System\Data\AbstractCollection;
+use WapplerSystems\Meilisearch\System\Data\AbstractCollection;
 
 /**
  * Class SortingCollection

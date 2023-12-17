@@ -15,16 +15,16 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Result\Parser;
+namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet\Result\Parser;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Grouping\Group;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Grouping\GroupCollection;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Grouping\GroupItem;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Grouping\GroupItemCollection;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Result\SearchResultCollection;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\SearchResultSet;
-use ApacheSolrForTypo3\Solr\Domain\Search\SearchRequest;
-use ApacheSolrForTypo3\Solr\System\Solr\Document\Document;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Grouping\Group;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Grouping\GroupCollection;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Grouping\GroupItem;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Grouping\GroupItemCollection;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Result\SearchResultCollection;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSet;
+use WapplerSystems\Meilisearch\Domain\Search\SearchRequest;
+use WapplerSystems\Meilisearch\System\Solr\Document\Document;
 use stdClass;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -178,7 +178,7 @@ class GroupedResultParser extends AbstractResultParser
     /**
      * Retrieves all configured queries independent if they have been configured in query or queries.
      *
-     * @todo This can be merged into TypoScriptConfiguration when solrfluidgrouping was merged to EXT:solr
+     * @todo This can be merged into TypoScriptConfiguration when solrfluidgrouping was merged to EXT:meilisearch
      */
     protected function getQueriesFromConfigurationArray(array $configurationArray): array
     {

@@ -15,10 +15,10 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\Events;
+namespace WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events;
 
-use ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\DataUpdateHandler;
-use ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler\GarbageHandler;
+use WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\DataUpdateHandler;
+use WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\GarbageHandler;
 use Psr\EventDispatcher\StoppableEventInterface;
 
 /**

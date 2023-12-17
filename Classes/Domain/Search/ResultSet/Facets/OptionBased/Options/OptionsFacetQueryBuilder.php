@@ -15,12 +15,12 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
 */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\OptionBased\Options;
+namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\OptionBased\Options;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\DefaultFacetQueryBuilder;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\FacetQueryBuilderInterface;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\SortingExpression;
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\DefaultFacetQueryBuilder;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\FacetQueryBuilderInterface;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\SortingExpression;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 
 /**
  * Class OptionsFacetQueryBuilder

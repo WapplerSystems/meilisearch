@@ -13,11 +13,11 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\Domain\Search\ResultSet\Facets\RangeBased\DateRange;
+namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Search\ResultSet\Facets\RangeBased\DateRange;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\RangeBased\DateRange\DateRangeFacet;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\RangeBased\DateRange\DateRangeFacetParser;
-use ApacheSolrForTypo3\Solr\Tests\Unit\Domain\Search\ResultSet\Facets\SetUpFacetParser;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\RangeBased\DateRange\DateRangeFacet;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\RangeBased\DateRange\DateRangeFacetParser;
+use WapplerSystems\Meilisearch\Tests\Unit\Domain\Search\ResultSet\Facets\SetUpFacetParser;
 
 /**
  * Class DateRangeFacetParserTest

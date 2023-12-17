@@ -15,10 +15,10 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\System\Logging;
+namespace WapplerSystems\Meilisearch\System\Logging;
 
-use ApacheSolrForTypo3\Solr\IndexQueue\PageIndexerRequest;
-use ApacheSolrForTypo3\Solr\Util;
+use WapplerSystems\Meilisearch\IndexQueue\PageIndexerRequest;
+use WapplerSystems\Meilisearch\Util;
 use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Core\Http\Request;
 use TYPO3\CMS\Core\Utility\DebugUtility;
@@ -92,7 +92,7 @@ class DebugWriter
     protected function writeDebugMessage(mixed $level, string $message = '', array $data = []): void
     {
         $parameters = [
-            'extKey' => 'solr',
+            'extKey' => 'meilisearch',
             'msg' => $message,
             'level' => $level,
             'data' => $data,

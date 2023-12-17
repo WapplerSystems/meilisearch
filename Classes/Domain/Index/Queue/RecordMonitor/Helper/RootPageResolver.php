@@ -15,15 +15,15 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Index\Queue\RecordMonitor\Helper;
+namespace WapplerSystems\Meilisearch\Domain\Index\Queue\RecordMonitor\Helper;
 
-use ApacheSolrForTypo3\Solr\Domain\Index\Queue\RecordMonitor\Exception\RootPageRecordNotFoundException;
-use ApacheSolrForTypo3\Solr\Domain\Site\Exception\UnexpectedTYPO3SiteInitializationException;
-use ApacheSolrForTypo3\Solr\Domain\Site\SiteRepository;
-use ApacheSolrForTypo3\Solr\System\Cache\TwoLevelCache;
-use ApacheSolrForTypo3\Solr\System\Configuration\ExtensionConfiguration;
-use ApacheSolrForTypo3\Solr\System\Page\Rootline;
-use ApacheSolrForTypo3\Solr\System\Util\SiteUtility;
+use WapplerSystems\Meilisearch\Domain\Index\Queue\RecordMonitor\Exception\RootPageRecordNotFoundException;
+use WapplerSystems\Meilisearch\Domain\Site\Exception\UnexpectedTYPO3SiteInitializationException;
+use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
+use WapplerSystems\Meilisearch\System\Cache\TwoLevelCache;
+use WapplerSystems\Meilisearch\System\Configuration\ExtensionConfiguration;
+use WapplerSystems\Meilisearch\System\Page\Rootline;
+use WapplerSystems\Meilisearch\System\Util\SiteUtility;
 use RuntimeException;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\SingletonInterface;
@@ -103,7 +103,7 @@ class RootPageResolver implements SingletonInterface
 
         $page = $this->getPageRecordByPageId($pageId);
         if (empty($page)) {
-            // @todo: 1636120156 See \ApacheSolrForTypo3\Solr\Tests\Integration\IndexQueue\FrontendHelper\PageIndexerTest::phpProcessDoesNotDieIfPageIsNotAvailable()
+            // @todo: 1636120156 See \WapplerSystems\Meilisearch\Tests\Integration\IndexQueue\FrontendHelper\PageIndexerTest::phpProcessDoesNotDieIfPageIsNotAvailable()
             //        Do we need an exception here or is it sufficient to just return false?
             throw new RootPageRecordNotFoundException(
                 'The page for the given page ID \'' . $pageId

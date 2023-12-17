@@ -15,11 +15,11 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Event\Indexing;
+namespace WapplerSystems\Meilisearch\Event\Indexing;
 
-use ApacheSolrForTypo3\Solr\IndexQueue\Item;
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
-use ApacheSolrForTypo3\Solr\System\Solr\Document\Document;
+use WapplerSystems\Meilisearch\IndexQueue\Item;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\System\Solr\Document\Document;
 use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
@@ -29,7 +29,7 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
  * created by the indexer.
  *
  * Previously used with
- *   $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['solr']['Indexer']['indexPageSubstitutePageDocument']
+ *   $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['meilisearch']['Indexer']['indexPageSubstitutePageDocument']
  * with SubstitutePageIndexer and PageFieldMappingIndexer screens
  */
 final class AfterPageDocumentIsCreatedForIndexingEvent

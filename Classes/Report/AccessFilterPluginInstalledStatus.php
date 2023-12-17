@@ -15,11 +15,11 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Report;
+namespace WapplerSystems\Meilisearch\Report;
 
-use ApacheSolrForTypo3\Solr\ConnectionManager;
-use ApacheSolrForTypo3\Solr\Domain\Site\Exception\UnexpectedTYPO3SiteInitializationException;
-use ApacheSolrForTypo3\Solr\System\Solr\Service\SolrAdminService;
+use WapplerSystems\Meilisearch\ConnectionManager;
+use WapplerSystems\Meilisearch\Domain\Site\Exception\UnexpectedTYPO3SiteInitializationException;
+use WapplerSystems\Meilisearch\System\Solr\Service\SolrAdminService;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Reports\Status;
@@ -90,7 +90,7 @@ class AccessFilterPluginInstalledStatus extends AbstractSolrStatus
      */
     public function getLabel(): string
     {
-        return 'LLL:EXT:solr/Resources/Private/Language/locallang_reports.xlf:status_solr_access-filter';
+        return 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_reports.xlf:status_solr_access-filter';
     }
 
     /**
@@ -102,7 +102,7 @@ class AccessFilterPluginInstalledStatus extends AbstractSolrStatus
             return null;
         }
 
-        $variables = ['solr' => $adminService, 'recommendedVersion' => self::RECOMMENDED_PLUGIN_VERSION];
+        $variables = ['meilisearch' => $adminService, 'recommendedVersion' => self::RECOMMENDED_PLUGIN_VERSION];
 
         $report = $this->getRenderedReport('AccessFilterPluginInstalledStatusNotInstalled.html', $variables);
         return GeneralUtility::makeInstance(
@@ -124,7 +124,7 @@ class AccessFilterPluginInstalledStatus extends AbstractSolrStatus
         }
 
         $version = $this->getInstalledPluginVersion($adminService);
-        $variables = ['solr' => $adminService, 'installedVersion' => $version, 'recommendedVersion' => self::RECOMMENDED_PLUGIN_VERSION];
+        $variables = ['meilisearch' => $adminService, 'installedVersion' => $version, 'recommendedVersion' => self::RECOMMENDED_PLUGIN_VERSION];
         $report = $this->getRenderedReport('AccessFilterPluginInstalledStatusIsOutDated.html', $variables);
 
         return GeneralUtility::makeInstance(

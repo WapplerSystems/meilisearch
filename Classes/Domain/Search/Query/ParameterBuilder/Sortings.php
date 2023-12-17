@@ -13,7 +13,7 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\Query\ParameterBuilder;
+namespace WapplerSystems\Meilisearch\Domain\Search\Query\ParameterBuilder;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 

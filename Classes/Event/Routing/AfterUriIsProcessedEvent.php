@@ -15,7 +15,7 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Event\Routing;
+namespace WapplerSystems\Meilisearch\Event\Routing;
 
 use Psr\Http\Message\UriInterface;
 

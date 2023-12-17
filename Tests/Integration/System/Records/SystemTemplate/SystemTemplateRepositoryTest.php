@@ -13,10 +13,10 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Integration\System\Records\SystemTemplate;
+namespace WapplerSystems\Meilisearch\Tests\Integration\System\Records\SystemTemplate;
 
-use ApacheSolrForTypo3\Solr\System\Records\SystemTemplate\SystemTemplateRepository;
-use ApacheSolrForTypo3\Solr\Tests\Integration\IntegrationTest;
+use WapplerSystems\Meilisearch\System\Records\SystemTemplate\SystemTemplateRepository;
+use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**

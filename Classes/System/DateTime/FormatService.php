@@ -13,7 +13,7 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\System\DateTime;
+namespace WapplerSystems\Meilisearch\System\DateTime;
 
 use DateTime;
 use DateTimeZone;

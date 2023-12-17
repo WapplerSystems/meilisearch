@@ -15,7 +15,7 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\System\Mvc\Backend\Component\Exception;
+namespace WapplerSystems\Meilisearch\System\Mvc\Backend\Component\Exception;
 
 use TYPO3\CMS\Extbase\Mvc\Exception;
 

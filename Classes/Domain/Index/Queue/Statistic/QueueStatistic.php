@@ -13,7 +13,7 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Index\Queue\Statistic;
+namespace WapplerSystems\Meilisearch\Domain\Index\Queue\Statistic;
 
 /**
  * Class QueueStatistic is responsible for index queue metrics calculations.

@@ -15,13 +15,13 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Index\Queue;
+namespace WapplerSystems\Meilisearch\Domain\Index\Queue;
 
-use ApacheSolrForTypo3\Solr\Domain\Site\Site;
-use ApacheSolrForTypo3\Solr\Event\IndexQueue\AfterIndexQueueHasBeenInitializedEvent;
-use ApacheSolrForTypo3\Solr\IndexQueue\Initializer\AbstractInitializer;
-use ApacheSolrForTypo3\Solr\IndexQueue\QueueInitializationServiceAwareInterface;
-use ApacheSolrForTypo3\Solr\IndexQueue\QueueInterface;
+use WapplerSystems\Meilisearch\Domain\Site\Site;
+use WapplerSystems\Meilisearch\Event\IndexQueue\AfterIndexQueueHasBeenInitializedEvent;
+use WapplerSystems\Meilisearch\IndexQueue\Initializer\AbstractInitializer;
+use WapplerSystems\Meilisearch\IndexQueue\QueueInitializationServiceAwareInterface;
+use WapplerSystems\Meilisearch\IndexQueue\QueueInterface;
 use Doctrine\DBAL\ConnectionException;
 use Doctrine\DBAL\Exception as DBALException;
 use Psr\EventDispatcher\EventDispatcherInterface;

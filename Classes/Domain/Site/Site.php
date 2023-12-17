@@ -15,17 +15,17 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Site;
+namespace WapplerSystems\Meilisearch\Domain\Site;
 
-use ApacheSolrForTypo3\Solr\NoSolrConnectionFoundException;
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
-use ApacheSolrForTypo3\Solr\System\Records\Pages\PagesRepository;
+use WapplerSystems\Meilisearch\NoSolrConnectionFoundException;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\System\Records\Pages\PagesRepository;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Site\Entity\Site as Typo3Site;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Represents all information for EXT:solr of a given TYPO3 Site to retrieve
+ * Represents all information for EXT:meilisearch of a given TYPO3 Site to retrieve
  * configuration and setup from a page.
  *
  * (c) 2011-2015 Ingo Renner <ingo@typo3.org>
@@ -282,7 +282,7 @@ class Site
     }
 
     /**
-     * Returns the EXT:solr state configured in site.
+     * Returns the EXT:meilisearch state configured in site.
      */
     public function isEnabled(): bool
     {

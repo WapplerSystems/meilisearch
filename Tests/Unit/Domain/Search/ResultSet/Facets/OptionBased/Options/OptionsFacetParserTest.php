@@ -13,11 +13,11 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\Domain\Search\ResultSet\Facets\OptionBased\Options;
+namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Search\ResultSet\Facets\OptionBased\Options;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\OptionBased\Options\OptionsFacetParser;
-use ApacheSolrForTypo3\Solr\System\Solr\ResponseAdapter;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\OptionBased\Options\OptionsFacetParser;
+use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 
 class OptionsFacetParserTest extends SetUpUnitTestCase
 {
@@ -53,6 +53,6 @@ class OptionsFacetParserTest extends SetUpUnitTestCase
             'floatOptions',
             $responseAdapter,
         );
-        self::assertCount(3, $optionsArray, 'EXT:solr can not list floats in facets.');
+        self::assertCount(3, $optionsArray, 'EXT:meilisearch can not list floats in facets.');
     }
 }

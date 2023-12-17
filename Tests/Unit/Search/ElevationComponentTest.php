@@ -13,20 +13,20 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\Search;
+namespace WapplerSystems\Meilisearch\Tests\Unit\Search;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\Query;
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\QueryBuilder;
-use ApacheSolrForTypo3\Solr\Domain\Search\SearchRequest;
-use ApacheSolrForTypo3\Solr\Domain\Site\SiteHashService;
-use ApacheSolrForTypo3\Solr\Event\Search\AfterSearchQueryHasBeenPreparedEvent;
-use ApacheSolrForTypo3\Solr\Search;
-use ApacheSolrForTypo3\Solr\Search\ElevationComponent;
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\Domain\Search\Query\Query;
+use WapplerSystems\Meilisearch\Domain\Search\Query\QueryBuilder;
+use WapplerSystems\Meilisearch\Domain\Search\SearchRequest;
+use WapplerSystems\Meilisearch\Domain\Site\SiteHashService;
+use WapplerSystems\Meilisearch\Event\Search\AfterSearchQueryHasBeenPreparedEvent;
+use WapplerSystems\Meilisearch\Search;
+use WapplerSystems\Meilisearch\Search\ElevationComponent;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 
 /**
- * Tests the ApacheSolrForTypo3\Solr\Query\Modifier\Elevation class
+ * Tests the WapplerSystems\Meilisearch\Query\Modifier\Elevation class
  *
  * @author Timo Hund <timo.hund@dkd.de>
  */

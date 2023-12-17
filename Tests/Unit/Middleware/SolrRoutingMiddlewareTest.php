@@ -14,12 +14,12 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\Middleware;
+namespace WapplerSystems\Meilisearch\Tests\Unit\Middleware;
 
-use ApacheSolrForTypo3\Solr\IndexQueue\PageIndexerRequest;
-use ApacheSolrForTypo3\Solr\Middleware\SolrRoutingMiddleware;
-use ApacheSolrForTypo3\Solr\Routing\RoutingService;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\IndexQueue\PageIndexerRequest;
+use WapplerSystems\Meilisearch\Middleware\SolrRoutingMiddleware;
+use WapplerSystems\Meilisearch\Routing\RoutingService;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use GuzzleHttp\Psr7\ServerRequest;
 use GuzzleHttp\Psr7\Uri;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -74,7 +74,7 @@ class SolrRoutingMiddlewareTest extends SetUpUnitTestCase
 
     /**
      * @test
-     * @covers \ApacheSolrForTypo3\Solr\Middleware\SolrRoutingMiddleware::process
+     * @covers \WapplerSystems\Meilisearch\Middleware\SolrRoutingMiddleware::process
      */
     public function missingEnhancerHasNoEffectTest(): void
     {
@@ -132,7 +132,7 @@ class SolrRoutingMiddlewareTest extends SetUpUnitTestCase
 
     /**
      * @test
-     * @covers \ApacheSolrForTypo3\Solr\Middleware\SolrRoutingMiddleware::process
+     * @covers \WapplerSystems\Meilisearch\Middleware\SolrRoutingMiddleware::process
      */
     public function enhancerInactiveDuringIndexingTest(): void
     {

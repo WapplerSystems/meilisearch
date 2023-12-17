@@ -15,9 +15,9 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\SolrFakeExtension3\EventListeners;
+namespace WapplerSystems\MeilisearchFakeExtension3\EventListeners;
 
-use ApacheSolrForTypo3\Solr\Event\Indexing\BeforeDocumentsAreIndexedEvent;
+use WapplerSystems\Meilisearch\Event\Indexing\BeforeDocumentsAreIndexedEvent;
 
 final class TestModificationOfDocuments
 {

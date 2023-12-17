@@ -13,11 +13,11 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\Domain\Index\Classification;
+namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Index\Classification;
 
-use ApacheSolrForTypo3\Solr\Domain\Index\Classification\Classification;
-use ApacheSolrForTypo3\Solr\Domain\Index\Classification\ClassificationService;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\Domain\Index\Classification\Classification;
+use WapplerSystems\Meilisearch\Domain\Index\Classification\ClassificationService;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 
 /**
  * @author Timo Hund <timo.hund@dkd.de>

@@ -15,11 +15,11 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\IndexQueue;
+namespace WapplerSystems\Meilisearch\IndexQueue;
 
-use ApacheSolrForTypo3\Solr\IndexQueue\FrontendHelper\FrontendHelper;
-use ApacheSolrForTypo3\Solr\IndexQueue\FrontendHelper\Manager;
-use ApacheSolrForTypo3\Solr\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\IndexQueue\FrontendHelper\FrontendHelper;
+use WapplerSystems\Meilisearch\IndexQueue\FrontendHelper\Manager;
+use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**

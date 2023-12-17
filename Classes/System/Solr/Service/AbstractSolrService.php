@@ -15,13 +15,13 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\System\Solr\Service;
+namespace WapplerSystems\Meilisearch\System\Solr\Service;
 
-use ApacheSolrForTypo3\Solr\PingFailedException;
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
-use ApacheSolrForTypo3\Solr\System\Logging\SolrLogManager;
-use ApacheSolrForTypo3\Solr\System\Solr\ResponseAdapter;
-use ApacheSolrForTypo3\Solr\Util;
+use WapplerSystems\Meilisearch\PingFailedException;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\System\Logging\SolrLogManager;
+use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
+use WapplerSystems\Meilisearch\Util;
 use Closure;
 use Psr\Log\LogLevel;
 use Solarium\Client;
@@ -356,7 +356,7 @@ abstract class AbstractSolrService
         $request = new Request();
         $path = parse_url($url, PHP_URL_PATH) ?? '';
         $endpoint = $this->getPrimaryEndpoint();
-        $api = $request->getApi() === Request::API_V1 ? 'solr' : 'api';
+        $api = $request->getApi() === Request::API_V1 ? 'meilisearch' : 'api';
         $coreBasePath = $endpoint->getPath() . '/' . $api . '/' . $endpoint->getCore() . '/';
 
         $handler = $this->buildRelativePath($coreBasePath, $path);

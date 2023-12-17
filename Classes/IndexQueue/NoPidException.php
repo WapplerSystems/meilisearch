@@ -13,9 +13,9 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\IndexQueue;
+namespace WapplerSystems\Meilisearch\IndexQueue;
 
-use ApacheSolrForTypo3\Solr\Exception;
+use WapplerSystems\Meilisearch\Exception;
 
 /**
  * This Exception is thrown when the RecordMonitor handles a record without a valid pid.

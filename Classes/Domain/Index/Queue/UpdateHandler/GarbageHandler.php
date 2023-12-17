@@ -15,10 +15,10 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Index\Queue\UpdateHandler;
+namespace WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler;
 
-use ApacheSolrForTypo3\Solr\Domain\Index\Queue\GarbageRemover\StrategyFactory;
-use ApacheSolrForTypo3\Solr\Domain\Site\Exception\UnexpectedTYPO3SiteInitializationException;
+use WapplerSystems\Meilisearch\Domain\Index\Queue\GarbageRemover\StrategyFactory;
+use WapplerSystems\Meilisearch\Domain\Site\Exception\UnexpectedTYPO3SiteInitializationException;
 use Doctrine\DBAL\Exception as DBALException;
 use PDO;
 use Throwable;
@@ -69,7 +69,7 @@ class GarbageHandler extends AbstractUpdateHandler
      * Tracks down index documents belonging to a particular record or page and
      * removes them from the index and the Index Queue.
      *
-     * @throws UnexpectedValueException if a hook object does not implement interface {@linkt \ApacheSolrForTypo3\Solr\GarbageCollectorPostProcessor}
+     * @throws UnexpectedValueException if a hook object does not implement interface {@linkt \WapplerSystems\Meilisearch\GarbageCollectorPostProcessor}
      */
     public function collectGarbage(string $table, int $uid): void
     {

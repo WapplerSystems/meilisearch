@@ -15,17 +15,17 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\Uri;
+namespace WapplerSystems\Meilisearch\Domain\Search\Uri;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Grouping\GroupItem;
-use ApacheSolrForTypo3\Solr\Domain\Search\SearchRequest;
-use ApacheSolrForTypo3\Solr\Event\Routing\AfterUriIsProcessedEvent;
-use ApacheSolrForTypo3\Solr\Event\Routing\BeforeCachedVariablesAreProcessedEvent;
-use ApacheSolrForTypo3\Solr\Event\Routing\BeforeVariableInCachedUrlAreReplacedEvent;
-use ApacheSolrForTypo3\Solr\Routing\RoutingService;
-use ApacheSolrForTypo3\Solr\System\Configuration\TypoScriptConfiguration;
-use ApacheSolrForTypo3\Solr\System\Url\UrlHelper;
-use ApacheSolrForTypo3\Solr\Utility\ParameterSortingUtility;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Grouping\GroupItem;
+use WapplerSystems\Meilisearch\Domain\Search\SearchRequest;
+use WapplerSystems\Meilisearch\Event\Routing\AfterUriIsProcessedEvent;
+use WapplerSystems\Meilisearch\Event\Routing\BeforeCachedVariablesAreProcessedEvent;
+use WapplerSystems\Meilisearch\Event\Routing\BeforeVariableInCachedUrlAreReplacedEvent;
+use WapplerSystems\Meilisearch\Routing\RoutingService;
+use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
+use WapplerSystems\Meilisearch\System\Url\UrlHelper;
+use WapplerSystems\Meilisearch\Utility\ParameterSortingUtility;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\Exception\InvalidParameterException;
 use TYPO3\CMS\Core\Http\Uri;

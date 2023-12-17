@@ -15,9 +15,9 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Traits;
+namespace WapplerSystems\Meilisearch\Traits;
 
-use ApacheSolrForTypo3\Solr\System\Configuration\ExtensionConfiguration;
+use WapplerSystems\Meilisearch\System\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 trait SkipMonitoringTrait

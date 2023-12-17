@@ -13,9 +13,9 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\IndexQueue;
+namespace WapplerSystems\Meilisearch\Tests\Unit\IndexQueue;
 
-use ApacheSolrForTypo3\Solr\IndexQueue\SerializedValueDetector;
+use WapplerSystems\Meilisearch\IndexQueue\SerializedValueDetector;
 
 class ValidSerializedValueDetector implements SerializedValueDetector
 {

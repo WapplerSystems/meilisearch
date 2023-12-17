@@ -13,9 +13,9 @@
  * The TYPO3 project - inspiring people to share!
 */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\OptionBased\Hierarchy;
+namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\OptionBased\Hierarchy;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\OptionBased\AbstractOptionFacetItem;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\OptionBased\AbstractOptionFacetItem;
 
 /**
  * Value object that represent an option of an options-facet.

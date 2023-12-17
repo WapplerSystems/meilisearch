@@ -15,19 +15,19 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\ResultSet;
+namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\Query\Query;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\AbstractFacet;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets\FacetCollection;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Result\SearchResult;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Result\SearchResultCollection;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Sorting\Sorting;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Sorting\SortingCollection;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Spellchecking\Suggestion;
-use ApacheSolrForTypo3\Solr\Domain\Search\SearchRequest;
-use ApacheSolrForTypo3\Solr\Search;
-use ApacheSolrForTypo3\Solr\System\Solr\ResponseAdapter;
+use WapplerSystems\Meilisearch\Domain\Search\Query\Query;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\AbstractFacet;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\FacetCollection;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Result\SearchResult;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Result\SearchResultCollection;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Sorting\Sorting;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Sorting\SortingCollection;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Spellchecking\Suggestion;
+use WapplerSystems\Meilisearch\Domain\Search\SearchRequest;
+use WapplerSystems\Meilisearch\Search;
+use WapplerSystems\Meilisearch\System\Solr\ResponseAdapter;
 
 /**
  * The SearchResultSet is used to provide access to the Apache Solr Response and

@@ -13,9 +13,9 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\System\Environment;
+namespace WapplerSystems\Meilisearch\System\Environment;
 
-use ApacheSolrForTypo3\Solr\Exception;
+use WapplerSystems\Meilisearch\Exception;
 
 /**
  * Exception that is thrown when a language file is needed, but not available.

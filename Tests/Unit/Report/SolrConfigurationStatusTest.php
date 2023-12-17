@@ -13,10 +13,10 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\Report;
+namespace WapplerSystems\Meilisearch\Tests\Unit\Report;
 
-use ApacheSolrForTypo3\Solr\Report\SolrConfigurationStatus;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\Report\SolrConfigurationStatus;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Reports\Status;
@@ -32,7 +32,7 @@ class SolrConfigurationStatusTest extends SetUpUnitTestCase
 
     protected function setUp(): void
     {
-        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['solr'] = [];
+        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['meilisearch'] = [];
         // we mock the methods to external dependencies.
 
         $this->report = $this->getMockBuilder(SolrConfigurationStatus::class)->onlyMethods(

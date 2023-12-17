@@ -7,7 +7,7 @@
 <f:section name="Form">
 
 	<div class="tx-solr-search-form">
-		<s:searchForm id="tx-solr-search-form-pi-results" additionalFilters="{additionalFilters}" suggestHeader="{f:translate(key: 'suggest_header', default: 'Top Results', extensionName: 'solr')}">
+		<s:searchForm id="tx-solr-search-form-pi-results" additionalFilters="{additionalFilters}" suggestHeader="{f:translate(key: 'suggest_header', default: 'Top Results', extensionName: 'meilisearch')}">
 				<f:for each="{existingParameters}" key="name" as="value">
 					<f:form.hidden name="{pluginNamespace}{name}" value="{value}" />
 				</f:for>

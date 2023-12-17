@@ -13,10 +13,10 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\ViewHelpers;
+namespace WapplerSystems\Meilisearch\ViewHelpers;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\LastSearches\LastSearchesService;
-use ApacheSolrForTypo3\Solr\System\Configuration\ConfigurationManager;
+use WapplerSystems\Meilisearch\Domain\Search\LastSearches\LastSearchesService;
+use WapplerSystems\Meilisearch\System\Configuration\ConfigurationManager;
 use Closure;
 use Doctrine\DBAL\Exception as DBALException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;

@@ -15,11 +15,11 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Task;
+namespace WapplerSystems\Meilisearch\Task;
 
-use ApacheSolrForTypo3\Solr\Backend\SiteSelectorField;
-use ApacheSolrForTypo3\Solr\Domain\Site\Exception\UnexpectedTYPO3SiteInitializationException;
-use ApacheSolrForTypo3\Solr\Domain\Site\SiteRepository;
+use WapplerSystems\Meilisearch\Backend\SiteSelectorField;
+use WapplerSystems\Meilisearch\Domain\Site\Exception\UnexpectedTYPO3SiteInitializationException;
+use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
 use Doctrine\DBAL\Exception as DBALException;
 use LogicException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -83,17 +83,17 @@ class IndexQueueWorkerTaskAdditionalFieldProvider extends AbstractAdditionalFiel
                 'tx_scheduler[site]',
                 $taskInfo['site']
             ),
-            'label' => 'LLL:EXT:solr/Resources/Private/Language/locallang.xlf:field_site',
+            'label' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang.xlf:field_site',
         ];
 
         $additionalFields['documentsToIndexLimit'] = [
             'code' => '<input type="number" class="form-control" name="tx_scheduler[documentsToIndexLimit]" value="' . htmlspecialchars((string)$taskInfo['documentsToIndexLimit']) . '" />',
-            'label' => 'LLL:EXT:solr/Resources/Private/Language/locallang.xlf:indexqueueworker_field_documentsToIndexLimit',
+            'label' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang.xlf:indexqueueworker_field_documentsToIndexLimit',
         ];
 
         $additionalFields['forcedWebRoot'] = [
             'code' => '<input type="text" class="form-control" name="tx_scheduler[forcedWebRoot]" value="' . htmlspecialchars($taskInfo['forcedWebRoot']) . '" />',
-            'label' => 'LLL:EXT:solr/Resources/Private/Language/locallang.xlf:indexqueueworker_field_forcedWebRoot',
+            'label' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang.xlf:indexqueueworker_field_forcedWebRoot',
         ];
 
         return $additionalFields;

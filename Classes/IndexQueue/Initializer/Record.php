@@ -13,7 +13,7 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\IndexQueue\Initializer;
+namespace WapplerSystems\Meilisearch\IndexQueue\Initializer;
 
 /**
  * Simple Index Queue initializer for records as found in tables configured

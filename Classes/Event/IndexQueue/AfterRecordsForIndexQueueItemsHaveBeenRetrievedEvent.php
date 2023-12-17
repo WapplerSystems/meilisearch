@@ -15,12 +15,12 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Event\IndexQueue;
+namespace WapplerSystems\Meilisearch\Event\IndexQueue;
 
 /**
  * PSR-14 Event which is fired after DB records have been fetched for the index queue.
  *
- * Previously used via $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['solr']['postProcessFetchRecordsForIndexQueueItem']
+ * Previously used via $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['meilisearch']['postProcessFetchRecordsForIndexQueueItem']
  */
 final class AfterRecordsForIndexQueueItemsHaveBeenRetrievedEvent
 {

@@ -15,12 +15,12 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\ViewHelpers;
+namespace WapplerSystems\Meilisearch\ViewHelpers;
 
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Grouping\GroupItem;
-use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\SearchResultSet;
-use ApacheSolrForTypo3\Solr\Pagination\ResultsPagination;
-use ApacheSolrForTypo3\Solr\Pagination\ResultsPaginator;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Grouping\GroupItem;
+use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSet;
+use WapplerSystems\Meilisearch\Pagination\ResultsPagination;
+use WapplerSystems\Meilisearch\Pagination\ResultsPaginator;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
@@ -98,21 +98,21 @@ class GroupItemPaginateViewHelper extends AbstractSolrViewHelper
         $viewConfiguration = $configuration->getValueByPath('plugin.tx_solr.view.');
 
         $layoutRootPaths = [];
-        $layoutRootPaths[] = GeneralUtility::getFileAbsFileName('EXT:solr/Resources/Private/Layouts/ViewHelpers/');
+        $layoutRootPaths[] = GeneralUtility::getFileAbsFileName('EXT:meilisearch/Resources/Private/Layouts/ViewHelpers/');
         if (isset($viewConfiguration['layoutRootPaths.'])) {
             foreach ($viewConfiguration['layoutRootPaths.'] as $layoutRootPath) {
                 $layoutRootPaths[] = GeneralUtility::getFileAbsFileName(rtrim($layoutRootPath, '/') . '/ViewHelpers/');
             }
         }
         $partialRootPaths = [];
-        $partialRootPaths[] = GeneralUtility::getFileAbsFileName('EXT:solr/Resources/Private/Partials/ViewHelpers/');
+        $partialRootPaths[] = GeneralUtility::getFileAbsFileName('EXT:meilisearch/Resources/Private/Partials/ViewHelpers/');
         if (isset($viewConfiguration['partialRootPaths.'])) {
             foreach ($viewConfiguration['partialRootPaths.'] as $partialRootPath) {
                 $partialRootPaths[] = GeneralUtility::getFileAbsFileName(rtrim($partialRootPath, '/') . '/ViewHelpers/');
             }
         }
         $templateRootPaths = [];
-        $templateRootPaths[] = GeneralUtility::getFileAbsFileName('EXT:solr/Resources/Private/Templates/ViewHelpers/');
+        $templateRootPaths[] = GeneralUtility::getFileAbsFileName('EXT:meilisearch/Resources/Private/Templates/ViewHelpers/');
         if (isset($viewConfiguration['templateRootPaths.'])) {
             foreach ($viewConfiguration['templateRootPaths.'] as $templateRootPath) {
                 $templateRootPaths[] = GeneralUtility::getFileAbsFileName(rtrim($templateRootPath, '/') . '/ViewHelpers/');

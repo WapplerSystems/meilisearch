@@ -26,8 +26,8 @@ If applicable, add screenshots to help explain your problem.
 **Used versions (please complete the following information):**
  - TYPO3 Version: [e.g. 12.4.0]
  - Browser: [e.g. chrome, safari]
- - EXT:solr Version: [e.g. 12.0.1]
- - Used Apache Solr Version: [e.g. 9.3.1]
+ - EXT:meilisearch Version: [e.g. 12.0.1]
+ - Used Meilisearch Version: [e.g. 9.3.1]
  - PHP Version: [e.g. 8.2.0]
  - MySQL Version: [e.g. 8.0.0]
 

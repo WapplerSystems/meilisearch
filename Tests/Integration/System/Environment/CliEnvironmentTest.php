@@ -13,11 +13,11 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Integration\System\Environment;
+namespace WapplerSystems\Meilisearch\Tests\Integration\System\Environment;
 
-use ApacheSolrForTypo3\Solr\System\Environment\CliEnvironment;
-use ApacheSolrForTypo3\Solr\System\Environment\WebRootAllReadyDefinedException;
-use ApacheSolrForTypo3\Solr\Tests\Integration\IntegrationTest;
+use WapplerSystems\Meilisearch\System\Environment\CliEnvironment;
+use WapplerSystems\Meilisearch\System\Environment\WebRootAllReadyDefinedException;
+use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**

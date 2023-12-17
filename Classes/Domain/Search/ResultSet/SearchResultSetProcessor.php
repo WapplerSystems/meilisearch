@@ -13,7 +13,7 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Domain\Search\ResultSet;
+namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet;
 
 /**
  * The implementation can be used to influence a SearchResultSet that is

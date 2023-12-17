@@ -14,7 +14,7 @@
 	stopOnSkipped="false"
 	verbose="false">
 	<extensions>
-		<extension class="\ApacheSolrForTypo3\Solr\Tests\PHPUnitExtensions\BypassFinals"/>
+		<extension class="\WapplerSystems\Meilisearch\Tests\PHPUnitExtensions\BypassFinals"/>
 	</extensions>
 	<coverage processUncoveredFiles="false">
 		<include>

@@ -13,9 +13,9 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\System\Util;
+namespace WapplerSystems\Meilisearch\System\Util;
 
-use ApacheSolrForTypo3\Solr\Domain\Site\Site as ExtSolrSite;
+use WapplerSystems\Meilisearch\Domain\Site\Site as ExtSolrSite;
 use TYPO3\CMS\Core\Exception\SiteNotFoundException;
 use TYPO3\CMS\Core\Site\Entity\Site as CoreSite;
 use TYPO3\CMS\Core\Site\SiteFinder;

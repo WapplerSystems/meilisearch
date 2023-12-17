@@ -15,10 +15,10 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Event\Indexing;
+namespace WapplerSystems\Meilisearch\Event\Indexing;
 
-use ApacheSolrForTypo3\Solr\IndexQueue\Item;
-use ApacheSolrForTypo3\Solr\Task\IndexQueueWorkerTask;
+use WapplerSystems\Meilisearch\IndexQueue\Item;
+use WapplerSystems\Meilisearch\Task\IndexQueueWorkerTask;
 
 /**
  * This event is dispatched after the indexing of items ends

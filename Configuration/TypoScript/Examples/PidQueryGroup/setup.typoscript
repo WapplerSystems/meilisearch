@@ -1,4 +1,4 @@
-plugin.tx_solr {
+plugin.tx_meilisearch {
   search {
     grouping = 1
     grouping {

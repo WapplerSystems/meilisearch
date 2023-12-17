@@ -1,6 +1,6 @@
 <?php
 
-namespace ApacheSolrForTypo3\Solr\Tests\Integration\Controller;
+namespace WapplerSystems\Meilisearch\Tests\Integration\Controller;
 
 /**
  * Class CategoryPathProvider

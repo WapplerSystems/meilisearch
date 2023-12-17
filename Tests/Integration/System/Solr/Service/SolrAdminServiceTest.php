@@ -13,10 +13,10 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Integration\System\Solr\Service;
+namespace WapplerSystems\Meilisearch\Tests\Integration\System\Solr\Service;
 
-use ApacheSolrForTypo3\Solr\System\Solr\Service\SolrAdminService;
-use ApacheSolrForTypo3\Solr\Tests\Integration\IntegrationTest;
+use WapplerSystems\Meilisearch\System\Solr\Service\SolrAdminService;
+use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use Solarium\Client;
 use Solarium\Core\Client\Adapter\Curl;
 use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;

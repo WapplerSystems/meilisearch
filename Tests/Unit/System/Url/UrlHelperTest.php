@@ -13,10 +13,10 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace ApacheSolrForTypo3\Solr\Tests\Unit\System\Url;
+namespace WapplerSystems\Meilisearch\Tests\Unit\System\Url;
 
-use ApacheSolrForTypo3\Solr\System\Url\UrlHelper;
-use ApacheSolrForTypo3\Solr\Tests\Unit\SetUpUnitTestCase;
+use WapplerSystems\Meilisearch\System\Url\UrlHelper;
+use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 
 /**
  * Testcase to check the functionallity of the UrlHelper
