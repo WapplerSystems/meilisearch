@@ -17,7 +17,7 @@ namespace WapplerSystems\Meilisearch\IndexQueue\FrontendHelper;
 
 use WapplerSystems\Meilisearch\Access\Rootline;
 use WapplerSystems\Meilisearch\ConnectionManager;
-use WapplerSystems\Meilisearch\Domain\Search\ApacheMeilisearchDocument\Builder;
+use WapplerSystems\Meilisearch\Domain\Search\MeilisearchDocument\Builder;
 use WapplerSystems\Meilisearch\Event\Indexing\AfterPageDocumentIsCreatedForIndexingEvent;
 use WapplerSystems\Meilisearch\Event\Indexing\BeforeDocumentsAreIndexedEvent;
 use WapplerSystems\Meilisearch\Event\Indexing\BeforePageDocumentIsProcessedForIndexingEvent;

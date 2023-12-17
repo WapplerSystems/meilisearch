@@ -31,7 +31,7 @@ class SearchResultBuilder
      * This method is used to wrap the original meilisearch document instance in an instance of the configured SearchResult
      * class.
      */
-    public function fromApacheMeilisearchDocument(Document $originalDocument): SearchResult
+    public function fromMeilisearchDocument(Document $originalDocument): SearchResult
     {
         $searchResultClassName = $this->getResultClassName();
         $result = GeneralUtility::makeInstance($searchResultClassName, $originalDocument->getFields());

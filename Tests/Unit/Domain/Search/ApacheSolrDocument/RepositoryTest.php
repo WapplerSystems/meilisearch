@@ -13,10 +13,10 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Search\ApacheMeilisearchDocument;
+namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Search\MeilisearchDocument;
 
 use WapplerSystems\Meilisearch\ConnectionManager;
-use WapplerSystems\Meilisearch\Domain\Search\ApacheMeilisearchDocument\Repository;
+use WapplerSystems\Meilisearch\Domain\Search\MeilisearchDocument\Repository;
 use WapplerSystems\Meilisearch\Domain\Search\Query\Query;
 use WapplerSystems\Meilisearch\Domain\Search\Query\QueryBuilder;
 use WapplerSystems\Meilisearch\Domain\Site\Site;
@@ -29,7 +29,7 @@ use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Test cases for ApacheMeilisearchDocumentRepository
+ * Test cases for MeilisearchDocumentRepository
  */
 class RepositoryTest extends SetUpUnitTestCase
 {
@@ -123,8 +123,8 @@ class RepositoryTest extends SetUpUnitTestCase
         $apacheMeilisearchDocumentRepository->expects(self::once())->method('getSearch')->willReturn($search);
         $queryMock = $this->createMock(Query::class);
         $queryBuilderMock->expects(self::any())->method('buildPageQuery')->willReturn($queryMock);
-        $actualApacheMeilisearchDocumentCollection = $apacheMeilisearchDocumentRepository->findByPageIdAndByLanguageId(777, 0);
+        $actualMeilisearchDocumentCollection = $apacheMeilisearchDocumentRepository->findByPageIdAndByLanguageId(777, 0);
 
-        self::assertSame($testDocuments, $actualApacheMeilisearchDocumentCollection);
+        self::assertSame($testDocuments, $actualMeilisearchDocumentCollection);
     }
 }

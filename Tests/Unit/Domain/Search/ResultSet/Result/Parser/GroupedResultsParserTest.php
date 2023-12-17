@@ -110,12 +110,12 @@ class GroupedResultsParserTest extends SetUpUnitTestCase
         $searchRequestMock->expects(self::any())->method('getContextTypoScriptConfiguration')->willReturn($configurationMock);
         $resultSet = $this->getMockBuilder(SearchResultSet::class)->setMethods(['getUsedSearchRequest', 'getResponse'])->getMock();
         $resultSet->expects(self::any())->method('getUsedSearchRequest')->willReturn($searchRequestMock);
-        $resultSet->expects(self::any())->method('getResponse')->willReturn($this->getFakeApacheMeilisearchResponse($fixtureName));
+        $resultSet->expects(self::any())->method('getResponse')->willReturn($this->getFakeMeilisearchResponse($fixtureName));
 
         return $resultSet;
     }
 
-    protected function getFakeApacheMeilisearchResponse(string $fixtureFile): ResponseAdapter
+    protected function getFakeMeilisearchResponse(string $fixtureFile): ResponseAdapter
     {
         $fakeResponseJson = $this->getFixtureContentByName($fixtureFile);
         return new ResponseAdapter($fakeResponseJson);

@@ -18,7 +18,7 @@ namespace WapplerSystems\Meilisearch\Tests\Unit\IndexQueue;
 use WapplerSystems\Meilisearch\Access\Rootline;
 use WapplerSystems\Meilisearch\ConnectionManager;
 use WapplerSystems\Meilisearch\Domain\Index\PageIndexer\PageUriBuilder;
-use WapplerSystems\Meilisearch\Domain\Search\ApacheMeilisearchDocument\Builder;
+use WapplerSystems\Meilisearch\Domain\Search\MeilisearchDocument\Builder;
 use WapplerSystems\Meilisearch\Domain\Site\Site;
 use WapplerSystems\Meilisearch\FrontendEnvironment;
 use WapplerSystems\Meilisearch\IndexQueue\Item;

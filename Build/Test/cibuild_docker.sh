@@ -195,7 +195,7 @@ assertVolumeExportHasNotBeenChanged ()
   fi
 }
 
-assertDataPathIsCreatedByApacheMeilisearch ()
+assertDataPathIsCreatedByMeilisearch ()
 {
   local DATA_PATH
   DATA_PATH="$LOCAL_VOLUME_PATH""/data/data"
@@ -323,7 +323,7 @@ assertAllCoresAreUp
 
 assertAllCoresAreQueriable
 
-assertDataPathIsCreatedByApacheMeilisearch
+assertDataPathIsCreatedByMeilisearch
 assertNecessaryPathsAreOwnedByMeilisearch
 
 assertCoresAreSwitchableViaEnvVar

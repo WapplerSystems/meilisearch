@@ -1,6 +1,6 @@
 <?php
 
-namespace ApacheMeilisearchForTypo3\FakeExtension\Domain\Model;
+namespace MeilisearchForTypo3\FakeExtension\Domain\Model;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 

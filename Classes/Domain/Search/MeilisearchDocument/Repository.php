@@ -13,7 +13,7 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace WapplerSystems\Meilisearch\Domain\Search\ApacheMeilisearchDocument;
+namespace WapplerSystems\Meilisearch\Domain\Search\MeilisearchDocument;
 
 use WapplerSystems\Meilisearch\ConnectionManager;
 use WapplerSystems\Meilisearch\Domain\Search\Query\QueryBuilder;

@@ -385,7 +385,7 @@ plugin.tx_meilisearch {
 lib.meilisearch_extbase_bootstrap = USER
 lib.meilisearch_extbase_bootstrap {
   userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
-  vendorName = ApacheMeilisearchForTypo3
+  vendorName = MeilisearchForTypo3
   extensionName = Meilisearch
   settings < plugin.tx_meilisearch.settings
   persistence < plugin.tx_meilisearch.persistence

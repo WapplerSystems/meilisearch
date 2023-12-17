@@ -17,7 +17,7 @@ tx_meilisearch_suggest {
     userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
     extensionName = Meilisearch
     pluginName = pi_suggest
-    vendorName = ApacheMeilisearchForTypo3
+    vendorName = MeilisearchForTypo3
     controller = Suggest
     action = suggest
   }

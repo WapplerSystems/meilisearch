@@ -16,7 +16,7 @@ tx_meilisearch_ajaxPage {
     userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
     extensionName = Meilisearch
     pluginName = pi_results
-    vendorName = ApacheMeilisearchForTypo3
+    vendorName = MeilisearchForTypo3
     controller = Search
     action = results
     switchableControllerActions {

@@ -304,7 +304,7 @@ class SearchResultSetService
             throw new UnexpectedValueException('Response did not contain a valid Document object');
         }
 
-        return $this->searchResultBuilder->fromApacheMeilisearchDocument($resultDocument);
+        return $this->searchResultBuilder->fromMeilisearchDocument($resultDocument);
     }
 
     public function getLastResultSet(): ?SearchResultSet

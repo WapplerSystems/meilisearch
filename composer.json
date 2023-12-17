@@ -54,7 +54,7 @@
   "autoload-dev": {
     "psr-4": {
       "WapplerSystems\\Meilisearch\\Tests\\": "Tests/",
-      "ApacheMeilisearchForTypo3\\FakeExtension\\": "Tests/Integration/Fixtures/Extensions/fake_extension/Classes/",
+      "MeilisearchForTypo3\\FakeExtension\\": "Tests/Integration/Fixtures/Extensions/fake_extension/Classes/",
       "WapplerSystems\\MeilisearchFakeExtension2\\": "Tests/Integration/Fixtures/Extensions/fake_extension2/Classes/",
       "WapplerSystems\\MeilisearchFakeExtension3\\": "Tests/Integration/Fixtures/Extensions/fake_extension3/Classes/",
       "TYPO3\\CMS\\Core\\Tests\\": ".Build/vendor/typo3/cms-core/Tests/"

@@ -13,14 +13,14 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace WapplerSystems\Meilisearch\Tests\Integration\Domain\Search\ApacheMeilisearchDocument;
+namespace WapplerSystems\Meilisearch\Tests\Integration\Domain\Search\MeilisearchDocument;
 
-use WapplerSystems\Meilisearch\Domain\Search\ApacheMeilisearchDocument\Repository;
+use WapplerSystems\Meilisearch\Domain\Search\MeilisearchDocument\Repository;
 use WapplerSystems\Meilisearch\System\Meilisearch\Document\Document;
 use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class ApacheMeilisearchDocumentRepositoryTest extends IntegrationTest
+class MeilisearchDocumentRepositoryTest extends IntegrationTest
 {
     /**
      * @var Repository|null
@@ -58,7 +58,7 @@ class ApacheMeilisearchDocumentRepositoryTest extends IntegrationTest
 
         self::assertIsArray($apacheMeilisearchDocumentsCollection, 'Repository did not get Document collection from pageId 3.');
         self::assertNotEmpty($apacheMeilisearchDocumentsCollection, 'Repository did not get apache meilisearch documents from pageId 3.');
-        self::assertInstanceOf(Document::class, $apacheMeilisearchDocumentsCollection[0], 'ApacheMeilisearchDocumentRepository returned not an array of type Document.');
+        self::assertInstanceOf(Document::class, $apacheMeilisearchDocumentsCollection[0], 'MeilisearchDocumentRepository returned not an array of type Document.');
     }
 
     /**
@@ -67,6 +67,6 @@ class ApacheMeilisearchDocumentRepositoryTest extends IntegrationTest
     public function canReturnEmptyCollectionIfNoConnectionToMeilisearchServerIsEstablished()
     {
         $apacheMeilisearchDocumentsCollection = $this->apacheMeilisearchDocumentRepository->findByPageIdAndByLanguageId(3, 777);
-        self::assertEmpty($apacheMeilisearchDocumentsCollection, 'ApacheMeilisearchDocumentRepository does not return empty collection if no connection to core can be established.');
+        self::assertEmpty($apacheMeilisearchDocumentsCollection, 'MeilisearchDocumentRepository does not return empty collection if no connection to core can be established.');
     }
 }

@@ -15,10 +15,10 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Search\ApacheMeilisearchDocument;
+namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Search\MeilisearchDocument;
 
 use WapplerSystems\Meilisearch\Access\Rootline;
-use WapplerSystems\Meilisearch\Domain\Search\ApacheMeilisearchDocument\Builder;
+use WapplerSystems\Meilisearch\Domain\Search\MeilisearchDocument\Builder;
 use WapplerSystems\Meilisearch\Domain\Site\Site;
 use WapplerSystems\Meilisearch\Domain\Variants\IdBuilder;
 use WapplerSystems\Meilisearch\System\Meilisearch\Document\Document;
@@ -28,7 +28,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
- * Testcase for the Builder of ApacheMeilisearchDocument
+ * Testcase for the Builder of MeilisearchDocument
  *
  * @author Timo Hund <timo.hund@dkd.de>
  */
@@ -69,7 +69,7 @@ class BuilderTest extends SetUpUnitTestCase
     /**
      * @test
      */
-    public function canBuildApacheMeilisearchDocumentFromEmptyPage(): void
+    public function canBuildMeilisearchDocumentFromEmptyPage(): void
     {
         $fakePage = $this->createMock(TypoScriptFrontendController::class);
         $fakeRootLine = $this->createMock(Rootline::class);
@@ -89,7 +89,7 @@ class BuilderTest extends SetUpUnitTestCase
     /**
      * @test
      */
-    public function canSetKeywordsForApacheMeilisearchDocument(): void
+    public function canSetKeywordsForMeilisearchDocument(): void
     {
         $fakePage = $this->createMock(TypoScriptFrontendController::class);
         $fakeRootLine = $this->createMock(Rootline::class);
@@ -108,7 +108,7 @@ class BuilderTest extends SetUpUnitTestCase
     /**
      * @test
      */
-    public function canSetEndtimeForApacheMeilisearchDocument(): void
+    public function canSetEndtimeForMeilisearchDocument(): void
     {
         $fakePage = $this->createMock(TypoScriptFrontendController::class);
         $fakeRootLine = $this->createMock(Rootline::class);
@@ -127,7 +127,7 @@ class BuilderTest extends SetUpUnitTestCase
     /**
      * @test
      */
-    public function canSetTagFieldsForApacheMeilisearchDocument(): void
+    public function canSetTagFieldsForMeilisearchDocument(): void
     {
         $fakePage = $this->createMock(TypoScriptFrontendController::class);
         $fakeRootLine = $this->createMock(Rootline::class);

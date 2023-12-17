@@ -228,7 +228,7 @@ class GroupedResultParser extends AbstractResultParser
                 $meilisearchDocument->setField($key, $value);
             }
 
-            $document = $this->searchResultBuilder->fromApacheMeilisearchDocument($meilisearchDocument);
+            $document = $this->searchResultBuilder->fromMeilisearchDocument($meilisearchDocument);
             $document->setGroupItem($groupItem);
 
             $groupItem->addSearchResult($document);

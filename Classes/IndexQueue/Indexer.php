@@ -18,7 +18,7 @@ declare(strict_types=1);
 namespace WapplerSystems\Meilisearch\IndexQueue;
 
 use WapplerSystems\Meilisearch\ConnectionManager;
-use WapplerSystems\Meilisearch\Domain\Search\ApacheMeilisearchDocument\Builder;
+use WapplerSystems\Meilisearch\Domain\Search\MeilisearchDocument\Builder;
 use WapplerSystems\Meilisearch\Domain\Site\Site;
 use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
 use WapplerSystems\Meilisearch\Event\Indexing\BeforeDocumentIsProcessedForIndexingEvent;

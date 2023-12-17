@@ -16,7 +16,7 @@
 namespace WapplerSystems\Meilisearch\Controller\Backend\Search;
 
 use WapplerSystems\Meilisearch\Api;
-use WapplerSystems\Meilisearch\Domain\Search\ApacheMeilisearchDocument\Repository as ApacheMeilisearchDocumentRepository;
+use WapplerSystems\Meilisearch\Domain\Search\MeilisearchDocument\Repository as MeilisearchDocumentRepository;
 use WapplerSystems\Meilisearch\Domain\Search\Statistics\StatisticsRepository;
 use WapplerSystems\Meilisearch\Domain\Site\Exception\UnexpectedTYPO3SiteInitializationException;
 use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
@@ -32,7 +32,7 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
  */
 class InfoModuleController extends AbstractModuleController
 {
-    protected ApacheMeilisearchDocumentRepository $apacheMeilisearchDocumentRepository;
+    protected MeilisearchDocumentRepository $apacheMeilisearchDocumentRepository;
 
     /**
      * @inheritDoc
@@ -40,7 +40,7 @@ class InfoModuleController extends AbstractModuleController
     protected function initializeAction(): void
     {
         parent::initializeAction();
-        $this->apacheMeilisearchDocumentRepository = GeneralUtility::makeInstance(ApacheMeilisearchDocumentRepository::class);
+        $this->apacheMeilisearchDocumentRepository = GeneralUtility::makeInstance(MeilisearchDocumentRepository::class);
     }
 
     /**

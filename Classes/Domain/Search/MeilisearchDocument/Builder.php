@@ -15,7 +15,7 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace WapplerSystems\Meilisearch\Domain\Search\ApacheMeilisearchDocument;
+namespace WapplerSystems\Meilisearch\Domain\Search\MeilisearchDocument;
 
 use WapplerSystems\Meilisearch\Access\Rootline;
 use WapplerSystems\Meilisearch\Domain\Site\Site;
@@ -29,7 +29,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
- * Builder class to build an ApacheMeilisearchDocument
+ * Builder class to build an MeilisearchDocument
  *
  * Responsible to build \WapplerSystems\Meilisearch\System\Meilisearch\Document\Document
  *

@@ -4,5 +4,5 @@ services:
     autoconfigure: true
     public: false
 
-  ApacheMeilisearchForTypo3\FakeExtension\:
+  MeilisearchForTypo3\FakeExtension\:
     resource: '../Classes/*'

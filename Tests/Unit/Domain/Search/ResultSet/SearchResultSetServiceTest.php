@@ -127,7 +127,7 @@ class SearchResultSetServiceTest extends SetUpUnitTestCase
         //  &q=*
         //  &start=0
         //  &rows=5
-        $fakeResponse = $this->getFakeApacheMeilisearchResponse('fake_meilisearch_response_group_on_type_field.json');
+        $fakeResponse = $this->getFakeMeilisearchResponse('fake_meilisearch_response_group_on_type_field.json');
 
         $searchMock = $this->createMock(Search::class);
 
@@ -249,7 +249,7 @@ class SearchResultSetServiceTest extends SetUpUnitTestCase
         $this->configurationMock->expects(self::any())->method('getSearchShowResultsOfInitialQuery')->willReturn(false);
     }
 
-    protected function getFakeApacheMeilisearchResponse(string $fixtureFile): ResponseAdapter
+    protected function getFakeMeilisearchResponse(string $fixtureFile): ResponseAdapter
     {
         $fakeResponseJson = $this->getFixtureContentByName($fixtureFile);
         return new ResponseAdapter($fakeResponseJson);

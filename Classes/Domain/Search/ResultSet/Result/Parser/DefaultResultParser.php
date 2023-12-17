@@ -52,7 +52,7 @@ class DefaultResultParser extends AbstractResultParser
         }
 
         foreach ($documents as $searchResult) {
-            $searchResultObject = $this->searchResultBuilder->fromApacheMeilisearchDocument($searchResult);
+            $searchResultObject = $this->searchResultBuilder->fromMeilisearchDocument($searchResult);
             $searchResults[] = $searchResultObject;
         }
 

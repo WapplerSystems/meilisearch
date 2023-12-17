@@ -18,7 +18,7 @@ namespace WapplerSystems\Meilisearch\Tests\Unit\IndexQueue;
 use WapplerSystems\Meilisearch\ConnectionManager;
 use WapplerSystems\Meilisearch\Domain\Index\Queue\IndexQueueIndexingPropertyRepository;
 use WapplerSystems\Meilisearch\Domain\Index\Queue\QueueItemRepository;
-use WapplerSystems\Meilisearch\Domain\Search\ApacheMeilisearchDocument\Builder;
+use WapplerSystems\Meilisearch\Domain\Search\MeilisearchDocument\Builder;
 use WapplerSystems\Meilisearch\Domain\Site\Site;
 use WapplerSystems\Meilisearch\Event\Indexing\BeforeDocumentIsProcessedForIndexingEvent;
 use WapplerSystems\Meilisearch\FrontendEnvironment;

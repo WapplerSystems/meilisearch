@@ -99,7 +99,7 @@ class VariantsProcessor implements SearchResultSetProcessor
             $fields = get_object_vars($variantDocumentArray);
             $variantDocument = new SearchResult($fields);
 
-            $variantSearchResult = $this->resultBuilder->fromApacheMeilisearchDocument($variantDocument);
+            $variantSearchResult = $this->resultBuilder->fromMeilisearchDocument($variantDocument);
             $variantSearchResult->setIsVariant();
             $variantSearchResult->setVariantParent($resultDocument);
 
