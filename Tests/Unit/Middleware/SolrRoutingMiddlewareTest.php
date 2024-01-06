@@ -16,7 +16,7 @@ declare(strict_types=1);
 
 namespace WapplerSystems\Meilisearch\Tests\Unit\Middleware;
 
-use WapplerSystems\Meilisearch\IndexQueue\PageIndexerRequest;
+use WapplerSystems\Meilisearch\Indexer\PageIndexerRequest;
 use WapplerSystems\Meilisearch\Middleware\MeilisearchRoutingMiddleware;
 use WapplerSystems\Meilisearch\Routing\RoutingService;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
@@ -140,7 +140,7 @@ class MeilisearchRoutingMiddlewareTest extends SetUpUnitTestCase
             'GET',
             'https://domain.example/',
             [
-                PageIndexerRequest::SOLR_INDEX_HEADER => '1',
+                PageIndexerRequest::MEILISEARCH_INDEX_HEADER => '1',
             ]
         );
 

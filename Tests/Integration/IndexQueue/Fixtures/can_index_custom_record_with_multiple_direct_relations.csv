@@ -49,14 +49,14 @@ plugin.tx_meilisearch {
 
                 fields {
                     title = title
-                    category_stringM = SOLR_RELATION
+                    category_stringM = MEILISEARCH_RELATION
                     category_stringM {
                         localField = category
                         foreignLabelField = category_label
                         multiValue = 1
                     }
 
-                    sysCategoryId_stringM = SOLR_RELATION
+                    sysCategoryId_stringM = MEILISEARCH_RELATION
                     sysCategoryId_stringM {
                         localField = category
                         foreignLabelField = sys_category
@@ -64,7 +64,7 @@ plugin.tx_meilisearch {
                         multiValue = 1
                     }
 
-                    sysCategory_stringM = SOLR_RELATION
+                    sysCategory_stringM = MEILISEARCH_RELATION
                     sysCategory_stringM {
                         localField = category
                         foreignLabelField = sys_category
@@ -72,7 +72,7 @@ plugin.tx_meilisearch {
                         multiValue = 1
                     }
 
-                    sysCategoryDescription_stringM = SOLR_RELATION
+                    sysCategoryDescription_stringM = MEILISEARCH_RELATION
                     sysCategoryDescription_stringM {
                         localField = category
                         foreignLabelField = sys_category.description

@@ -20,9 +20,9 @@ use WapplerSystems\Meilisearch\Domain\Index\Queue\RecordMonitor\Helper\MountPage
 use WapplerSystems\Meilisearch\Domain\Index\Queue\RecordMonitor\Helper\RootPageResolver;
 use WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\DataUpdateHandler;
 use WapplerSystems\Meilisearch\FrontendEnvironment;
-use WapplerSystems\Meilisearch\IndexQueue\Item;
-use WapplerSystems\Meilisearch\IndexQueue\Queue;
-use WapplerSystems\Meilisearch\IndexQueue\RecordMonitor;
+use WapplerSystems\Meilisearch\Indexer\Item;
+use WapplerSystems\Meilisearch\Indexer\Queue;
+use WapplerSystems\Meilisearch\Indexer\RecordMonitor;
 use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\System\Records\Pages\PagesRepository;
 use WapplerSystems\Meilisearch\System\Records\Queue\EventQueueItemRepository;
@@ -658,9 +658,9 @@ class RecordMonitorTest extends IntegrationTest
 
                 custom_page_type = 1
                 custom_page_type {
-                    initialization = WapplerSystems\Meilisearch\IndexQueue\Initializer\Page
+                    initialization = WapplerSystems\Meilisearch\Indexer\Initializer\Page
                     allowedPageTypes = 130
-                    indexer = WapplerSystems\Meilisearch\IndexQueue\PageIndexer
+                    indexer = WapplerSystems\Meilisearch\Indexer\PageIndexer
                     table = pages
                     additionalWhereClause = doktype = 130 AND no_search = 0
 
@@ -773,9 +773,9 @@ class RecordMonitorTest extends IntegrationTest
              plugin.tx_meilisearch.index.queue {
                 custom_page_type = 1
                 custom_page_type {
-                    initialization = WapplerSystems\Meilisearch\IndexQueue\Initializer\Page
+                    initialization = WapplerSystems\Meilisearch\Indexer\Initializer\Page
                     allowedPageTypes = 130
-                    indexer = WapplerSystems\Meilisearch\IndexQueue\PageIndexer
+                    indexer = WapplerSystems\Meilisearch\Indexer\PageIndexer
                     table = pages
                     additionalWhereClause = doktype = 130 AND no_search = 0
 

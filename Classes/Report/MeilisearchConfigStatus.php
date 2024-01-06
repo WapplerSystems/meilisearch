@@ -41,7 +41,7 @@ class MeilisearchConfigStatus extends AbstractMeilisearchStatus
      *
      * Must be updated when changing the meilisearchconfig.
      */
-    public const RECOMMENDED_SOLRCONFIG_VERSION = 'tx_meilisearch-12-0-0--20230602';
+    public const RECOMMENDED_MEILISEARCHCONFIG_VERSION = 'tx_meilisearch-12-0-0--20230602';
 
     /**
      * Compiles a collection of meilisearchconfig version checks against each configured
@@ -68,12 +68,12 @@ class MeilisearchConfigStatus extends AbstractMeilisearchStatus
 
         /** @var MeilisearchConnection $meilisearchConnection */
         foreach ($meilisearchConnections as $meilisearchConnection) {
-            $adminService = $meilisearchConnection->getAdminService();
-            if (!$adminService->ping()) {
+            $service = $meilisearchConnection->getService();
+            if (!$service->ping()) {
                 $reports[] = GeneralUtility::makeInstance(
                     Status::class,
                     'Meilisearchconfig Version',
-                    'Couldn\'t connect to ' . $adminService->__toString(),
+                    'Couldn\'t connect to ' . $service->__toString(),
                     '',
                     ContextualFeedbackSeverity::WARNING
                 );
@@ -81,8 +81,8 @@ class MeilisearchConfigStatus extends AbstractMeilisearchStatus
                 continue;
             }
 
-            if ($adminService->getMeilisearchconfigName() != self::RECOMMENDED_SOLRCONFIG_VERSION) {
-                $variables = ['meilisearch' => $adminService, 'recommendedVersion' => self::RECOMMENDED_SOLRCONFIG_VERSION];
+            if ($service->getMeilisearchconfigName() != self::RECOMMENDED_MEILISEARCHCONFIG_VERSION) {
+                $variables = ['meilisearch' => $service, 'recommendedVersion' => self::RECOMMENDED_MEILISEARCHCONFIG_VERSION];
                 $report = $this->getRenderedReport('MeilisearchConfigStatus.html', $variables);
                 $status = GeneralUtility::makeInstance(
                     Status::class,

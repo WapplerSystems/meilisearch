@@ -19,9 +19,9 @@ namespace WapplerSystems\Meilisearch\Domain\Index\Queue;
 
 use WapplerSystems\Meilisearch\Domain\Site\Site;
 use WapplerSystems\Meilisearch\Event\IndexQueue\AfterIndexQueueHasBeenInitializedEvent;
-use WapplerSystems\Meilisearch\IndexQueue\Initializer\AbstractInitializer;
-use WapplerSystems\Meilisearch\IndexQueue\QueueInitializationServiceAwareInterface;
-use WapplerSystems\Meilisearch\IndexQueue\QueueInterface;
+use WapplerSystems\Meilisearch\Indexer\Initializer\AbstractInitializer;
+use WapplerSystems\Meilisearch\Indexer\QueueInitializationServiceAwareInterface;
+use WapplerSystems\Meilisearch\Indexer\QueueInterface;
 use Doctrine\DBAL\ConnectionException;
 use Doctrine\DBAL\Exception as DBALException;
 use Psr\EventDispatcher\EventDispatcherInterface;

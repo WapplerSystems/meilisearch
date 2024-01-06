@@ -17,9 +17,9 @@ declare(strict_types=1);
 
 namespace WapplerSystems\Meilisearch\Tests\Integration\IndexQueue;
 
-use WapplerSystems\Meilisearch\IndexQueue\PageIndexer;
-use WapplerSystems\Meilisearch\IndexQueue\PageIndexerRequest;
-use WapplerSystems\Meilisearch\IndexQueue\PageIndexerResponse;
+use WapplerSystems\Meilisearch\Indexer\PageIndexer;
+use WapplerSystems\Meilisearch\Indexer\PageIndexerRequest;
+use WapplerSystems\Meilisearch\Indexer\PageIndexerResponse;
 use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use Traversable;
 use TYPO3\CMS\Core\Utility\GeneralUtility;

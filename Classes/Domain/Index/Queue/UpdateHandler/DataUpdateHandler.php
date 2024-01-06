@@ -25,7 +25,7 @@ use WapplerSystems\Meilisearch\Domain\Site\Exception\UnexpectedTYPO3SiteInitiali
 use WapplerSystems\Meilisearch\Domain\Site\Site;
 use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
 use WapplerSystems\Meilisearch\FrontendEnvironment;
-use WapplerSystems\Meilisearch\IndexQueue\Queue;
+use WapplerSystems\Meilisearch\Indexer\Queue;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\System\Records\Pages\PagesRepository;

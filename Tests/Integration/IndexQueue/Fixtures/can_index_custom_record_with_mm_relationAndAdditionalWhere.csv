@@ -50,7 +50,7 @@ plugin.tx_meilisearch {
 
                 fields {
                     title = title
-                    category_stringM = SOLR_RELATION
+                    category_stringM = MEILISEARCH_RELATION
                     category_stringM {
                         localField = tags
                         multiValue = 1

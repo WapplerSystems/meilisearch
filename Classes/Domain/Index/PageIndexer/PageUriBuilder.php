@@ -18,7 +18,7 @@ declare(strict_types=1);
 namespace WapplerSystems\Meilisearch\Domain\Index\PageIndexer;
 
 use WapplerSystems\Meilisearch\Event\Indexing\AfterFrontendPageUriForIndexingHasBeenGeneratedEvent;
-use WapplerSystems\Meilisearch\IndexQueue\Item;
+use WapplerSystems\Meilisearch\Indexer\Item;
 use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\UriInterface;

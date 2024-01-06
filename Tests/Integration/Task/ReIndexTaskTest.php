@@ -16,8 +16,8 @@
 namespace WapplerSystems\Meilisearch\Tests\Integration\Task;
 
 use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
-use WapplerSystems\Meilisearch\IndexQueue\Indexer;
-use WapplerSystems\Meilisearch\IndexQueue\Queue;
+use WapplerSystems\Meilisearch\Indexer\Indexer;
+use WapplerSystems\Meilisearch\Indexer\Queue;
 use WapplerSystems\Meilisearch\Task\ReIndexTask;
 use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use Exception;

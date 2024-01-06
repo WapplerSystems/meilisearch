@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Index\PageIndexer;
 
 use WapplerSystems\Meilisearch\Domain\Index\PageIndexer\PageUriBuilder;
-use WapplerSystems\Meilisearch\IndexQueue\Item;
+use WapplerSystems\Meilisearch\Indexer\Item;
 use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use TYPO3\CMS\Core\EventDispatcher\NoopEventDispatcher;

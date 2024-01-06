@@ -20,7 +20,7 @@ use WapplerSystems\Meilisearch\Domain\Site\Exception\UnexpectedTYPO3SiteInitiali
 use WapplerSystems\Meilisearch\Domain\Site\Site;
 use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
 use WapplerSystems\Meilisearch\Exception\InvalidArgumentException;
-use WapplerSystems\Meilisearch\IndexQueue\QueueInterface;
+use WapplerSystems\Meilisearch\Indexer\QueueInterface;
 use WapplerSystems\Meilisearch\System\Mvc\Backend\Service\ModuleDataStorageService;
 use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchConnection as MeilisearchCoreConnection;
 use Doctrine\DBAL\Exception as DBALException;
@@ -197,7 +197,7 @@ abstract class AbstractModuleController extends ActionController
         $this->initializeSelectedMeilisearchCoreConnection();
         $cores = $this->meilisearchConnectionManager->getConnectionsBySite($site);
         foreach ($cores as $core) {
-            $coreAdmin = $core->getAdminService();
+            $coreAdmin = $core->getService();
             $menuItem = $this->coreSelectorMenu->makeMenuItem();
             $menuItem->setTitle($coreAdmin->getCorePath());
             $uri = $this->uriBuilder->reset()->uriFor(
@@ -209,7 +209,7 @@ abstract class AbstractModuleController extends ActionController
             );
             $menuItem->setHref($uri);
 
-            if ($coreAdmin->getCorePath() == $this->selectedMeilisearchCoreConnection->getAdminService()->getCorePath()) {
+            if ($coreAdmin->getCorePath() == $this->selectedMeilisearchCoreConnection->getService()->getCorePath()) {
                 $menuItem->setActive(true);
             }
             $this->coreSelectorMenu->addMenuItem($menuItem);
@@ -280,13 +280,13 @@ abstract class AbstractModuleController extends ActionController
             return;
         }
         foreach ($meilisearchCoreConnections as $meilisearchCoreConnection) {
-            if ($meilisearchCoreConnection->getAdminService()->getCorePath() == $currentMeilisearchCorePath) {
+            if ($meilisearchCoreConnection->getService()->getCorePath() == $currentMeilisearchCorePath) {
                 $this->selectedMeilisearchCoreConnection = $meilisearchCoreConnection;
             }
         }
         if (!$this->selectedMeilisearchCoreConnection instanceof MeilisearchCoreConnection && count($meilisearchCoreConnections) > 0) {
             $this->initializeFirstAvailableMeilisearchCoreConnection($meilisearchCoreConnections, $moduleData);
-            $message = LocalizationUtility::translate('coreselector_switched_to_default_core', 'meilisearch', [$currentMeilisearchCorePath, $this->selectedSite->getLabel(), $this->selectedMeilisearchCoreConnection->getAdminService()->getCorePath()]);
+            $message = LocalizationUtility::translate('coreselector_switched_to_default_core', 'meilisearch', [$currentMeilisearchCorePath, $this->selectedSite->getLabel(), $this->selectedMeilisearchCoreConnection->getService()->getCorePath()]);
             $this->addFlashMessage($message, '', ContextualFeedbackSeverity::NOTICE);
         }
     }
@@ -300,7 +300,7 @@ abstract class AbstractModuleController extends ActionController
             return;
         }
         $this->selectedMeilisearchCoreConnection = array_shift($meilisearchCoreConnections);
-        $moduleData->setCore($this->selectedMeilisearchCoreConnection->getAdminService()->getCorePath());
+        $moduleData->setCore($this->selectedMeilisearchCoreConnection->getService()->getCorePath());
         $this->moduleDataStorageService->persistModuleData($moduleData);
     }
 }

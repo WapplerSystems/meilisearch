@@ -20,7 +20,7 @@ namespace WapplerSystems\Meilisearch\Tests\Unit\ContentObject;
 use WapplerSystems\Meilisearch\ContentObject\Multivalue;
 
 /**
- * Tests for the SOLR_MULTIVALUE cObj.
+ * Tests for the MEILISEARCH_MULTIVALUE cObj.
  *
  * @author Ingo Renner <ingo@typo3.org>
  */

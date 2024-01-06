@@ -18,7 +18,7 @@ namespace WapplerSystems\Meilisearch\Tests\Integration\Controller\Backend\Search
 use WapplerSystems\Meilisearch\ConnectionManager;
 use WapplerSystems\Meilisearch\Controller\Backend\Search\IndexAdministrationModuleController;
 use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
-use WapplerSystems\Meilisearch\IndexQueue\Queue;
+use WapplerSystems\Meilisearch\Indexer\Queue;
 use WapplerSystems\Meilisearch\System\Mvc\Backend\Service\ModuleDataStorageService;
 use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use PHPUnit\Framework\MockObject\MockObject;

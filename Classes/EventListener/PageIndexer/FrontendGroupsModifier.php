@@ -18,8 +18,8 @@ declare(strict_types=1);
 namespace WapplerSystems\Meilisearch\EventListener\PageIndexer;
 
 use WapplerSystems\Meilisearch\Access\Rootline;
-use WapplerSystems\Meilisearch\IndexQueue\FrontendHelper\AuthorizationService;
-use WapplerSystems\Meilisearch\IndexQueue\PageIndexerRequest;
+use WapplerSystems\Meilisearch\Indexer\FrontendHelper\AuthorizationService;
+use WapplerSystems\Meilisearch\Indexer\PageIndexerRequest;
 use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use TYPO3\CMS\Core\Http\JsonResponse;
 use TYPO3\CMS\Core\Http\PropagateResponseException;
@@ -59,7 +59,7 @@ class FrontendGroupsModifier
                 'Invalid Index Queue Frontend Request detected!',
                 [
                     'page indexer request' => (array)$pageIndexerRequest,
-                    'index queue header' => $event->getRequest()->getHeader(PageIndexerRequest::SOLR_INDEX_HEADER)[0],
+                    'index queue header' => $event->getRequest()->getHeader(PageIndexerRequest::MEILISEARCH_INDEX_HEADER)[0],
                 ]
             );
             throw new PropagateResponseException(
@@ -91,7 +91,7 @@ class FrontendGroupsModifier
                 'pid' => 0,
             ];
         }
-        $event->getUser()->user[$event->getUser()->username_column] = AuthorizationService::SOLR_INDEXER_USERNAME;
+        $event->getUser()->user[$event->getUser()->username_column] = AuthorizationService::MEILISEARCH_INDEXER_USERNAME;
         $event->setGroups($groupData);
     }
 

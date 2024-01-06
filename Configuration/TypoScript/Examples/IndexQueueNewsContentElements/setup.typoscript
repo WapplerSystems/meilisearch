@@ -3,7 +3,7 @@ plugin.tx_meilisearch.index.queue {
     fields {
       content {
         cObject {
-          20 = SOLR_RELATION
+          20 = MEILISEARCH_RELATION
           20 {
             localField = content_elements
             foreignLabelField = bodytext

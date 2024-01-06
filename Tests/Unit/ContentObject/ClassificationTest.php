@@ -20,7 +20,7 @@ namespace WapplerSystems\Meilisearch\Tests\Unit\ContentObject;
 use WapplerSystems\Meilisearch\ContentObject\Classification;
 
 /**
- * Tests for the SOLR_CLASSIFICATION cObj.
+ * Tests for the MEILISEARCH_CLASSIFICATION cObj.
  *
  * @author Timo Hund <timo.hund@dkd.de>
  */

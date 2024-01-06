@@ -24,7 +24,7 @@ plugin.tx_meilisearch.index.queue {
         date = Y-m-d\TH:i:s\Z
       }
 
-      content = SOLR_CONTENT
+      content = MEILISEARCH_CONTENT
       content {
         cObject = COA
         cObject {
@@ -36,18 +36,18 @@ plugin.tx_meilisearch.index.queue {
         }
       }
 
-      category_stringM = SOLR_RELATION
+      category_stringM = MEILISEARCH_RELATION
       category_stringM {
         localField = categories
         multiValue = 1
       }
 
-      keywords = SOLR_MULTIVALUE
+      keywords = MEILISEARCH_MULTIVALUE
       keywords {
         field = keywords
       }
 
-      tags_stringM = SOLR_RELATION
+      tags_stringM = MEILISEARCH_RELATION
       tags_stringM {
         localField = tags
         multiValue = 1

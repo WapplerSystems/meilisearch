@@ -32,14 +32,14 @@ plugin.tx_meilisearch {
             // mapping tableName.fields.MeilisearchFieldName => TableFieldName (+ cObj processing)
             pages = 1
             pages {
-                initialization = WapplerSystems\Meilisearch\IndexQueue\Initializer\Page
+                initialization = WapplerSystems\Meilisearch\Indexer\Initializer\Page
 
                 // allowed page types (doktype) when indexing pages
                 allowedPageTypes = 1,7
 
                 indexingPriority = 0
 
-                indexer = WapplerSystems\Meilisearch\IndexQueue\PageIndexer
+                indexer = WapplerSystems\Meilisearch\Indexer\PageIndexer
                 indexer {
                     // add options for the indexer here
                 }

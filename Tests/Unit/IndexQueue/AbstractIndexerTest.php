@@ -15,7 +15,7 @@
 
 namespace WapplerSystems\Meilisearch\Tests\Unit\IndexQueue;
 
-use WapplerSystems\Meilisearch\IndexQueue\AbstractIndexer;
+use WapplerSystems\Meilisearch\Indexer\AbstractIndexer;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use UnexpectedValueException;
@@ -37,18 +37,18 @@ class AbstractIndexerTest extends SetUpUnitTestCase
     public function isSerializedValueCanHandleCustomContentElements(): void
     {
         $indexingConfiguration = [
-            'topic_stringM' => 'SOLR_CLASSIFICATION',
-            'categories_stringM' => 'SOLR_RELATION',
+            'topic_stringM' => 'MEILISEARCH_CLASSIFICATION',
+            'categories_stringM' => 'MEILISEARCH_RELATION',
             'categories_stringM.' => [
                 'multiValue' => true,
             ],
-            'csv_stringM' => 'SOLR_MULTIVALUE',
-            'category_stringM' => 'SOLR_RELATION',
+            'csv_stringM' => 'MEILISEARCH_MULTIVALUE',
+            'category_stringM' => 'MEILISEARCH_RELATION',
         ];
 
-        self::assertTrue(AbstractIndexer::isSerializedValue($indexingConfiguration, 'topic_stringM'), 'Response of SOLR_CLASSIFICATION is expected to be serialized');
-        self::assertTrue(AbstractIndexer::isSerializedValue($indexingConfiguration, 'csv_stringM'), 'Response of SOLR_MULTIVALUE is expected to be serialized');
-        self::assertTrue(AbstractIndexer::isSerializedValue($indexingConfiguration, 'categories_stringM'), 'Response of SOLR_MULTIVALUE is expected to be serialized');
+        self::assertTrue(AbstractIndexer::isSerializedValue($indexingConfiguration, 'topic_stringM'), 'Response of MEILISEARCH_CLASSIFICATION is expected to be serialized');
+        self::assertTrue(AbstractIndexer::isSerializedValue($indexingConfiguration, 'csv_stringM'), 'Response of MEILISEARCH_MULTIVALUE is expected to be serialized');
+        self::assertTrue(AbstractIndexer::isSerializedValue($indexingConfiguration, 'categories_stringM'), 'Response of MEILISEARCH_MULTIVALUE is expected to be serialized');
 
         self::assertFalse(AbstractIndexer::isSerializedValue($indexingConfiguration, 'category_stringM'), 'Non configured fields should allways be unserialized');
         self::assertFalse(AbstractIndexer::isSerializedValue($indexingConfiguration, 'notConfigured_stringM'), 'Non configured fields should allways be unserialized');
@@ -65,7 +65,7 @@ class AbstractIndexerTest extends SetUpUnitTestCase
         $this->expectExceptionMessageMatches('/.*InvalidSerializedValueDetector must implement interface.*/');
 
         $indexingConfiguration = [
-            'topic_stringM' => 'SOLR_CLASSIFICATION',
+            'topic_stringM' => 'MEILISEARCH_CLASSIFICATION',
         ];
 
         // when an invalid detector is registered we expect that an exception is thrown
@@ -81,13 +81,13 @@ class AbstractIndexerTest extends SetUpUnitTestCase
         $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['meilisearch']['detectSerializedValue'][] = ValidSerializedValueDetector::class;
 
         $indexingConfiguration = [
-            'topic_stringM' => 'SOLR_CLASSIFICATION',
-            'categories_stringM' => 'SOLR_RELATION',
+            'topic_stringM' => 'MEILISEARCH_CLASSIFICATION',
+            'categories_stringM' => 'MEILISEARCH_RELATION',
             'categories_stringM.' => [
                 'multiValue' => true,
             ],
-            'csv_stringM' => 'SOLR_MULTIVALUE',
-            'category_stringM' => 'SOLR_RELATION',
+            'csv_stringM' => 'MEILISEARCH_MULTIVALUE',
+            'category_stringM' => 'MEILISEARCH_RELATION',
         ];
         self::assertTrue(AbstractIndexer::isSerializedValue($indexingConfiguration, 'topic_stringM'), 'Every value should be treated as serialized by custom detector');
         self::assertTrue(AbstractIndexer::isSerializedValue($indexingConfiguration, 'csv_stringM'), 'Every value should be treated as serialized by custom detector');

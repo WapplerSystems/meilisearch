@@ -56,7 +56,7 @@ plugin.tx_meilisearch {
 
                 fields {
                     title = title
-                    relatedPageTitles_stringM = SOLR_RELATION
+                    relatedPageTitles_stringM = MEILISEARCH_RELATION
                     relatedPageTitles_stringM {
                         localField = page_relations
                         multiValue = 1

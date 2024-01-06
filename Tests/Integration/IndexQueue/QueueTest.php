@@ -18,7 +18,7 @@ namespace WapplerSystems\Meilisearch\Tests\Integration\IndexQueue;
 use WapplerSystems\Meilisearch\Domain\Index\Queue\QueueInitializationService;
 use WapplerSystems\Meilisearch\Domain\Site\Site;
 use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
-use WapplerSystems\Meilisearch\IndexQueue\Queue;
+use WapplerSystems\Meilisearch\Indexer\Queue;
 use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -174,8 +174,8 @@ class QueueTest extends IntegrationTest
             plugin.tx_meilisearch.index.queue {
                 custom_page_type = 1
                 custom_page_type {
-                    initialization = WapplerSystems\Meilisearch\IndexQueue\Initializer\Page
-                    indexer = WapplerSystems\Meilisearch\IndexQueue\PageIndexer
+                    initialization = WapplerSystems\Meilisearch\Indexer\Initializer\Page
+                    indexer = WapplerSystems\Meilisearch\Indexer\PageIndexer
                     table = pages
                     allowedPageTypes = 130
                     additionalWhereClause = doktype = 130 AND no_search = 0

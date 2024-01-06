@@ -76,7 +76,7 @@ class IndexAdministrationModuleController extends AbstractModuleController
         $meilisearchServers = $this->meilisearchConnectionManager->getConnectionsBySite($this->selectedSite);
 
         foreach ($meilisearchServers as $meilisearchServer) {
-            $coreAdmin = $meilisearchServer->getAdminService();
+            $coreAdmin = $meilisearchServer->getService();
             $coreReloaded = $coreAdmin->reloadCore()->getHttpStatus() === 200;
 
             $coreName = $coreAdmin->getPrimaryEndpoint()->getCore();

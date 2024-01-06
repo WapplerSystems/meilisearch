@@ -165,21 +165,6 @@ class MeilisearchStatus extends AbstractMeilisearchStatus
         return $meilisearchVersion;
     }
 
-    /**
-     * Checks the access filter setup and adds it to the report.
-     */
-    protected function checkAccessFilter(MeilisearchService $meilisearchAdminService): string
-    {
-        try {
-            $accessFilterPluginStatus = GeneralUtility::makeInstance(AccessFilterPluginInstalledStatus::class);
-            $accessFilterPluginVersion = $accessFilterPluginStatus->getInstalledPluginVersion($meilisearchAdminService);
-            $accessFilterMessage = $accessFilterPluginVersion;
-        } catch (Throwable $e) {
-            $this->responseStatus = ContextualFeedbackSeverity::ERROR;
-            $accessFilterMessage = 'Error getting access filter: ' . $e->getMessage();
-        }
-        return $accessFilterMessage;
-    }
 
     /**
      * Checks the ping time and adds it to the report.

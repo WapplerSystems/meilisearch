@@ -18,7 +18,7 @@ declare(strict_types=1);
 namespace WapplerSystems\Meilisearch\Event\IndexQueue;
 
 use WapplerSystems\Meilisearch\Domain\Site\Site;
-use WapplerSystems\Meilisearch\IndexQueue\Initializer\AbstractInitializer;
+use WapplerSystems\Meilisearch\Indexer\Initializer\AbstractInitializer;
 
 /**
  * PSR-14 Event which is fired after a index queue has been (re-) initialized.

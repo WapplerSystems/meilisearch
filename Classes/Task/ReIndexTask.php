@@ -22,6 +22,7 @@ use WapplerSystems\Meilisearch\Domain\Index\Queue\QueueInitializationService;
 use Doctrine\DBAL\ConnectionException as DBALConnectionException;
 use Doctrine\DBAL\Exception as DBALException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchConnection;
 
 /**
  * Scheduler task to empty the indexes of a site and re-initialize the
@@ -31,10 +32,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class ReIndexTask extends AbstractMeilisearchTask
 {
-    /**
-     * Indexing configurations to re-initialize.
-     */
-    protected array $indexingConfigurationsToReIndex = [];
 
     /**
      * Purges/commits all Meilisearch indexes, initializes the Index Queue
@@ -49,16 +46,9 @@ class ReIndexTask extends AbstractMeilisearchTask
      */
     public function execute()
     {
-        // clean up
         $cleanUpResult = $this->cleanUpIndex();
 
-        // initialize for re-indexing
-        /** @var QueueInitializationService $indexQueueInitializationService */
-        $indexQueueInitializationService = GeneralUtility::makeInstance(QueueInitializationService::class);
-        $indexQueueInitializationResults = $indexQueueInitializationService
-            ->initializeBySiteAndIndexConfigurations($this->getSite(), $this->indexingConfigurationsToReIndex);
-
-        return $cleanUpResult && !in_array(false, $indexQueueInitializationResults);
+        return true;
     }
 
     /**
@@ -70,79 +60,22 @@ class ReIndexTask extends AbstractMeilisearchTask
      */
     protected function cleanUpIndex(): bool
     {
-        $cleanUpResult = true;
-        $meilisearchConfiguration = $this->getSite()->getMeilisearchConfiguration();
-        $meilisearchServers = GeneralUtility::makeInstance(ConnectionManager::class)->getConnectionsBySite($this->getSite());
-        $typesToCleanUp = [];
-        $enableCommitsSetting = $meilisearchConfiguration->getEnableCommits();
+        $connections = GeneralUtility::makeInstance(ConnectionManager::class)->getConnectionsBySite($this->getSite());
 
-        foreach ($this->indexingConfigurationsToReIndex as $indexingConfigurationName) {
-            $type = $meilisearchConfiguration->getIndexQueueTypeOrFallbackToConfigurationName($indexingConfigurationName);
-            $typesToCleanUp[] = $type;
-        }
+        /** @var MeilisearchConnection $connection */
+        foreach ($connections as $connection) {
 
-        foreach ($meilisearchServers as $meilisearchServer) {
-            $deleteQuery = 'type:(' . implode(' OR ', $typesToCleanUp) . ')' . ' AND siteHash:' . $this->getSite()->getSiteHash();
-            $meilisearchServer->getWriteService()->deleteByQuery($deleteQuery);
+            $client = $connection->getService()->getClient();
 
-            if (!$enableCommitsSetting) {
-                // Do not commit
-                continue;
+            $indexes = $client->getIndexes();
+            foreach ($indexes as $index) {
+                $client->deleteIndex($index->getUid());
             }
 
-            $response = $meilisearchServer->getWriteService()->commit(false, false);
-            if ($response->getHttpStatus() != 200) {
-                $cleanUpResult = false;
-                break;
-            }
         }
 
-        return $cleanUpResult;
+        return true;
     }
 
-    /**
-     * Gets the indexing configurations to re-index.
-     */
-    public function getIndexingConfigurationsToReIndex(): array
-    {
-        return $this->indexingConfigurationsToReIndex;
-    }
 
-    /**
-     * Sets the indexing configurations to re-index.
-     */
-    public function setIndexingConfigurationsToReIndex(array $indexingConfigurationsToReIndex): void
-    {
-        $this->indexingConfigurationsToReIndex = $indexingConfigurationsToReIndex;
-    }
-
-    /**
-     * This method is designed to return some additional information about the task,
-     * that may help to set it apart from other tasks from the same class
-     * This additional information is used - for example - in the Scheduler's BE module
-     * This method should be implemented in most task classes
-     *
-     * @return string Information to display
-     *
-     * @throws DBALException
-     *
-     * @noinspection PhpMissingReturnTypeInspection See {@link \TYPO3\CMS\Scheduler\Task\AbstractTask::getAdditionalInformation()}
-     */
-    public function getAdditionalInformation()
-    {
-        $site = $this->getSite();
-        if (is_null($site)) {
-            return 'Invalid site configuration for scheduler please re-create the task!';
-        }
-
-        $information = 'Site: ' . $this->getSite()->getLabel();
-        if (!empty($this->indexingConfigurationsToReIndex)) {
-            $information .= ', Indexing Configurations: ' . implode(
-                ', ',
-                $this->indexingConfigurationsToReIndex
-            );
-        }
-
-        return $information;
-    }
 }

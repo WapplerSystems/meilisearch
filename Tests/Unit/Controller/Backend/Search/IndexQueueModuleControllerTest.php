@@ -22,7 +22,7 @@ use WapplerSystems\Meilisearch\Domain\Index\Queue\RecordMonitor\Helper\RootPageR
 use WapplerSystems\Meilisearch\Domain\Index\Queue\Statistic\QueueStatisticsRepository;
 use WapplerSystems\Meilisearch\Event\IndexQueue\AfterIndexQueueItemHasBeenMarkedForReindexingEvent;
 use WapplerSystems\Meilisearch\FrontendEnvironment;
-use WapplerSystems\Meilisearch\IndexQueue\Queue;
+use WapplerSystems\Meilisearch\Indexer\Queue;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Tests\Unit\Fixtures\EventDispatcher\MockEventDispatcher;
 

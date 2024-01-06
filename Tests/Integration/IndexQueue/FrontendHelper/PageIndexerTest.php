@@ -132,7 +132,7 @@ class PageIndexerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.index.queue.pages.fields.relatedPageTitles_stringM = SOLR_RELATION
+            plugin.tx_meilisearch.index.queue.pages.fields.relatedPageTitles_stringM = MEILISEARCH_RELATION
             plugin.tx_meilisearch.index.queue.pages.fields.relatedPageTitles_stringM {
               localField = page_relations
               enableRecursiveValueResolution = 0
@@ -174,7 +174,7 @@ class PageIndexerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.index.queue.pages.fields.categories_stringM = SOLR_RELATION
+            plugin.tx_meilisearch.index.queue.pages.fields.categories_stringM = MEILISEARCH_RELATION
             plugin.tx_meilisearch.index.queue.pages.fields.categories_stringM {
               localField = categories
               foreignLabelField = title

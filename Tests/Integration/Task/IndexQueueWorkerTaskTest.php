@@ -16,7 +16,7 @@
 namespace WapplerSystems\Meilisearch\Tests\Integration\Task;
 
 use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
-use WapplerSystems\Meilisearch\IndexQueue\Queue;
+use WapplerSystems\Meilisearch\Indexer\Queue;
 use WapplerSystems\Meilisearch\Task\IndexQueueWorkerTask;
 use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use TYPO3\CMS\Core\Utility\GeneralUtility;

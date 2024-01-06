@@ -19,7 +19,7 @@ use WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\ContentEl
 use WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\RecordMovedEvent;
 use WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\RecordUpdatedEvent;
 use WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\VersionSwappedEvent;
-use WapplerSystems\Meilisearch\IndexQueue\RecordMonitor;
+use WapplerSystems\Meilisearch\Indexer\RecordMonitor;
 use WapplerSystems\Meilisearch\System\Configuration\ExtensionConfiguration;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;

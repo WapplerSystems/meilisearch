@@ -17,8 +17,8 @@ namespace WapplerSystems\Meilisearch\Tests\Integration;
 
 use WapplerSystems\Meilisearch\Access\Rootline;
 use WapplerSystems\Meilisearch\Exception\InvalidArgumentException;
-use WapplerSystems\Meilisearch\IndexQueue\Item;
-use WapplerSystems\Meilisearch\IndexQueue\PageIndexerRequest;
+use WapplerSystems\Meilisearch\Indexer\Item;
+use WapplerSystems\Meilisearch\Indexer\PageIndexerRequest;
 use Psr\Http\Message\ResponseInterface;
 use ReflectionClass;
 use ReflectionException;
@@ -263,9 +263,9 @@ abstract class IntegrationTest extends FunctionalTestCase
     protected function getMeilisearchConnectionInfo(): array
     {
         return [
-            'scheme' => getenv('TESTING_SOLR_SCHEME') ?: 'http',
-            'host' => getenv('TESTING_SOLR_HOST') ?: 'localhost',
-            'port' => getenv('TESTING_SOLR_PORT') ?: 8999,
+            'scheme' => getenv('TESTING_MEILISEARCH_SCHEME') ?: 'http',
+            'host' => getenv('TESTING_MEILISEARCH_HOST') ?: 'localhost',
+            'port' => getenv('TESTING_MEILISEARCH_PORT') ?: 8999,
         ];
     }
 

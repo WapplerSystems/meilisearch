@@ -64,7 +64,7 @@ class MeilisearchAdminServiceTest extends IntegrationTest
             '#' => ['baseword' => '#', 'synonyms' => ['hashtag']],
             ':' => ['baseword' => ':', 'synonyms' => ['colon']],
             ';' => ['baseword' => ';', 'synonyms' => ['semicolon']],
-            // '/' still persists in https://issues.apache.org/jira/browse/SOLR-6853
+            // '/' still persists in https://issues.apache.org/jira/browse/MEILISEARCH-6853
             //'/' => ['baseword' => '/', 'synonyms' => ['slash']]
         ];
     }

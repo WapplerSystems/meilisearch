@@ -19,8 +19,8 @@ namespace WapplerSystems\Meilisearch\Domain\Index\Queue;
 
 use WapplerSystems\Meilisearch\Domain\Site\Site;
 use WapplerSystems\Meilisearch\Event\IndexQueue\AfterRecordsForIndexQueueItemsHaveBeenRetrievedEvent;
-use WapplerSystems\Meilisearch\IndexQueue\Item;
-use WapplerSystems\Meilisearch\IndexQueue\ItemInterface;
+use WapplerSystems\Meilisearch\Indexer\Item;
+use WapplerSystems\Meilisearch\Indexer\ItemInterface;
 use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\System\Records\AbstractRepository;
 use WapplerSystems\Meilisearch\System\Util\SiteUtility;
@@ -663,7 +663,7 @@ class QueueItemRepository extends AbstractRepository
     }
 
     /**
-     * Creates an array of WapplerSystems\Meilisearch\IndexQueue\Item objects from an array of
+     * Creates an array of WapplerSystems\Meilisearch\Indexer\Item objects from an array of
      * index queue records.
      *
      * @return Item[]

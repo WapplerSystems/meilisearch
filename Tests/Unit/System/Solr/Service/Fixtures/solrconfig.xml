@@ -43,7 +43,7 @@
 		(contd.) must not move schema file out of the language specific
 		schema config directory (which it does currently)
 		Possible solution: Move/Change core instanceDir configuration option in
-			meilisearch.xml so that /opt/meilisearch-tomcat/meilisearch (SOLR_HOME) is the root for
+			meilisearch.xml so that /opt/meilisearch-tomcat/meilisearch (MEILISEARCH_HOME) is the root for
 			a collection - like example collection1
 
 			Properties like language can be specified in meilisearch.xml

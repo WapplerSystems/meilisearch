@@ -18,7 +18,7 @@ declare(strict_types=1);
 namespace WapplerSystems\Meilisearch\Tests\Integration\Domain\Index\PageIndexer;
 
 use WapplerSystems\Meilisearch\Domain\Index\PageIndexer\PageUriBuilder;
-use WapplerSystems\Meilisearch\IndexQueue\Item;
+use WapplerSystems\Meilisearch\Indexer\Item;
 use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 

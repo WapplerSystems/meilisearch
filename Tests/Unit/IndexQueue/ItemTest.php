@@ -16,7 +16,7 @@
 namespace WapplerSystems\Meilisearch\Tests\Unit\IndexQueue;
 
 use WapplerSystems\Meilisearch\Domain\Index\Queue\QueueItemRepository;
-use WapplerSystems\Meilisearch\IndexQueue\Item;
+use WapplerSystems\Meilisearch\Indexer\Item;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 
 /**

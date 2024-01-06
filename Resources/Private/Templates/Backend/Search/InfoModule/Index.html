@@ -4,66 +4,134 @@
 <f:section name="Main">
     <f:be.pageRenderer includeCssFiles="{0: '{f:uri.resource(path:\'StyleSheets/Backend/InfoModule.css\')}'}"/>
 
-    <div role="tabpanel">
-        <ul class="nav nav-tabs t3js-tabs" role="tablist" id="tabs-tab" data-store-last-tab="1">
-            <li role="presentation" class="t3js-tabmenu-item nav-item">
-                <a href="#connections-tab" class="nav-link active" title="" aria-controls="tab-1" role="tab" data-bs-toggle="tab">
-                    Connections
-                </a>
-            </li>
-            <li role="presentation" class="t3js-tabmenu-item nav-item ">
-                <a href="#statistics-tab" class="nav-link" title="" aria-controls="tab-3" role="tab" data-bs-toggle="tab">
-                    Statistics
-                </a>
-            </li>
-            <li role="presentation" class="t3js-tabmenu-item nav-item ">
-                <a href="#index_fields-tab" class="nav-link" title="" aria-controls="tab-2" role="tab" data-bs-toggle="tab">
-                    Index Fields
-                </a>
-            </li>
-            <li role="presentation" class="t3js-tabmenu-item nav-item">
-                <a href="#index_inspector-tab" class="nav-link" title="" aria-controls="tab-2" role="tab" data-bs-toggle="tab">
-                    Index Documents
-                </a>
-            </li>
-        </ul>
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="connections-tab">
-                <div class="panel panel-tab">
-                    <div class="panel-body">
-                        <f:render section="ConnectionInfos" arguments="{_all}"/>
+    <f:debug>{connections}</f:debug>
+    <f:debug>{data}</f:debug>
+
+    <h1>Site: {site.label}, {site.domain}</h1>
+
+    <div class="accordion recordlist" id="accordionExample">
+        <f:for each="{data}" as="connection">
+
+            <div class="accordion-item">
+                <div class="recordlist-heading multi-record-selection-panel">
+                    <div class="recordlist-heading-row">
+                        {connection.url}
                     </div>
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Accordion Item #1
+                    </button>
                 </div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="statistics-tab">
-                <div class="panel panel-tab">
-                    <div class="panel-body">
-                        <f:render section="Statistics" arguments="{_all}"/>
+
+                <div class="collapse show" data-state="expanded" id="recordlist-pages" style="">
+
+                    <div class="card">
+
+                        <div class="card-header">
+                            <h2>Stats</h2>
+                        </div>
+
+                        <div class="card-footer">
+                            <f:render section="StatsInfos" arguments="{data:connection.stats}"/>
+                        </div>
+
                     </div>
-                </div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="index_fields-tab">
-                <div class="panel panel-tab">
-                    <div class="panel-body">
-                        <f:render section="IndexFields" arguments="{_all}"/>
+
+                    <div class="card">
+
+                        <div class="card-header">
+                            <h2>Indexes</h2>
+                        </div>
+
+                        <div class="card-footer">
+                            <div role="tabpanel">
+                                <ul class="nav nav-tabs t3js-tabs" role="tablist" id="tabs-tab" data-store-last-tab="1">
+                                    <li role="presentation" class="t3js-tabmenu-item nav-item">
+                                        <a href="#connections-tab" class="nav-link active" title="" aria-controls="tab-1" role="tab" data-bs-toggle="tab">
+                                            Index 1
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane active" id="connections-tab">
+                                        <div class="panel panel-tab">
+                                            <div class="panel-body">
+                                                <f:render section="IndexInfo" arguments="{index:index}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-                </div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="index_inspector-tab">
-                <div class="panel panel-tab">
-                    <div class="panel-body">
-                        <f:render section="IndexInspector" arguments="{_all}"/>
+
+
+                    <div class="card">
+
+                        <div class="card-header">
+                            <h2>Snapshots</h2>
+                        </div>
+
+                        <div class="card-footer">
+
+                        </div>
+
                     </div>
+
+
+
+
                 </div>
+
             </div>
-        </div>
+
+        </f:for>
+
     </div>
+
+
 </f:section>
 
 <f:comment><!-- Sections --></f:comment>
 
+
+<f:section name="IndexInfo">
+
+
+    <div class="table-fit">
+        <table data-table="pages" class="table table-striped table-hover">
+            <tbody data-multi-record-selection-row-selection="true">
+            <tr class="t3js-entity">
+                edwd
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</f:section>
+
+<f:section name="StatsInfos">
+
+
+    <div class="table-fit">
+        <table data-table="pages" class="table table-striped table-hover">
+            <tbody data-multi-record-selection-row-selection="true">
+                <tr class="t3js-entity">
+                    <td>databaseSize</td>
+                    <td>{data.databaseSize}</td>
+                </tr>
+                <tr class="t3js-entity">
+                    <td>lastUpdate</td>
+                    <td>{data.lastUpdate}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</f:section>
+
 <f:section name="ConnectionInfos">
-    <h2>Site: {site.label}</h2>
+
 
     <f:if condition="{connectedHosts}">
         <f:be.infobox title="Following Meilisearch servers have been contacted:" state="0">
@@ -96,8 +164,13 @@
         </f:be.infobox>
     </f:if>
 
-    <hr class="double" />
+    <hr class="double"/>
     Used domain: {site.domain}
+
+</f:section>
+
+
+<f:section name="Settings">
 
 </f:section>
 
@@ -125,9 +198,9 @@
         <div class="row">
             <div class="col-md-12">
                 <h2>
-									<f:format.printf arguments="{0: '{topHitsLimit}'}">
-										<f:translate key="meilisearch.backend.search_statistics_module.top_search_phrases"/>
-									</f:format.printf>
+                    <f:format.printf arguments="{0: '{topHitsLimit}'}">
+                        <f:translate key="meilisearch.backend.search_statistics_module.top_search_phrases"/>
+                    </f:format.printf>
                 </h2>
 
                 <ul>
@@ -140,16 +213,16 @@
             </div>
         </div>
 
-        <hr class="section-divider" />
+        <hr class="section-divider"/>
     </f:if>
 
     <f:if condition="{top_search_phrases_without_hits}">
         <div class="row section-with-header">
             <div class="col-md-12">
                 <h2>
-									<f:format.printf arguments="{0: '{noHitsLimit}'}">
-										<f:translate key="meilisearch.backend.search_statistics_module.top_search_phrases_without_hits"/>
-									</f:format.printf>
+                    <f:format.printf arguments="{0: '{noHitsLimit}'}">
+                        <f:translate key="meilisearch.backend.search_statistics_module.top_search_phrases_without_hits"/>
+                    </f:format.printf>
                 </h2>
 
                 <ul>
@@ -162,7 +235,7 @@
             </div>
         </div>
 
-        <hr class="section-divider" />
+        <hr class="section-divider"/>
     </f:if>
 
     <div class="row section-with-header">
@@ -224,7 +297,8 @@
                             <f:then>
                                 <a data-bs-toggle="collapse" data-bs-parent="#index-fields_accordion" href="#collapse-core{iterator.index}">{indexFieldsInfoForCore.corePath}</a>
                                 <a href="#collapse-core{iterator.index}" title="Collapse table" class="pull-right" data-bs-toggle="collapse">
-                                    <core:icon identifier="actions-view-list-expand" size="small"/><f:comment><!-- @todo: make Icon toggable between actions-view-list-collapse/actions-view-list-expand --></f:comment>
+                                    <core:icon identifier="actions-view-list-expand" size="small"/>
+                                    <f:comment><!-- @todo: make Icon toggable between actions-view-list-collapse/actions-view-list-expand --></f:comment>
                                 </a>
                             </f:then>
                             <f:else>
@@ -254,7 +328,8 @@
                     <h3 class="panel-title">
                         <a href="#panel-group3document-core-{currentCore.index}" data-bs-toggle="collapse">{indexInspectorDocumentsByType.core.corepath}</a>
                         <a href="#panel-group3document-core-{currentCore.index}" title="Collapse table" class="pull-right" data-bs-toggle="collapse">
-                            <core:icon identifier="actions-view-list-expand" size="small"/><f:comment><!-- @todo: make Icon toggable between actions-view-list-collapse/actions-view-list-expand --></f:comment>
+                            <core:icon identifier="actions-view-list-expand" size="small"/>
+                            <f:comment><!-- @todo: make Icon toggable between actions-view-list-collapse/actions-view-list-expand --></f:comment>
                         </a>
                     </h3>
                 </div>
@@ -262,7 +337,8 @@
                 <div id="panel-group3document-core-{currentCore.index}" class="panel-collapse collapse {f:if(condition: '{iterator.isFirst}', then: 'in')}">
                     <div class="panel-body">
                         <f:for each="{indexInspectorDocumentsByType.documents}" as="documents" key="documentType">
-                            <f:if condition="{documents}"> <f:comment><!-- Don't show emty panel groups if array with documents is empty. --></f:comment>
+                            <f:if condition="{documents}">
+                                <f:comment><!-- Don't show emty panel groups if array with documents is empty. --></f:comment>
                                 <f:render section="PanelGroupForDocumentType" arguments="{_all}"/>
                             </f:if>
                         </f:for>
@@ -278,7 +354,8 @@
                 <h3 class="panel-title">
                     <a href="#panel-group4document-type-{currentCore.index}-{documentType}" data-bs-toggle="collapse">Type: {documentType} ({f:count(subject: documents)})</a>
                     <a href="#panel-group4document-type-{currentCore.index}-{documentType}" title="Collapse table" class="pull-right" data-bs-toggle="collapse">
-                        <core:icon identifier="actions-view-list-expand" size="small"/><f:comment><!-- @todo: make Icon toggable between actions-view-list-collapse/actions-view-list-expand --></f:comment>
+                        <core:icon identifier="actions-view-list-expand" size="small"/>
+                        <f:comment><!-- @todo: make Icon toggable between actions-view-list-collapse/actions-view-list-expand --></f:comment>
                     </a>
                 </h3>
             </div>
@@ -298,21 +375,29 @@
                             <f:for each="{documents}" as="document">
                                 <tr>
                                     <td>{document.uid}</td>
-                                    <td><f:format.crop maxCharacters="20">{document.title}</f:format.crop></td>
-                                    <td><f:format.crop maxCharacters="40">{document.url}</f:format.crop></td>
-                                    <td><f:format.date format="d.m.Y H:i:s">{document.created}</f:format.date></td>
-                                    <td><f:format.date format="d.m.Y H:i:s">{document.indexed}</f:format.date></td>
+                                    <td>
+                                        <f:format.crop maxCharacters="20">{document.title}</f:format.crop>
+                                    </td>
+                                    <td>
+                                        <f:format.crop maxCharacters="40">{document.url}</f:format.crop>
+                                    </td>
+                                    <td>
+                                        <f:format.date format="d.m.Y H:i:s">{document.created}</f:format.date>
+                                    </td>
+                                    <td>
+                                        <f:format.date format="d.m.Y H:i:s">{document.indexed}</f:format.date>
+                                    </td>
 
                                     <td>
                                         <span class="btn btn-default">
                                             <f:link.action action="documentsDetails" arguments="{uid: document.uid, type: document.type, languageUid: language, pageId: pageId}" title="Show details">
-                                                <core:icon identifier="actions-document-view" />
+                                                <core:icon identifier="actions-document-view"/>
                                             </f:link.action>
                                         </span>
                                         <meilisearch:backend.security.ifHasAccessToModule extension="Meilisearch" main="searchbackend" sub="indexqueue">
                                             <span class="btn btn-default">
                                                 <f:be.link route="searchbackend_indexqueue.Backend\Search\IndexQueueModule_requeueDocument" parameters="{uid: document.uid, type: document.type}">
-                                                    <core:icon identifier="actions-refresh" />
+                                                    <core:icon identifier="actions-refresh"/>
                                                 </f:be.link>
                                             </span>
                                         </meilisearch:backend.security.ifHasAccessToModule>

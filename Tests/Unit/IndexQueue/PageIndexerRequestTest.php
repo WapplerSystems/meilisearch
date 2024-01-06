@@ -15,8 +15,8 @@
 
 namespace WapplerSystems\Meilisearch\Tests\Unit\IndexQueue;
 
-use WapplerSystems\Meilisearch\IndexQueue\Item;
-use WapplerSystems\Meilisearch\IndexQueue\PageIndexerRequest;
+use WapplerSystems\Meilisearch\Indexer\Item;
+use WapplerSystems\Meilisearch\Indexer\PageIndexerRequest;
 use WapplerSystems\Meilisearch\System\Configuration\ExtensionConfiguration;
 use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;

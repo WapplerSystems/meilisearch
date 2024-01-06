@@ -49,12 +49,12 @@ class IndexAdministrationModuleControllerTest extends AbstractModuleController
         $responseMock->expects(self::once())->method('getHttpStatus')->willReturn(200);
 
         $writeEndpointMock = $this->createMock(Endpoint::class);
-        $adminServiceMock = $this->createMock(MeilisearchAdminService::class);
-        $adminServiceMock->expects(self::once())->method('reloadCore')->willReturn($responseMock);
-        $adminServiceMock->expects(self::once())->method('getPrimaryEndpoint')->willReturn($writeEndpointMock);
+        $serviceMock = $this->createMock(MeilisearchAdminService::class);
+        $serviceMock->expects(self::once())->method('reloadCore')->willReturn($responseMock);
+        $serviceMock->expects(self::once())->method('getPrimaryEndpoint')->willReturn($writeEndpointMock);
 
         $meilisearchConnection = $this->createMock(MeilisearchConnection::class);
-        $meilisearchConnection->expects(self::once())->method('getAdminService')->willReturn($adminServiceMock);
+        $meilisearchConnection->expects(self::once())->method('getService')->willReturn($serviceMock);
 
         $fakeConnections = [$meilisearchConnection];
         $this->connectionManagerMock->expects(self::once())

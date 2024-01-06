@@ -17,7 +17,7 @@ declare(strict_types=1);
 
 namespace WapplerSystems\Meilisearch\Event\Indexing;
 
-use WapplerSystems\Meilisearch\IndexQueue\Item;
+use WapplerSystems\Meilisearch\Indexer\Item;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 use WapplerSystems\Meilisearch\System\Meilisearch\Document\Document;
 use TYPO3\CMS\Core\Site\Entity\Site;

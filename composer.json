@@ -1,149 +1,135 @@
 {
-  "name": "wapplersystems/meilisearch",
-  "type": "typo3-cms-extension",
-  "description": "Meilisearch for TYPO3",
-  "license": "GPL-3.0-or-later",
-  "keywords": ["typo3", "TYPO3 CMS", "meilisearch", "search"],
-  "homepage": "https://www.typo3-meilisearch.com",
-  "authors": [
-    {
-      "name": "Ingo Renner",
-      "email": "ingo@typo3.org",
-      "role": "Lead Developer"
-    }
-  ],
-  "support": {
-    "email": "meilisearch-eb-support@dkd.de",
-    "issues": "https://github.com/TYPO3-Meilisearch/ext-meilisearch/issues",
-    "forum": "https://talk.typo3.org",
-    "slack": "https://typo3.slack.com/archives/C02FF05Q4",
-    "source": "https://github.com/TYPO3-Meilisearch/ext-meilisearch",
-    "docs": "https://docs.typo3.org/p/wapplersystems/meilisearch/main/en-us/"
-  },
-  "require": {
-    "php": "^8.1",
-    "ext-dom": "*",
-    "ext-json": "*",
-    "ext-libxml": "*",
-    "ext-pdo": "*",
-    "ext-simplexml": "*",
-    "typo3/cms-backend": "*",
-    "typo3/cms-core": "^v12.4.3",
-    "typo3/cms-extbase": "*",
-    "typo3/cms-fluid": "*",
-    "typo3/cms-frontend": "*",
-    "typo3/cms-reports": "*",
-    "typo3/cms-scheduler": "*",
-    "typo3/cms-tstemplate": "*",
-    "meilisearch/meilisearch-php": "^v1.5.0"
-  },
-  "require-dev": {
-    "dg/bypass-finals": "^1.4",
-    "phpunit/phpunit": "^9.5",
-    "typo3/cms-fluid-styled-content": "*",
-    "typo3/coding-standards": "~0.7.1",
-    "typo3/testing-framework": "^7.0.2",
-    "phpstan/phpstan": "^1.10",
-    "phpstan/phpstan-phpunit": "^1.3"
-  },
-  "autoload": {
-    "psr-4": {
-      "WapplerSystems\\Meilisearch\\": "Classes/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "WapplerSystems\\Meilisearch\\Tests\\": "Tests/",
-      "MeilisearchForTypo3\\FakeExtension\\": "Tests/Integration/Fixtures/Extensions/fake_extension/Classes/",
-      "WapplerSystems\\MeilisearchFakeExtension2\\": "Tests/Integration/Fixtures/Extensions/fake_extension2/Classes/",
-      "WapplerSystems\\MeilisearchFakeExtension3\\": "Tests/Integration/Fixtures/Extensions/fake_extension3/Classes/",
-      "TYPO3\\CMS\\Core\\Tests\\": ".Build/vendor/typo3/cms-core/Tests/"
-    }
-  },
-  "minimum-stability": "stable",
-  "prefer-stable": true,
-  "config": {
-    "allow-plugins": true,
-    "vendor-dir": ".Build/vendor",
-    "bin-dir": ".Build/bin",
-    "sort-packages": true,
-    "preferred-install": {
-      "typo3/cms-core": "source",
-      "*": "dist"
-    }
-  },
-  "scripts": {
-    "post-autoload-dump": [
-      "mkdir -p .Build/vendor/apache-meilisearch-for-typo3",
-      "[ -L .Build/vendor/wapplersystems/meilisearch ] || ln -snvf ../../../. .Build/vendor/wapplersystems/meilisearch"
-    ],
-    "t3:docs:build": [
-      "rm -Rf Documentation-GENERATED-temp/",
-      "./Build/generate_documentation.sh"
-    ],
-    "t3:docs:build:prod": [
-      "BUILD_DOCS_FOR_PRODUCTION=1 $COMPOSER_BINARY t3:docs:build"
-    ],
-    "t3:docs:clean": [
-      "rm -Rf Documentation-GENERATED-temp/ $(readlink -f Documentation.HTML) Documentation.HTML"
-    ],
-    "extension-create-libs": [
-      "@composer req -d Resources/Private/Php/ComposerLibraries solarium/solarium:$(Build/Helpers/GET_LOCAL_PACKAGE_VERSION_CONSTRAINT.sh solarium/solarium)"
-    ],
-    "extension-build": [
-      "@extension-create-libs"
-    ],
-    "tests:restore-git": "echo \"Retore composer.json to initial state:\" && git checkout composer.json",
-    "tests:env": [
-      "if [ -z ${TYPO3_VERSION+x} ]; then >&2 echo \"Can not proceed, because env var TYPO3_VERSION is not set\"; exit 1; else echo \"Setup test environment for TYPO3 ${TYPO3_VERSION}\"; fi",
-      "if echo $TYPO3_VERSION | grep -q \"dev\"; then $COMPOSER_BINARY config minimum-stability dev; fi"
-    ],
-    "tests:setup": [
-      "@tests:env",
-      "@composer req --update-with-all-dependencies typo3/cms-core:${TYPO3_VERSION}",
-      "@tests:restore-git"
-    ],
-    "tests:unit": [
-      "phpunit --config=Build/Test/UnitTests.xml"
-    ],
-    "tests:integration": [
-      "Composer\\Config::disableProcessTimeout",
-      "phpunit --config=Build/Test/IntegrationTests.xml"
-    ],
-    "tests:phpstan": [
-      "phpstan analyze -c Build/Test/phpstan.neon"
-    ],
-    "t3:standards:fix": [
-      "php-cs-fixer fix"
-    ],
-    "tests:lint-xml": [
-      "echo \"Run XML Lint\"",
-      "if ! $($COMPOSER_BINARY config home)/vendor/bin/xmllint Resources/Private/Language/ --pattern='*.xlf' --exclude=.Build/*; then echo \"Some XML files are not valid\" && echo \"Please fix the files listed above\" && export EXIT_CODE=4; else echo \"No syntax errors! Great job!\"; fi"
-    ]
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-main": "12.0.x-dev"
-    },
-    "typo3/cms": {
-      "extension-key": "meilisearch"
-    },
-    "TYPO3-Meilisearch": {
-      "version-matrix": {
-        "ext-tika": "^12.0",
-        "ext-meilisearchfal": "^12.0",
-        "ext-meilisearchconsole": "^12.0",
-        "ext-meilisearchdebugtools": "^12.0",
-        "ext-meilisearchmlt": "^12.0",
-        "Apache-Meilisearch": "9.3.0",
-        "configset": "ext_meilisearch_12_0_0"
-      },
-      "ext-meilisearchfal": {
-      },
-      "stack-for-ci": {
-        "sclable/xml-lint": "*",
-        "scrutinizer/ocular": "*"
-      }
-    }
-  }
+	"name": "wapplersystems/meilisearch",
+	"type": "typo3-cms-extension",
+	"description": "Meilisearch for TYPO3",
+	"license": "GPL-3.0-or-later",
+	"keywords": [
+		"typo3",
+		"TYPO3 CMS",
+		"meilisearch",
+		"search"
+	],
+	"homepage": "https://wappler.systems",
+	"authors": [
+		{
+			"name": "Ingo Renner",
+			"email": "ingo@typo3.org",
+			"role": "Developer"
+		},
+		{
+			"name": "Sven Wappler",
+			"email": "info@wappler.systems",
+			"role": "Lead Developer"
+		}
+	],
+	"support": {
+		"email": "info@wappler.systems",
+		"issues": "https://github.com/WapplerSystems/meilisearch/issues",
+		"source": "https://github.com/WapplerSystems/meilisearch"
+	},
+	"require": {
+		"php": "^8.1",
+		"ext-dom": "*",
+		"ext-json": "*",
+		"ext-libxml": "*",
+		"ext-pdo": "*",
+		"ext-simplexml": "*",
+		"typo3/cms-backend": "*",
+		"typo3/cms-core": "^v12.4.3",
+		"typo3/cms-extbase": "*",
+		"typo3/cms-fluid": "*",
+		"typo3/cms-frontend": "*",
+		"typo3/cms-reports": "*",
+		"typo3/cms-scheduler": "*",
+		"typo3/cms-tstemplate": "*",
+		"meilisearch/meilisearch-php": "^v1.5.0"
+	},
+	"require-dev": {
+		"dg/bypass-finals": "^1.4",
+		"phpunit/phpunit": "^10.5",
+		"typo3/cms-fluid-styled-content": "*",
+		"typo3/coding-standards": "~0.7.1",
+		"typo3/testing-framework": "^7.0.2",
+		"phpstan/phpstan": "^1.10",
+		"phpstan/phpstan-phpunit": "^1.3"
+	},
+	"autoload": {
+		"psr-4": {
+			"WapplerSystems\\Meilisearch\\": "Classes/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"WapplerSystems\\Meilisearch\\Tests\\": "Tests/"
+		}
+	},
+	"minimum-stability": "stable",
+	"prefer-stable": true,
+	"config": {
+		"allow-plugins": true,
+		"vendor-dir": ".Build/vendor",
+		"bin-dir": ".Build/bin",
+		"sort-packages": true,
+		"preferred-install": {
+			"typo3/cms-core": "source",
+			"*": "dist"
+		}
+	},
+	"scripts": {
+		"post-autoload-dump": [
+			"mkdir -p .Build/vendor/apache-meilisearch-for-typo3",
+			"[ -L .Build/vendor/wapplersystems/meilisearch ] || ln -snvf ../../../. .Build/vendor/wapplersystems/meilisearch"
+		],
+		"t3:docs:build": [
+			"rm -Rf Documentation-GENERATED-temp/",
+			"./Build/generate_documentation.sh"
+		],
+		"t3:docs:build:prod": [
+			"BUILD_DOCS_FOR_PRODUCTION=1 $COMPOSER_BINARY t3:docs:build"
+		],
+		"t3:docs:clean": [
+			"rm -Rf Documentation-GENERATED-temp/ $(readlink -f Documentation.HTML) Documentation.HTML"
+		],
+		"extension-create-libs": [
+			"@composer req -d Resources/Private/Php/ComposerLibraries solarium/solarium:$(Build/Helpers/GET_LOCAL_PACKAGE_VERSION_CONSTRAINT.sh solarium/solarium)"
+		],
+		"extension-build": [
+			"@extension-create-libs"
+		],
+		"tests:restore-git": "echo \"Retore composer.json to initial state:\" && git checkout composer.json",
+		"tests:env": [
+			"if [ -z ${TYPO3_VERSION+x} ]; then >&2 echo \"Can not proceed, because env var TYPO3_VERSION is not set\"; exit 1; else echo \"Setup test environment for TYPO3 ${TYPO3_VERSION}\"; fi",
+			"if echo $TYPO3_VERSION | grep -q \"dev\"; then $COMPOSER_BINARY config minimum-stability dev; fi"
+		],
+		"tests:setup": [
+			"@tests:env",
+			"@composer req --update-with-all-dependencies typo3/cms-core:${TYPO3_VERSION}",
+			"@tests:restore-git"
+		],
+		"tests:unit": [
+			"phpunit --config=Build/Test/UnitTests.xml"
+		],
+		"tests:integration": [
+			"Composer\\Config::disableProcessTimeout",
+			"phpunit --config=Build/Test/IntegrationTests.xml"
+		],
+		"tests:phpstan": [
+			"phpstan analyze -c Build/Test/phpstan.neon"
+		],
+		"t3:standards:fix": [
+			"php-cs-fixer fix"
+		],
+		"tests:lint-xml": [
+			"echo \"Run XML Lint\"",
+			"if ! $($COMPOSER_BINARY config home)/vendor/bin/xmllint Resources/Private/Language/ --pattern='*.xlf' --exclude=.Build/*; then echo \"Some XML files are not valid\" && echo \"Please fix the files listed above\" && export EXIT_CODE=4; else echo \"No syntax errors! Great job!\"; fi"
+		]
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-main": "12.0.x-dev"
+		},
+		"typo3/cms": {
+			"extension-key": "meilisearch"
+		}
+	}
 }

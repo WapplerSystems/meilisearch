@@ -194,7 +194,7 @@ class Rootline
             $groups = array_merge($groups, $rootlineElementGroups);
         }
 
-        return $this->cleanGroupArray($groups);
+        return self::cleanGroupArray($groups);
     }
 
     /**

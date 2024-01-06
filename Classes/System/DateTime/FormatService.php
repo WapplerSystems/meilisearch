@@ -28,7 +28,7 @@ use Exception;
  */
 class FormatService
 {
-    public const SOLR_ISO_DATETIME_FORMAT = 'Y-m-d\TH:i:s\Z';
+    public const MEILISEARCH_ISO_DATETIME_FORMAT = 'Y-m-d\TH:i:s\Z';
 
     /**
      * @see http://php.net/manual/de/function.date.php for formatting options
@@ -63,7 +63,7 @@ class FormatService
      */
     public function timestampToIso(?int $timestamp = 0): string
     {
-        return date(self::SOLR_ISO_DATETIME_FORMAT, $timestamp ?? 0);
+        return date(self::MEILISEARCH_ISO_DATETIME_FORMAT, $timestamp ?? 0);
     }
 
     /**
@@ -75,7 +75,7 @@ class FormatService
     public function isoToTimestamp(string $isoTime): int
     {
         $dateTime = DateTime::createFromFormat(
-            self::SOLR_ISO_DATETIME_FORMAT,
+            self::MEILISEARCH_ISO_DATETIME_FORMAT,
             $isoTime
         );
         return $dateTime ? (int)$dateTime->format('U') : 0;
@@ -89,7 +89,7 @@ class FormatService
      */
     public function timestampToUtcIso(?int $timestamp = 0): string
     {
-        return gmdate(self::SOLR_ISO_DATETIME_FORMAT, $timestamp ?? 0);
+        return gmdate(self::MEILISEARCH_ISO_DATETIME_FORMAT, $timestamp ?? 0);
     }
 
     /**
@@ -102,7 +102,7 @@ class FormatService
     {
         $utcTimeZone = new DateTimeZone('UTC');
         $dateTime = DateTime::createFromFormat(
-            self::SOLR_ISO_DATETIME_FORMAT,
+            self::MEILISEARCH_ISO_DATETIME_FORMAT,
             $isoTime,
             $utcTimeZone
         );

@@ -17,7 +17,7 @@ declare(strict_types=1);
 
 namespace WapplerSystems\Meilisearch\Event\Indexing;
 
-use WapplerSystems\Meilisearch\IndexQueue\Item;
+use WapplerSystems\Meilisearch\Indexer\Item;
 use Psr\Http\Message\UriInterface;
 
 /**

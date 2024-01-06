@@ -15,9 +15,9 @@
 
 namespace WapplerSystems\Meilisearch\Tests\Integration\IndexQueue;
 
-use WapplerSystems\Meilisearch\IndexQueue\Indexer;
-use WapplerSystems\Meilisearch\IndexQueue\Item;
-use WapplerSystems\Meilisearch\IndexQueue\Queue;
+use WapplerSystems\Meilisearch\Indexer\Indexer;
+use WapplerSystems\Meilisearch\Indexer\Item;
+use WapplerSystems\Meilisearch\Indexer\Queue;
 use WapplerSystems\Meilisearch\System\Meilisearch\Document\Document;
 use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchConnection;
 use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
@@ -501,7 +501,7 @@ class IndexerTest extends IntegrationTest
         $result = $this->callInaccessibleMethod($this->indexer, 'getMeilisearchConnectionsByItem', $item);
 
         self::assertInstanceOf(MeilisearchConnection::class, $result[1], 'Expect MeilisearchConnection object in connection array item with key 1.');
-        self::assertCount(1, $result, 'Expect only one SOLR connection.');
+        self::assertCount(1, $result, 'Expect only one MEILISEARCH connection.');
         self::assertArrayNotHasKey(0, $result, 'Expect, that there is no meilisearch connection returned for default language,');
     }
 
@@ -526,7 +526,7 @@ class IndexerTest extends IntegrationTest
 
         self::assertEmpty($result[0], 'Connection for default language was expected to be empty');
         self::assertInstanceOf(MeilisearchConnection::class, $result[1], 'Expect MeilisearchConnection object in connection array item with key 1.');
-        self::assertCount(1, $result, 'Expect only one SOLR connection.');
+        self::assertCount(1, $result, 'Expect only one MEILISEARCH connection.');
         self::assertArrayNotHasKey(0, $result, 'Expect, that there is no meilisearch connection returned for default language,');
     }
 

@@ -62,9 +62,6 @@ class InfoModuleController extends AbstractModuleController
         }
 
         $this->collectConnectionInfos();
-        $this->collectStatistics();
-        $this->collectIndexFieldsInfo();
-        $this->collectIndexInspectorInfo();
 
         return $this->getModuleTemplateResponse();
     }
@@ -88,13 +85,9 @@ class InfoModuleController extends AbstractModuleController
      */
     protected function collectConnectionInfos(): void
     {
-        $connectedHosts = [];
-        $missingHosts = [];
-        $invalidPaths = [];
-
-        /** @var Path $path */
-        $path = GeneralUtility::makeInstance(Path::class);
         $connections = $this->meilisearchConnectionManager->getConnectionsBySite($this->selectedSite);
+
+        $data = [];
 
         if (empty($connections)) {
             $this->view->assign('can_not_proceed', true);
@@ -105,19 +98,28 @@ class InfoModuleController extends AbstractModuleController
 
             $service = $connection->getService();
 
-            if ($service->getClient()->isHealthy()) {
-                $connectedHosts[] = $connection->getUrl();
-            } else {
-                $missingHosts[] = $connection->getUrl();
+            $key = $connection->getUrl();
+
+            if (isset($data[$key])) {
+                continue;
             }
+
+
+            $data[$key] = [
+                'url' => $connection->getUrl(),
+                'healthy' => $service->getClient()->isHealthy(),
+                'client' => $service->getClient(),
+                'service' => $service,
+            ];
+
+            $data[$key]['stats'] = $service->getClient()->stats();
 
         }
 
         $this->view->assignMultiple([
             'site' => $this->selectedSite,
-            'connectedHosts' => $connectedHosts,
-            'missingHosts' => $missingHosts,
-            'invalidPaths' => $invalidPaths,
+            'connections' => $connections,
+            'data' => $data,
         ]);
     }
 
@@ -205,7 +207,6 @@ class InfoModuleController extends AbstractModuleController
             ];
             if ($client->isHealthy()) {
 
-                DebugUtility::debug($client->getIndexes()->count());
 
                 continue;
 
@@ -228,6 +229,86 @@ class InfoModuleController extends AbstractModuleController
         }
         $this->view->assign('indexFieldsInfoByCorePaths', $indexFieldsInfoByCorePaths);
     }
+
+
+    protected function collectIndexes(): void
+    {
+        $indexFieldsInfoByCorePaths = [];
+
+        $meilisearchCoreConnections = $this->meilisearchConnectionManager->getConnectionsBySite($this->selectedSite);
+        foreach ($meilisearchCoreConnections as $meilisearchCoreConnection) {
+            $service = $meilisearchCoreConnection->getService();
+            $client = $service->getClient();
+
+
+            $indexFieldsInfo = [
+            ];
+            if ($client->isHealthy()) {
+
+                $indexes = $client->getIndexes();
+
+
+
+                continue;
+
+
+
+
+                $indexFieldsInfo['noError'] = 'OK';
+                $indexFieldsInfo['fields'] = $fields;
+                $indexFieldsInfo['coreMetrics'] = $coreMetrics;
+            } else {
+                $indexFieldsInfo['noError'] = null;
+
+                $this->addFlashMessage(
+                    '',
+                    'Unable to contact Meilisearch server: ' . $this->selectedSite->getLabel(),
+                    ContextualFeedbackSeverity::ERROR
+                );
+            }
+            $indexFieldsInfoByCorePaths[$service->getCorePath()] = $indexFieldsInfo;
+        }
+        $this->view->assign('indexFieldsInfoByCorePaths', $indexFieldsInfoByCorePaths);
+    }
+
+
+    protected function collectSettings(): void
+    {
+        $indexFieldsInfoByCorePaths = [];
+
+        $meilisearchCoreConnections = $this->meilisearchConnectionManager->getConnectionsBySite($this->selectedSite);
+        foreach ($meilisearchCoreConnections as $meilisearchCoreConnection) {
+            $service = $meilisearchCoreConnection->getService();
+            $client = $service->getClient();
+
+
+            $indexFieldsInfo = [
+            ];
+            if ($client->isHealthy()) {
+
+
+                continue;
+
+
+
+
+                $indexFieldsInfo['noError'] = 'OK';
+                $indexFieldsInfo['fields'] = $fields;
+                $indexFieldsInfo['coreMetrics'] = $coreMetrics;
+            } else {
+                $indexFieldsInfo['noError'] = null;
+
+                $this->addFlashMessage(
+                    '',
+                    'Unable to contact Meilisearch server: ' . $this->selectedSite->getLabel(),
+                    ContextualFeedbackSeverity::ERROR
+                );
+            }
+            $indexFieldsInfoByCorePaths[$service->getCorePath()] = $indexFieldsInfo;
+        }
+        $this->view->assign('indexFieldsInfoByCorePaths', $indexFieldsInfoByCorePaths);
+    }
+
 
     /**
      * Retrieves the information for the index inspector.

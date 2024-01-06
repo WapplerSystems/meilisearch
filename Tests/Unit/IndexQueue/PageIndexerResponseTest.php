@@ -17,7 +17,7 @@ declare(strict_types=1);
 
 namespace WapplerSystems\Meilisearch\Tests\Unit\IndexQueue;
 
-use WapplerSystems\Meilisearch\IndexQueue\PageIndexerResponse;
+use WapplerSystems\Meilisearch\Indexer\PageIndexerResponse;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 

@@ -17,9 +17,9 @@ namespace WapplerSystems\Meilisearch\Tests\Integration;
 
 use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
 use WapplerSystems\Meilisearch\GarbageCollector;
-use WapplerSystems\Meilisearch\IndexQueue\Indexer;
-use WapplerSystems\Meilisearch\IndexQueue\Queue;
-use WapplerSystems\Meilisearch\IndexQueue\RecordMonitor;
+use WapplerSystems\Meilisearch\Indexer\Indexer;
+use WapplerSystems\Meilisearch\Indexer\Queue;
+use WapplerSystems\Meilisearch\Indexer\RecordMonitor;
 use WapplerSystems\Meilisearch\System\Records\Queue\EventQueueItemRepository;
 use WapplerSystems\Meilisearch\Task\EventQueueWorkerTask;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;

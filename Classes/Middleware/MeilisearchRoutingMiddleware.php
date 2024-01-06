@@ -17,7 +17,7 @@ declare(strict_types=1);
 
 namespace WapplerSystems\Meilisearch\Middleware;
 
-use WapplerSystems\Meilisearch\IndexQueue\PageIndexerRequest;
+use WapplerSystems\Meilisearch\Indexer\PageIndexerRequest;
 use WapplerSystems\Meilisearch\Routing\RoutingService;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -84,7 +84,7 @@ class MeilisearchRoutingMiddleware implements MiddlewareInterface, LoggerAwareIn
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        if ($request->hasHeader(PageIndexerRequest::SOLR_INDEX_HEADER)) {
+        if ($request->hasHeader(PageIndexerRequest::MEILISEARCH_INDEX_HEADER)) {
             return $handler->handle($request);
         }
 

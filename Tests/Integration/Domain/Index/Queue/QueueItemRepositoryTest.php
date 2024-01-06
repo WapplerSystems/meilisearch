@@ -20,7 +20,7 @@ namespace WapplerSystems\Meilisearch\Tests\Integration\Domain\Index\Queue;
 use WapplerSystems\Meilisearch\Domain\Index\Queue\QueueItemRepository;
 use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
 use WapplerSystems\Meilisearch\Event\IndexQueue\AfterRecordsForIndexQueueItemsHaveBeenRetrievedEvent;
-use WapplerSystems\Meilisearch\IndexQueue\Item;
+use WapplerSystems\Meilisearch\Indexer\Item;
 use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use TYPO3\CMS\Core\Tests\Unit\Fixtures\EventDispatcher\MockEventDispatcher;
 use TYPO3\CMS\Core\Utility\GeneralUtility;

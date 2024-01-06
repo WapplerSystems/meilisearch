@@ -15,7 +15,7 @@
 
 namespace WapplerSystems\Meilisearch\Tests\Unit;
 
-use WapplerSystems\Meilisearch\IndexQueue\AbstractIndexer;
+use WapplerSystems\Meilisearch\Indexer\AbstractIndexer;
 
 /**
  * Testcase for AbstractIndexer

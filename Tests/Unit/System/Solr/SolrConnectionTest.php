@@ -100,7 +100,7 @@ class MeilisearchConnectionTest extends SetUpUnitTestCase
         $connection->setClient($clientMock, 'admin');
 
         $endpointMock->expects(self::never())->method('setAuthentication');
-        $connection->getAdminService();
+        $connection->getService();
     }
 
     /**
@@ -120,7 +120,7 @@ class MeilisearchConnectionTest extends SetUpUnitTestCase
         $connection->setClient($clientMock, 'admin');
 
         $endpointMock->expects(self::once())->method('setAuthentication');
-        $connection->getAdminService();
+        $connection->getService();
     }
 
     /**

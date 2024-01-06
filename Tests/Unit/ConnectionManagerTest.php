@@ -34,7 +34,6 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 /**
  * PHP Unit test for connection manager
  *
- * @author Markus Friedrich <markus.friedrich@dkd.de>
  */
 class ConnectionManagerTest extends SetUpUnitTestCase
 {
@@ -75,46 +74,22 @@ class ConnectionManagerTest extends SetUpUnitTestCase
     /**
      * Provides data for the connection test
      */
-    public function connectDataProvider(): Traversable
+    public static function connectDataProvider(): Traversable
     {
         yield 'invalid' => [
             'scheme' => '',
             'host' => 'localhost',
             'port' => null,
-            'path' => '',
-            'core' => 'core_de',
             'expectsException' => true,
-            'expectedConnectionString' => null,
+            'expectedConnectionString' => '://localhost:',
         ];
 
-        yield 'valid without path' => [
-            'scheme' => 'https',
+        yield 'valid connection' => [
+            'scheme' => 'http',
             'host' => '127.0.0.1',
-            'port' => 8181,
-            'path' => '' ,
-            'core' => 'core_de',
+            'port' => 7700,
             'expectsException' => false,
-            'expectedConnectionString' => 'https://127.0.0.1:8181/meilisearch/core_de/',
-        ];
-
-        yield 'valid with slash in path' => [
-            'scheme' => 'https',
-            'host' => '127.0.0.1',
-            'port' => 8181,
-            'path' => '/' ,
-            'core' => 'core_de',
-            'expectsException' => false,
-            'expectedConnectionString' => 'https://127.0.0.1:8181/meilisearch/core_de/',
-        ];
-
-        yield 'valid connection with path' => [
-            'scheme' => 'https',
-            'host' => '127.0.0.1',
-            'port' => 8181,
-            'path' => '/production/' ,
-            'core' => 'core_de',
-            'expectsException' => false,
-            'expectedConnectionString' => 'https://127.0.0.1:8181/production/meilisearch/core_de/',
+            'expectedConnectionString' => 'http://127.0.0.1:7700',
         ];
     }
 
@@ -125,22 +100,27 @@ class ConnectionManagerTest extends SetUpUnitTestCase
      * @test
      */
     public function canConnect(
-        string $scheme,
-        string $host,
-        ?int $port,
-        string $path,
-        string $core,
-        bool $expectsException,
+        string  $scheme,
+        string  $host,
+        ?int    $port,
+        bool    $expectsException,
         ?string $expectedConnectionString
-    ): void {
+    ): void
+    {
         $exceptionOccurred = false;
         try {
             $configuration = [
-                'read' => ['scheme' => $scheme, 'host' => $host, 'port' => $port, 'path' => $path, 'core' => $core],
+                'scheme' => $scheme,
+                'host' => $host,
+                'port' => $port,
             ];
-            $configuration['write'] = $configuration['read'];
 
             $meilisearchService = $this->connectionManager->getConnectionFromConfiguration($configuration);
+
+            if (!$meilisearchService->getService()->ping()) {
+                $exceptionOccurred = true;
+            }
+
             self::assertEquals($expectedConnectionString, $meilisearchService->getService()->__toString());
         } catch (InvalidConnectionException $exception) {
             $exceptionOccurred = true;

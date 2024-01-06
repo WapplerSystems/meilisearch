@@ -35,7 +35,7 @@ class MeilisearchVersionStatus extends AbstractMeilisearchStatus
     /**
      * Required Meilisearch version. The version that gets installed when using the provided Docker image.
      */
-    public const REQUIRED_SOLR_VERSION = '9.3.0';
+    public const REQUIRED_MEILISEARCH_VERSION = '9.3.0';
 
     /**
      * Compiles a version check against each configured Meilisearch server.
@@ -48,7 +48,7 @@ class MeilisearchVersionStatus extends AbstractMeilisearchStatus
         $meilisearchConnections = GeneralUtility::makeInstance(ConnectionManager::class)->getAllConnections();
 
         foreach ($meilisearchConnections as $meilisearchConnection) {
-            $coreAdmin = $meilisearchConnection->getAdminService();
+            $coreAdmin = $meilisearchConnection->getService();
             /** @var MeilisearchConnection $meilisearchConnection */
             if (!$coreAdmin->ping()) {
                 $url = $coreAdmin->__toString();
@@ -65,7 +65,7 @@ class MeilisearchVersionStatus extends AbstractMeilisearchStatus
             }
 
             $meilisearchVersion = $coreAdmin->getMeilisearchServerVersion();
-            $isOutdatedVersion = version_compare($this->getCleanMeilisearchVersion($meilisearchVersion), self::REQUIRED_SOLR_VERSION, '<');
+            $isOutdatedVersion = version_compare($this->getCleanMeilisearchVersion($meilisearchVersion), self::REQUIRED_MEILISEARCH_VERSION, '<');
 
             if (!$isOutdatedVersion) {
                 $reports[] = GeneralUtility::makeInstance(
@@ -79,7 +79,7 @@ class MeilisearchVersionStatus extends AbstractMeilisearchStatus
             }
 
             $formattedVersion = $this->formatMeilisearchVersion($meilisearchVersion);
-            $variables = ['requiredVersion' => self::REQUIRED_SOLR_VERSION, 'currentVersion' => $formattedVersion, 'meilisearch' => $coreAdmin];
+            $variables = ['requiredVersion' => self::REQUIRED_MEILISEARCH_VERSION, 'currentVersion' => $formattedVersion, 'meilisearch' => $coreAdmin];
             $report = $this->getRenderedReport('MeilisearchVersionStatus.html', $variables);
             $status = GeneralUtility::makeInstance(
                 Status::class,

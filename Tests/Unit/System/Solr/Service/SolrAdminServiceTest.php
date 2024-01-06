@@ -32,7 +32,7 @@ use function json_encode;
  */
 class MeilisearchAdminServiceTest extends SetUpUnitTestCase
 {
-    protected MeilisearchAdminService|MockObject $adminService;
+    protected MeilisearchAdminService|MockObject $service;
     protected Client|MockObject $clientMock;
     protected Endpoint|MockObject $endpointMock;
 

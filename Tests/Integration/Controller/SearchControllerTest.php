@@ -892,7 +892,7 @@ class SearchControllerTest extends IntegrationTest
                 index {
                     fieldProcessingInstructions.categoryPaths_stringM = pathToHierarchy
                     queue.pages.fields {
-                        categoryPaths_stringM = SOLR_MULTIVALUE
+                        categoryPaths_stringM = MEILISEARCH_MULTIVALUE
                         categoryPaths_stringM {
                             stdWrap.cObject = USER
                             stdWrap.cObject.userFunc = WapplerSystems\Meilisearch\Tests\Integration\Controller\CategoryPathProvider->getPaths

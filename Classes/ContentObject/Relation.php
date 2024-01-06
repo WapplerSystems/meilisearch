@@ -45,7 +45,7 @@ use TYPO3\CMS\Frontend\ContentObject\Exception\ContentRenderingException;
  */
 class Relation extends AbstractContentObject
 {
-    public const CONTENT_OBJECT_NAME = 'SOLR_RELATION';
+    public const CONTENT_OBJECT_NAME = 'MEILISEARCH_RELATION';
 
     /**
      * Content object configuration
@@ -62,7 +62,7 @@ class Relation extends AbstractContentObject
     }
 
     /**
-     * Executes the SOLR_RELATION content object.
+     * Executes the MEILISEARCH_RELATION content object.
      *
      * Resolves relations between records. Currently, supported relations are
      * TYPO3-style m:n relations.

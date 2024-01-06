@@ -15,7 +15,7 @@
 
 namespace WapplerSystems\Meilisearch\Tests\Unit\IndexQueue\FrontendHelper;
 
-use WapplerSystems\Meilisearch\IndexQueue\FrontendHelper\Manager;
+use WapplerSystems\Meilisearch\Indexer\FrontendHelper\Manager;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 
 /**
@@ -50,7 +50,7 @@ class ManagerTest extends SetUpUnitTestCase
     {
         Manager::registerFrontendHelper('test', InvalidFakeHelper::class);
         $this->expectException(\RuntimeException::class);
-        $message = InvalidFakeHelper::class . ' is not an implementation of WapplerSystems\Meilisearch\IndexQueue\FrontendHelper\FrontendHelper';
+        $message = InvalidFakeHelper::class . ' is not an implementation of WapplerSystems\Meilisearch\Indexer\FrontendHelper\FrontendHelper';
         $this->expectExceptionMessage($message);
         $handler = $this->manager->resolveAction('test');
     }

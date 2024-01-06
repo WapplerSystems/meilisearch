@@ -5,7 +5,6 @@ services:
 
   WapplerSystems\Meilisearch\:
     resource: '../Classes/*'
-    exclude: '../Classes/Eid/*'
 
   controller:
     namespace: WapplerSystems\Meilisearch\Controller\
@@ -72,7 +71,7 @@ services:
       $recordService: '@WapplerSystems\Meilisearch\Domain\Index\Queue\RecordMonitor\Helper\ConfigurationAwareRecordService'
       $frontendEnvironment: '@WapplerSystems\Meilisearch\FrontendEnvironment'
       $tcaService: '@WapplerSystems\Meilisearch\System\TCA\TCAService'
-      $indexQueue: '@WapplerSystems\Meilisearch\IndexQueue\Queue'
+      $indexQueue: '@WapplerSystems\Meilisearch\Indexer\Queue'
       $mountPageUpdater: '@WapplerSystems\Meilisearch\Domain\Index\Queue\RecordMonitor\Helper\MountPagesUpdater'
       $rootPageResolver: '@WapplerSystems\Meilisearch\Domain\Index\Queue\RecordMonitor\Helper\RootPageResolver'
       $pagesRepository: '@WapplerSystems\Meilisearch\System\Records\Pages\PagesRepository'
@@ -83,13 +82,13 @@ services:
       $recordService: '@WapplerSystems\Meilisearch\Domain\Index\Queue\RecordMonitor\Helper\ConfigurationAwareRecordService'
       $frontendEnvironment: '@WapplerSystems\Meilisearch\FrontendEnvironment'
       $tcaService: '@WapplerSystems\Meilisearch\System\TCA\TCAService'
-      $indexQueue: '@WapplerSystems\Meilisearch\IndexQueue\Queue'
+      $indexQueue: '@WapplerSystems\Meilisearch\Indexer\Queue'
 
   WapplerSystems\Meilisearch\Domain\Site\SiteHashService:
     public: true
     autowire: true
 
-  WapplerSystems\Meilisearch\IndexQueue\PageIndexerRequestHandler:
+  WapplerSystems\Meilisearch\Indexer\PageIndexerRequestHandler:
     public: true
     autowire: true
 
@@ -273,7 +272,7 @@ services:
       - name: event.listener
         identifier: 'meilisearch.index.PageIndexer.FrontendUserAuthenticator'
 
-  WapplerSystems\Meilisearch\IndexQueue\FrontendHelper\PageIndexer:
+  WapplerSystems\Meilisearch\Indexer\FrontendHelper\PageIndexer:
     autowire: true
     tags:
       - name: event.listener
@@ -289,7 +288,7 @@ services:
       - name: event.listener
         identifier: 'meilisearch.index.AdditionalFieldsForPageIndexing'
 
-  WapplerSystems\Meilisearch\IndexQueue\FrontendHelper\PageFieldMappingIndexer:
+  WapplerSystems\Meilisearch\Indexer\FrontendHelper\PageFieldMappingIndexer:
     autowire: true
     tags:
       - name: event.listener
@@ -309,24 +308,54 @@ services:
   WapplerSystems\Meilisearch\ContentObject\Classification:
     tags:
       - name: frontend.contentobject
-        identifier: 'SOLR_CLASSIFICATION'
+        identifier: 'MEILISEARCH_CLASSIFICATION'
   WapplerSystems\Meilisearch\ContentObject\Content:
     tags:
       - name: frontend.contentobject
-        identifier: 'SOLR_CONTENT'
+        identifier: 'MEILISEARCH_CONTENT'
   WapplerSystems\Meilisearch\ContentObject\Multivalue:
     tags:
       - name: frontend.contentobject
-        identifier: 'SOLR_MULTIVALUE'
+        identifier: 'MEILISEARCH_MULTIVALUE'
   WapplerSystems\Meilisearch\ContentObject\Relation:
     arguments:
       $tcaService: '@WapplerSystems\Meilisearch\System\TCA\TCAService'
     tags:
       - name: frontend.contentobject
-        identifier: 'SOLR_RELATION'
+        identifier: 'MEILISEARCH_RELATION'
 
 
   # Reports: Status
   WapplerSystems\Meilisearch\Report\:
     resource: '../Classes/Report/*'
     autoconfigure: true
+
+  WapplerSystems\Meilisearch\ConnectionManager:
+    public: true
+    autowire: true
+
+  WapplerSystems\Meilisearch\Command\IndexPageCommand:
+    autowire: true
+    tags:
+      - name: 'console.command'
+        command: 'meilisearch:indexPage'
+        description: 'Index single page'
+
+  WapplerSystems\Meilisearch\Command\TestCommand:
+    autowire: true
+    tags:
+      - name: 'console.command'
+        command: 'meilisearch:test'
+        description: 'Test'
+
+  WapplerSystems\Meilisearch\Indexer\IndexerFactory:
+    arguments:
+      $indexers: !tagged_locator { tag: 'meilisearch.indexer', index_by: 'type' }
+
+  WapplerSystems\Meilisearch\Indexer\PageIndexer:
+    autoconfigure: true
+    autowire: true
+
+  WapplerSystems\Meilisearch\Indexer\BetterPageIndexer:
+    autoconfigure: true
+    autowire: true

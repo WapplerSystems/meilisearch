@@ -16,7 +16,7 @@
 namespace WapplerSystems\Meilisearch\Tests\Integration\Task;
 
 use WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler\Events\RecordUpdatedEvent;
-use WapplerSystems\Meilisearch\IndexQueue\Queue;
+use WapplerSystems\Meilisearch\Indexer\Queue;
 use WapplerSystems\Meilisearch\System\Records\Queue\EventQueueItemRepository;
 use WapplerSystems\Meilisearch\Task\EventQueueWorkerTask;
 use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;

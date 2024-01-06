@@ -17,8 +17,8 @@ declare(strict_types=1);
 
 namespace WapplerSystems\Meilisearch\Middleware;
 
-use WapplerSystems\Meilisearch\IndexQueue\PageIndexerRequest;
-use WapplerSystems\Meilisearch\IndexQueue\PageIndexerRequestHandler;
+use WapplerSystems\Meilisearch\Indexer\PageIndexerRequest;
+use WapplerSystems\Meilisearch\Indexer\PageIndexerRequestHandler;
 use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -38,10 +38,10 @@ class PageIndexerInitialization implements MiddlewareInterface
     {
         $pageIndexerRequestHandler = null;
         $pageIndexerRequest = null;
-        if ($request->hasHeader(PageIndexerRequest::SOLR_INDEX_HEADER)) {
+        if ($request->hasHeader(PageIndexerRequest::MEILISEARCH_INDEX_HEADER)) {
             // disable TSFE cache for TYPO3 v10
             $request = $request->withAttribute('noCache', true);
-            $jsonEncodedParameters = $request->getHeader(PageIndexerRequest::SOLR_INDEX_HEADER)[0];
+            $jsonEncodedParameters = $request->getHeader(PageIndexerRequest::MEILISEARCH_INDEX_HEADER)[0];
             $pageIndexerRequest = GeneralUtility::makeInstance(PageIndexerRequest::class, $jsonEncodedParameters);
             if (!$pageIndexerRequest->isAuthenticated()) {
                 $logger = GeneralUtility::makeInstance(MeilisearchLogManager::class, self::class);

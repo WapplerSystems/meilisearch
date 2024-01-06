@@ -28,10 +28,10 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
  */
 class Content extends AbstractContentObject
 {
-    public const CONTENT_OBJECT_NAME = 'SOLR_CONTENT';
+    public const CONTENT_OBJECT_NAME = 'MEILISEARCH_CONTENT';
 
     /**
-     * Executes the SOLR_CONTENT content object.
+     * Executes the MEILISEARCH_CONTENT content object.
      *
      * Cleans content coming from a database field, removing HTML tags ...
      */

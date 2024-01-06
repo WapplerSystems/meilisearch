@@ -49,13 +49,13 @@ plugin.tx_meilisearch {
 
                 fields {
                     title = title
-                    category_stringM = SOLR_RELATION
+                    category_stringM = MEILISEARCH_RELATION
                     category_stringM {
                         localField = tags
                         multiValue = 1
                     }
 
-                    tags_stringM = SOLR_RELATION
+                    tags_stringM = MEILISEARCH_RELATION
                     tags_stringM {
                         localField = tags
                         enableRecursiveValueResolution = 1

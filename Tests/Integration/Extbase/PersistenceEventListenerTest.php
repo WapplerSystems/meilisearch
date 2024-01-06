@@ -17,7 +17,7 @@ namespace WapplerSystems\Meilisearch\Tests\Integration\Extbase;
 
 use MeilisearchForTypo3\FakeExtension\Domain\Model\Foo;
 use MeilisearchForTypo3\FakeExtension\Domain\Repository\FooRepository;
-use WapplerSystems\Meilisearch\IndexQueue\Queue;
+use WapplerSystems\Meilisearch\Indexer\Queue;
 use WapplerSystems\Meilisearch\Tests\Integration\IntegrationTest;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Utility\GeneralUtility;

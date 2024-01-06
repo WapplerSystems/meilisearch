@@ -34,7 +34,7 @@ namespace WapplerSystems\Meilisearch\Tests\Unit\Domain\Index\Queue;
 
 use WapplerSystems\Meilisearch\Domain\Index\Queue\QueueInitializationService;
 use WapplerSystems\Meilisearch\Domain\Site\Site;
-use WapplerSystems\Meilisearch\IndexQueue\Queue;
+use WapplerSystems\Meilisearch\Indexer\Queue;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use TYPO3\CMS\Core\EventDispatcher\NoopEventDispatcher;

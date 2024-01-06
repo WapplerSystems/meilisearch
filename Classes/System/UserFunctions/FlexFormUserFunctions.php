@@ -133,7 +133,7 @@ class FlexFormUserFunctions
      */
     protected function getFieldNamesFromMeilisearchMetaDataForPage(array $pageRecord): array
     {
-        return array_keys((array)$this->getConnection($pageRecord)->getAdminService()->getFieldsMetaData());
+        return array_keys((array)$this->getConnection($pageRecord)->getService()->getFieldsMetaData());
     }
 
     /**

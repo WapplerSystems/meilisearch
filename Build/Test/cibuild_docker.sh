@@ -272,11 +272,11 @@ assertNecessaryPathsAreOwnedByMeilisearch ()
 
 assertCoresAreSwitchableViaEnvVar ()
 {
-  echo -e "\nCheck all cores are disabled except desired by \$TYPO3_SOLR_ENABLED_CORES env:"
+  echo -e "\nCheck all cores are disabled except desired by \$TYPO3_MEILISEARCH_ENABLED_CORES env:"
   echo -n "  stop container $LOCAL_CONTAINER_NAME" prettyPrintOrExitOnError $? "$(docker stop "$LOCAL_CONTAINER_NAME" 2>&1)"
 
   echo -n "Starting container"
-  prettyPrintOrExitOnError $? "$(docker run --env TYPO3_SOLR_ENABLED_CORES='german english danish' --name="$LOCAL_CONTAINER_NAME" -d -p 127.0.0.1:8998:8983 -v "$LOCAL_VOLUME_NAME":"$DEFAULT_IMAGE_VOLUME_EXPORT_PATH" "$LOCAL_IMAGE_NAME" 2>&1)"
+  prettyPrintOrExitOnError $? "$(docker run --env TYPO3_MEILISEARCH_ENABLED_CORES='german english danish' --name="$LOCAL_CONTAINER_NAME" -d -p 127.0.0.1:8998:8983 -v "$LOCAL_VOLUME_NAME":"$DEFAULT_IMAGE_VOLUME_EXPORT_PATH" "$LOCAL_IMAGE_NAME" 2>&1)"
 
   ENABLED_CORES=(
     "core_de"

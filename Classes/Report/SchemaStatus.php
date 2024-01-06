@@ -70,10 +70,10 @@ class SchemaStatus extends AbstractMeilisearchStatus
         }
 
         foreach ($meilisearchConnections as $meilisearchConnection) {
-            $adminService = $meilisearchConnection->getAdminService();
+            $service = $meilisearchConnection->getService();
             /** @var MeilisearchConnection $meilisearchConnection */
-            if (!$adminService->ping()) {
-                $url = $adminService->__toString();
+            if (!$service->ping()) {
+                $url = $service->__toString();
                 $pingFailedMsg = 'Could not ping meilisearch server, can not check version ' . $url;
                 $status = GeneralUtility::makeInstance(
                     Status::class,
@@ -86,9 +86,9 @@ class SchemaStatus extends AbstractMeilisearchStatus
                 continue;
             }
 
-            $isWrongSchema = $adminService->getSchema()->getName() != self::RECOMMENDED_SCHEMA_VERSION;
+            $isWrongSchema = $service->getSchema()->getName() != self::RECOMMENDED_SCHEMA_VERSION;
             if ($isWrongSchema) {
-                $variables = ['meilisearch' => $adminService, 'recommendedVersion' => self::RECOMMENDED_SCHEMA_VERSION];
+                $variables = ['meilisearch' => $service, 'recommendedVersion' => self::RECOMMENDED_SCHEMA_VERSION];
                 $report = $this->getRenderedReport('SchemaStatus.html', $variables);
                 $status = GeneralUtility::makeInstance(
                     Status::class,

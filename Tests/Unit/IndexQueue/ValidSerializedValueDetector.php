@@ -15,7 +15,7 @@
 
 namespace WapplerSystems\Meilisearch\Tests\Unit\IndexQueue;
 
-use WapplerSystems\Meilisearch\IndexQueue\SerializedValueDetector;
+use WapplerSystems\Meilisearch\Indexer\SerializedValueDetector;
 
 class ValidSerializedValueDetector implements SerializedValueDetector
 {

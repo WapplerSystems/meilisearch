@@ -17,9 +17,9 @@ namespace WapplerSystems\Meilisearch\System\Configuration;
 
 use WapplerSystems\Meilisearch\Domain\Search\SearchRequest;
 use WapplerSystems\Meilisearch\Exception\InvalidArgumentException;
-use WapplerSystems\Meilisearch\IndexQueue\Indexer;
-use WapplerSystems\Meilisearch\IndexQueue\Initializer\Record;
-use WapplerSystems\Meilisearch\IndexQueue\Queue;
+use WapplerSystems\Meilisearch\Indexer\Indexer;
+use WapplerSystems\Meilisearch\Indexer\Initializer\Record;
+use WapplerSystems\Meilisearch\Indexer\Queue;
 use WapplerSystems\Meilisearch\System\ContentObject\ContentObjectService;
 use WapplerSystems\Meilisearch\System\Util\ArrayAccessor;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
@@ -145,7 +145,7 @@ class TypoScriptConfiguration
      *
      * Example: plugin.tx_meilisearch.index.queue.tt_news.fields.content
      * returns $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_meilisearch.']['index.']['queue.']['tt_news.']['fields.']['content.']
-     * which is a SOLR_CONTENT cObj.
+     * which is a MEILISEARCH_CONTENT cObj.
      *
      * @throws InvalidArgumentException
      */
@@ -417,7 +417,7 @@ class TypoScriptConfiguration
 
     /**
      * Returns the configured indexer class that should be used for a certain indexingConfiguration.
-     * By default, "WapplerSystems\Meilisearch\IndexQueue\Indexer" will be returned.
+     * By default, "WapplerSystems\Meilisearch\Indexer\Indexer" will be returned.
      *
      * plugin.tx_meilisearch.index.queue.<configurationName>.indexer
      */
@@ -1709,21 +1709,6 @@ class TypoScriptConfiguration
         return $this->getObjectByPathOrDefault('plugin.tx_meilisearch.view.templateFiles.' . $fileKey . '.availableTemplates.');
     }
 
-    /**
-     * Controls whether ext-meilisearch will send commits to meilisearch.
-     * Beware: If you disable this, you need to ensure
-     * that some other mechanism will commit your changes
-     * otherwise they will never be searchable.
-     * A good way to achieve this is enabling the meilisearch
-     * daemons autoCommit feature.
-     *
-     * plugin.tx_meilisearch.index.enableCommits
-     */
-    public function getEnableCommits(bool $defaultIfEmpty = true): bool
-    {
-        $enableCommits = $this->getValueByPathOrDefaultValue('plugin.tx_meilisearch.index.enableCommits', $defaultIfEmpty);
-        return $this->getBool($enableCommits);
-    }
 
     /**
      * Returns the url namespace that is used for the arguments.

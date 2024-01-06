@@ -24,7 +24,7 @@ use TYPO3\CMS\Frontend\ContentObject\AbstractContentObject;
  *
  * Example usage:
  *
- * keywords = SOLR_MULTIVALUE # supports stdWrap
+ * keywords = MEILISEARCH_MULTIVALUE # supports stdWrap
  * keywords {
  *   field = tags # a comma separated field. instead of field you can also use "value"
  *   separator = , # comma is the default value
@@ -36,10 +36,10 @@ use TYPO3\CMS\Frontend\ContentObject\AbstractContentObject;
  */
 class Multivalue extends AbstractContentObject
 {
-    public const CONTENT_OBJECT_NAME = 'SOLR_MULTIVALUE';
+    public const CONTENT_OBJECT_NAME = 'MEILISEARCH_MULTIVALUE';
 
     /**
-     * Executes the SOLR_MULTIVALUE content object.
+     * Executes the MEILISEARCH_MULTIVALUE content object.
      *
      * Turns a list of values into an array that can then be used to fill
      * multivalued fields in a Meilisearch document. The array is returned in

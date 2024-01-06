@@ -16,7 +16,7 @@
 namespace WapplerSystems\Meilisearch\Domain\Index\Queue\RecordMonitor\Helper;
 
 use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
-use WapplerSystems\Meilisearch\IndexQueue\Initializer\Page;
+use WapplerSystems\Meilisearch\Indexer\Initializer\Page;
 use WapplerSystems\Meilisearch\System\Page\Rootline;
 use WapplerSystems\Meilisearch\System\Records\Pages\PagesRepository;
 use Doctrine\DBAL\Exception as DBALException;

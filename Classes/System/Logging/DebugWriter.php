@@ -17,7 +17,7 @@ declare(strict_types=1);
 
 namespace WapplerSystems\Meilisearch\System\Logging;
 
-use WapplerSystems\Meilisearch\IndexQueue\PageIndexerRequest;
+use WapplerSystems\Meilisearch\Indexer\PageIndexerRequest;
 use WapplerSystems\Meilisearch\Util;
 use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Core\Http\Request;
@@ -79,7 +79,7 @@ class DebugWriter
         if (!($GLOBALS['TYPO3_REQUEST'] ?? null) instanceof Request) {
             return false;
         }
-        return $GLOBALS['TYPO3_REQUEST']->hasHeader(PageIndexerRequest::SOLR_INDEX_HEADER);
+        return $GLOBALS['TYPO3_REQUEST']->hasHeader(PageIndexerRequest::MEILISEARCH_INDEX_HEADER);
     }
 
     /**

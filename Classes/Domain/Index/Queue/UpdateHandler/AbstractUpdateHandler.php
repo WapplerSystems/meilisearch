@@ -19,7 +19,7 @@ namespace WapplerSystems\Meilisearch\Domain\Index\Queue\UpdateHandler;
 
 use WapplerSystems\Meilisearch\Domain\Index\Queue\RecordMonitor\Helper\ConfigurationAwareRecordService;
 use WapplerSystems\Meilisearch\FrontendEnvironment;
-use WapplerSystems\Meilisearch\IndexQueue\Queue;
+use WapplerSystems\Meilisearch\Indexer\Queue;
 use WapplerSystems\Meilisearch\System\Records\Pages\PagesRepository;
 use WapplerSystems\Meilisearch\System\TCA\TCAService;
 use Doctrine\DBAL\Exception as DBALException;

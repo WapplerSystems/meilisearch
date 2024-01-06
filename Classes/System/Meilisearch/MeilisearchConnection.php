@@ -42,7 +42,7 @@ class MeilisearchConnection
 {
     protected array $clientConfiguration;
 
-    protected ?MeilisearchService $readService = null;
+    protected ?MeilisearchService $service = null;
 
     protected TypoScriptConfiguration $configuration;
 
@@ -57,6 +57,7 @@ class MeilisearchConnection
     protected ?Client $client = null;
 
     protected ClientInterface $psr7Client;
+
     protected RequestFactoryInterface $requestFactory;
 
     protected StreamFactoryInterface $streamFactory;
@@ -104,11 +105,11 @@ class MeilisearchConnection
      */
     public function getService(): MeilisearchService
     {
-        if ($this->readService === null) {
-            $this->readService = $this->buildService();
+        if ($this->service === null) {
+            $this->service = $this->buildService();
         }
 
-        return $this->readService;
+        return $this->service;
     }
 
     /**

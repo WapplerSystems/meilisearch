@@ -5,14 +5,14 @@
  * This script is made to avoid bash/system dependencies for json-parsing tools.
  * And is made for usage CI/CD usage in TYPO3-Meilisearch addons/projects.
  */
-$addOnPath = getenv('EXT_SOLR_ADDON_PATH') ?? null;
+$addOnPath = getenv('EXT_MEILISEARCH_ADDON_PATH') ?? null;
 
 $usage = "
   Usage:
     $argv[0] vendor/name
     $argv[0] solarium/solarium
 
-  EXT_SOLR_ADDON_PATH=$(pwd -P)packages/ext-tika $argv[0] typo3/cms-core
+  EXT_MEILISEARCH_ADDON_PATH=$(pwd -P)packages/ext-tika $argv[0] typo3/cms-core
 ";
 
 if (!isset($argv[1])) {

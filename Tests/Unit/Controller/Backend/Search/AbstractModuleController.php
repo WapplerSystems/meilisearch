@@ -19,7 +19,7 @@ use WapplerSystems\Meilisearch\ConnectionManager;
 use WapplerSystems\Meilisearch\Controller\Backend\Search\AbstractModuleController as ModuleController;
 use WapplerSystems\Meilisearch\Domain\Site\Site;
 use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
-use WapplerSystems\Meilisearch\IndexQueue\Queue;
+use WapplerSystems\Meilisearch\Indexer\Queue;
 use WapplerSystems\Meilisearch\System\Mvc\Backend\Service\ModuleDataStorageService;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;

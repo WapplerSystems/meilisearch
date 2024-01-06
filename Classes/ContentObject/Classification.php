@@ -26,7 +26,7 @@ use TYPO3\CMS\Frontend\ContentObject\AbstractContentObject;
  *
  * Example usage:
  *
- * keywords = SOLR_CLASSIFICATION # supports stdWrap
+ * keywords = MEILISEARCH_CLASSIFICATION # supports stdWrap
  * keywords {
  *   field = __meilisearch_content # a comma separated field. instead of field you can also use "value"
  *   classes {
@@ -39,10 +39,10 @@ use TYPO3\CMS\Frontend\ContentObject\AbstractContentObject;
  */
 class Classification extends AbstractContentObject
 {
-    public const CONTENT_OBJECT_NAME = 'SOLR_CLASSIFICATION';
+    public const CONTENT_OBJECT_NAME = 'MEILISEARCH_CLASSIFICATION';
 
     /**
-     * Executes the SOLR_CLASSIFICATION content object.
+     * Executes the MEILISEARCH_CLASSIFICATION content object.
      *
      * Returns mapped classes when the field matches on of the configured patterns ...
      *
@@ -51,7 +51,7 @@ class Classification extends AbstractContentObject
     public function render($conf = [])
     {
         if (!is_array($conf['classes.'])) {
-            throw new InvalidArgumentException('No class configuration configured for SOLR_CLASSIFICATION object. Given configuration: ' . serialize($conf));
+            throw new InvalidArgumentException('No class configuration configured for MEILISEARCH_CLASSIFICATION object. Given configuration: ' . serialize($conf));
         }
 
         $configuredMappedClasses = $conf['classes.'];
@@ -83,7 +83,7 @@ class Classification extends AbstractContentObject
         $classifications = [];
         foreach ($configuredMappedClasses as $class) {
             if ((empty($class['patterns']) && empty($class['matchPatterns'])) || empty($class['class'])) {
-                throw new InvalidArgumentException('A class configuration in SOLR_CLASSIFCATION needs to have a pattern and a class configured. Given configuration: ' . serialize($class));
+                throw new InvalidArgumentException('A class configuration in MEILISEARCH_CLASSIFCATION needs to have a pattern and a class configured. Given configuration: ' . serialize($class));
             }
 
             // @todo deprecate patterns configuration

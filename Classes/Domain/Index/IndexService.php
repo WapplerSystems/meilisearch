@@ -15,16 +15,17 @@
 
 namespace WapplerSystems\Meilisearch\Domain\Index;
 
+use TYPO3\CMS\Core\Utility\DebugUtility;
 use WapplerSystems\Meilisearch\ConnectionManager;
 use WapplerSystems\Meilisearch\Domain\Site\Site;
 use WapplerSystems\Meilisearch\Event\Indexing\AfterItemHasBeenIndexedEvent;
 use WapplerSystems\Meilisearch\Event\Indexing\AfterItemsHaveBeenIndexedEvent;
 use WapplerSystems\Meilisearch\Event\Indexing\BeforeItemIsIndexedEvent;
 use WapplerSystems\Meilisearch\Event\Indexing\BeforeItemsAreIndexedEvent;
-use WapplerSystems\Meilisearch\IndexQueue\Indexer;
-use WapplerSystems\Meilisearch\IndexQueue\Item;
-use WapplerSystems\Meilisearch\IndexQueue\Queue;
-use WapplerSystems\Meilisearch\IndexQueue\QueueInterface;
+use WapplerSystems\Meilisearch\Indexer\Indexer;
+use WapplerSystems\Meilisearch\Indexer\Item;
+use WapplerSystems\Meilisearch\Indexer\Queue;
+use WapplerSystems\Meilisearch\Indexer\QueueInterface;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\Task\IndexQueueWorkerTask;
@@ -85,7 +86,6 @@ class IndexService
         $errors     = 0;
         $indexRunId = uniqid();
         $configurationToUse = $this->site->getMeilisearchConfiguration();
-        $enableCommitsSetting = $configurationToUse->getEnableCommits();
 
         // get items to index
         $itemsToIndex = $this->indexQueue->getItemsToIndex($this->site, $limit);
@@ -113,15 +113,6 @@ class IndexService
         $afterIndexItemsEvent = new AfterItemsHaveBeenIndexedEvent($itemsToIndex, $this->getContextTask(), $indexRunId);
         $this->eventDispatcher->dispatch($afterIndexItemsEvent);
 
-        if ($enableCommitsSetting && count($itemsToIndex) > 0) {
-            $meilisearchServers = GeneralUtility::makeInstance(ConnectionManager::class)->getConnectionsBySite($this->site);
-            foreach ($meilisearchServers as $meilisearchServer) {
-                $response = $meilisearchServer->getWriteService()->commit(false, false);
-                if ($response->getHttpStatus() !== 200) {
-                    $errors++;
-                }
-            }
-        }
 
         return $errors === 0;
     }
@@ -180,9 +171,9 @@ class IndexService
      * A factory method to get an indexer depending on an item's configuration.
      *
      * By default, all items are indexed using the default indexer
-     * (WapplerSystems\Meilisearch\IndexQueue\Indexer) coming with EXT:meilisearch. Pages by default are
+     * (WapplerSystems\Meilisearch\Indexer\Indexer) coming with EXT:meilisearch. Pages by default are
      * configured to be indexed through a dedicated indexer
-     * (WapplerSystems\Meilisearch\IndexQueue\PageIndexer). In all other cases a dedicated indexer
+     * (WapplerSystems\Meilisearch\Indexer\PageIndexer). In all other cases a dedicated indexer
      * can be specified through TypoScript if needed.
      */
     protected function getIndexerByItem(
@@ -195,7 +186,7 @@ class IndexService
         $indexer = GeneralUtility::makeInstance($indexerClass, $indexerConfiguration);
         if (!($indexer instanceof Indexer)) {
             throw new RuntimeException(
-                'The indexer class "' . $indexerClass . '" for indexing configuration "' . $indexingConfigurationName . '" is not a valid indexer. Must be a subclass of WapplerSystems\Meilisearch\IndexQueue\Indexer.',
+                'The indexer class "' . $indexerClass . '" for indexing configuration "' . $indexingConfigurationName . '" is not a valid indexer. Must be a subclass of WapplerSystems\Meilisearch\Indexer\Indexer.',
                 1260463206
             );
         }

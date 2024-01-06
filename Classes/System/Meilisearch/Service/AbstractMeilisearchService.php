@@ -19,17 +19,14 @@ namespace WapplerSystems\Meilisearch\System\Meilisearch\Service;
 
 use Meilisearch\Client;
 use Meilisearch\Contracts\Endpoint;
+use Throwable;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use WapplerSystems\Meilisearch\PingFailedException;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 use WapplerSystems\Meilisearch\System\Logging\MeilisearchLogManager;
 use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchConnection;
 use WapplerSystems\Meilisearch\System\Meilisearch\ResponseAdapter;
 use WapplerSystems\Meilisearch\Util;
-use Closure;
-use Psr\Log\LogLevel;
-use Throwable;
-use TYPO3\CMS\Core\Http\Uri;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 abstract class AbstractMeilisearchService
 {

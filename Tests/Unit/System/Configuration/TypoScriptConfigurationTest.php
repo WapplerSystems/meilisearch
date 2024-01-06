@@ -15,8 +15,8 @@
 
 namespace WapplerSystems\Meilisearch\Tests\Unit\System\Configuration;
 
-use WapplerSystems\Meilisearch\IndexQueue\Initializer\Record;
-use WapplerSystems\Meilisearch\IndexQueue\Queue;
+use WapplerSystems\Meilisearch\Indexer\Initializer\Record;
+use WapplerSystems\Meilisearch\Indexer\Queue;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
 use WapplerSystems\Meilisearch\Tests\Unit\SetUpUnitTestCase;
 
@@ -35,7 +35,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
     protected function setUp(): void
     {
         $fakeConfigurationArray = [];
-        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['index.']['queue.']['tt_news.']['fields.']['content'] = 'SOLR_CONTENT';
+        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['index.']['queue.']['tt_news.']['fields.']['content'] = 'MEILISEARCH_CONTENT';
         $fakeConfigurationArray['plugin.']['tx_meilisearch.']['index.']['queue.']['tt_news.']['fields.']['content.']['field'] = 'bodytext';
         $this->configuration = new TypoScriptConfiguration($fakeConfigurationArray);
         parent::setUp();
@@ -47,7 +47,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
     public function canGetValueByPath()
     {
         $testPath = 'plugin.tx_meilisearch.index.queue.tt_news.fields.content';
-        self::assertSame('SOLR_CONTENT', $this->configuration->getValueByPath($testPath), 'Could not get configuration value by path');
+        self::assertSame('MEILISEARCH_CONTENT', $this->configuration->getValueByPath($testPath), 'Could not get configuration value by path');
     }
 
     /**
@@ -57,7 +57,7 @@ class TypoScriptConfigurationTest extends SetUpUnitTestCase
     {
         $testPath = 'plugin.tx_meilisearch.index.queue.tt_news.fields.content';
         $expectedResult = [
-            'content' => 'SOLR_CONTENT',
+            'content' => 'MEILISEARCH_CONTENT',
             'content.' => ['field' => 'bodytext'],
         ];
 

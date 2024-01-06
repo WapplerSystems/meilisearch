@@ -48,7 +48,7 @@ plugin.tx_meilisearch {
 
                 fields {
                     title = title
-                    category_stringM = SOLR_RELATION
+                    category_stringM = MEILISEARCH_RELATION
                     category_stringM {
                         localField = category
                         foreignLabelField = category_label
