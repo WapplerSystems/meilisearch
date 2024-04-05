@@ -40,7 +40,7 @@ class TestCommand extends Command
      *
      * @inheritdoc
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
 
 
@@ -77,7 +77,7 @@ class TestCommand extends Command
         $indexes = $client->getIndexes();
 
 
-        return 0;
+        return Command::SUCCESS;
     }
 
 

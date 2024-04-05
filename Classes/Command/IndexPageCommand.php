@@ -49,7 +49,7 @@ class IndexPageCommand extends Command
      *
      * @inheritdoc
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
 
         $pageUid = (int)$input->getArgument('pageUid');
@@ -77,7 +77,7 @@ class IndexPageCommand extends Command
         $output->writeln('Done');
 
 
-        return 0;
+        return Command::SUCCESS;
     }
 
 
