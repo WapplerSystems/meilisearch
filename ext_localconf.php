@@ -6,7 +6,6 @@ use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Result\Parser\GroupedResu
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Result\Parser\ResultParserRegistry;
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Result\SearchResult;
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSet;
-use WapplerSystems\Meilisearch\Eid\ApiEid;
 use WapplerSystems\Meilisearch\GarbageCollector;
 use WapplerSystems\Meilisearch\Indexer\FrontendHelper\AuthorizationService;
 use WapplerSystems\Meilisearch\Indexer\FrontendHelper\Manager;
@@ -35,10 +34,8 @@ use TYPO3\CMS\Scheduler\Task\TableGarbageCollectionTask;
 
 defined('TYPO3') or die('Access denied.');
 
-// ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- #
 
 (static function () {
-    // ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- #
     // Registering RecordMonitor and GarbageCollector hooks.
 
     // hooking into TCE Main to monitor record updates that may require deleting documents from the index
@@ -49,13 +46,11 @@ defined('TYPO3') or die('Access denied.');
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass']['meilisearch/recordmonitor'] = RecordMonitor::class;
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['meilisearch/recordmonitor'] = RecordMonitor::class;
 
-    // ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- #
     // registering Index Queue page indexer helpers
     Manager::registerFrontendHelper('findUserGroups', UserGroupDetector::class);
 
     Manager::registerFrontendHelper('indexPage', PageIndexer::class);
 
-    // ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- #
 
     // adding scheduler tasks
 
@@ -134,7 +129,6 @@ defined('TYPO3') or die('Access denied.');
         ]
     );
 
-    // ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- #
 
     if (!isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['meilisearch']['searchResultClassName '])) {
         $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['meilisearch']['searchResultClassName '] = SearchResult::class;
@@ -162,7 +156,6 @@ defined('TYPO3') or die('Access denied.');
         ];
     }
 
-    // ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- #
 
     ExtensionUtility::configurePlugin(
         'Meilisearch',
@@ -206,19 +199,13 @@ defined('TYPO3') or die('Access denied.');
     );
 
     // register the Fluid namespace 'meilisearch' globally
-    $GLOBALS['TYPO3_CONF_VARS']['SYS']['fluid']['namespaces']['meilisearch'] = ['WapplerSystems\\Meilisearch\\ViewHelpers'];
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['fluid']['namespaces']['t3ms'] = ['WapplerSystems\\Meilisearch\\ViewHelpers'];
 
     /*
      * Meilisearch route enhancer configuration
      */
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['routing']['enhancers']['MeilisearchFacetMaskAndCombineEnhancer'] = MeilisearchFacetMaskAndCombineEnhancer::class;
 
-    // add meilisearch field to rootline fields
-    if ($GLOBALS['TYPO3_CONF_VARS']['FE']['addRootLineFields'] === '') {
-        $GLOBALS['TYPO3_CONF_VARS']['FE']['addRootLineFields'] = 'no_search_sub_entries';
-    } else {
-        $GLOBALS['TYPO3_CONF_VARS']['FE']['addRootLineFields'] .= ',no_search_sub_entries';
-    }
 
     /**
      * Registers an authentication service to authorize / grant the indexer to

@@ -43,7 +43,7 @@ class ExtensionConfiguration
     public function __construct(array $configurationToUse = [])
     {
         if (empty($configurationToUse)) {
-            $this->configuration = GeneralUtility::makeInstance(CoreExtensionConfiguration::class)->get('meilisearch');
+            $this->configuration = GeneralUtility::makeInstance(CoreExtensionConfiguration::class)->get('t3_meilisearch');
         } else {
             $this->configuration = $configurationToUse;
         }

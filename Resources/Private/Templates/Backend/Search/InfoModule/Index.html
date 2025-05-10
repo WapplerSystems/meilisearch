@@ -394,13 +394,13 @@
                                                 <core:icon identifier="actions-document-view"/>
                                             </f:link.action>
                                         </span>
-                                        <meilisearch:backend.security.ifHasAccessToModule extension="Meilisearch" main="searchbackend" sub="indexqueue">
+                                        <t3ms:backend.security.ifHasAccessToModule extension="Meilisearch" main="searchbackend" sub="indexqueue">
                                             <span class="btn btn-default">
                                                 <f:be.link route="searchbackend_indexqueue.Backend\Search\IndexQueueModule_requeueDocument" parameters="{uid: document.uid, type: document.type}">
                                                     <core:icon identifier="actions-refresh"/>
                                                 </f:be.link>
                                             </span>
-                                        </meilisearch:backend.security.ifHasAccessToModule>
+                                        </t3ms:backend.security.ifHasAccessToModule>
                                     </td>
                                 </tr>
                             </f:for>

@@ -27,7 +27,7 @@
     <f:for each="{tableRows}" key="tableRowFiledName" as="tableRowValue" >
         <tr>
             <th scope="row">{tableRowFiledName}</th>
-            <meilisearch:isString value="{tableRowValue}">
+            <t3ms:isString value="{tableRowValue}">
                 <f:then>
                     <td>{tableRowValue}</td>
                 </f:then>
@@ -36,7 +36,7 @@
                         <f:render section="SubTable" arguments="{tableRows: tableRowValue}"/>
                     </td>
                 </f:else>
-            </meilisearch:isString>
+            </t3ms:isString>
         </tr>
     </f:for>
 </f:section>

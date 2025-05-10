@@ -122,7 +122,7 @@
 	</div>
 
 	<f:comment><!-- Show this button only if module indexadministration is allowed for be user/group --></f:comment>
-	<meilisearch:backend.security.ifHasAccessToModule extension="Meilisearch" main="searchbackend" sub="indexadministration">
+	<t3ms:backend.security.ifHasAccessToModule extension="Meilisearch" main="searchbackend" sub="indexadministration">
 		<f:then>
 			<hr class="section-divider" />
 
@@ -149,5 +149,5 @@
 				</div>
 			</div>
 		</f:then>
-	</meilisearch:backend.security.ifHasAccessToModule>
+	</t3ms:backend.security.ifHasAccessToModule>
 </f:section>
