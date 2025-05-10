@@ -25,7 +25,7 @@ use TYPO3\CMS\Core\Site\Entity\Site as Typo3Site;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Represents all information for EXT:meilisearch of a given TYPO3 Site to retrieve
+ * Represents all information for EXT:t3_meilisearch of a given TYPO3 Site to retrieve
  * configuration and setup from a page.
  *
  * (c) 2011-2015 Ingo Renner <ingo@typo3.org>
@@ -176,7 +176,7 @@ class Site
     }
 
     /**
-     * Gets the site's Meilisearch TypoScript configuration (plugin.tx_meilisearch.*)
+     * Gets the site's Meilisearch TypoScript configuration (plugin.tx_t3meilisearch.*)
      *
      * Purpose: Interface and Unit test mocking helper method.
      */
@@ -228,7 +228,7 @@ class Site
      * Generates the site's unique Site Hash.
      *
      * The Site Hash is build from the site's main domain, the system encryption
-     * key, and the extension "tx_meilisearch". These components are concatenated and
+     * key, and the extension "tx_t3meilisearch". These components are concatenated and
      * sha1-hashed.
      */
     public function getSiteHash(): string
@@ -282,7 +282,7 @@ class Site
     }
 
     /**
-     * Returns the EXT:meilisearch state configured in site.
+     * Returns the EXT:t3_meilisearch state configured in site.
      */
     public function isEnabled(): bool
     {

@@ -138,7 +138,7 @@ class SiteHandlingStatus extends AbstractMeilisearchStatus
      */
     public function getLabel(): string
     {
-        return 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_reports.xlf:status_meilisearch_site-handling';
+        return 'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang_reports.xlf:status_meilisearch_site-handling';
     }
 
     /**

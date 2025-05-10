@@ -83,7 +83,7 @@ class Tsfe implements SingletonInterface
         $cacheIdentifier = $this->getCacheIdentifier($pageId, $language, $rootPageId);
 
         // Handle spacer and sys-folders, since they are not accessible in frontend, and TSFE can not be fully initialized on them.
-        // Apart from this, the plugin.tx_meilisearch.index.queue.[indexConfig].additionalPageIds is handled as well.
+        // Apart from this, the plugin.tx_t3meilisearch.index.queue.[indexConfig].additionalPageIds is handled as well.
         $pidToUse = $this->getPidToUseForTsfeInitialization($pageId, $rootPageId);
         if ($pidToUse !== $pageId) {
             $this->initializeTsfe($pidToUse, $language, $rootPageId);
@@ -172,7 +172,7 @@ class Tsfe implements SingletonInterface
                 $tsfe->no_cache = false;
                 /** @var ServerRequest $serverRequest */
                 $serverRequest = $tsfe->getFromCache($serverRequest);
-                // The manual releasing of locks is low level api and should be avoided in EXT:meilisearch.
+                // The manual releasing of locks is low level api and should be avoided in EXT:t3_meilisearch.
                 $tsfe->releaseLocks();
 
                 $tsfe->newCObj($serverRequest);
@@ -218,7 +218,7 @@ class Tsfe implements SingletonInterface
      * Returns TypoScriptFrontendController for first available language id in fallback chain.
      *
      * Is usable for BE-Modules/CLI-Commands stack only, where the rendered TypoScript configuration
-     * of EXT:meilisearch* stack is wanted and the language id does not matter.
+     * of EXT:t3_meilisearch* stack is wanted and the language id does not matter.
      *
      * NOTE: This method MUST NOT be used on indexing context.
      *
@@ -244,7 +244,7 @@ class Tsfe implements SingletonInterface
      * Returns TSFE for first initializable site language.
      *
      * Is usable for BE-Modules/CLI-Commands stack only, where the rendered TypoScript configuration
-     * of EXT:meilisearch* stack is wanted and the language id does not matter.
+     * of EXT:t3_meilisearch* stack is wanted and the language id does not matter.
      */
     public function getTsfeByPageIdIgnoringLanguage(int $pageId): ?TypoScriptFrontendController
     {
@@ -311,7 +311,7 @@ class Tsfe implements SingletonInterface
      * The TSFE can not be initialized for Spacer and sys-folders.
      * See: "Spacer and sys folders is not accessible in frontend" on {@link TypoScriptFrontendController::getPageAndRootline}
      *
-     * Note: The requested $pidToUse can be one of configured plugin.tx_meilisearch.index.queue.[indexConfig].additionalPageIds.
+     * Note: The requested $pidToUse can be one of configured plugin.tx_t3meilisearch.index.queue.[indexConfig].additionalPageIds.
      *
      * @throws Exception\Exception
      * @throws DBALException
@@ -321,7 +321,7 @@ class Tsfe implements SingletonInterface
         $incomingPidToUse = $pidToUse;
         $incomingRootPageId = $rootPageId;
 
-        // handle plugin.tx_meilisearch.index.queue.[indexConfig].additionalPageIds
+        // handle plugin.tx_t3meilisearch.index.queue.[indexConfig].additionalPageIds
         if (isset($rootPageId) && !$this->isRequestedPageAPartOfRequestedSite($pidToUse)) {
             return $rootPageId;
         }

@@ -62,7 +62,7 @@ class PageIndexerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.index.queue.pages.fields {
+            plugin.tx_t3meilisearch.index.queue.pages.fields {
               sortSubTitle_stringS = subtitle
               custom_stringS = TEXT
               custom_stringS.value = my text
@@ -96,8 +96,8 @@ class PageIndexerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.index.queue.mytype < plugin.tx_meilisearch.index.queue.pages
-            plugin.tx_meilisearch.index.queue.mytype {
+            plugin.tx_t3meilisearch.index.queue.mytype < plugin.tx_t3meilisearch.index.queue.pages
+            plugin.tx_t3meilisearch.index.queue.mytype {
               allowedPageTypes = 130
               additionalWhereClause = doktype = 130
               fields.custom_stringS = TEXT
@@ -132,8 +132,8 @@ class PageIndexerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.index.queue.pages.fields.relatedPageTitles_stringM = MEILISEARCH_RELATION
-            plugin.tx_meilisearch.index.queue.pages.fields.relatedPageTitles_stringM {
+            plugin.tx_t3meilisearch.index.queue.pages.fields.relatedPageTitles_stringM = MEILISEARCH_RELATION
+            plugin.tx_t3meilisearch.index.queue.pages.fields.relatedPageTitles_stringM {
               localField = page_relations
               enableRecursiveValueResolution = 0
               multiValue = 1
@@ -174,8 +174,8 @@ class PageIndexerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.index.queue.pages.fields.categories_stringM = MEILISEARCH_RELATION
-            plugin.tx_meilisearch.index.queue.pages.fields.categories_stringM {
+            plugin.tx_t3meilisearch.index.queue.pages.fields.categories_stringM = MEILISEARCH_RELATION
+            plugin.tx_t3meilisearch.index.queue.pages.fields.categories_stringM {
               localField = categories
               foreignLabelField = title
               multiValue = 1
@@ -204,7 +204,7 @@ class PageIndexerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.index.additionalFields {
+            plugin.tx_t3meilisearch.index.additionalFields {
               additional_sortSubTitle_stringS = subtitle
               additional_custom_stringS = TEXT
               additional_custom_stringS.value = my text
@@ -238,8 +238,8 @@ class PageIndexerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.index.queue.pages.fields.additional_stringS = TEXT
-            plugin.tx_meilisearch.index.queue.pages.fields.additional_stringS.value = from rootline
+            plugin.tx_t3meilisearch.index.queue.pages.fields.additional_stringS = TEXT
+            plugin.tx_t3meilisearch.index.queue.pages.fields.additional_stringS.value = from rootline
             '
         );
 
@@ -285,7 +285,7 @@ class PageIndexerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.index.queue.pages.fields {
+            plugin.tx_t3meilisearch.index.queue.pages.fields {
               custom_stringS = TEXT
               custom_stringS.value = my text
             }

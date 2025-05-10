@@ -31,7 +31,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class SearchRequest
 {
-    public const DEFAULT_PLUGIN_NAMESPACE = 'tx_meilisearch';
+    public const DEFAULT_PLUGIN_NAMESPACE = 'tx_t3meilisearch';
 
     protected string $id;
 
@@ -45,10 +45,10 @@ class SearchRequest
      * Default values, overwritten in the constructor with the namespaced arguments
      */
     protected array $persistentArgumentsPaths = [
-        'tx_meilisearch:q',
-        'tx_meilisearch:filter',
-        'tx_meilisearch:sort',
-        'tx_meilisearch:groupPage',
+        'tx_t3meilisearch:q',
+        'tx_t3meilisearch:filter',
+        'tx_t3meilisearch:sort',
+        'tx_t3meilisearch:groupPage',
     ];
 
     protected bool $stateChanged = false;

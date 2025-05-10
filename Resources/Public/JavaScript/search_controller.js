@@ -11,7 +11,7 @@ function SearchController() {
     this.handleClickOnAjaxifiedUri = function() {
         var clickedLink = jQuery(this);
 
-        var meilisearchContainer = clickedLink.closest(".tx_meilisearch");
+        var meilisearchContainer = clickedLink.closest(".tx_t3meilisearch");
         var meilisearchParent = meilisearchContainer.parent();
 
         var loader = jQuery("<div class='tx-meilisearch-loader'></div>");
@@ -25,7 +25,7 @@ function SearchController() {
             function(data) {
                 meilisearchContainer = meilisearchContainer.replaceWith(data);
                 _this.scrollToTopOfElement(meilisearchParent, 50);
-                jQuery("body").trigger("tx_meilisearch_updated");
+                jQuery("body").trigger("tx_t3meilisearch_updated");
                 loader.fadeOut().remove();
                 history.replaceState({}, null, uri.removeQuery("type").href());
             }

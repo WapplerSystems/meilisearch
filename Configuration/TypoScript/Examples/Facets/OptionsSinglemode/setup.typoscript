@@ -1,5 +1,5 @@
-plugin.tx_meilisearch.search.faceting = 1
-plugin.tx_meilisearch.search.faceting.facets {
+plugin.tx_t3meilisearch.search.faceting = 1
+plugin.tx_t3meilisearch.search.faceting.facets {
   typeSinglemode {
     label = Type Singlemode
     field = type
@@ -9,6 +9,6 @@ plugin.tx_meilisearch.search.faceting.facets {
 }
 
 page.includeJSFooterlibs {
-  meilisearch-jquery = EXT:meilisearch/Resources/Public/JavaScript/JQuery/jquery.min.js
-  meilisearch-options = EXT:meilisearch/Resources/Public/JavaScript/facet_options_controller.js
+  meilisearch-jquery = EXT:t3_meilisearch/Resources/Public/JavaScript/JQuery/jquery.min.js
+  meilisearch-options = EXT:t3_meilisearch/Resources/Public/JavaScript/facet_options_controller.js
 }

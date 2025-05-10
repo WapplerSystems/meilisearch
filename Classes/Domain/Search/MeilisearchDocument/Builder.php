@@ -62,7 +62,7 @@ class Builder
         $document->setField('id', $documentId);
         $document->setField('site', $site->getDomain());
         $document->setField('siteHash', $site->getSiteHash());
-        $document->setField('appKey', 'EXT:meilisearch');
+        $document->setField('appKey', 'EXT:t3_meilisearch');
         $document->setField('type', 'pages');
 
         // system fields
@@ -119,7 +119,7 @@ class Builder
         // required fields
         $document->setField('id', $documentId);
         $document->setField('type', $type);
-        $document->setField('appKey', 'EXT:meilisearch');
+        $document->setField('appKey', 'EXT:t3_meilisearch');
 
         // site, siteHash
         $document->setField('site', $site->getDomain());

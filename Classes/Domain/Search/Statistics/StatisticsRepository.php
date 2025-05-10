@@ -28,10 +28,10 @@ use TYPO3\CMS\Core\Database\Query\QueryBuilder;
  */
 class StatisticsRepository extends AbstractRepository
 {
-    protected string $table = 'tx_meilisearch_statistics';
+    protected string $table = 'tx_t3meilisearch_statistics';
 
     /**
-     * Fetches most popular search keys words from the table tx_meilisearch_statistics
+     * Fetches most popular search keys words from the table tx_t3meilisearch_statistics
      *
      * @throws DBALException
      */
@@ -144,7 +144,7 @@ class StatisticsRepository extends AbstractRepository
 
     /**
      * Returns an Array of frequent search terms, keys are the terms, values are hits of a result set by given
-     * plugin.tx_meilisearch.search.frequentSearches.select configuration.
+     * plugin.tx_t3meilisearch.search.frequentSearches.select configuration.
      *
      * @throws DBALException
      */

@@ -35,7 +35,7 @@ jQuery(document).ready(function() {
     var dateRangeFacetController = new DateRangeFacetController();
     dateRangeFacetController.init();
 
-    jQuery("body").on("tx_meilisearch_updated", function() {
+    jQuery("body").on("tx_t3meilisearch_updated", function() {
         dateRangeFacetController.init();
     });
 });

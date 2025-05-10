@@ -440,7 +440,7 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
         $usedSearchRequest = $searchResultSet->getUsedSearchRequest();
         $usedSearchRequest->expects(self::any())->method('getActiveFacetValuesByName')->willReturnCallback(
             function ($name) {
-                return $name == 'type' ? ['tx_meilisearch_file'] : [];
+                return $name == 'type' ? ['tx_t3meilisearch_file'] : [];
             }
         );
 
@@ -492,7 +492,7 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
         $usedSearchRequest = $searchResultSet->getUsedSearchRequest();
         $usedSearchRequest->expects(self::any())->method('getActiveFacetValuesByName')->willReturnCallback(
             function ($name) {
-                return $name == 'type' ? ['tx_meilisearch_file'] : [];
+                return $name == 'type' ? ['tx_t3meilisearch_file'] : [];
             }
         );
 
@@ -536,7 +536,7 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
         $usedSearchRequest = $searchResultSet->getUsedSearchRequest();
         $usedSearchRequest->expects(self::any())->method('getActiveFacetValuesByName')->willReturnCallback(
             function ($name) {
-                return $name == 'type' ? ['tx_meilisearch_file'] : [];
+                return $name == 'type' ? ['tx_t3meilisearch_file'] : [];
             }
         );
 
@@ -1006,7 +1006,7 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
         $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_meilisearch_response_with_query_fields_facets.json');
 
         $configuration = [];
-        $configuration['plugin.']['tx_meilisearch.']['search.'] = [
+        $configuration['plugin.']['tx_t3meilisearch.']['search.'] = [
             'sorting' => 1,
             'sorting.' => [
                 'defaultOrder' => 'asc',
@@ -1039,7 +1039,7 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
         $searchResultSet = $this->initializeSearchResultSetFromFakeResponse('fake_meilisearch_response_with_query_fields_facets.json');
 
         $configuration = [];
-        $configuration['plugin.']['tx_meilisearch.']['search.'] = [
+        $configuration['plugin.']['tx_t3meilisearch.']['search.'] = [
             'sorting' => 1,
             'sorting.' => [
                 'defaultOrder' => 'asc',
@@ -1077,7 +1077,7 @@ class ResultSetReconstitutionProcessorTest extends SetUpUnitTestCase
     protected function getConfigurationArrayFromFacetConfigurationArray(array $facetConfiguration): array
     {
         $configuration = [];
-        $configuration['plugin.']['tx_meilisearch.']['search.']['faceting.'] = $facetConfiguration;
+        $configuration['plugin.']['tx_t3meilisearch.']['search.']['faceting.'] = $facetConfiguration;
         return $configuration;
     }
 

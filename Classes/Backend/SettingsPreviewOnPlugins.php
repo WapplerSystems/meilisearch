@@ -26,7 +26,7 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 use function str_starts_with;
 
 /**
- * Summary to display flexform settings of EXT:meilisearch plugin in BE page module.
+ * Summary to display flexform settings of EXT:t3_meilisearch plugin in BE page module.
  */
 class SettingsPreviewOnPlugins
 {
@@ -60,7 +60,7 @@ class SettingsPreviewOnPlugins
         /** @var StandaloneView $standaloneView */
         $standaloneView = GeneralUtility::makeInstance(StandaloneView::class);
         $standaloneView->setTemplatePathAndFilename(
-            GeneralUtility::getFileAbsFileName('EXT:meilisearch/Resources/Private/Templates/Backend/PageModule/Summary.html')
+            GeneralUtility::getFileAbsFileName('EXT:t3_meilisearch/Resources/Private/Templates/Backend/PageModule/Summary.html')
         );
 
         $standaloneView->assignMultiple([

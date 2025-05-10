@@ -166,7 +166,7 @@ class FlexFormUserFunctions
         $extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class);
         $namespaces = [];
         foreach ($extensionConfiguration->getAvailablePluginNamespaces() as $namespace) {
-            $label = $namespace === 'tx_meilisearch' ? 'Default' : $namespace;
+            $label = $namespace === 'tx_t3meilisearch' ? 'Default' : $namespace;
             $namespaces[$namespace] = [$label, $namespace];
         }
         $parentInformation['items'] = $namespaces;

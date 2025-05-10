@@ -40,7 +40,7 @@ class SuggestControllerTest extends IntegrationTest
             page = PAGE
             page.typeNum = 0
             # include suggest feature
-            @import \'EXT:meilisearch/Configuration/TypoScript/Examples/Suggest/setup.typoscript\'
+            @import \'EXT:t3_meilisearch/Configuration/TypoScript/Examples/Suggest/setup.typoscript\'
             '
         );
     }
@@ -93,7 +93,7 @@ class SuggestControllerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-			plugin.tx_meilisearch.suggest.suggestField = title
+			plugin.tx_t3meilisearch.suggest.suggestField = title
             '
         );
 
@@ -130,10 +130,10 @@ class SuggestControllerTest extends IntegrationTest
         $request = $request
             ->withPageId(1)
             ->withQueryParameter('type', '7384')
-            ->withQueryParameter('tx_meilisearch[queryString]', $queryString);
+            ->withQueryParameter('tx_t3meilisearch[queryString]', $queryString);
 
         if ($callback !== null) {
-            $request = $request->withQueryParameter('tx_meilisearch[callback]', $callback);
+            $request = $request->withQueryParameter('tx_t3meilisearch[callback]', $callback);
         }
         return $this->executeFrontendSubRequest($request);
     }

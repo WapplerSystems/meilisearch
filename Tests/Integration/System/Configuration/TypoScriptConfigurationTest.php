@@ -44,7 +44,7 @@ class TypoScriptConfigurationTest extends IntegrationTest
     {
         $configuration = [
             'plugin.' => [
-                'tx_meilisearch.' => [
+                'tx_t3meilisearch.' => [
                     'search.' => [
                         'sorting' => 1,
                     ],

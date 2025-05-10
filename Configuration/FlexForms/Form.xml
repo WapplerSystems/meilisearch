@@ -52,7 +52,7 @@
 								<itemsProcFunc>
 									WapplerSystems\Meilisearch\System\UserFunctions\FlexFormUserFunctions->getAvailablePluginNamespaces
 								</itemsProcFunc>
-								<default>tx_meilisearch</default>
+								<default>tx_t3meilisearch</default>
 							</config>
 						</TCEforms>
 					</view.pluginNamespace>

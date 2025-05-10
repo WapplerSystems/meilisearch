@@ -61,7 +61,7 @@ class IdBuilder
         }
 
         $siteName = $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'];
-        $systemKey = 'tx_meilisearch' . $siteName;
+        $systemKey = 'tx_t3meilisearch' . $siteName;
         return GeneralUtility::hmac($systemKey);
     }
 }

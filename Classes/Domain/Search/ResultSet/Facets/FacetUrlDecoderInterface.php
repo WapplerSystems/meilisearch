@@ -18,7 +18,7 @@ declare(strict_types=1);
 namespace WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets;
 
 /**
- * The facet url encode is responsible to encode and decode values for EXT:meilisearch urls.
+ * The facet url encode is responsible to encode and decode values for EXT:t3_meilisearch urls.
  *
  * @author Ingo Renner <ingo@typo3.org>
  * @author Timo Hund <timo.hund@dkd.de>

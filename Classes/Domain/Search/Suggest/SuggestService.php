@@ -166,7 +166,7 @@ class SuggestService
             return [];
         }
         $results = json_decode($rawResponse);
-        $suggestConfig = $this->typoScriptConfiguration->getObjectByPath('plugin.tx_meilisearch.suggest.');
+        $suggestConfig = $this->typoScriptConfiguration->getObjectByPath('plugin.tx_t3meilisearch.suggest.');
         $facetSuggestions = isset($suggestConfig['suggestField']) ? $results->facet_counts->facet_fields->{$suggestConfig['suggestField']} ?? [] : [];
         return ParsingUtil::getMapArrayFromFlatArray($facetSuggestions);
     }

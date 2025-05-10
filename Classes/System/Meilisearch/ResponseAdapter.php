@@ -22,7 +22,7 @@ use Countable;
 use stdClass;
 
 /**
- * In EXT:meilisearch 9 we have switched from the MeilisearchPhpClient to the solarium api.
+ * In EXT:t3_meilisearch 9 we have switched from the MeilisearchPhpClient to the solarium api.
  *
  * In many places of the code the class Apache_Meilisearch_Response and the property Apache_Meilisearch_Response::response is used.
  * To be able to refactor this we need to have a replacement for Apache_Meilisearch_Response that behaves like the original class,

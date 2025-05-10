@@ -122,7 +122,7 @@ class ReIndexTaskAdditionalFieldProvider extends AbstractAdditionalFieldProvider
                 'tx_scheduler[site]',
                 $this->site
             ),
-            'label' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang.xlf:field_site',
+            'label' => 'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang.xlf:field_site',
         ];
 
         $additionalFields['indexingConfigurations'] = [

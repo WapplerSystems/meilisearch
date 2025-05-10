@@ -134,14 +134,14 @@ class SearchControllerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.search.results.resultsPerPageSwitchOptions = 5, 10, 25, 50
-            plugin.tx_meilisearch.search.results.resultsPerPage = 5'
+            plugin.tx_t3meilisearch.search.results.resultsPerPageSwitchOptions = 5, 10, 25, 50
+            plugin.tx_t3meilisearch.search.results.resultsPerPage = 5'
         );
 
         $this->indexPages([1, 2, 3, 4, 5, 6, 7, 8]);
 
         $resultPage1 = (string)$this->executeFrontendSubRequest(
-            $this->getPreparedRequest()->withQueryParameter('tx_meilisearch[q]', '*')
+            $this->getPreparedRequest()->withQueryParameter('tx_t3meilisearch[q]', '*')
         )->getBody();
 
         $this->assertPaginationVisible($resultPage1);
@@ -155,8 +155,8 @@ class SearchControllerTest extends IntegrationTest
     {
         $resultPage2 = (string)$this->executeFrontendSubRequest(
             $this->getPreparedRequest()
-                ->withQueryParameter('tx_meilisearch[q]', '*')
-                ->withQueryParameter('tx_meilisearch[page]', 2)
+                ->withQueryParameter('tx_t3meilisearch[q]', '*')
+                ->withQueryParameter('tx_t3meilisearch[page]', 2)
         )->getBody();
 
         self::assertStringContainsString('pages/8/0/0/0', $resultPage2, 'Could not find page(PID) 8 in result set.');
@@ -167,8 +167,8 @@ class SearchControllerTest extends IntegrationTest
     {
         $resultPage = (string)$this->executeFrontendSubRequest(
             $this->getPreparedRequest()
-                ->withQueryParameter('tx_meilisearch[q]', '*')
-                ->withQueryParameter('tx_meilisearch[resultsPerPage]', 10)
+                ->withQueryParameter('tx_t3meilisearch[q]', '*')
+                ->withQueryParameter('tx_t3meilisearch[resultsPerPage]', 10)
         )->getBody();
 
         self::assertStringContainsString('Displaying results 1 to 8 of 8', $resultPage, '');
@@ -186,7 +186,7 @@ class SearchControllerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.search.spellchecking = 1
+            plugin.tx_t3meilisearch.search.spellchecking = 1
             '
         );
 
@@ -195,7 +195,7 @@ class SearchControllerTest extends IntegrationTest
         //not in the content but we expect to get shoes suggested
         $resultPage1 = (string)$this->executeFrontendSubRequest(
             $this->getPreparedRequest()
-                ->withQueryParameter('tx_meilisearch[q]', 'shoo')
+                ->withQueryParameter('tx_t3meilisearch[q]', 'shoo')
         )->getBody();
 
         self::assertStringContainsString('Did you mean', $resultPage1, 'Could not find did you mean in response');
@@ -213,8 +213,8 @@ class SearchControllerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.search.spellchecking = 1
-            plugin.tx_meilisearch.search.spellchecking {
+            plugin.tx_t3meilisearch.search.spellchecking = 1
+            plugin.tx_t3meilisearch.search.spellchecking {
                 searchUsingSpellCheckerSuggestion = 1
                 numberOfSuggestionsToTry = 1
             }
@@ -226,7 +226,7 @@ class SearchControllerTest extends IntegrationTest
         //not in the content but we expect to get shoes suggested
         $resultPage1 = (string)$this->executeFrontendSubRequest(
             $this->getPreparedRequest()
-                ->withQueryParameter('tx_meilisearch[q]', 'shoo')
+                ->withQueryParameter('tx_t3meilisearch[q]', 'shoo')
         )->getBody();
 
         self::assertStringContainsString('Nothing found for &quot;shoo&quot;', $resultPage1, 'Could not find nothing found message');
@@ -245,8 +245,8 @@ class SearchControllerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.search.faceting = 1
-            plugin.tx_meilisearch.search.faceting.facets.type {
+            plugin.tx_t3meilisearch.search.faceting = 1
+            plugin.tx_t3meilisearch.search.faceting.facets.type {
                 label = Content Type
                 field = type
             }
@@ -257,7 +257,7 @@ class SearchControllerTest extends IntegrationTest
 
         $resultPage1 = (string)$this->executeFrontendSubRequest(
             $this->getPreparedRequest()
-                ->withQueryParameter('tx_meilisearch[q]', '*')
+                ->withQueryParameter('tx_t3meilisearch[q]', '*')
         )->getBody();
 
         self::assertStringContainsString('fluidfacet', $resultPage1, 'Could not find fluidfacet class that indicates the facet was rendered with fluid');
@@ -287,7 +287,7 @@ class SearchControllerTest extends IntegrationTest
                 'routeEnhancers' => [
                     'meilisearchContentType' => [
                         'type' => 'MeilisearchFacetMaskAndCombineEnhancer',
-                        'extensionKey' => 'tx_meilisearch',
+                        'extensionKey' => 'tx_t3meilisearch',
                         'routePath' => '/contentType/{type}',
                         '_arguments' => [
                             'type' => 'filter-type',
@@ -304,8 +304,8 @@ class SearchControllerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.search.faceting = 1
-            plugin.tx_meilisearch.search.faceting.facets.type {
+            plugin.tx_t3meilisearch.search.faceting = 1
+            plugin.tx_t3meilisearch.search.faceting.facets.type {
                 label = Content Type
                 field = type
             }
@@ -314,18 +314,18 @@ class SearchControllerTest extends IntegrationTest
 
         $this->indexPages([1, 2]);
 
-        $request = $this->getPreparedRequest()->withQueryParameter('tx_meilisearch[q]', '*');
+        $request = $this->getPreparedRequest()->withQueryParameter('tx_t3meilisearch[q]', '*');
         $response = $this->executeFrontendSubRequest($request);
         $resultPage1 = (string)$response->getBody();
 
         self::assertEquals(
             $expectedMatchesDefaultUrl,
-            preg_match('/<ul.*?data-facet-name="type".*?">.*?<li.*?data-facet-item-value="pages".*?>.*?href="\/en\/search\?tx_meilisearch.*?<\/ul>/s', $resultPage1),
+            preg_match('/<ul.*?data-facet-name="type".*?">.*?<li.*?data-facet-item-value="pages".*?>.*?href="\/en\/search\?tx_t3meilisearch.*?<\/ul>/s', $resultPage1),
             'Could not find speaking facet url pages'
         );
         self::assertEquals(
             $expectedMatchesSpeakingUrl,
-            preg_match('/<ul.*?data-facet-name="type".*?">.*?<li.*?data-facet-item-value="pages".*?>.*?href="\/en\/search\/contentType\/pages\?tx_meilisearch.*?<\/ul>/s', $resultPage1),
+            preg_match('/<ul.*?data-facet-name="type".*?">.*?<li.*?data-facet-item-value="pages".*?>.*?href="\/en\/search\/contentType\/pages\?tx_t3meilisearch.*?<\/ul>/s', $resultPage1),
             'Could not find speaking facet url pages'
         );
     }
@@ -359,7 +359,7 @@ class SearchControllerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.search {
+            plugin.tx_t3meilisearch.search {
                 initializeWithEmptyQuery = 1
                 showResultsOfInitialEmptyQuery = 0
                 faceting = 1
@@ -390,7 +390,7 @@ class SearchControllerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.search {
+            plugin.tx_t3meilisearch.search {
                 initializeWithEmptyQuery = 1
                 showResultsOfInitialEmptyQuery = 1
                 faceting = 1
@@ -421,7 +421,7 @@ class SearchControllerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.search {
+            plugin.tx_t3meilisearch.search {
                 initializeWithQuery = product
                 showResultsOfInitialEmptyQuery = 0
                 faceting = 1
@@ -452,7 +452,7 @@ class SearchControllerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.search {
+            plugin.tx_t3meilisearch.search {
                 initializeWithQuery = product
                 showResultsOfInitialEmptyQuery = 1
                 faceting = 1
@@ -483,7 +483,7 @@ class SearchControllerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.search {
+            plugin.tx_t3meilisearch.search {
                 faceting = 1
                 faceting.facets.type {
                     label = Content Type
@@ -497,8 +497,8 @@ class SearchControllerTest extends IntegrationTest
 
         $resultPage1 = (string)$this->executeFrontendSubRequest(
             $this->getPreparedRequest()
-                ->withQueryParameter('tx_meilisearch[q]', '*')
-                ->withQueryParameter('tx_meilisearch[filter][0]', 'type:pages')
+                ->withQueryParameter('tx_t3meilisearch[q]', '*')
+                ->withQueryParameter('tx_t3meilisearch[filter][0]', 'type:pages')
         )->getBody();
 
         self::assertStringContainsString('fluidfacet', $resultPage1, 'Could not find fluidfacet class that indicates the facet was rendered with fluid');
@@ -516,7 +516,7 @@ class SearchControllerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.search {
+            plugin.tx_t3meilisearch.search {
                 faceting = 1
                 faceting.facets.type {
                     label = Content Type
@@ -530,8 +530,8 @@ class SearchControllerTest extends IntegrationTest
 
         $resultPage1 = (string)$this->executeFrontendSubRequest(
             $this->getPreparedRequest()
-                ->withQueryParameter('tx_meilisearch[q]', '*')
-                ->withQueryParameter('tx_meilisearch[filter][0]', 'type:my_jobs')
+                ->withQueryParameter('tx_t3meilisearch[q]', '*')
+                ->withQueryParameter('tx_t3meilisearch[filter][0]', 'type:my_jobs')
         )->getBody();
 
         self::assertStringContainsString('remove-facet-option', $resultPage1, 'No link to remove facet option found');
@@ -548,7 +548,7 @@ class SearchControllerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.search.query.filter.__pageSections = 2,3
+            plugin.tx_t3meilisearch.search.query.filter.__pageSections = 2,3
             '
         );
 
@@ -556,7 +556,7 @@ class SearchControllerTest extends IntegrationTest
 
         $resultPage1 = (string)$this->executeFrontendSubRequest(
             $this->getPreparedRequest()
-                ->withQueryParameter('tx_meilisearch[q]', '*')
+                ->withQueryParameter('tx_t3meilisearch[q]', '*')
         )->getBody();
 
         // we should only find 2 results since a __pageSections filter should be applied
@@ -579,7 +579,7 @@ class SearchControllerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.search {
+            plugin.tx_t3meilisearch.search {
                 faceting = 1
                 faceting.facets.type {
                     partialName = NotFound
@@ -594,7 +594,7 @@ class SearchControllerTest extends IntegrationTest
 
         $this->executeFrontendSubRequest(
             $this->getPreparedRequest()
-                ->withQueryParameter('tx_meilisearch[q]', '*')
+                ->withQueryParameter('tx_t3meilisearch[q]', '*')
         );
     }
 
@@ -613,7 +613,7 @@ class SearchControllerTest extends IntegrationTest
         $GLOBALS['BE_USER'] = $this->setUpBackendUser(1);
         $resultPage1 = (string)$this->executeFrontendSubRequest(
             $this->getPreparedRequest()
-                ->withQueryParameter('tx_meilisearch[q]', '*'),
+                ->withQueryParameter('tx_t3meilisearch[q]', '*'),
             (new InternalRequestContext())->withBackendUserId(1)
         )->getBody();
 
@@ -631,7 +631,7 @@ class SearchControllerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.search {
+            plugin.tx_t3meilisearch.search {
                 faceting = 1
                 faceting.facets.subtitle {
                     label = Subtitle
@@ -651,7 +651,7 @@ class SearchControllerTest extends IntegrationTest
 
         $resultPage1 = (string)$this->executeFrontendSubRequest(
             $this->getPreparedRequest()
-                ->withQueryParameter('tx_meilisearch[q]', '*')
+                ->withQueryParameter('tx_t3meilisearch[q]', '*')
         )->getBody();
 
         self::assertEquals(
@@ -688,7 +688,7 @@ class SearchControllerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.search {
+            plugin.tx_t3meilisearch.search {
                 faceting = 1
                 faceting.facets.subtitle {
                     label = Subtitle
@@ -706,7 +706,7 @@ class SearchControllerTest extends IntegrationTest
 
         $resultPage1 = (string)$this->executeFrontendSubRequest(
             $this->getPreparedRequest()
-                ->withQueryParameter('tx_meilisearch[q]', '*')
+                ->withQueryParameter('tx_t3meilisearch[q]', '*')
         )->getBody();
 
         self::assertEquals(
@@ -744,7 +744,7 @@ class SearchControllerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.search {
+            plugin.tx_t3meilisearch.search {
                 faceting = 1
                 faceting.facets.pid {
                     label = Uid Range
@@ -789,7 +789,7 @@ class SearchControllerTest extends IntegrationTest
 
         $resultPage1 = (string)$this->executeFrontendSubRequest(
             $this->getPreparedRequest()
-                ->withQueryParameter('tx_meilisearch[q]', '*')
+                ->withQueryParameter('tx_t3meilisearch[q]', '*')
         )->getBody();
 
         self::assertStringContainsString('Small (1 &amp; 2)', $resultPage1, 'Response did not contain expected small option of query facet');
@@ -803,7 +803,7 @@ class SearchControllerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.search {
+            plugin.tx_t3meilisearch.search {
                 faceting = 1
                 faceting.facets.pageHierarchy {
                     field = rootline
@@ -844,14 +844,14 @@ class SearchControllerTest extends IntegrationTest
 
         $resultPage1 = (string)$this->executeFrontendSubRequest(
             $this->getPreparedRequest()
-                ->withQueryParameter('tx_meilisearch[q]', '*')
+                ->withQueryParameter('tx_t3meilisearch[q]', '*')
         )->getBody();
 
         self::assertStringContainsString('Found 8 results', $resultPage1, 'Assert to find 8 results without faceting');
         self::assertStringContainsString('facet-type-hierarchy', $resultPage1, 'Did not render hierarchy facet in the response');
         self::assertStringContainsString('data-facet-item-value="/1/2/"', $resultPage1, 'Hierarchy facet item did not contain expected data item');
 
-        self::assertStringContainsString('tx_meilisearch%5Bfilter%5D%5B0%5D=pageHierarchy%3A%2F1%2F2%2F&amp;tx_meilisearch%5Bq%5D=%2A', $resultPage1, 'Result page did not contain hierarchical facet link');
+        self::assertStringContainsString('tx_t3meilisearch%5Bfilter%5D%5B0%5D=pageHierarchy%3A%2F1%2F2%2F&amp;tx_t3meilisearch%5Bq%5D=%2A', $resultPage1, 'Result page did not contain hierarchical facet link');
     }
 
     /**
@@ -866,14 +866,14 @@ class SearchControllerTest extends IntegrationTest
 
         $resultPage1 = (string)$this->executeFrontendSubRequest(
             $this->getPreparedRequest()
-                ->withQueryParameter('tx_meilisearch[q]', '*')
-                ->withQueryParameter('tx_meilisearch[filter][0]', 'pageHierarchy:/1/2/')
+                ->withQueryParameter('tx_t3meilisearch[q]', '*')
+                ->withQueryParameter('tx_t3meilisearch[filter][0]', 'pageHierarchy:/1/2/')
         )->getBody();
 
         self::assertStringContainsString('Found 1 result', $resultPage1, 'Assert to only find one result after faceting');
         self::assertStringContainsString('facet-type-hierarchy', $resultPage1, 'Did not render hierarchy facet in the response');
         self::assertStringContainsString('data-facet-item-value="/1/2/"', $resultPage1, 'Hierarchy facet item did not contain expected data item');
-        self::assertStringContainsString('tx_meilisearch%5Bfilter%5D%5B0%5D=pageHierarchy%3A%2F1%2F2%2F&amp;tx_meilisearch%5Bq%5D=%2A', $resultPage1, 'Result page did not contain hierarchical facet link');
+        self::assertStringContainsString('tx_t3meilisearch%5Bfilter%5D%5B0%5D=pageHierarchy%3A%2F1%2F2%2F&amp;tx_t3meilisearch%5Bq%5D=%2A', $resultPage1, 'Result page did not contain hierarchical facet link');
     }
 
     /**
@@ -888,7 +888,7 @@ class SearchControllerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch {
+            plugin.tx_t3meilisearch {
                 index {
                     fieldProcessingInstructions.categoryPaths_stringM = pathToHierarchy
                     queue.pages.fields {
@@ -921,8 +921,8 @@ class SearchControllerTest extends IntegrationTest
         // do not have the category assigned
         $resultPage1 = (string)$this->executeFrontendSubRequest(
             $this->getPreparedRequest()
-                ->withQueryParameter('tx_meilisearch[q]', '*')
-                ->withQueryParameter('tx_meilisearch[filter][0]', 'categoryPaths:/Men/Shoes \/ Socks/')
+                ->withQueryParameter('tx_t3meilisearch[q]', '*')
+                ->withQueryParameter('tx_t3meilisearch[filter][0]', 'categoryPaths:/Men/Shoes \/ Socks/')
         )->getBody();
 
         self::assertStringContainsString('Found 1 result', $resultPage1, 'Assert to only find one result after faceting');
@@ -939,8 +939,8 @@ class SearchControllerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.search.faceting = 1
-            plugin.tx_meilisearch.search.faceting.facets.subtitle {
+            plugin.tx_t3meilisearch.search.faceting = 1
+            plugin.tx_t3meilisearch.search.faceting.facets.subtitle {
                 label = Subtitle
                 field = subTitle
                 keepAllOptionsOnSelection = 1
@@ -956,7 +956,7 @@ class SearchControllerTest extends IntegrationTest
 
         $resultPage1 = (string)$this->executeFrontendSubRequest(
             $this->getPreparedRequest()
-                ->withQueryParameter('tx_meilisearch[q]', '*')
+                ->withQueryParameter('tx_t3meilisearch[q]', '*')
         )->getBody();
 
         self::assertEquals(
@@ -994,7 +994,7 @@ class SearchControllerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.enableDebugMode = 1
+            plugin.tx_t3meilisearch.enableDebugMode = 1
             '
         );
         $this->indexPages([1, 2]);
@@ -1003,7 +1003,7 @@ class SearchControllerTest extends IntegrationTest
         $GLOBALS['BE_USER'] = $this->setUpBackendUser(1);
         $resultPage1 = (string)$this->executeFrontendSubRequest(
             $this->getPreparedRequest()
-                ->withQueryParameter('tx_meilisearch[q]', '*'),
+                ->withQueryParameter('tx_t3meilisearch[q]', '*'),
             (new InternalRequestContext())->withBackendUserId(1)
         )->getBody();
 
@@ -1047,8 +1047,8 @@ class SearchControllerTest extends IntegrationTest
 
         $response = $this->executeFrontendSubRequest(
             $this->getPreparedRequest()
-                ->withQueryParameter('tx_meilisearch[action]', $action)
-                ->withQueryParameter('tx_meilisearch[' . key($getArguments) . ']', current($getArguments))
+                ->withQueryParameter('tx_t3meilisearch[action]', $action)
+                ->withQueryParameter('tx_t3meilisearch[' . key($getArguments) . ']', current($getArguments))
         );
 
         self::assertStringContainsString('Search is currently not available.', (string)$response->getBody(), 'Response did not contain meilisearch unavailable error message');
@@ -1073,8 +1073,8 @@ class SearchControllerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.search.lastSearches = 1
-            plugin.tx_meilisearch.search.lastSearches {
+            plugin.tx_t3meilisearch.search.lastSearches = 1
+            plugin.tx_t3meilisearch.search.lastSearches {
                 limit = 10
                 mode = user
             }
@@ -1084,12 +1084,12 @@ class SearchControllerTest extends IntegrationTest
         $this->indexPages([1, 2, 3, 4, 5, 6, 7, 8]);
 
         $resultSearch1 = (string)$this->executeFrontendSubRequest(
-            $this->getPreparedRequest()->withQueryParameter('tx_meilisearch[q]', 'shoe')
+            $this->getPreparedRequest()->withQueryParameter('tx_t3meilisearch[q]', 'shoe')
         )->getBody();
 
         $resultSearch2 = (string)$this->executeFrontendSubRequest(
             $this->getPreparedRequest()
-                ->withQueryParameter('tx_meilisearch[q]', '*')
+                ->withQueryParameter('tx_t3meilisearch[q]', '*')
         )->getBody();
 
         $this->assertContainerByIdContains('>shoe</a>', $resultSearch2, 'tx-meilisearch-lastsearches');
@@ -1106,8 +1106,8 @@ class SearchControllerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.search.lastSearches = 1
-            plugin.tx_meilisearch.search.lastSearches {
+            plugin.tx_t3meilisearch.search.lastSearches = 1
+            plugin.tx_t3meilisearch.search.lastSearches {
                 limit = 10
                 mode = global
             }
@@ -1116,12 +1116,12 @@ class SearchControllerTest extends IntegrationTest
         $this->indexPages([1, 2, 3, 4, 5, 6, 7, 8]);
 
         $resultSearch1 = (string)$this->executeFrontendSubRequest(
-            $this->getPreparedRequest()->withQueryParameter('tx_meilisearch[q]', 'shoe')
+            $this->getPreparedRequest()->withQueryParameter('tx_t3meilisearch[q]', 'shoe')
         )->getBody();
 
         $resultSearch2 = (string)$this->executeFrontendSubRequest(
             $this->getPreparedRequest()
-                ->withQueryParameter('tx_meilisearch[q]', '*')
+                ->withQueryParameter('tx_t3meilisearch[q]', '*')
         )->getBody();
 
         $this->assertContainerByIdContains('>shoe</a>', $resultSearch2, 'tx-meilisearch-lastsearches');
@@ -1138,8 +1138,8 @@ class SearchControllerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.search.lastSearches = 1
-            plugin.tx_meilisearch.search.lastSearches {
+            plugin.tx_t3meilisearch.search.lastSearches = 1
+            plugin.tx_t3meilisearch.search.lastSearches {
                 limit = 10
                 mode = global
             }
@@ -1149,12 +1149,12 @@ class SearchControllerTest extends IntegrationTest
 
         $resultSearch1 = (string)$this->executeFrontendSubRequest(
             $this->getPreparedRequest()
-                ->withQueryParameter('tx_meilisearch[q]', 'nothingwillbefound')
+                ->withQueryParameter('tx_t3meilisearch[q]', 'nothingwillbefound')
         )->getBody();
 
         $resultSearch2 = (string)$this->executeFrontendSubRequest(
             $this->getPreparedRequest()
-                ->withQueryParameter('tx_meilisearch[q]', 'nothingwillbefound')
+                ->withQueryParameter('tx_t3meilisearch[q]', 'nothingwillbefound')
         )->getBody();
 
         $this->assertContainerByIdNotContains('>nothingwillbefound</a>', $resultSearch2, 'tx-meilisearch-lastsearches');
@@ -1178,7 +1178,7 @@ class SearchControllerTest extends IntegrationTest
 
         $resultSearch = (string)$this->executeFrontendSubRequest(
             $this->getPreparedRequest()
-                ->withQueryParameter('tx_meilisearch[q]', '*')
+                ->withQueryParameter('tx_t3meilisearch[q]', '*')
         )->getBody();
 
         self::assertStringContainsString('Displaying results 1 to 4 of 4', $resultSearch);
@@ -1195,8 +1195,8 @@ class SearchControllerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.search.faceting = 1
-            plugin.tx_meilisearch.search.faceting.facets.myCreatedFacet {
+            plugin.tx_t3meilisearch.search.faceting = 1
+            plugin.tx_t3meilisearch.search.faceting.facets.myCreatedFacet {
                 label = Created Between
                 field = created
                 type = dateRange
@@ -1208,7 +1208,7 @@ class SearchControllerTest extends IntegrationTest
 
         $resultSearch = (string)$this->executeFrontendSubRequest(
             $this->getPreparedRequest()
-                ->withQueryParameter('tx_meilisearch[q]', '*')
+                ->withQueryParameter('tx_t3meilisearch[q]', '*')
         )->getBody();
 
         self::assertStringContainsString('facet-type-dateRange', $resultSearch);
@@ -1225,8 +1225,8 @@ class SearchControllerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.search.faceting = 1
-            plugin.tx_meilisearch.search.faceting.facets {
+            plugin.tx_t3meilisearch.search.faceting = 1
+            plugin.tx_t3meilisearch.search.faceting.facets {
                 type {
                     label = Content Type
                     field = type
@@ -1243,7 +1243,7 @@ class SearchControllerTest extends IntegrationTest
 
         $resultSearch = (string)$this->executeFrontendSubRequest(
             $this->getPreparedRequest()
-                ->withQueryParameter('tx_meilisearch[q]', '*')
+                ->withQueryParameter('tx_t3meilisearch[q]', '*')
         )->getBody();
 
         self::assertStringContainsString('id="facetmyType"', $resultSearch);
@@ -1263,8 +1263,8 @@ class SearchControllerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.search.faceting = 1
-            plugin.tx_meilisearch.search.faceting.facets {
+            plugin.tx_t3meilisearch.search.faceting = 1
+            plugin.tx_t3meilisearch.search.faceting.facets {
                 pid {
                     label = PID
                     field = pid
@@ -1279,12 +1279,12 @@ class SearchControllerTest extends IntegrationTest
 
         $this->indexPages([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
 
-        $pid1Option = urlencode('tx_meilisearch[filter][0]') . '=' . urlencode('pid:1');
-        $pid2Option = urlencode('tx_meilisearch[filter][0]') . '=' . urlencode('pid:2');
+        $pid1Option = urlencode('tx_t3meilisearch[filter][0]') . '=' . urlencode('pid:1');
+        $pid2Option = urlencode('tx_t3meilisearch[filter][0]') . '=' . urlencode('pid:2');
 
         $content = (string)$this->executeFrontendSubRequest(
             $this->getPreparedRequest()
-                ->withQueryParameter('tx_meilisearch[q]', '*')
+                ->withQueryParameter('tx_t3meilisearch[q]', '*')
         )->getBody();
         $pid1OptionPosition = strpos($content, $pid1Option);
         $pid2OptionPosition = strpos($content, $pid2Option);
@@ -1339,7 +1339,7 @@ class SearchControllerTest extends IntegrationTest
 
         $resultPage = (string)$this->executeFrontendSubRequest(
             $this->getPreparedRequest()
-                ->withQueryParameter('tx_meilisearch[q]', 'shoes')
+                ->withQueryParameter('tx_t3meilisearch[q]', 'shoes')
         )->getBody();
 
         $this->assertContainerByIdContains('>shoes</a>', $resultPage, 'tx-meilisearch-frequent-searches');
@@ -1356,8 +1356,8 @@ class SearchControllerTest extends IntegrationTest
 
         $resultPage = (string)$this->executeFrontendSubRequest(
             $this->getPreparedRequest()
-                ->withQueryParameter('tx_meilisearch[action]', 'detail')
-                ->withQueryParameter('tx_meilisearch[documentId]', '002de2729efa650191f82900ea02a0a3189dfabb/pages/2/0/0/0')
+                ->withQueryParameter('tx_t3meilisearch[action]', 'detail')
+                ->withQueryParameter('tx_t3meilisearch[documentId]', '002de2729efa650191f82900ea02a0a3189dfabb/pages/2/0/0/0')
         )->getBody();
 
         self::assertStringContainsString('<h1>Socks</h1>', $resultPage);
@@ -1377,9 +1377,9 @@ class SearchControllerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.view {
-                templateRootPaths.20 = EXT:meilisearch/Tests/Integration/Controller/Fixtures/customTemplates/
-                partialRootPaths.20 = EXT:meilisearch/Tests/Integration/Controller/Fixtures/customPartials/
+            plugin.tx_t3meilisearch.view {
+                templateRootPaths.20 = EXT:t3_meilisearch/Tests/Integration/Controller/Fixtures/customTemplates/
+                partialRootPaths.20 = EXT:t3_meilisearch/Tests/Integration/Controller/Fixtures/customPartials/
             }
             '
         );
@@ -1404,9 +1404,9 @@ class SearchControllerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.view {
-                templateRootPath = EXT:meilisearch/Tests/Integration/Controller/Fixtures/customTemplates/
-                partialRootPath = EXT:meilisearch/Tests/Integration/Controller/Fixtures/customPartials/
+            plugin.tx_t3meilisearch.view {
+                templateRootPath = EXT:t3_meilisearch/Tests/Integration/Controller/Fixtures/customTemplates/
+                partialRootPath = EXT:t3_meilisearch/Tests/Integration/Controller/Fixtures/customPartials/
             }
             '
         );
@@ -1429,11 +1429,11 @@ class SearchControllerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch {
+            plugin.tx_t3meilisearch {
                 settings.foo.bar = mytestsetting
                 view {
-                    templateRootPaths.20 = EXT:meilisearch/Tests/Integration/Controller/Fixtures/customTemplates/
-                    partialRootPaths.20 = EXT:meilisearch/Tests/Integration/Controller/Fixtures/customPartials/
+                    templateRootPaths.20 = EXT:t3_meilisearch/Tests/Integration/Controller/Fixtures/customTemplates/
+                    partialRootPaths.20 = EXT:t3_meilisearch/Tests/Integration/Controller/Fixtures/customPartials/
                 }
             }
             '
@@ -1458,8 +1458,8 @@ class SearchControllerTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.view.templateFiles {
-                results = EXT:meilisearch/Tests/Integration/Controller/Fixtures/customTemplates/Search/MyResults.html
+            plugin.tx_t3meilisearch.view.templateFiles {
+                results = EXT:t3_meilisearch/Tests/Integration/Controller/Fixtures/customTemplates/Search/MyResults.html
             }
             '
         );

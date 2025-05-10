@@ -1,7 +1,7 @@
 # Enable search field autocomplete/suggest
 # Ajaxify the suggest/results
-tx_meilisearch_suggest = PAGE
-tx_meilisearch_suggest {
+tx_t3meilisearch_suggest = PAGE
+tx_t3meilisearch_suggest {
   typeNum = 7384
   config {
     disableAllHeaderCode = 1
@@ -23,12 +23,12 @@ tx_meilisearch_suggest {
   }
 }
 
-[traverse(request.getQueryParams(), 'tx_meilisearch/callback') == '']
-  tx_meilisearch_suggest.config.additionalHeaders.10.header = Content-type: application/json
+[traverse(request.getQueryParams(), 'tx_t3meilisearch/callback') == '']
+  tx_t3meilisearch_suggest.config.additionalHeaders.10.header = Content-type: application/json
 [global]
 
 # Enable suggest
-plugin.tx_meilisearch {
+plugin.tx_t3meilisearch {
   suggest = 1
   suggest {
     numberOfSuggestions = 10
@@ -38,11 +38,11 @@ plugin.tx_meilisearch {
 
 # Load js files
 page.includeJSFooterlibs {
-  meilisearch-jquery = EXT:meilisearch/Resources/Public/JavaScript/JQuery/jquery.min.js
-  meilisearch-autocomplete = EXT:meilisearch/Resources/Public/JavaScript/JQuery/jquery.autocomplete.min.js
-  meilisearch-suggest = EXT:meilisearch/Resources/Public/JavaScript/suggest_controller.js
+  meilisearch-jquery = EXT:t3_meilisearch/Resources/Public/JavaScript/JQuery/jquery.min.js
+  meilisearch-autocomplete = EXT:t3_meilisearch/Resources/Public/JavaScript/JQuery/jquery.autocomplete.min.js
+  meilisearch-suggest = EXT:t3_meilisearch/Resources/Public/JavaScript/suggest_controller.js
 }
 
 page.includeCSS {
-  meilisearch-suggest = EXT:meilisearch/Resources/Public/StyleSheets/Frontend/suggest.css
+  meilisearch-suggest = EXT:t3_meilisearch/Resources/Public/StyleSheets/Frontend/suggest.css
 }

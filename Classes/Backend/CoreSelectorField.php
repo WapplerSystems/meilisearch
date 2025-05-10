@@ -36,7 +36,7 @@ class CoreSelectorField
     /**
      * Form element name
      */
-    protected string $formElementName = 'tx_meilisearch-index-optimize-core-selector';
+    protected string $formElementName = 'tx_t3meilisearch-index-optimize-core-selector';
 
     /**
      * Selected values
@@ -105,7 +105,7 @@ class CoreSelectorField
 
         // need to wrap the field in a TCEforms table to make the CSS apply
         $form = [];
-        $form[] = '<div class="typo3-TCEforms tx_meilisearch-TCEforms">';
+        $form[] = '<div class="typo3-TCEforms tx_t3meilisearch-TCEforms">';
         $form[] = $formField;
         $form[] = '</div>';
 
@@ -165,7 +165,7 @@ class CoreSelectorField
         $nodeFactory = GeneralUtility::makeInstance(NodeFactory::class);
         $options = [
             'renderType' => 'selectCheckBox',
-            'table' => 'tx_meilisearch_classes_backend_coreselector',
+            'table' => 'tx_t3meilisearch_classes_backend_coreselector',
             'fieldName' => 'additionalFields',
             'databaseRow' => [],
             'parameterArray' => $parameterArray,

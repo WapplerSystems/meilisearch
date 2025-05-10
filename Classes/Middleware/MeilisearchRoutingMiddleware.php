@@ -59,7 +59,7 @@ class MeilisearchRoutingMiddleware implements MiddlewareInterface, LoggerAwareIn
     /**
      * Meilisearch parameter key
      */
-    protected string $namespace = 'tx_meilisearch';
+    protected string $namespace = 'tx_t3meilisearch';
 
     /**
      * Settings from enhancer configuration

@@ -57,7 +57,7 @@ class QueueInitializerServiceTest extends SetUpUnitTestCase
 
         $fakeTs = [
             'plugin.' => [
-                'tx_meilisearch.' => [
+                'tx_t3meilisearch.' => [
                     'index.' => [
                         'queue.' => [
                             'my_pages' => 1,
@@ -91,8 +91,8 @@ class QueueInitializerServiceTest extends SetUpUnitTestCase
             ->expects(self::exactly(2))
             ->method('executeInitializer')
             ->withConsecutive(
-                [$siteMock, 'my_pages', 'MyPagesInitializer', 'pages', $fakeTs['plugin.']['tx_meilisearch.']['index.']['queue.']['my_pages.']],
-                [$siteMock, 'my_news', 'MyNewsInitializer', 'tx_news_domain_model_news', $fakeTs['plugin.']['tx_meilisearch.']['index.']['queue.']['my_news.']]
+                [$siteMock, 'my_pages', 'MyPagesInitializer', 'pages', $fakeTs['plugin.']['tx_t3meilisearch.']['index.']['queue.']['my_pages.']],
+                [$siteMock, 'my_news', 'MyNewsInitializer', 'tx_news_domain_model_news', $fakeTs['plugin.']['tx_t3meilisearch.']['index.']['queue.']['my_news.']]
             );
         $service->initializeBySiteAndIndexConfiguration($siteMock, '*');
     }

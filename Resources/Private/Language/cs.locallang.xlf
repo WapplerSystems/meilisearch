@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" target-language="cs" datatype="plaintext" original="EXT:meilisearch/Resources/Private/Language/locallang.xlf"  date="2021-12-17T10:22:00Z">
+	<file source-language="en" target-language="cs" datatype="plaintext" original="EXT:t3_meilisearch/Resources/Private/Language/locallang.xlf"  date="2021-12-17T10:22:00Z">
 		<header>
 			<generator>LFEditor</generator>
 		</header>
@@ -441,8 +441,8 @@
 				<target>Procenta</target>
 			</trans-unit>
 			<trans-unit id="meilisearch.backend.search_statistics_module.no_records_found" xml:space="preserve">
-				<source>No records found. Did you enabled 'plugin.tx_meilisearch.statistics = 1' in the typoscript configuration of your site?</source>
-				<target>Nenalezeny žádné záznamy. Povolili jste 'plugin.tx_meilisearch.statistics = 1' v konfiguraci typoscriptu vašeho webu?</target>
+				<source>No records found. Did you enabled 'plugin.tx_t3meilisearch.statistics = 1' in the typoscript configuration of your site?</source>
+				<target>Nenalezeny žádné záznamy. Povolili jste 'plugin.tx_t3meilisearch.statistics = 1' v konfiguraci typoscriptu vašeho webu?</target>
 			</trans-unit>
 			<trans-unit id="meilisearch.backend.search_statistics_module.top_search_phrases" xml:space="preserve">
 				<source>Top %d Search Phrases</source>

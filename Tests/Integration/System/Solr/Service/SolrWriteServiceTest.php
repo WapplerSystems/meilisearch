@@ -41,7 +41,7 @@ class MeilisearchWriteServiceTest extends IntegrationTest
     {
         parent::setUp();
 
-        // @todo: Drop manual initialization of meilisearch Connection and use provided EXT:Meilisearch API.
+        // @todo: Drop manual initialization of meilisearch Connection and use provided EXT:t3_meilisearch API.
         $psr7Client = $this->get(ClientInterface::class);
         $requestFactory = $this->get(RequestFactoryInterface::class);
         $streamFactory = $this->get(StreamFactoryInterface::class);

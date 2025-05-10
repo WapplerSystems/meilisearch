@@ -31,9 +31,9 @@ function SuggestController() {
                 serviceUrl: $form.data('suggest'),
                 dataType: 'jsonp',
                 ajaxSettings: {
-                    jsonp: "tx_meilisearch[callback]"
+                    jsonp: "tx_t3meilisearch[callback]"
                 },
-                paramName: 'tx_meilisearch[queryString]',
+                paramName: 'tx_t3meilisearch[queryString]',
                 groupBy: 'category',
                 maxHeight: 1000,
                 appendTo: $formAutoComplete,
@@ -141,7 +141,7 @@ jQuery(document).ready(function() {
     var meilisearchSuggestController = new SuggestController();
     meilisearchSuggestController.init();
 
-    jQuery("body").on("tx_meilisearch_updated", function() {
+    jQuery("body").on("tx_t3meilisearch_updated", function() {
         meilisearchSuggestController.init();
     });
 });

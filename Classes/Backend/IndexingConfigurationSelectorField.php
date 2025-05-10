@@ -38,7 +38,7 @@ class IndexingConfigurationSelectorField
     /**
      * Form element name
      */
-    protected string $formElementName = 'tx_meilisearch-index-queue-indexing-configuration-selector';
+    protected string $formElementName = 'tx_t3meilisearch-index-queue-indexing-configuration-selector';
 
     /**
      * Selected values
@@ -110,7 +110,7 @@ class IndexingConfigurationSelectorField
 
         // need to wrap the field in a TCEforms table to make the CSS apply
         $form = [];
-        $form[] = '<div class="typo3-TCEforms tx_meilisearch-TCEforms">';
+        $form[] = '<div class="typo3-TCEforms tx_t3meilisearch-TCEforms">';
         $form[] = $formField;
         $form[] = '</div>';
 
@@ -193,8 +193,8 @@ class IndexingConfigurationSelectorField
         $nodeFactory = GeneralUtility::makeInstance(NodeFactory::class);
         $options = [
             'type' => 'select', 'renderType' => 'selectCheckBox',
-            'table' => 'tx_meilisearch_classes_backend_indexingconfigurationselector',
-            'tableName' => 'tx_meilisearch_classes_backend_indexingconfigurationselector',
+            'table' => 'tx_t3meilisearch_classes_backend_indexingconfigurationselector',
+            'tableName' => 'tx_t3meilisearch_classes_backend_indexingconfigurationselector',
             'fieldName' => 'additionalFields',
             'databaseRow' => ['uid' => 0],
             'parameterArray' => $parameterArray,

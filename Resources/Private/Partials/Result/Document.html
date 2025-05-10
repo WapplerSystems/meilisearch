@@ -26,7 +26,7 @@
 
 		<div class="results-teaser">
 			<p class="result-content">{s:document.highlightResult(resultSet:resultSet, document:document, fieldName:'content')}</p>
-			<f:if condition="{document.type} == 'tx_meilisearch_file'">
+			<f:if condition="{document.type} == 'tx_t3meilisearch_file'">
 				<p>
 					<f:translate key="file_mimetype" extensionName="meilisearch"/>: {document.fileMimeType}<br />
 					<f:translate key="file_referenced" extensionName="meilisearch"/>:

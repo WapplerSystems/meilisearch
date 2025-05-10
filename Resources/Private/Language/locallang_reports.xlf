@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-	<file source-language="en" datatype="plaintext" original="EXT:meilisearch/Resources/Private/Language/locallang_reports.xlf" date="2023-06-01T10:07:00Z" product-name="meilisearch">
+	<file source-language="en" datatype="plaintext" original="EXT:t3_meilisearch/Resources/Private/Language/locallang_reports.xlf" date="2023-06-01T10:07:00Z" product-name="meilisearch">
 		<header/>
 		<body>
 			<trans-unit id="status_meilisearch_access-filter" resname="status_meilisearch_access-filter">

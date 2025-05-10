@@ -799,7 +799,7 @@ class GarbageCollectorTest extends IntegrationTest
         // check queue directly as Queue wouldn't return invalid records
         /** @var Connection $connection */
         $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionByName(ConnectionPool::DEFAULT_CONNECTION_NAME);
-        $queueItemUid = $connection->select(['uid'], 'tx_meilisearch_indexqueue_item')->fetchOne();
+        $queueItemUid = $connection->select(['uid'], 'tx_t3meilisearch_indexqueue_item')->fetchOne();
         self::assertEquals(234, $queueItemUid);
     }
 
@@ -818,7 +818,7 @@ class GarbageCollectorTest extends IntegrationTest
         // check queue directly as Queue wouldn't return invalid records
         /** @var Connection $connection */
         $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionByName(ConnectionPool::DEFAULT_CONNECTION_NAME);
-        $queueItemUid = $connection->select(['uid'], 'tx_meilisearch_indexqueue_item')->fetchOne();
+        $queueItemUid = $connection->select(['uid'], 'tx_t3meilisearch_indexqueue_item')->fetchOne();
         self::assertEquals(123, $queueItemUid);
     }
 
@@ -841,7 +841,7 @@ class GarbageCollectorTest extends IntegrationTest
         // check queue directly as Queue wouldn't return invalid records
         /** @var Connection $connection */
         $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionByName(ConnectionPool::DEFAULT_CONNECTION_NAME);
-        $queueItemUid = $connection->select(['uid'], 'tx_meilisearch_indexqueue_item')->fetchOne();
+        $queueItemUid = $connection->select(['uid'], 'tx_t3meilisearch_indexqueue_item')->fetchOne();
         self::assertEquals(234, $queueItemUid);
     }
 
@@ -921,7 +921,7 @@ class GarbageCollectorTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.index.queue {
+            plugin.tx_t3meilisearch.index.queue {
                 foo = 1
                 foo {
                     table = tx_fakeextension_domain_model_foo

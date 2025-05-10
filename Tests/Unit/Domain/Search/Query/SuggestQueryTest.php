@@ -33,8 +33,8 @@ class SuggestQueryTest extends SetUpUnitTestCase
      */
     public function testSuggestQueryDoesNotUseFieldCollapsing()
     {
-        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['variants'] = 1;
-        $fakeConfigurationArray['plugin.']['tx_meilisearch.']['search.']['variants.'] = [
+        $fakeConfigurationArray['plugin.']['tx_t3meilisearch.']['search.']['variants'] = 1;
+        $fakeConfigurationArray['plugin.']['tx_t3meilisearch.']['search.']['variants.'] = [
             'variantField' => 'myField',
         ];
 

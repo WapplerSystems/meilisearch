@@ -233,7 +233,7 @@ class SiteRepository
             return $language->getLanguageId();
         }, $typo3Site->getLanguages());
 
-        // Try to get first instantiable TSFE for one of site languages, to get TypoScript with `plugin.tx_meilisearch.index.*`,
+        // Try to get first instantiable TSFE for one of site languages, to get TypoScript with `plugin.tx_t3meilisearch.index.*`,
         // to be able to collect indexing configuration,
         // which are required for BE-Modules/CLI-Commands or RecordMonitor within BE/TCE-commands.
         // If TSFE for none of languages can be initialized, then the \WapplerSystems\Meilisearch\Domain\Site\Site object unusable at all,

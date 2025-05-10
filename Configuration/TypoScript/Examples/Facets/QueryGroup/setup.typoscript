@@ -1,7 +1,7 @@
 # Enable a queryGroup facet on the field "created"
 
-plugin.tx_meilisearch.search.faceting = 1
-plugin.tx_meilisearch.search.faceting.facets {
+plugin.tx_t3meilisearch.search.faceting = 1
+plugin.tx_t3meilisearch.search.faceting.facets {
   age {
     label = Age
     field = created

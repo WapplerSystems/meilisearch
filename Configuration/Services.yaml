@@ -304,7 +304,7 @@ services:
         identifier: 'meilisearch.index.ExtbaseEntityRemoved'
         method: 'entityRemoved'
 
-  ###  EXT:meilisearch content objects
+  ###  EXT:t3_meilisearch content objects
   WapplerSystems\Meilisearch\ContentObject\Classification:
     tags:
       - name: frontend.contentobject

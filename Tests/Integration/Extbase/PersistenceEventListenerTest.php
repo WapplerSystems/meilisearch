@@ -39,8 +39,8 @@ class PersistenceEventListenerTest extends IntegrationTest
         parent::setUp();
         $this->writeDefaultMeilisearchTestSiteConfiguration();
         $this->addTypoScriptToTemplateRecord(1, '
-            plugin.tx_meilisearch.index.queue.foo = 1
-            plugin.tx_meilisearch.index.queue.foo.type = tx_fakeextension_domain_model_foo
+            plugin.tx_t3meilisearch.index.queue.foo = 1
+            plugin.tx_t3meilisearch.index.queue.foo.type = tx_fakeextension_domain_model_foo
         ');
         $this->indexQueue = GeneralUtility::makeInstance(Queue::class);
         $this->repository = GeneralUtility::makeInstance(FooRepository::class);

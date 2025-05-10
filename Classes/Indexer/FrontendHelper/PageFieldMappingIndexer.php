@@ -28,7 +28,7 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
  * Indexer to add / overwrite page document fields as defined in
- * plugin.tx_meilisearch.index.queue.pages.fields.
+ * plugin.tx_t3meilisearch.index.queue.pages.fields.
  *
  * @author Ingo Renner <ingo@typo3.org>
  */
@@ -41,7 +41,7 @@ class PageFieldMappingIndexer
      * Builds a substitute document for the currently being indexed page.
      *
      * Uses the original document and adds fields as defined in
-     * plugin.tx_meilisearch.index.queue.pages.fields.
+     * plugin.tx_t3meilisearch.index.queue.pages.fields.
      */
     public function __invoke(AfterPageDocumentIsCreatedForIndexingEvent $event): void
     {

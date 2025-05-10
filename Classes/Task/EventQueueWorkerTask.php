@@ -121,7 +121,7 @@ final class EventQueueWorkerTask extends AbstractTask
     public function getAdditionalInformation(): string
     {
         $message = LocalizationUtility::translate(
-            'LLL:EXT:meilisearch/Resources/Private/Language/locallang_be.xlf:task.eventQueueWorkerTask.statusMsg'
+            'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang_be.xlf:task.eventQueueWorkerTask.statusMsg'
         );
 
         $fullItemCount = $this->getEventQueueItemRepository()->count(false);

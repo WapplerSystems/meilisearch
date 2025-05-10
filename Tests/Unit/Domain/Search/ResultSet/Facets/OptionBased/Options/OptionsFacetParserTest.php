@@ -53,6 +53,6 @@ class OptionsFacetParserTest extends SetUpUnitTestCase
             'floatOptions',
             $responseAdapter,
         );
-        self::assertCount(3, $optionsArray, 'EXT:meilisearch can not list floats in facets.');
+        self::assertCount(3, $optionsArray, 'EXT:t3_meilisearch can not list floats in facets.');
     }
 }

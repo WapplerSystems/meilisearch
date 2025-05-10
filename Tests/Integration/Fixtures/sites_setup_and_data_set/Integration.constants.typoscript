@@ -1,2 +1,2 @@
 @import 'EXT:fluid_styled_content/Configuration/TypoScript/constants.typoscript'
-@import 'EXT:meilisearch/Configuration/TypoScript/Meilisearch/constants.typoscript'
+@import 'EXT:t3_meilisearch/Configuration/TypoScript/Meilisearch/constants.typoscript'

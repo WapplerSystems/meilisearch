@@ -30,7 +30,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * This class is used to build the indexing url for a TYPO3 frontend.
  * These sites have the pageId and language information encoded in the speaking url.
  *
- * EXT:meilisearch will then extend the URL with additional header information to actually
+ * EXT:t3_meilisearch will then extend the URL with additional header information to actually
  * trigger a frontend request to index a page.
  */
 class PageUriBuilder

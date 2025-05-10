@@ -48,7 +48,7 @@ jQuery(document).ready(function () {
     var optionsController = new OptionFacetController();
     optionsController.init();
 
-    jQuery("body").on("tx_meilisearch_updated", function() {
+    jQuery("body").on("tx_t3meilisearch_updated", function() {
         optionsController.init();
     });
 });

@@ -1,6 +1,6 @@
-plugin.tx_meilisearch {
+plugin.tx_t3meilisearch {
 
-  enabled = {$plugin.tx_meilisearch.enabled}
+  enabled = {$plugin.tx_t3meilisearch.enabled}
 
   enableDebugMode = 0
 
@@ -59,7 +59,7 @@ plugin.tx_meilisearch {
     // characters in the url.
     trustedFields = url
 
-    targetPage = {$plugin.tx_meilisearch.search.targetPage}
+    targetPage = {$plugin.tx_t3meilisearch.search.targetPage}
 
     initializeWithEmptyQuery = 0
     showResultsOfInitialEmptyQuery = 0
@@ -105,7 +105,7 @@ plugin.tx_meilisearch {
       // https://meilisearch.pl/en/2010/07/14/meilisearch-and-phrasequery-phrase-bonus-in-query-stage/
 
       // see https://lucene.apache.org/meilisearch/guide/7_0/the-dismax-query-parser.html#TheDisMaxQueryParser-Thepf_PhraseFields_Parameter
-      // EXT:Meilisearch configures Schemas from Meilisearch to use content field with boost of 2.0 per default.
+      // EXT:t3_meilisearch configures Schemas from Meilisearch to use content field with boost of 2.0 per default.
       // By enabling of phrase search, Meilisearch will build a phrase queries for a list of defined fields(phrase.fields) and boost the documents containing the terms in defined proximity(phrase.slop).
       // phrase.querySlop
       phrase = 0
@@ -181,7 +181,7 @@ plugin.tx_meilisearch {
       }
       siteHighlighting = 0
 
-      resultsPerPage = {$plugin.tx_meilisearch.search.results.resultsPerPage}
+      resultsPerPage = {$plugin.tx_t3meilisearch.search.results.resultsPerPage}
       resultsPerPageSwitchOptions = 10, 25, 50
       maxPaginatorLinks = 0
 
@@ -212,7 +212,7 @@ plugin.tx_meilisearch {
 
       select {
         SELECT = keywords as search_term, count(*) as hits
-        FROM = tx_meilisearch_statistics
+        FROM = tx_t3meilisearch_statistics
         ADD_WHERE = AND num_found != 0
         GROUP_BY = keywords
         ORDER_BY = hits DESC, search_term ASC
@@ -260,11 +260,11 @@ plugin.tx_meilisearch {
     faceting {
       minimumCount = 1
       sortBy = count
-      limit = {$plugin.tx_meilisearch.search.faceting.limit}
+      limit = {$plugin.tx_t3meilisearch.search.faceting.limit}
       showEmptyFacets = 0
       keepAllFacetsOnSelection = 0
-      urlParameterStyle = {$plugin.tx_meilisearch.search.faceting.urlParameterStyle}
-      urlParameterSort = {$plugin.tx_meilisearch.search.faceting.urlParameterSort}
+      urlParameterStyle = {$plugin.tx_t3meilisearch.search.faceting.urlParameterStyle}
+      urlParameterSort = {$plugin.tx_t3meilisearch.search.faceting.urlParameterSort}
       facetLinkUrlParameters =
 
       facets {
@@ -307,22 +307,22 @@ plugin.tx_meilisearch {
   }
 
   view {
-    pluginNamespace = tx_meilisearch
+    pluginNamespace = tx_t3meilisearch
 
     templateRootPaths {
-      0 = EXT:meilisearch/Resources/Private/Templates/
-      10 = {$plugin.tx_meilisearch.view.templateRootPath}
+      0 = EXT:t3_meilisearch/Resources/Private/Templates/
+      10 = {$plugin.tx_t3meilisearch.view.templateRootPath}
     }
     partialRootPaths {
-      0 = EXT:meilisearch/Resources/Private/Partials/
-      10 = {$plugin.tx_meilisearch.view.partialRootPath}
+      0 = EXT:t3_meilisearch/Resources/Private/Partials/
+      10 = {$plugin.tx_t3meilisearch.view.partialRootPath}
     }
     layoutRootPaths {
-      0 = EXT:meilisearch/Resources/Private/Layouts/
-      10 = {$plugin.tx_meilisearch.view.layoutRootPath}
+      0 = EXT:t3_meilisearch/Resources/Private/Layouts/
+      10 = {$plugin.tx_t3meilisearch.view.layoutRootPath}
     }
 
-    // By convention the templates is loaded from EXT:meilisearch/Resources/Private/Templates/Frontend/Search/(ActionName).html
+    // By convention the templates is loaded from EXT:t3_meilisearch/Resources/Private/Templates/Frontend/Search/(ActionName).html
     // If you want to define a different entry template, you can do this here to overwrite the conventional default template
     // if you want to use FLUID fallbacks you can just configure the template name, otherwise you could also use a full reference EXT:/.../
     // The templates that you configure in availableTemplate can be used in the flexform by the editor to select a template for the concrete plugin instance.
@@ -376,7 +376,7 @@ plugin.tx_meilisearch {
 
   settings {
   faceting {
-    limit = {$plugin.tx_meilisearch.search.faceting.limit}
+    limit = {$plugin.tx_t3meilisearch.search.faceting.limit}
   }
   }
 }
@@ -387,14 +387,14 @@ lib.meilisearch_extbase_bootstrap {
   userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
   vendorName = MeilisearchForTypo3
   extensionName = Meilisearch
-  settings < plugin.tx_meilisearch.settings
-  persistence < plugin.tx_meilisearch.persistence
-  view < plugin.tx_meilisearch.view
+  settings < plugin.tx_t3meilisearch.settings
+  persistence < plugin.tx_t3meilisearch.persistence
+  view < plugin.tx_t3meilisearch.view
 }
 
-plugin.tx_meilisearch_PiResults_Results < lib.meilisearch_extbase_bootstrap
-plugin.tx_meilisearch_PiResults_Results = USER_INT
-plugin.tx_meilisearch_PiResults_Results {
+plugin.tx_t3meilisearch_PiResults_Results < lib.meilisearch_extbase_bootstrap
+plugin.tx_t3meilisearch_PiResults_Results = USER_INT
+plugin.tx_t3meilisearch_PiResults_Results {
   pluginName = pi_results
   switchableControllerActions {
     Search {
@@ -404,8 +404,8 @@ plugin.tx_meilisearch_PiResults_Results {
   }
 }
 
-plugin.tx_meilisearch_PiSearch_Search < lib.meilisearch_extbase_bootstrap
-plugin.tx_meilisearch_PiSearch_Search {
+plugin.tx_t3meilisearch_PiSearch_Search < lib.meilisearch_extbase_bootstrap
+plugin.tx_t3meilisearch_PiSearch_Search {
   pluginName = pi_search
   switchableControllerActions {
     Search {
@@ -414,8 +414,8 @@ plugin.tx_meilisearch_PiSearch_Search {
   }
 }
 
-plugin.tx_meilisearch_PiFrequentSearches_FrequentSearches < lib.meilisearch_extbase_bootstrap
-plugin.tx_meilisearch_PiFrequentSearches_FrequentSearches {
+plugin.tx_t3meilisearch_PiFrequentSearches_FrequentSearches < lib.meilisearch_extbase_bootstrap
+plugin.tx_t3meilisearch_PiFrequentSearches_FrequentSearches {
   pluginName = pi_frequentlySearched
   switchableControllerActions {
     Search {

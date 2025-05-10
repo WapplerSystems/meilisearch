@@ -61,34 +61,34 @@ defined('TYPO3') or die('Access denied.');
 
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][OptimizeIndexTask::class] = [
         'extension' => 'meilisearch',
-        'title' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang.xlf:optimizeindex_title',
-        'description' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang.xlf:optimizeindex_description',
+        'title' => 'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang.xlf:optimizeindex_title',
+        'description' => 'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang.xlf:optimizeindex_description',
         'additionalFields' => OptimizeIndexTaskAdditionalFieldProvider::class,
     ];
 
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][ReIndexTask::class] = [
         'extension' => 'meilisearch',
-        'title' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang.xlf:reindex_title',
-        'description' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang.xlf:reindex_description',
+        'title' => 'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang.xlf:reindex_title',
+        'description' => 'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang.xlf:reindex_description',
         'additionalFields' => ReIndexTaskAdditionalFieldProvider::class,
     ];
 
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][IndexQueueWorkerTask::class] = [
         'extension' => 'meilisearch',
-        'title' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang.xlf:indexqueueworker_title',
-        'description' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang.xlf:indexqueueworker_description',
+        'title' => 'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang.xlf:indexqueueworker_title',
+        'description' => 'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang.xlf:indexqueueworker_description',
         'additionalFields' => IndexQueueWorkerTaskAdditionalFieldProvider::class,
     ];
 
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][EventQueueWorkerTask::class] = [
         'extension' => 'meilisearch',
-        'title' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_be.xlf:task.eventQueueWorkerTask.title',
-        'description' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_be.xlf:task.eventQueueWorkerTask.description',
+        'title' => 'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang_be.xlf:task.eventQueueWorkerTask.title',
+        'description' => 'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang_be.xlf:task.eventQueueWorkerTask.description',
         'additionalFields' => EventQueueWorkerTaskAdditionalFieldProvider::class,
     ];
 
-    if (!isset($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][TableGarbageCollectionTask::class]['options']['tables']['tx_meilisearch_statistics'])) {
-        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][TableGarbageCollectionTask::class]['options']['tables']['tx_meilisearch_statistics'] = [
+    if (!isset($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][TableGarbageCollectionTask::class]['options']['tables']['tx_t3meilisearch_statistics'])) {
+        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][TableGarbageCollectionTask::class]['options']['tables']['tx_t3meilisearch_statistics'] = [
             'dateField' => 'tstamp',
             'expirePeriod' => 180,
         ];
@@ -97,25 +97,25 @@ defined('TYPO3') or die('Access denied.');
 
     // Register cache for frequent searches
 
-    if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_meilisearch'])) {
-        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_meilisearch'] = [];
+    if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_t3meilisearch'])) {
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_t3meilisearch'] = [];
     }
     // Caching framework meilisearch
-    if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_meilisearch_configuration'])) {
-        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_meilisearch_configuration'] = [];
+    if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_t3meilisearch_configuration'])) {
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_t3meilisearch_configuration'] = [];
     }
 
-    if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_meilisearch_configuration']['backend'])) {
-        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_meilisearch_configuration']['backend'] = Typo3DatabaseBackend::class;
+    if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_t3meilisearch_configuration']['backend'])) {
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_t3meilisearch_configuration']['backend'] = Typo3DatabaseBackend::class;
     }
 
-    if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_meilisearch_configuration']['options'])) {
+    if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_t3meilisearch_configuration']['options'])) {
         // default life-time is one day
-        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_meilisearch_configuration']['options'] = ['defaultLifetime' => 60 * 60 * 24];
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_t3meilisearch_configuration']['options'] = ['defaultLifetime' => 60 * 60 * 24];
     }
 
-    if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_meilisearch_configuration']['groups'])) {
-        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_meilisearch_configuration']['groups'] = ['all'];
+    if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_t3meilisearch_configuration']['groups'])) {
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_t3meilisearch_configuration']['groups'] = ['all'];
     }
 
     // ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- #

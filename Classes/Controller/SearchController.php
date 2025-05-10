@@ -114,7 +114,7 @@ class SearchController extends AbstractBaseController
 
             $currentPage = $this->request->hasArgument('page') ? (int)$this->request->getArgument('page') : 1;
 
-            // prevent currentPage < 1 (i.e for GET request like &tx_meilisearch[page]=0)
+            // prevent currentPage < 1 (i.e for GET request like &tx_t3meilisearch[page]=0)
             if ($currentPage < 1) {
                 $currentPage = 1;
             }

@@ -157,7 +157,7 @@ class AbstractIndexer
      * cObj processing if wanted/needed. Otherwise, the plain item/record value
      * is taken.
      *
-     * @param array $indexingConfiguration Indexing configuration as defined in plugin.tx_meilisearch_index.queue.[indexingConfigurationName].fields
+     * @param array $indexingConfiguration Indexing configuration as defined in plugin.tx_t3meilisearch_index.queue.[indexingConfigurationName].fields
      * @param string $meilisearchFieldName A Meilisearch field name that is configured in the indexing configuration
      * @param array $data A record or item's data
      * @return array|float|int|string|null The resolved string value to be indexed; null if value could not be resolved

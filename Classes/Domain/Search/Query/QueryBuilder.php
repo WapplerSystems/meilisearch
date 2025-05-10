@@ -253,11 +253,11 @@ class QueryBuilder extends AbstractQueryBuilder
     }
 
     /**
-     * Can be used to apply the allowed sites from plugin.tx_meilisearch.search.query.allowedSites to the query.
+     * Can be used to apply the allowed sites from plugin.tx_t3meilisearch.search.query.allowedSites to the query.
      */
     public function useSiteHashFromTypoScript(int $requestedPageId): QueryBuilder
     {
-        $queryConfiguration = $this->typoScriptConfiguration->getObjectByPathOrDefault('plugin.tx_meilisearch.search.query.');
+        $queryConfiguration = $this->typoScriptConfiguration->getObjectByPathOrDefault('plugin.tx_t3meilisearch.search.query.');
         $allowedSites = $this->siteHashService->getAllowedSitesForPageIdAndAllowedSitesConfiguration($requestedPageId, $queryConfiguration['allowedSites'] ?? '');
         return $this->useSiteHashFromAllowedSites($allowedSites);
     }

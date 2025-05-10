@@ -61,7 +61,7 @@ class EventQueueWorkerTaskAdditionalFieldProvider extends AbstractAdditionalFiel
 
         $additionalFields['limit'] = [
             'code' => '<input type="number" class="form-control" name="tx_scheduler[meilisearch_eventqueueworkertask_limit]" value="' . (int)$taskInfo['meilisearch_eventqueueworkertask_limit'] . '" />',
-            'label' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_be.xlf:task.eventQueueWorkerTask.limit',
+            'label' => 'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang_be.xlf:task.eventQueueWorkerTask.limit',
         ];
 
         return $additionalFields;

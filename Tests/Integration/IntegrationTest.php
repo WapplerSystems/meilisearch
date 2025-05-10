@@ -35,7 +35,7 @@ use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequestCon
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 /**
- * Base class for all integration tests in the EXT:meilisearch project
+ * Base class for all integration tests in the EXT:t3_meilisearch project
  *
  * @author Timo Schmidt
  */
@@ -254,7 +254,7 @@ abstract class IntegrationTest extends FunctionalTestCase
         error_reporting(error_reporting() & ~E_USER_DEPRECATED);
         set_error_handler(function (int $id, string $msg, string $file, int $line): bool {
             if ($id === E_USER_DEPRECATED && str_starts_with($msg, 'meilisearch:deprecation: ')) {
-                $this->fail('Executed deprecated EXT:meilisearch code: ' . $msg);
+                $this->fail('Executed deprecated EXT:t3_meilisearch code: ' . $msg);
             }
             return true;
         });
@@ -355,7 +355,7 @@ abstract class IntegrationTest extends FunctionalTestCase
     }
 
     /**
-     * Adds a page to the queue (into DB table tx_meilisearch_indexqueue_item) so it can
+     * Adds a page to the queue (into DB table tx_t3meilisearch_indexqueue_item) so it can
      * be fetched via a frontend subrequest
      */
     protected function addPageToIndexQueue(int $pageId, Site $site): Item
@@ -366,16 +366,16 @@ abstract class IntegrationTest extends FunctionalTestCase
             'item_uid' => $pageId,
             'indexing_configuration' => 'pages',
         ];
-        $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('tx_meilisearch_indexqueue_item');
+        $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('tx_t3meilisearch_indexqueue_item');
         // Check if item (type + Page ID) is already in index, if so update it
-        $row = $connection->select(['*'], 'tx_meilisearch_indexqueue_item', $queueItem)->fetchAssociative();
+        $row = $connection->select(['*'], 'tx_t3meilisearch_indexqueue_item', $queueItem)->fetchAssociative();
         if (is_array($row)) {
-            $connection->update('tx_meilisearch_indexqueue_item', $queueItem + ['errors' => ''], ['uid' => $row['uid']]);
+            $connection->update('tx_t3meilisearch_indexqueue_item', $queueItem + ['errors' => ''], ['uid' => $row['uid']]);
             $queueItem['uid'] = $row['uid'];
         } else {
-            $connection->insert('tx_meilisearch_indexqueue_item', $queueItem + ['errors' => '']);
+            $connection->insert('tx_t3meilisearch_indexqueue_item', $queueItem + ['errors' => '']);
             $queueItem['uid'] = (int)$connection->lastInsertId();
-            $queueItem = $connection->select(['*'], 'tx_meilisearch_indexqueue_item', ['uid' => $queueItem['uid']])->fetchAssociative();
+            $queueItem = $connection->select(['*'], 'tx_t3meilisearch_indexqueue_item', ['uid' => $queueItem['uid']])->fetchAssociative();
         }
         return new Item($queueItem);
     }
@@ -385,8 +385,8 @@ abstract class IntegrationTest extends FunctionalTestCase
      */
     protected function getIndexQueueItem(int $itemUid): Item
     {
-        $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('tx_meilisearch_indexqueue_item');
-        $itemData = $connection->select(['*'], 'tx_meilisearch_indexqueue_item', ['uid' => $itemUid])->fetchAssociative();
+        $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('tx_t3meilisearch_indexqueue_item');
+        $itemData = $connection->select(['*'], 'tx_t3meilisearch_indexqueue_item', ['uid' => $itemUid])->fetchAssociative();
         return new Item($itemData);
     }
 

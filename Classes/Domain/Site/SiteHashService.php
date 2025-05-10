@@ -74,7 +74,7 @@ class SiteHashService
             return $siteHashes[$domain];
         }
 
-        $siteHashes[$domain] = sha1($domain . $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey'] . 'tx_meilisearch');
+        $siteHashes[$domain] = sha1($domain . $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey'] . 'tx_t3meilisearch');
         return $siteHashes[$domain];
     }
 

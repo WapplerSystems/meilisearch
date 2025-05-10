@@ -18,7 +18,7 @@ namespace WapplerSystems\Meilisearch\FrontendEnvironment\Exception;
 use WapplerSystems\Meilisearch\Exception as ExtMeilisearchException;
 
 /**
- * Exception that is thrown on initialization of EXT:meilisearch FrontendEnvironment.
+ * Exception that is thrown on initialization of EXT:t3_meilisearch FrontendEnvironment.
  * This exception should be used for any errors on indexing .
  */
 class Exception extends ExtMeilisearchException {}

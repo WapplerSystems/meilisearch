@@ -1,6 +1,6 @@
 <?php
 /**
- * Definitions for modules provided by EXT:meilisearch
+ * Definitions for modules provided by EXT:t3_meilisearch
  */
 
 use WapplerSystems\Meilisearch\Controller\Backend\Search\CoreOptimizationModuleController;
@@ -10,7 +10,7 @@ use WapplerSystems\Meilisearch\Controller\Backend\Search\InfoModuleController;
 
 return [
     'searchbackend' => [
-        'labels' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_mod.xlf',
+        'labels' => 'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang_mod.xlf',
         'iconIdentifier' => 'extensions-meilisearch-module-main',
         'navigationComponent' => '@typo3/backend/page-tree/page-tree-element',
         'extensionName' => 'Meilisearch',
@@ -20,7 +20,7 @@ return [
         'access' => 'user,group',
         'path' => '/module/searchbackend/info',
         'iconIdentifier' => 'extensions-meilisearch-module-info',
-        'labels' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_mod_info.xlf',
+        'labels' => 'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang_mod_info.xlf',
         'extensionName' => 'Meilisearch',
         'controllerActions' => [
             InfoModuleController::class => [
@@ -33,7 +33,7 @@ return [
         'access' => 'user,group',
         'path' => '/module/searchbackend/core-optimization',
         'iconIdentifier' => 'extensions-meilisearch-module-meilisearch-core-optimization',
-        'labels' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_mod_coreoptimize.xlf',
+        'labels' => 'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang_mod_coreoptimize.xlf',
         'extensionName' => 'Meilisearch',
         'controllerActions' => [
             CoreOptimizationModuleController::class => [
@@ -49,7 +49,7 @@ return [
         'access' => 'user,group',
         'path' => '/module/searchbackend/index-queue',
         'iconIdentifier' => 'extensions-meilisearch-module-index-queue',
-        'labels' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_mod_indexqueue.xlf',
+        'labels' => 'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang_mod_indexqueue.xlf',
         'extensionName' => 'Meilisearch',
         'controllerActions' => [
             IndexQueueModuleController::class => [
@@ -63,7 +63,7 @@ return [
         'access' => 'user,group',
         'path' => '/module/searchbackend/index-administration',
         'iconIdentifier' => 'extensions-meilisearch-module-index-administration',
-        'labels' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_mod_indexadmin.xlf',
+        'labels' => 'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang_mod_indexadmin.xlf',
         'extensionName' => 'Meilisearch',
         'controllerActions' => [
             IndexAdministrationModuleController::class => [

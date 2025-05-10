@@ -1,4 +1,4 @@
-plugin.tx_meilisearch.search.query {
+plugin.tx_t3meilisearch.search.query {
 
   filter {
     pagesOnlyFilter = type:pages

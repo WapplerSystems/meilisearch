@@ -25,7 +25,7 @@ page.10 {
     }
 }
 
-plugin.tx_meilisearch {
+plugin.tx_t3meilisearch {
     enabled = 1
     index {
         fieldProcessingInstructions {
@@ -71,7 +71,7 @@ page.10 {
     }
 }
 
-plugin.tx_meilisearch {
+plugin.tx_t3meilisearch {
     enabled = 1
     index {
         fieldProcessingInstructions {

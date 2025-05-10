@@ -27,7 +27,7 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
- * Tests setUp for EXT:meilisearch content object classes
+ * Tests setUp for EXT:t3_meilisearch content object classes
  */
 abstract class SetUpContentObject extends SetUpUnitTestCase
 {

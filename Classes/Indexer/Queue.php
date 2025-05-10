@@ -123,7 +123,7 @@ class Queue implements QueueInterface, QueueInitializationServiceAwareInterface
     {
         if (!isset($this->queueInitializationService)) {
             trigger_error(
-                'queueInitializationService is no longer initalized automatically, till EXT:meilisearch supports DI'
+                'queueInitializationService is no longer initalized automatically, till EXT:t3_meilisearch supports DI'
                 . ' the QueueInitializationService has to be set manually, fallback will be removed in v13.',
                 E_USER_DEPRECATED
             );

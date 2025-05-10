@@ -171,7 +171,7 @@ class IndexService
      * A factory method to get an indexer depending on an item's configuration.
      *
      * By default, all items are indexed using the default indexer
-     * (WapplerSystems\Meilisearch\Indexer\Indexer) coming with EXT:meilisearch. Pages by default are
+     * (WapplerSystems\Meilisearch\Indexer\Indexer) coming with EXT:t3_meilisearch. Pages by default are
      * configured to be indexed through a dedicated indexer
      * (WapplerSystems\Meilisearch\Indexer\PageIndexer). In all other cases a dedicated indexer
      * can be specified through TypoScript if needed.

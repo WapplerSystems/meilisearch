@@ -109,7 +109,7 @@ class IndexQueueModuleController extends AbstractModuleController
     protected function getIndexQueueInitializationSelector(): string
     {
         $selector = GeneralUtility::makeInstance(IndexingConfigurationSelectorField::class, $this->selectedSite);
-        $selector->setFormElementName('tx_meilisearch-index-queue-initialization');
+        $selector->setFormElementName('tx_t3meilisearch-index-queue-initialization');
 
         return $selector->render();
     }
@@ -125,7 +125,7 @@ class IndexQueueModuleController extends AbstractModuleController
     {
         $initializedIndexingConfigurations = [];
 
-        $indexingConfigurationsToInitialize = $this->request->getArgument('tx_meilisearch-index-queue-initialization');
+        $indexingConfigurationsToInitialize = $this->request->getArgument('tx_t3meilisearch-index-queue-initialization');
         if ((!empty($indexingConfigurationsToInitialize)) && (is_array($indexingConfigurationsToInitialize))) {
             $initializationService = GeneralUtility::makeInstance(QueueInitializationService::class);
             foreach ($indexingConfigurationsToInitialize as $configurationToInitialize) {

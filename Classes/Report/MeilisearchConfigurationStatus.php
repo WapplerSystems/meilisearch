@@ -71,7 +71,7 @@ class MeilisearchConfigurationStatus extends AbstractMeilisearchStatus
      */
     public function getLabel(): string
     {
-        return 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_reports.xlf:status_meilisearch_configuration';
+        return 'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang_reports.xlf:status_meilisearch_configuration';
     }
 
     /**
@@ -136,7 +136,7 @@ class MeilisearchConfigurationStatus extends AbstractMeilisearchStatus
     }
 
     /**
-     * Returns an array of rootPages where the indexing is off and EXT:meilisearch is enabled.
+     * Returns an array of rootPages where the indexing is off and EXT:t3_meilisearch is enabled.
      *
      * @throws DBALException
      */
@@ -189,7 +189,7 @@ class MeilisearchConfigurationStatus extends AbstractMeilisearchStatus
     }
 
     /**
-     * Checks if the meilisearch plugin is enabled with plugin.tx_meilisearch.enabled.
+     * Checks if the meilisearch plugin is enabled with plugin.tx_t3meilisearch.enabled.
      *
      * @throws DBALException
      */

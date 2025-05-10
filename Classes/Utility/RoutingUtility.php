@@ -57,7 +57,7 @@ class RoutingUtility
      *
      * @see \TYPO3\CMS\Core\Routing\Enhancer\VariableProcessor
      */
-    public static function deflateString(string $parameterName, string $namespace = 'tx_meilisearch'): string
+    public static function deflateString(string $parameterName, string $namespace = 'tx_t3meilisearch'): string
     {
         if (!empty($namespace)) {
             $parameterName = $namespace . '/' . $parameterName;

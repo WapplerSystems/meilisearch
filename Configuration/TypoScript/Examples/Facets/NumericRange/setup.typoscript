@@ -1,7 +1,7 @@
 # Enable a numericRange facet on the pidField
 
-plugin.tx_meilisearch.search.faceting = 1
-plugin.tx_meilisearch.search.faceting.facets {
+plugin.tx_t3meilisearch.search.faceting = 1
+plugin.tx_t3meilisearch.search.faceting.facets {
   pidRangeRange {
     field = pid
     label = Pid Range
@@ -16,11 +16,11 @@ plugin.tx_meilisearch.search.faceting.facets {
 
 # Load js files
 page.includeJSFooterlibs {
-  meilisearch-jquery = EXT:meilisearch/Resources/Public/JavaScript/JQuery/jquery.min.js
-  meilisearch-ui = EXT:meilisearch/Resources/Public/JavaScript/JQuery/jquery-ui.min.js
-  meilisearch-numericrange = EXT:meilisearch/Resources/Public/JavaScript/facet_numericrange_controller.js
+  meilisearch-jquery = EXT:t3_meilisearch/Resources/Public/JavaScript/JQuery/jquery.min.js
+  meilisearch-ui = EXT:t3_meilisearch/Resources/Public/JavaScript/JQuery/jquery-ui.min.js
+  meilisearch-numericrange = EXT:t3_meilisearch/Resources/Public/JavaScript/facet_numericrange_controller.js
 }
 
 page.includeCSS {
-  meilisearch-ui = EXT:meilisearch/Resources/Public/Css/JQueryUi/jquery-ui.custom.css
+  meilisearch-ui = EXT:t3_meilisearch/Resources/Public/Css/JQueryUi/jquery-ui.custom.css
 }

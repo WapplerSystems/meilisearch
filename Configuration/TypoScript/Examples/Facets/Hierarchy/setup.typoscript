@@ -1,7 +1,7 @@
 # Enable a hierarchy facet on the field "rootline"
 
-lib.tx_meilisearch.pagetitle = HMENU
-lib.tx_meilisearch.pagetitle {
+lib.tx_t3meilisearch.pagetitle = HMENU
+lib.tx_t3meilisearch.pagetitle {
   special = list
   special.value.current = 1
   1 = TMENU
@@ -12,8 +12,8 @@ lib.tx_meilisearch.pagetitle {
   }
 }
 
-plugin.tx_meilisearch.search.faceting = 1
-plugin.tx_meilisearch.search.faceting.facets {
+plugin.tx_t3meilisearch.search.faceting = 1
+plugin.tx_t3meilisearch.search.faceting.facets {
   pageHierarchy {
     field = rootline
     label = Rootline

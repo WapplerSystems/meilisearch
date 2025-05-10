@@ -133,7 +133,7 @@ class SearchResultSetServiceTest extends SetUpUnitTestCase
 
         $configurationArray = [
             'plugin.' => [
-                'tx_meilisearch.' => [
+                'tx_t3meilisearch.' => [
                     'search.' => [
                         'grouping' => 1,
                         'grouping.' => [

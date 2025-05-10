@@ -32,7 +32,7 @@ class GroupingTest extends SetUpUnitTestCase
         $typoScriptConfiguration = new TypoScriptConfiguration(
             [
                 'plugin.' => [
-                    'tx_meilisearch.' => [
+                    'tx_t3meilisearch.' => [
                         'search.' => [
                             'grouping' => 1,
                             'grouping.' => [

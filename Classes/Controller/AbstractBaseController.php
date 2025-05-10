@@ -102,7 +102,7 @@ abstract class AbstractBaseController extends ActionController
         /** @var TypoScriptService $typoScriptService */
         $typoScriptService = GeneralUtility::makeInstance(TypoScriptService::class);
 
-        // Merge settings done by typoscript with meilisearchConfiguration plugin.tx_meilisearch (obsolete when part of ext:meilisearch)
+        // Merge settings done by typoscript with meilisearchConfiguration plugin.tx_t3meilisearch (obsolete when part of EXT:t3_meilisearch)
         $frameWorkConfiguration = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
         $pluginSettings = [];
         foreach (['search', 'settings', 'suggest', 'statistics', 'logging', 'general', 'meilisearch', 'view'] as $key) {
@@ -138,15 +138,15 @@ abstract class AbstractBaseController extends ActionController
     }
 
     /**
-     * Inject settings of plugin.tx_meilisearch
+     * Inject settings of plugin.tx_t3meilisearch
      */
     protected function initializeSettings(): void
     {
         $typoScriptService = GeneralUtility::makeInstance(TypoScriptService::class);
 
-        // Make sure plugin.tx_meilisearch.settings are available in the view as {settings}
+        // Make sure plugin.tx_t3meilisearch.settings are available in the view as {settings}
         $this->settings = $typoScriptService->convertTypoScriptArrayToPlainArray(
-            $this->typoScriptConfiguration->getObjectByPathOrDefault('plugin.tx_meilisearch.settings.')
+            $this->typoScriptConfiguration->getObjectByPathOrDefault('plugin.tx_t3meilisearch.settings.')
         );
     }
 

@@ -44,7 +44,7 @@ class OptimizeIndexTaskAdditionalFieldProvider extends AbstractAdditionalFieldPr
     /**
      * Default language file of the extension link validator
      */
-    protected string $languageFile = 'LLL:EXT:meilisearch/Resources/Private/Language/locallang.xlf';
+    protected string $languageFile = 'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang.xlf';
 
     /**
      * Task information

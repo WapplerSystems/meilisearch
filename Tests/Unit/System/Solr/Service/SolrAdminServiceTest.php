@@ -112,7 +112,7 @@ class MeilisearchAdminServiceTest extends SetUpUnitTestCase
         $fakedMeilisearchConfigResponse->expects(self::once())->method('getRawResponse')->willReturn($fakeTestSchema);
 
         $this->assertGetRequestIsTriggered('http://localhost:8983/meilisearch/core_en/admin/file?file=meilisearchconfig.xml', $fakedMeilisearchConfigResponse);
-        $expectedSchemaVersion = 'tx_meilisearch-9-9-9--20221020';
+        $expectedSchemaVersion = 'tx_t3meilisearch-9-9-9--20221020';
         self::assertSame($expectedSchemaVersion, $this->adminService->getMeilisearchconfigName(), 'MeilisearchAdminService could not parse the meilisearchconfig version as expected');
     }
 

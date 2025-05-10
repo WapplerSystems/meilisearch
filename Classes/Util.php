@@ -29,7 +29,7 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Utility class for tx_meilisearch
+ * Utility class for tx_t3meilisearch
  *
  * @author Ingo Renner <ingo@typo3.org>
  * (c) 2009-2015 Ingo Renner <ingo@typo3.org>
@@ -99,7 +99,7 @@ class Util
     }
 
     /**
-     * Shortcut to retrieve the TypoScript configuration for EXT:meilisearch
+     * Shortcut to retrieve the TypoScript configuration for EXT:t3_meilisearch
      */
     public static function getMeilisearchConfiguration(): TypoScriptConfiguration
     {

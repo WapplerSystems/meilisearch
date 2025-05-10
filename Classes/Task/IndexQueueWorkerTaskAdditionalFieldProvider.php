@@ -83,17 +83,17 @@ class IndexQueueWorkerTaskAdditionalFieldProvider extends AbstractAdditionalFiel
                 'tx_scheduler[site]',
                 $taskInfo['site']
             ),
-            'label' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang.xlf:field_site',
+            'label' => 'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang.xlf:field_site',
         ];
 
         $additionalFields['documentsToIndexLimit'] = [
             'code' => '<input type="number" class="form-control" name="tx_scheduler[documentsToIndexLimit]" value="' . htmlspecialchars((string)$taskInfo['documentsToIndexLimit']) . '" />',
-            'label' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang.xlf:indexqueueworker_field_documentsToIndexLimit',
+            'label' => 'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang.xlf:indexqueueworker_field_documentsToIndexLimit',
         ];
 
         $additionalFields['forcedWebRoot'] = [
             'code' => '<input type="text" class="form-control" name="tx_scheduler[forcedWebRoot]" value="' . htmlspecialchars($taskInfo['forcedWebRoot']) . '" />',
-            'label' => 'LLL:EXT:meilisearch/Resources/Private/Language/locallang.xlf:indexqueueworker_field_forcedWebRoot',
+            'label' => 'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang.xlf:indexqueueworker_field_forcedWebRoot',
         ];
 
         return $additionalFields;

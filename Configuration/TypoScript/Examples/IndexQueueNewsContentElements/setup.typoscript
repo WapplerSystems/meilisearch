@@ -1,4 +1,4 @@
-plugin.tx_meilisearch.index.queue {
+plugin.tx_t3meilisearch.index.queue {
   news {
     fields {
       content {

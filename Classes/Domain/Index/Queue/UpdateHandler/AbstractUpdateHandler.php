@@ -154,7 +154,7 @@ abstract class AbstractUpdateHandler
      * Checks if a page update will trigger a recursive update of pages
      *
      * This can either be the case if some $changedFields are part of the RecursiveUpdateTriggerConfiguration or
-     * columns have explicitly been configured via plugin.tx_meilisearch.index.queue.recursiveUpdateFields
+     * columns have explicitly been configured via plugin.tx_t3meilisearch.index.queue.recursiveUpdateFields
      *
      * @throws DBALException
      */

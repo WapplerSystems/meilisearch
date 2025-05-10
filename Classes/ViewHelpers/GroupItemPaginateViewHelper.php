@@ -95,24 +95,24 @@ class GroupItemPaginateViewHelper extends AbstractMeilisearchViewHelper
         /** @var SearchResultSet $resultSet */
         $resultSet = $this->arguments['resultSet'];
         $configuration = $resultSet->getUsedSearchRequest()->getContextTypoScriptConfiguration();
-        $viewConfiguration = $configuration->getValueByPath('plugin.tx_meilisearch.view.');
+        $viewConfiguration = $configuration->getValueByPath('plugin.tx_t3meilisearch.view.');
 
         $layoutRootPaths = [];
-        $layoutRootPaths[] = GeneralUtility::getFileAbsFileName('EXT:meilisearch/Resources/Private/Layouts/ViewHelpers/');
+        $layoutRootPaths[] = GeneralUtility::getFileAbsFileName('EXT:t3_meilisearch/Resources/Private/Layouts/ViewHelpers/');
         if (isset($viewConfiguration['layoutRootPaths.'])) {
             foreach ($viewConfiguration['layoutRootPaths.'] as $layoutRootPath) {
                 $layoutRootPaths[] = GeneralUtility::getFileAbsFileName(rtrim($layoutRootPath, '/') . '/ViewHelpers/');
             }
         }
         $partialRootPaths = [];
-        $partialRootPaths[] = GeneralUtility::getFileAbsFileName('EXT:meilisearch/Resources/Private/Partials/ViewHelpers/');
+        $partialRootPaths[] = GeneralUtility::getFileAbsFileName('EXT:t3_meilisearch/Resources/Private/Partials/ViewHelpers/');
         if (isset($viewConfiguration['partialRootPaths.'])) {
             foreach ($viewConfiguration['partialRootPaths.'] as $partialRootPath) {
                 $partialRootPaths[] = GeneralUtility::getFileAbsFileName(rtrim($partialRootPath, '/') . '/ViewHelpers/');
             }
         }
         $templateRootPaths = [];
-        $templateRootPaths[] = GeneralUtility::getFileAbsFileName('EXT:meilisearch/Resources/Private/Templates/ViewHelpers/');
+        $templateRootPaths[] = GeneralUtility::getFileAbsFileName('EXT:t3_meilisearch/Resources/Private/Templates/ViewHelpers/');
         if (isset($viewConfiguration['templateRootPaths.'])) {
             foreach ($viewConfiguration['templateRootPaths.'] as $templateRootPath) {
                 $templateRootPaths[] = GeneralUtility::getFileAbsFileName(rtrim($templateRootPath, '/') . '/ViewHelpers/');

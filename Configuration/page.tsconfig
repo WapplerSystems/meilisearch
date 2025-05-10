@@ -1,9 +1,9 @@
 mod.wizards.newContentElement.wizardItems.plugins {
   elements {
-    tx_meilisearch_results {
+    tx_t3meilisearch_results {
       iconIdentifier = extensions-meilisearch-plugin-contentelement
-      title = LLL:EXT:meilisearch/Resources/Private/Language/locallang.xlf:plugin_results
-      description = LLL:EXT:meilisearch/Resources/Private/Language/locallang.xlf:plugin_results_description
+      title = LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang.xlf:plugin_results
+      description = LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang.xlf:plugin_results_description
       tt_content_defValues {
         CType = list
         list_type = meilisearch_pi_results

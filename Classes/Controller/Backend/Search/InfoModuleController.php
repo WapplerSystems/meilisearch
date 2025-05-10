@@ -134,7 +134,7 @@ class InfoModuleController extends AbstractModuleController
             ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT,
             'meilisearch'
         );
-        $statisticsConfig = $frameWorkConfiguration['plugin.']['tx_meilisearch.']['statistics.'] ?? [];
+        $statisticsConfig = $frameWorkConfiguration['plugin.']['tx_t3meilisearch.']['statistics.'] ?? [];
 
         $topHitsLimit = (int)($statisticsConfig['topHits.']['limit'] ?? 5);
         $noHitsLimit = (int)($statisticsConfig['noHits.']['limit'] ?? 5);

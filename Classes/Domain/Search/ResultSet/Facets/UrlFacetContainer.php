@@ -46,7 +46,7 @@ class UrlFacetContainer implements Countable
     /**
      * Argument namespace as configures in TypoScript
      */
-    protected string $argumentNameSpace = 'tx_meilisearch';
+    protected string $argumentNameSpace = 'tx_t3meilisearch';
 
     protected ArrayAccessor $argumentsAccessor;
 

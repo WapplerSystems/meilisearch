@@ -109,8 +109,8 @@ class HierarchyFacetParser extends AbstractFacetParser
      *
      * Meilisearch `facet.sort` can be set globally or per facet.
      * Relevant TypoScript paths:
-     * plugin.tx_meilisearch.search.faceting.sortBy causes `facet.sort` Meilisearch parameter
-     * plugin.tx_meilisearch.search.faceting.facets.[facetName].sortBy causes f.<fieldname>.facet.sort parameter
+     * plugin.tx_t3meilisearch.search.faceting.sortBy causes `facet.sort` Meilisearch parameter
+     * plugin.tx_t3meilisearch.search.faceting.facets.[facetName].sortBy causes f.<fieldname>.facet.sort parameter
      *
      * see: https://lucene.apache.org/meilisearch/guide/6_6/faceting.html#Faceting-Thefacet.sortParameter
      * see: https://meilisearch.apache.org/guide/6_6/faceting.html#Faceting-Thefacet.sortParameter : "This parameter can be specified on a per-field basis with the syntax of f.<fieldname>.facet.sort."

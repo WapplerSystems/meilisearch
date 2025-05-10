@@ -171,7 +171,7 @@ class QueueTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.index.queue {
+            plugin.tx_t3meilisearch.index.queue {
                 custom_page_type = 1
                 custom_page_type {
                     initialization = WapplerSystems\Meilisearch\Indexer\Initializer\Page

@@ -86,7 +86,7 @@ class FrequentlySearchedViewHelper extends AbstractMeilisearchViewHelper
      */
     protected static function getInitializedCache(): ?FrontendInterface
     {
-        $cacheIdentifier = 'tx_meilisearch';
+        $cacheIdentifier = 'tx_t3meilisearch';
         try {
             /** @var FrontendInterface $cacheInstance */
             $cacheInstance = GeneralUtility::makeInstance(CacheManager::class)->getCache($cacheIdentifier);

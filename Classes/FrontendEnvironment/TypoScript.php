@@ -70,7 +70,7 @@ class TypoScript implements SingletonInterface
         }
 
         /** @var TwoLevelCache $cache */
-        $cache = GeneralUtility::makeInstance(TwoLevelCache::class, 'tx_meilisearch_configuration');
+        $cache = GeneralUtility::makeInstance(TwoLevelCache::class, 'tx_t3meilisearch_configuration');
         $configurationArray = $cache->get($cacheId);
 
         if (!empty($configurationArray)) {

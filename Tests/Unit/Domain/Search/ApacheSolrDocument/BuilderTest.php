@@ -167,7 +167,7 @@ class BuilderTest extends SetUpUnitTestCase
         self::assertSame('r:0', $document->access, 'Access field was not set as expected');
         self::assertSame('testSiteHash/news/4711', $document->id, 'Id field was not set as expected');
         self::assertSame('news', $document->type, 'Type field was not set as expected');
-        self::assertSame('EXT:meilisearch', $document->appKey, 'appKey field was not set as expected');
+        self::assertSame('EXT:t3_meilisearch', $document->appKey, 'appKey field was not set as expected');
     }
 
     protected function fakePageDocumentId(string $documentId): void

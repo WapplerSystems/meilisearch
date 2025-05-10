@@ -362,7 +362,7 @@
 				<source>Percentage</source>
 			</trans-unit>
 			<trans-unit id="meilisearch.backend.search_statistics_module.no_records_found" xml:space="preserve">
-				<source>No records found. Did you enabled 'plugin.tx_meilisearch.statistics = 1' in the typoscript configuration of your site?</source>
+				<source>No records found. Did you enabled 'plugin.tx_t3meilisearch.statistics = 1' in the typoscript configuration of your site?</source>
 			</trans-unit>
 			<trans-unit id="meilisearch.backend.search_statistics_module.top_search_phrases" xml:space="preserve">
 				<source>Top %d Search Phrases</source>

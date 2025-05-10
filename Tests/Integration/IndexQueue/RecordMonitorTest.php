@@ -284,7 +284,7 @@ class RecordMonitorTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.index {
+            plugin.tx_t3meilisearch.index {
                 queue {
                     foo = 1
                     foo {
@@ -556,7 +556,7 @@ class RecordMonitorTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.index {
+            plugin.tx_t3meilisearch.index {
                 queue {
                     foo = 1
                     foo {
@@ -651,7 +651,7 @@ class RecordMonitorTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.index.queue {
+            plugin.tx_t3meilisearch.index.queue {
                 pages {
                     allowedPageTypes = 1,3,7
                 }
@@ -770,7 +770,7 @@ class RecordMonitorTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-             plugin.tx_meilisearch.index.queue {
+             plugin.tx_t3meilisearch.index.queue {
                 custom_page_type = 1
                 custom_page_type {
                     initialization = WapplerSystems\Meilisearch\Indexer\Initializer\Page
@@ -1182,7 +1182,7 @@ class RecordMonitorTest extends IntegrationTest
         $this->addTypoScriptToTemplateRecord(
             1,
             /* @lang TYPO3_TypoScript */
-            'plugin.tx_meilisearch.index.queue.pages.recursiveUpdateFields = title'
+            'plugin.tx_t3meilisearch.index.queue.pages.recursiveUpdateFields = title'
         );
         $this->assertEmptyIndexQueue();
 
@@ -1211,7 +1211,7 @@ class RecordMonitorTest extends IntegrationTest
         $this->addTypoScriptToTemplateRecord(
             1,
             /* @lang TYPO3_TypoScript */
-            'plugin.tx_meilisearch.index.queue.pages.recursiveUpdateFields = title'
+            'plugin.tx_t3meilisearch.index.queue.pages.recursiveUpdateFields = title'
         );
         $this->assertEmptyIndexQueue();
 
@@ -1269,7 +1269,7 @@ class RecordMonitorTest extends IntegrationTest
         $this->addTypoScriptToTemplateRecord(
             1,
             /* @lang TYPO3_TypoScript */
-            'plugin.tx_meilisearch.index.queue.pages.recursiveUpdateFields = title'
+            'plugin.tx_t3meilisearch.index.queue.pages.recursiveUpdateFields = title'
         );
         $this->assertEmptyIndexQueue();
 
@@ -1325,7 +1325,7 @@ class RecordMonitorTest extends IntegrationTest
         $this->addTypoScriptToTemplateRecord(
             1,
             /* @lang TYPO3_TypoScript */
-            'plugin.tx_meilisearch.index.queue.pages.recursiveUpdateFields = doktype'
+            'plugin.tx_t3meilisearch.index.queue.pages.recursiveUpdateFields = doktype'
         );
         $this->assertEmptyIndexQueue();
 
@@ -1354,7 +1354,7 @@ class RecordMonitorTest extends IntegrationTest
         $this->addTypoScriptToTemplateRecord(
             1,
             /* @lang TYPO3_TypoScript */
-            'plugin.tx_meilisearch.index.queue.pages.recursiveUpdateFields = doktype'
+            'plugin.tx_t3meilisearch.index.queue.pages.recursiveUpdateFields = doktype'
         );
         $this->assertEmptyIndexQueue();
 
@@ -1385,7 +1385,7 @@ class RecordMonitorTest extends IntegrationTest
         $this->addTypoScriptToTemplateRecord(
             1,
             /* @lang TYPO3_TypoScript */
-            'plugin.tx_meilisearch.index.queue.pages.recursiveUpdateFields = doktype'
+            'plugin.tx_t3meilisearch.index.queue.pages.recursiveUpdateFields = doktype'
         );
         $this->assertEmptyIndexQueue();
 
@@ -1580,7 +1580,7 @@ class RecordMonitorTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.index.queue {
+            plugin.tx_t3meilisearch.index.queue {
                 foo = 1
                 foo {
                     additionalPageIds = 2
@@ -1594,7 +1594,7 @@ class RecordMonitorTest extends IntegrationTest
             111,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.index.queue {
+            plugin.tx_t3meilisearch.index.queue {
                 foo = 1
                 foo {
                     additionalPageIds = 2
@@ -1627,7 +1627,7 @@ class RecordMonitorTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.index.queue {
+            plugin.tx_t3meilisearch.index.queue {
                 foo = 1
                 foo {
                     additionalPageIds = 2
@@ -1694,7 +1694,7 @@ class RecordMonitorTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.index.queue {
+            plugin.tx_t3meilisearch.index.queue {
                 foo = 1
                 foo {
                     additionalPageIds = 3
@@ -1709,7 +1709,7 @@ class RecordMonitorTest extends IntegrationTest
             111,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.index.queue {
+            plugin.tx_t3meilisearch.index.queue {
                 foo = 1
                 foo {
                     additionalPageIds = 3
@@ -1746,7 +1746,7 @@ class RecordMonitorTest extends IntegrationTest
             1,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.index.queue {
+            plugin.tx_t3meilisearch.index.queue {
                 foo = 1
                 foo {
                     additionalPageIds = 3
@@ -1759,7 +1759,7 @@ class RecordMonitorTest extends IntegrationTest
             111,
             /* @lang TYPO3_TypoScript */
             '
-            plugin.tx_meilisearch.index.queue {
+            plugin.tx_t3meilisearch.index.queue {
                 foo = 1
                 foo {
                     additionalPageIds = 3

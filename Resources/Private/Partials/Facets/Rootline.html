@@ -8,7 +8,7 @@
 	<f:for each="{node.childNodes}" as="childNode" iteration="iteration">
 		<li class="facet-option{f:if(condition:'{iteration.index} > 9', then:' tx-meilisearch-facet-hidden')}" data-facet-item-value="{childNode.value}">
 			<a class="facet meilisearch-ajaxified" href="{s:uri.facet.addFacetItem(facet: facet, facetItem: childNode)}">
-				<f:cObject typoscriptObjectPath="lib.tx_meilisearch.pagetitle">{childNode.label}</f:cObject>
+				<f:cObject typoscriptObjectPath="lib.tx_t3meilisearch.pagetitle">{childNode.label}</f:cObject>
 			</a>
 			<span class="facet-result-count badge bg-info">{childNode.documentCount}</span>
 		</li>

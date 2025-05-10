@@ -178,7 +178,7 @@ class GroupedResultParser extends AbstractResultParser
     /**
      * Retrieves all configured queries independent if they have been configured in query or queries.
      *
-     * @todo This can be merged into TypoScriptConfiguration when meilisearchfluidgrouping was merged to EXT:meilisearch
+     * @todo This can be merged into TypoScriptConfiguration when meilisearchfluidgrouping was merged to EXT:t3_meilisearch
      */
     protected function getQueriesFromConfigurationArray(array $configurationArray): array
     {

@@ -39,7 +39,7 @@ class SuggestQuery extends Query
         $meilisearchConfiguration = $meilisearchConfiguration ?? Util::getMeilisearchConfiguration();
 
         $this->setQuery($keywords);
-        $this->configuration = $meilisearchConfiguration->getObjectByPathOrDefault('plugin.tx_meilisearch.suggest.');
+        $this->configuration = $meilisearchConfiguration->getObjectByPathOrDefault('plugin.tx_t3meilisearch.suggest.');
 
         if (!empty($this->configuration['treatMultipleTermsAsSingleTerm'])) {
             $this->prefix = $keywords;

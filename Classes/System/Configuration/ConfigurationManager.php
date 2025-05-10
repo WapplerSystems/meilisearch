@@ -59,8 +59,8 @@ class ConfigurationManager implements SingletonInterface
             $configurationArray = [];
         }
 
-        if (!isset($configurationArray['plugin.']['tx_meilisearch.'])) {
-            $configurationArray['plugin.']['tx_meilisearch.'] = [];
+        if (!isset($configurationArray['plugin.']['tx_t3meilisearch.'])) {
+            $configurationArray['plugin.']['tx_t3meilisearch.'] = [];
         }
 
         if ($contextPageId === null && !empty($GLOBALS['TSFE']->id)) {

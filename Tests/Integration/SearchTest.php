@@ -90,7 +90,7 @@ class SearchTest extends IntegrationTest
         // fragmentSize 50 => fastVector
         $typoScriptConfiguration = new TypoScriptConfiguration([
             'plugin.' => [
-                'tx_meilisearch.' => [
+                'tx_t3meilisearch.' => [
                     'search.' => [
                         'query.' => ['queryFields' => 'content,title'],
                         'results.' => [

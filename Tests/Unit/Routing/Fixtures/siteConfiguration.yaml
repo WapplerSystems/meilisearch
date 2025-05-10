@@ -69,7 +69,7 @@ routeEnhancers:
     type: MeilisearchFacetMaskAndCombineEnhancer
     limitToPages:
       - 42
-    extensionKey: tx_meilisearch
+    extensionKey: tx_t3meilisearch
     routePath: '/{type}'
     meilisearch:
       ignoreUrlKeys: []
@@ -80,10 +80,10 @@ routeEnhancers:
         # You can tell Meilisearch to mask query facets. This feature require the map below
         #
         # For example you have following filter:
-        #   tx_meilisearch[filter][0]=color:red&tx_meilisearch[filter][1]=color:green&tx_meilisearch[filter][2]=color:yellow
+        #   tx_t3meilisearch[filter][0]=color:red&tx_t3meilisearch[filter][1]=color:green&tx_t3meilisearch[filter][2]=color:yellow
         # Mask will:
         # 1. implode all values into a single string and sort it -> green,red,yellow
-        # 2. replace tx_meilisearch[filter][]=color: with color=
+        # 2. replace tx_t3meilisearch[filter][]=color: with color=
         #
         # As a result the query will modified into:
         # color=green,red,yellow
@@ -92,14 +92,14 @@ routeEnhancers:
 
         # To reduce the amount of parameters you can force Meilisearch to concat the values.
         # For example you have following filter:
-        #   tx_meilisearch[filter][0]=color:red&tx_meilisearch[filter][1]=color:green&tx_meilisearch[filter][2]=color:yellow
+        #   tx_t3meilisearch[filter][0]=color:red&tx_t3meilisearch[filter][1]=color:green&tx_t3meilisearch[filter][2]=color:yellow
         # Concat will:
         # 1. collect all filters of the same type
         # 2. will sort all filter values alpha numeric
         # 3. join the values together
         #
         # As a result the query will modified into:
-        # tx_meilisearch[filter][0]=color=green,red,yellow
+        # tx_t3meilisearch[filter][0]=color=green,red,yellow
         #
         # Note: If you active the mask option, the concat feature turn on automatically
         #
@@ -118,8 +118,8 @@ routeEnhancers:
           color: color
           taste: taste
           product: product
-    # Note: All arguments inside of namespace tx_meilisearch. See -> extensionKey
-    # Example: Argument 'type' define as 'filter-type' will convert into 'tx_meilisearch/filter-type'
+    # Note: All arguments inside of namespace tx_t3meilisearch. See -> extensionKey
+    # Example: Argument 'type' define as 'filter-type' will convert into 'tx_t3meilisearch/filter-type'
     _arguments:
       type: filter-type
     requirements:

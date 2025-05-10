@@ -64,6 +64,6 @@ class AllowUrlFOpenStatus extends AbstractMeilisearchStatus
      */
     public function getLabel(): string
     {
-        return 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_reports.xlf:status_meilisearch_allow-url-open';
+        return 'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang_reports.xlf:status_meilisearch_allow-url-open';
     }
 }

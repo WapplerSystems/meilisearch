@@ -91,19 +91,19 @@ class ExtensionConfiguration
     }
 
     /**
-     * Returns a list of available/whitelisted EXT:meilisearch plugin namespaces.
+     * Returns a list of available/whitelisted EXT:t3_meilisearch plugin namespaces.
      * Builds from "pluginNamespaces" extension configuration setting.
      */
     public function getAvailablePluginNamespaces(): array
     {
-        $pluginNamespacesList = 'tx_meilisearch,' . $this->getConfigurationOrDefaultValue(
+        $pluginNamespacesList = 'tx_t3meilisearch,' . $this->getConfigurationOrDefaultValue(
             'pluginNamespaces'
         );
         return array_unique(GeneralUtility::trimExplode(',', $pluginNamespacesList));
     }
 
     /**
-     * Returns a list of cacheHash-excludedParameters matching the EXT:meilisearch plugin namespaces.
+     * Returns a list of cacheHash-excludedParameters matching the EXT:t3_meilisearch plugin namespaces.
      *
      * Builds from "pluginNamespaces" and takes "includeGlobalQParameterInCacheHash"
      * extension configuration settings into account.

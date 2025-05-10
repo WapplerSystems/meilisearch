@@ -2,11 +2,11 @@
 	margin: 7px 0;
 }
 
-table.tx_meilisearch_index_list {
+table.tx_t3meilisearch_index_list {
 	width: 100%;
 }
 
-.tx_meilisearch_index_list td {
+.tx_t3meilisearch_index_list td {
 	padding: 2px 4px;
 	vertical-align: middle;
 	height: 20px;
@@ -14,7 +14,7 @@ table.tx_meilisearch_index_list {
 	border-bottom: 1px solid #dee0e1;
 }
 
-.tx_meilisearch_index_list .bgColor2 td {
+.tx_t3meilisearch_index_list .bgColor2 td {
 	text-align: left;
 	font-weight: bold;
 	color: #fff;

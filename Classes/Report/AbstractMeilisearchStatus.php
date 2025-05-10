@@ -33,7 +33,7 @@ abstract class AbstractMeilisearchStatus implements StatusProviderInterface
      */
     protected function getRenderedReport(string $templateFilename = '', array $variables = []): string
     {
-        $templatePath = 'EXT:meilisearch/Resources/Private/Templates/Backend/Reports/' . $templateFilename;
+        $templatePath = 'EXT:t3_meilisearch/Resources/Private/Templates/Backend/Reports/' . $templateFilename;
         $standaloneView = $this->getFluidStandaloneViewWithTemplate($templatePath);
         $standaloneView->assignMultiple($variables);
 

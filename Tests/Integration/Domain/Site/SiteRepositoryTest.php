@@ -46,7 +46,7 @@ class SiteRepositoryTest extends IntegrationTest
     public function canGetAllSites()
     {
         $sites = $this->siteRepository->getAvailableSites();
-        self::assertSame(2, count($sites), 'Expected to retrieve two sites from default tests setup. Note: The third site is not enabled for EXT:meilisearch.');
+        self::assertSame(2, count($sites), 'Expected to retrieve two sites from default tests setup. Note: The third site is not enabled for EXT:t3_meilisearch.');
     }
 
     /**

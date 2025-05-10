@@ -130,7 +130,7 @@ class ResultSetReconstitutionProcessorTest extends IntegrationTest
     protected function getConfigurationArrayFromFacetConfigurationArray(array $facetConfiguration): array
     {
         $configuration = [];
-        $configuration['plugin.']['tx_meilisearch.']['search.']['faceting.'] = $facetConfiguration;
+        $configuration['plugin.']['tx_t3meilisearch.']['search.']['faceting.'] = $facetConfiguration;
         return $configuration;
     }
 

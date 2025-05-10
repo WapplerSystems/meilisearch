@@ -35,13 +35,13 @@ class MeilisearchConfigStatus extends AbstractMeilisearchStatus
     /**
      * The config name property is constructed as follows:
      *
-     * tx_meilisearch    - The extension key
+     * tx_t3meilisearch    - The extension key
      * x-y-z    - The extension version this config is meant to work with
      * YYYYMMDD    - The date the config file was changed the last time
      *
      * Must be updated when changing the meilisearchconfig.
      */
-    public const RECOMMENDED_MEILISEARCHCONFIG_VERSION = 'tx_meilisearch-12-0-0--20230602';
+    public const RECOMMENDED_MEILISEARCHCONFIG_VERSION = 'tx_t3meilisearch-12-0-0--20230602';
 
     /**
      * Compiles a collection of meilisearchconfig version checks against each configured
@@ -114,6 +114,6 @@ class MeilisearchConfigStatus extends AbstractMeilisearchStatus
      */
     public function getLabel(): string
     {
-        return 'LLL:EXT:meilisearch/Resources/Private/Language/locallang_reports.xlf:status_meilisearch_meilisearchconfig';
+        return 'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang_reports.xlf:status_meilisearch_meilisearchconfig';
     }
 }

@@ -53,10 +53,10 @@ abstract class SetUpFacetParser extends SetUpUnitTestCase
         $searchResultSet->setResponse($fakeResponse);
 
         $activeUrlFacets = new UrlFacetContainer(
-            new ArrayAccessor([ 'tx_meilisearch' => ['filter' => $activeFilters] ])
+            new ArrayAccessor([ 'tx_t3meilisearch' => ['filter' => $activeFilters] ])
         );
         $configuration = [];
-        $configuration['plugin.']['tx_meilisearch.']['search.']['faceting.']['facets.'] = $facetConfiguration;
+        $configuration['plugin.']['tx_t3meilisearch.']['search.']['faceting.']['facets.'] = $facetConfiguration;
         $typoScriptConfiguration = new TypoScriptConfiguration($configuration);
         $searchRequestMock->expects(self::any())
             ->method('getContextTypoScriptConfiguration')

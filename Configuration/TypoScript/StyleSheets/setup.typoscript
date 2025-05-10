@@ -1,4 +1,4 @@
 page.includeCSS {
-  search = EXT:meilisearch/Resources/Public/StyleSheets/Frontend/results.css
-  meilisearch-loader = EXT:meilisearch/Resources/Public/StyleSheets/Frontend/loader.css
+  search = EXT:t3_meilisearch/Resources/Public/StyleSheets/Frontend/results.css
+  meilisearch-loader = EXT:t3_meilisearch/Resources/Public/StyleSheets/Frontend/loader.css
 }

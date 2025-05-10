@@ -35,7 +35,7 @@ class MeilisearchFacetMaskAndCombineEnhancer extends AbstractEnhancer implements
     public function __construct(array $configuration)
     {
         $this->configuration = $configuration;
-        $this->namespace = $this->configuration['extensionKey'] ?? 'tx_meilisearch';
+        $this->namespace = $this->configuration['extensionKey'] ?? 'tx_t3meilisearch';
 
         $extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class);
         $this->isEnabled = $extensionConfiguration->getIsRouteEnhancerEnabled();

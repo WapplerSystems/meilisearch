@@ -3,7 +3,7 @@
     "status":0,
     "QTime":0},
   "schema":{
-    "name":"tx_meilisearch-6-0-0--20161122",
+    "name":"tx_t3meilisearch-6-0-0--20161122",
     "version":1.6,
     "uniqueKey":"id",
     "fieldTypes":[{

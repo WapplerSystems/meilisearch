@@ -170,7 +170,7 @@ class SearchResultSetService
     {
         /** @var ResultParserRegistry $parserRegistry */
         $parserRegistry = GeneralUtility::makeInstance(ResultParserRegistry::class, $this->typoScriptConfiguration);
-        $useRawDocuments = (bool)$this->typoScriptConfiguration->getValueByPathOrDefaultValue('plugin.tx_meilisearch.features.useRawDocuments', false);
+        $useRawDocuments = (bool)$this->typoScriptConfiguration->getValueByPathOrDefaultValue('plugin.tx_t3meilisearch.features.useRawDocuments', false);
         $parserRegistry->getParser($resultSet)->parse($resultSet, $useRawDocuments);
     }
 

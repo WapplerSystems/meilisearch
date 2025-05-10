@@ -12,7 +12,7 @@ use TYPO3\CMS\Core\Service\FlexFormService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * EXT:meilisearch offers a summary in the BE on search plugins, that summarizes the extension
+ * EXT:t3_meilisearch offers a summary in the BE on search plugins, that summarizes the extension
  * configuration.
  * This testcase checks if the SummaryController produces the expected output.
  */

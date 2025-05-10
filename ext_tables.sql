@@ -1,7 +1,7 @@
 #
-# Table structure for table 'tx_meilisearch_last_searches'
+# Table structure for table 'tx_t3meilisearch_last_searches'
 #
-CREATE TABLE tx_meilisearch_last_searches
+CREATE TABLE tx_t3meilisearch_last_searches
 (
 	sequence_id tinyint(3) unsigned DEFAULT '0' NOT NULL,
 	tstamp      int(11)             DEFAULT '0' NOT NULL,
@@ -12,9 +12,9 @@ CREATE TABLE tx_meilisearch_last_searches
 
 
 #
-# Table structure for table 'tx_meilisearch_statistics'
+# Table structure for table 'tx_t3meilisearch_statistics'
 #
-CREATE TABLE tx_meilisearch_statistics
+CREATE TABLE tx_t3meilisearch_statistics
 (
 	uid               int(11)                      NOT NULL auto_increment,
 	pid               int(11)          DEFAULT '0' NOT NULL,
@@ -44,9 +44,9 @@ CREATE TABLE tx_meilisearch_statistics
 
 
 #
-# Table structure for table 'tx_meilisearch_indexqueue_item'
+# Table structure for table 'tx_t3meilisearch_indexqueue_item'
 #
-CREATE TABLE tx_meilisearch_indexqueue_item
+CREATE TABLE tx_t3meilisearch_indexqueue_item
 (
 	uid                     int(11)                  NOT NULL auto_increment,
 
@@ -73,9 +73,9 @@ CREATE TABLE tx_meilisearch_indexqueue_item
 
 
 #
-# Table structure for table 'tx_meilisearch_indexqueue_indexing_property'
+# Table structure for table 'tx_t3meilisearch_indexqueue_indexing_property'
 #
-CREATE TABLE tx_meilisearch_indexqueue_indexing_property
+CREATE TABLE tx_t3meilisearch_indexqueue_indexing_property
 (
 	uid            int(11)                  NOT NULL auto_increment,
 
@@ -90,9 +90,9 @@ CREATE TABLE tx_meilisearch_indexqueue_indexing_property
 ) ENGINE = InnoDB;
 
 #
-# Table structure for table 'tx_meilisearch_eventqueue_item'
+# Table structure for table 'tx_t3meilisearch_eventqueue_item'
 #
-CREATE TABLE tx_meilisearch_eventqueue_item
+CREATE TABLE tx_t3meilisearch_eventqueue_item
 (
 	uid           int(11)                         NOT NULL auto_increment,
 

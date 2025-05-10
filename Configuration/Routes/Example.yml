@@ -3,7 +3,7 @@ routeEnhancers:
     type: MeilisearchFacetMaskAndCombineEnhancer
     limitToPages:
       - 10
-    extensionKey: tx_meilisearch
+    extensionKey: tx_t3meilisearch
     meilisearch:
       multiValueSeparator: '+'
       replaceCharacters:
@@ -11,7 +11,7 @@ routeEnhancers:
       query:
         # To reduce the amount of parameters you can force Meilisearch to concat the values.
         # For example you have following filter:
-        #   tx_meilisearch[filter][0]=taste:sweet&tx_meilisearch[filter][1]=taste:sour&tx_meilisearch[filter][2]=taste:matcha
+        #   tx_t3meilisearch[filter][0]=taste:sweet&tx_t3meilisearch[filter][1]=taste:sour&tx_t3meilisearch[filter][2]=taste:matcha
         #
         # Concat will:
         # 1. collect all filters of the same type
@@ -19,7 +19,7 @@ routeEnhancers:
         # 3. join the values together
         #
         # As a result the query will modified into:
-        #   tx_meilisearch[filter][0]=taste:matcha,sour,sweet
+        #   tx_t3meilisearch[filter][0]=taste:matcha,sour,sweet
         #
         # Note: If you activate the mask option, the concat feature turn on automatically
         #
@@ -29,10 +29,10 @@ routeEnhancers:
         # You can tell Meilisearch to mask query facets. This feature require the map below
         #
         # For example you have following filter:
-        #   tx_meilisearch[filter][0]=taste:sweet&tx_meilisearch[filter][1]=taste:sour&tx_meilisearch[filter][2]=taste:matcha
+        #   tx_t3meilisearch[filter][0]=taste:sweet&tx_t3meilisearch[filter][1]=taste:sour&tx_t3meilisearch[filter][2]=taste:matcha
         # Mask will:
         # 1. implode all values into a single string and sort it -> matcha,sour,sweet
-        # 2. replace tx_meilisearch[filter][]=taste: with taste=
+        # 2. replace tx_t3meilisearch[filter][]=taste: with taste=
         #
         # As a result the query will modified into:
         # taste=matcha,sour,sweet
@@ -49,8 +49,8 @@ routeEnhancers:
         map:
           taste: taste
     routePath: '/{taste}'
-    # Note: All arguments inside of namespace tx_meilisearch. See -> extensionKey
-    # Example: Argument 'taste' define as 'filter-taste' will convert into 'tx_meilisearch/filter-taste'
+    # Note: All arguments inside of namespace tx_t3meilisearch. See -> extensionKey
+    # Example: Argument 'taste' define as 'filter-taste' will convert into 'tx_t3meilisearch/filter-taste'
     _arguments:
       taste: filter-taste
     requirements:
