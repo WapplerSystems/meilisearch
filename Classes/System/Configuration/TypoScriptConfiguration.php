@@ -15,6 +15,7 @@
 
 namespace WapplerSystems\Meilisearch\System\Configuration;
 
+use TYPO3\CMS\Core\Utility\DebugUtility;
 use WapplerSystems\Meilisearch\Domain\Search\SearchRequest;
 use WapplerSystems\Meilisearch\Exception\InvalidArgumentException;
 use WapplerSystems\Meilisearch\Indexer\Indexer;

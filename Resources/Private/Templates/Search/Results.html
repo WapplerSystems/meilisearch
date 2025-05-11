@@ -1,6 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en"
 	xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
-	xmlns:s="http://typo3.org/ns/MeilisearchForTypo3/Meilisearch/ViewHelpers"
+	xmlns:t3ms="http://typo3.org/ns/MeilisearchForTypo3/Meilisearch/ViewHelpers"
 	data-namespace-typo3-fluid="true"
 >
 
@@ -32,7 +32,7 @@
 			</div>
 		</f:if>
 
-		<s:debug.query>
+		<t3ms:debug.query>
 			<f:if condition="{parsedQuery}">
 				<div class="row">
 					<div class="hidden-xs col-md-12">
@@ -40,7 +40,7 @@
 					</div>
 				</div>
 			</f:if>
-		</s:debug.query>
+		</t3ms:debug.query>
 
 		<div class="row">
 			<div class="col-md-12">
@@ -82,9 +82,9 @@
 						</f:if>
 					</span>
 						<span class="result-range">
-						<s:pageBrowserRange>
+						<t3ms:pageBrowserRange>
 							<f:translate key="results_range" arguments="{0: from, 1: to, 2: total}" extensionName="meilisearch">Results %d until %d of %d</f:translate>
-						</s:pageBrowserRange>
+						</t3ms:pageBrowserRange>
 					</span>
 				</f:if>
 			</div>
@@ -99,7 +99,7 @@
 								<h2>{group.groupname}</h2>
 								<f:for each="{group.groupitems}" as="groupItem">
 									<strong>{groupItem.groupValue} <span>({groupItem.allResultCount})</span></strong>
-									<s:groupItemPaginate groupItem="{groupItem}" resultSet="{resultSet}">
+									<t3ms:groupItemPaginate groupItem="{groupItem}" resultSet="{resultSet}">
 
 										<f:comment>
 											<f:render partial="Result/Pagination" section="Pagination" arguments="{resultSet: resultSet, groupItem: groupItem, pagination: pagination, currentPage: currentPage}"/>
@@ -110,7 +110,7 @@
 												<f:render partial="Result/Document" section="Document" arguments="{resultSet:resultSet, document:document}" />
 											</f:for>
 										</ol>
-									</s:groupItemPaginate>
+									</t3ms:groupItemPaginate>
 								</f:for>
 							</f:for>
 						</f:then>

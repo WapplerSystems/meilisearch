@@ -13,7 +13,7 @@ $GLOBALS['TCA']['tt_content']['columns']['CType']['config']['itemGroups']['searc
 $pluginSearchSignature = ExtensionUtility::registerPlugin(
     't3_meilisearch',
     'search',
-    'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang.xlf:tt_content.CType_pi_search',
+    'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang.xlf:tt_content.CType_search',
     'extensions-t3meilisearch-plugin-contentelement',
     'search'
 );
@@ -27,7 +27,7 @@ ExtensionManagementUtility::addPiFlexFormValue(
 $pluginFrequentlySearchedSignature = ExtensionUtility::registerPlugin(
     't3_meilisearch',
     'frequentlySearched',
-    'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang.xlf:tt_content.CType_pi_frequentsearches',
+    'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang.xlf:tt_content.CType_frequentsearches',
     'extensions-t3meilisearch-plugin-contentelement',
     'search'
 );
@@ -36,7 +36,7 @@ $GLOBALS['TCA']['tt_content']['types'][$pluginFrequentlySearchedSignature]['show
 $pluginResultsSignature = ExtensionUtility::registerPlugin(
     't3_meilisearch',
     'results',
-    'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang.xlf:tt_content.CType_pi_results',
+    'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang.xlf:tt_content.CType_results',
     'extensions-t3meilisearch-plugin-contentelement',
     'search'
 );

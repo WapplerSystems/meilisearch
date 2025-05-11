@@ -382,7 +382,7 @@ class DataUpdateHandler extends AbstractUpdateHandler
 
         $this->processRecord('pages', $uid, $rootPageIds);
 
-        $this->updateCanonicalPages($uid);
+        //$this->updateCanonicalPages($uid);
         $this->mountPageUpdater->update($uid);
 
         $recursiveUpdateRequired = $this->isRecursivePageUpdateRequired($uid, $updatedFields);

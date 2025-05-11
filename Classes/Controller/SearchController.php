@@ -15,6 +15,7 @@
 
 namespace WapplerSystems\Meilisearch\Controller;
 
+use TYPO3Fluid\Fluid\View\ViewInterface;
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\Facets\InvalidFacetPackageException;
 use WapplerSystems\Meilisearch\Domain\Search\ResultSet\SearchResultSet;
 use WapplerSystems\Meilisearch\Event\Search\AfterFrequentlySearchHasBeenExecutedEvent;
@@ -23,13 +24,12 @@ use WapplerSystems\Meilisearch\Event\Search\BeforeSearchResultIsShownEvent;
 use WapplerSystems\Meilisearch\Mvc\Variable\MeilisearchVariableProvider;
 use WapplerSystems\Meilisearch\Pagination\ResultsPagination;
 use WapplerSystems\Meilisearch\Pagination\ResultsPaginator;
+use WapplerSystems\Meilisearch\System\Configuration\ConfigurationManager as MeilisearchConfigurationManager;
 use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchUnavailableException;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
-use TYPO3\CMS\Fluid\View\TemplateView;
 use TYPO3Fluid\Fluid\View\AbstractTemplateView;
-use TYPO3Fluid\Fluid\View\ViewInterface;
 
 /**
  * Class SearchController
@@ -38,6 +38,12 @@ use TYPO3Fluid\Fluid\View\ViewInterface;
  */
 class SearchController extends AbstractBaseController
 {
+
+    public function __construct(readonly MeilisearchConfigurationManager $meilisearchConfigurationManager)
+    {
+    }
+
+
     /**
      * Provide search query in extbase arguments.
      */
@@ -49,7 +55,7 @@ class SearchController extends AbstractBaseController
 
     protected function mapGlobalQueryStringWhenEnabled(): void
     {
-        $query = GeneralUtility::_GET('q');
+        $query = $this->request->getQueryParams()['q'] ?? null;
 
         $useGlobalQueryString = $query !== null && !$this->typoScriptConfiguration->getSearchIgnoreGlobalQParameter();
         if ($useGlobalQueryString) {
@@ -59,25 +65,23 @@ class SearchController extends AbstractBaseController
 
     public function initializeView(ViewInterface $view): void
     {
-        if ($view instanceof TemplateView) {
-            $variableProvider = GeneralUtility::makeInstance(MeilisearchVariableProvider::class);
-            $variableProvider->setSource($view->getRenderingContext()->getVariableProvider()->getSource());
-            $view->getRenderingContext()->setVariableProvider($variableProvider);
-            $view->getRenderingContext()->getVariableProvider()->add(
-                'typoScriptConfiguration',
-                $this->typoScriptConfiguration
-            );
+        $variableProvider = GeneralUtility::makeInstance(MeilisearchVariableProvider::class);
+        $variableProvider->setSource($view->getRenderingContext()->getVariableProvider()->getSource());
+        $view->getRenderingContext()->setVariableProvider($variableProvider);
+        $view->getRenderingContext()->getVariableProvider()->add(
+            'typoScriptConfiguration',
+            $this->typoScriptConfiguration
+        );
 
-            $customTemplate = $this->getCustomTemplateFromConfiguration();
-            if ($customTemplate === '') {
-                return;
-            }
+        $customTemplate = $this->getCustomTemplateFromConfiguration();
+        if ($customTemplate === '') {
+            return;
+        }
 
-            if (str_contains($customTemplate, 'EXT:')) {
-                $view->setTemplatePathAndFilename($customTemplate);
-            } else {
-                $view->setTemplate($customTemplate);
-            }
+        if (str_contains($customTemplate, 'EXT:')) {
+            $view->setTemplatePathAndFilename($customTemplate);
+        } else {
+            $view->setTemplate($customTemplate);
         }
     }
 
@@ -102,8 +106,9 @@ class SearchController extends AbstractBaseController
 
         try {
             $arguments = $this->request->getArguments();
-            $pageId = $this->typoScriptFrontendController->getRequestedId();
-            $languageId = $this->typoScriptFrontendController->getLanguage()->getLanguageId();
+
+            $pageId = $this->request->getAttribute('routing')->getPageId();
+            $languageId = $this->request->getAttribute('language')->getLanguageId();
             $searchRequest = $this->getSearchRequestBuilder()->buildForSearch($arguments, $pageId, $languageId);
 
             $searchResultSet = $this->searchService->search($searchRequest);
@@ -144,6 +149,7 @@ class SearchController extends AbstractBaseController
                 'pagination' => $afterSearchEvent->getPagination(),
                 'currentPage' => $afterSearchEvent->getCurrentPage(),
                 'additionalVariables' => $afterSearchEvent->getAdditionalVariables(),
+                'contentObjectData' => $this->request->getAttribute('currentContentObject')?->data,
             ];
 
             $this->view->assignMultiple($values);
@@ -176,6 +182,7 @@ class SearchController extends AbstractBaseController
             'search' => $formEvent->getSearch(),
             'additionalFilters' => $formEvent->getAdditionalFilters(),
             'pluginNamespace' => $formEvent->getPluginNamespace(),
+            'contentObjectData' => $this->request->getAttribute('currentContentObject')?->data,
         ];
 
         $this->view->assignMultiple($values);
@@ -192,8 +199,8 @@ class SearchController extends AbstractBaseController
         /** @var SearchResultSet $searchResultSet */
         $searchResultSet = GeneralUtility::makeInstance(SearchResultSet::class);
 
-        $pageId = $this->typoScriptFrontendController->getRequestedId();
-        $languageId = $this->typoScriptFrontendController->getLanguage()->getLanguageId();
+        $pageId = $this->request->getAttribute('routing')->getPageId();
+        $languageId = $this->request->getAttribute('language')->getLanguageId();
         $searchRequest = $this->getSearchRequestBuilder()->buildForFrequentSearches($pageId, $languageId);
         $searchResultSet->setUsedSearchRequest($searchRequest);
 
@@ -209,6 +216,7 @@ class SearchController extends AbstractBaseController
         $values = [
             'additionalFilters' => $afterFrequentlySearchedEvent->getAdditionalFilters(),
             'resultSet' => $afterFrequentlySearchedEvent->getResultSet(),
+            'contentObjectData' => $this->request->getAttribute('currentContentObject')?->data,
         ];
         $this->view->assignMultiple($values);
         return $this->htmlResponse();
@@ -227,7 +235,11 @@ class SearchController extends AbstractBaseController
 
         try {
             $document = $this->searchService->getDocumentById($documentId);
-            $this->view->assign('document', $document);
+            $values = [
+                'document' => $document,
+                'contentObjectData' => $this->request->getAttribute('currentContentObject')?->data,
+            ];
+            $this->view->assignMultiple($values);
         } catch (MeilisearchUnavailableException) {
             return $this->handleMeilisearchUnavailable();
         }

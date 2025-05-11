@@ -11,7 +11,7 @@
 	</div>
 
 	<div class="card-body facet-type-options fluidfacet collapse show" data-facet-name="{facet.name}" data-facet-label="{facet.label}" id="facet{facet.name}">
-		<s:facet.options.group.prefix.labelPrefixes options="{facet.options}" length="1" sortBy="alpha">
+		<t3ms:facet.options.group.prefix.labelPrefixes options="{facet.options}" length="1" sortBy="alpha">
 
 			<ul class="nav nav-tabs" id="facet{facet.name}-tabs" role="tablist">
 				<f:for each="{prefixes}" iteration="iteration"  as="prefix">
@@ -31,7 +31,7 @@
 			<div class="tab-content" id="facet{facet.name}-tabsContent">
 				<f:for each="{prefixes}" iteration="iteration" as="prefix">
 					<div class="tab-pane fade {f:if(condition: '{iteration.isFirst}', then: 'show active')}" id="facet{facet.name}-prefix-{prefix}" role="tabpanel" aria-labelledby="facet{facet.name}-{prefix}-tab">
-						<s:facet.options.group.prefix.labelFilter options="{facet.options}" prefix="{prefix}">
+						<t3ms:facet.options.group.prefix.labelFilter options="{facet.options}" prefix="{prefix}">
 							<ul class="list-group list-group-flush facet-option-list">
 								<f:for each="{filteredOptions}" as="option">
 									<li class="list-group-item d-flex justify-content-between">
@@ -40,12 +40,12 @@
 									</li>
 								</f:for>
 							</ul>
-						</s:facet.options.group.prefix.labelFilter>
+						</t3ms:facet.options.group.prefix.labelFilter>
 					</div>
 				</f:for>
 			</div>
 
-		</s:facet.options.group.prefix.labelPrefixes>
+		</t3ms:facet.options.group.prefix.labelPrefixes>
 	</div>
 </div>
 

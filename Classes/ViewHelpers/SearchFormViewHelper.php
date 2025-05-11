@@ -17,10 +17,13 @@ declare(strict_types=1);
 
 namespace WapplerSystems\Meilisearch\ViewHelpers;
 
+use Psr\Http\Message\ServerRequestInterface;
 use WapplerSystems\Meilisearch\System\Url\UrlHelper;
 use WapplerSystems\Meilisearch\System\Util\SiteUtility;
 use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
+use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 use TYPO3\CMS\Fluid\Core\Rendering\RenderingContext;
 use TYPO3Fluid\Fluid\Core\Variables\VariableProviderInterface;
@@ -28,8 +31,6 @@ use TYPO3Fluid\Fluid\Core\Variables\VariableProviderInterface;
 /**
  * Class SearchFormViewHelper
  *
- * @author Frans Saris <frans@beech.it>
- * @author Timo Hund <timo.hund@dkd.de>
  *
  * @property RenderingContext $renderingContext
  */
@@ -45,7 +46,7 @@ class SearchFormViewHelper extends AbstractMeilisearchFrontendTagBasedViewHelper
      * Constructor
      */
     public function __construct(
-        protected readonly UriBuilder $uriBuilder
+        protected readonly UriBuilder $uriBuilder,
     ) {
         parent::__construct();
     }
@@ -79,18 +80,21 @@ class SearchFormViewHelper extends AbstractMeilisearchFrontendTagBasedViewHelper
     }
 
     /**
-     * Render search form tag
+     * Renders search form-tag
      *
      * @throws AspectNotFoundException
      * @noinspection PhpMissingReturnTypeInspection
      */
     public function render()
     {
-        /** @phpstan-ignore-next-line */
-        $this->uriBuilder->setRequest($this->renderingContext->getRequest());
+        /** @var RequestInterface $request */
+        $request = $this->renderingContext->getAttribute(ServerRequestInterface::class);
+        $this->uriBuilder->setRequest($request);
         $pageUid = $this->arguments['pageUid'] ?? null;
         if ($pageUid === null && !empty($this->getTypoScriptConfiguration()->getSearchTargetPage())) {
             $pageUid = $this->getTypoScriptConfiguration()->getSearchTargetPage();
+        } elseif ($pageUid === null) {
+            $pageUid = $this->renderingContext->getAttribute(ServerRequestInterface::class)->getAttribute('routing')?->getPageId();
         }
         $pageUid = (int)$pageUid;
 
@@ -109,11 +113,20 @@ class SearchFormViewHelper extends AbstractMeilisearchFrontendTagBasedViewHelper
         // @extensionScannerIgnoreLine
         $this->getTemplateVariableContainer()->add('pageUid', $pageUid);
         // @extensionScannerIgnoreLine
-        $this->getTemplateVariableContainer()->add('languageUid', ($GLOBALS['TSFE']?->getLanguage()->getLanguageId() ?? 0));
+        $this->getTemplateVariableContainer()->add(
+            'languageUid',
+            (
+                $this->renderingContext
+                    ->getAttribute(ServerRequestInterface::class)
+                    ->getAttribute('language')
+                    ?->getLanguageId() ?? 0
+            )
+        );
         // @extensionScannerIgnoreLine
         $this->getTemplateVariableContainer()->add('existingParameters', $this->getExistingSearchParameters());
         // @extensionScannerIgnoreLine
-        $this->getTemplateVariableContainer()->add('addPageAndLanguageId', !$this->getIsSiteManagedSite($pageUid));
+        // Added addPageAndLanguageId for compatibility
+        $this->getTemplateVariableContainer()->add('addPageAndLanguageId', false);
         $formContent = $this->renderChildren();
         // @extensionScannerIgnoreLine
         $this->getTemplateVariableContainer()->remove('addPageAndLanguageId');
@@ -139,7 +152,11 @@ class SearchFormViewHelper extends AbstractMeilisearchFrontendTagBasedViewHelper
     {
         $searchParameters = [];
         if ($this->getTypoScriptConfiguration()->getSearchKeepExistingParametersForNewSearches()) {
-            $arguments = GeneralUtility::_GPmerged($this->getTypoScriptConfiguration()->getSearchPluginNamespace());
+            $request = $this->renderingContext->getAttribute(ServerRequestInterface::class);
+            $pluginNamespace = $this->getTypoScriptConfiguration()->getSearchPluginNamespace();
+            $arguments = $request->getQueryParams()[$pluginNamespace] ?? [];
+            ArrayUtility::mergeRecursiveWithOverrule($arguments, $request->getParsedBody()[$pluginNamespace] ?? []);
+
             unset($arguments['q'], $arguments['id'], $arguments['L']);
             $searchParameters = $this->translateSearchParametersToInputTagAttributes($arguments);
         }
@@ -151,7 +168,7 @@ class SearchFormViewHelper extends AbstractMeilisearchFrontendTagBasedViewHelper
      */
     protected function translateSearchParametersToInputTagAttributes(
         array $arguments,
-        string $nameAttributePrefix = ''
+        string $nameAttributePrefix = '',
     ): array {
         $attributes = [];
         foreach ($arguments as $key => $value) {
@@ -166,16 +183,6 @@ class SearchFormViewHelper extends AbstractMeilisearchFrontendTagBasedViewHelper
             }
         }
         return $attributes;
-    }
-
-    /**
-     * When a site is managed with site management the language and the id are encoded in the path segment of the url.
-     * When no speaking urls are active (e.g. with TYPO3 8 and no realurl) this information is passed as query parameter
-     * and would get lost when it is only part of the query arguments in the action parameter of the form.
-     */
-    protected function getIsSiteManagedSite(int $pageId): bool
-    {
-        return SiteUtility::getIsSiteManagedSite($pageId);
     }
 
     protected function getTemplateVariableContainer(): ?VariableProviderInterface

@@ -30,13 +30,9 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
  * Class AbstractBaseController
- *
- * @author Frans Saris <frans@beech.it>
- * @author Timo Hund <timo.hund@dkd.de>
  */
 abstract class AbstractBaseController extends ActionController
 {
@@ -46,10 +42,6 @@ abstract class AbstractBaseController extends ActionController
     protected const STATUS_503_MESSAGE = 'Meilisearch Server is not available.';
 
     private ?ContentObjectRenderer $contentObjectRenderer = null;
-
-    protected ?TypoScriptFrontendController $typoScriptFrontendController = null;
-
-    private ?MeilisearchConfigurationManager $meilisearchConfigurationManager = null;
 
     /**
      * The configuration is private if you need it please get it from the MeilisearchVariableProvider of RenderingContext.
@@ -62,11 +54,10 @@ abstract class AbstractBaseController extends ActionController
 
     protected bool $resetConfigurationBeforeInitialize = true;
 
+
     public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager): void
     {
         $this->configurationManager = $configurationManager;
-        // @extensionScannerIgnoreLine
-        $this->contentObjectRenderer = $this->configurationManager->getContentObject();
         $this->arguments = GeneralUtility::makeInstance(Arguments::class);
     }
 
@@ -80,11 +71,6 @@ abstract class AbstractBaseController extends ActionController
         return $this->contentObjectRenderer;
     }
 
-    public function injectMeilisearchConfigurationManager(MeilisearchConfigurationManager $configurationManager): void
-    {
-        $this->meilisearchConfigurationManager = $configurationManager;
-    }
-
     public function setResetConfigurationBeforeInitialize(bool $resetConfigurationBeforeInitialize): void
     {
         $this->resetConfigurationBeforeInitialize = $resetConfigurationBeforeInitialize;
@@ -95,10 +81,7 @@ abstract class AbstractBaseController extends ActionController
      */
     protected function initializeAction(): void
     {
-        // Reset configuration (to reset flexform overrides) if resetting is enabled
-        if ($this->resetConfigurationBeforeInitialize) {
-            $this->meilisearchConfigurationManager->reset();
-        }
+        $this->contentObjectRenderer = $this->request->getAttribute('currentContentObject', $this->contentObjectRenderer);
         /** @var TypoScriptService $typoScriptService */
         $typoScriptService = GeneralUtility::makeInstance(TypoScriptService::class);
 
@@ -111,7 +94,7 @@ abstract class AbstractBaseController extends ActionController
             }
         }
 
-        $this->typoScriptConfiguration = $this->meilisearchConfigurationManager->getTypoScriptConfiguration();
+        $this->typoScriptConfiguration = $this->meilisearchConfigurationManager->getTypoScriptFromRequest($this->request);
         if ($pluginSettings !== []) {
             $this->typoScriptConfiguration->mergeMeilisearchConfiguration(
                 $typoScriptService->convertPlainArrayToTypoScriptArray($pluginSettings),
@@ -129,7 +112,6 @@ abstract class AbstractBaseController extends ActionController
         }
 
         parent::initializeAction();
-        $this->typoScriptFrontendController = $GLOBALS['TSFE'];
         $this->initializeSettings();
 
         if ($this->actionMethodName !== 'meilisearchNotAvailableAction') {
@@ -158,8 +140,8 @@ abstract class AbstractBaseController extends ActionController
     {
         try {
             $meilisearchConnection = GeneralUtility::makeInstance(ConnectionManager::class)->getConnectionByTypo3Site(
-                $this->typoScriptFrontendController->getSite(),
-                $this->typoScriptFrontendController->getLanguage()->getLanguageId()
+                $this->request->getAttribute('site'),
+                (int)$this->request->getAttribute('language')?->getLanguageId(),
             );
 
             $search = GeneralUtility::makeInstance(Search::class, $meilisearchConnection);
