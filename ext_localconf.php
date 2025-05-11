@@ -158,43 +158,50 @@ defined('TYPO3') or die('Access denied.');
 
     ExtensionUtility::configurePlugin(
         't3_meilisearch',
-        'pi_results',
+        'results',
         [
             SearchController::class => 'results,form,detail',
         ],
         [
             SearchController::class => 'results',
-        ]
+        ],
+        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
     ExtensionUtility::configurePlugin(
         't3_meilisearch',
-        'pi_search',
+        'search',
         [
             SearchController::class => 'form',
-        ]
+        ],
+        [
+            SearchController::class => 'form',
+        ],
+        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
     ExtensionUtility::configurePlugin(
         't3_meilisearch',
-        'pi_frequentlySearched',
+        'frequentlySearched',
         [
             SearchController::class => 'frequentlySearched',
         ],
         [
             SearchController::class => 'frequentlySearched',
-        ]
+        ],
+        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
     ExtensionUtility::configurePlugin(
         't3_meilisearch',
-        'pi_suggest',
+        'suggest',
         [
             SuggestController::class => 'suggest',
         ],
         [
             SuggestController::class => 'suggest',
-        ]
+        ],
+        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
     // register the Fluid namespace 't3ms' globally
