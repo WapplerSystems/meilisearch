@@ -1,4 +1,4 @@
-{namespace meilisearch=WapplerSystems\Meilisearch\ViewHelpers}
+{namespace t3ms=WapplerSystems\Meilisearch\ViewHelpers}
 <f:layout name="Backend/WithPageTree"/>
 
 <f:section name="Main">
@@ -42,20 +42,26 @@
                         <div class="card-footer">
                             <div role="tabpanel">
                                 <ul class="nav nav-tabs t3js-tabs" role="tablist" id="tabs-tab" data-store-last-tab="1">
-                                    <li role="presentation" class="t3js-tabmenu-item nav-item">
-                                        <a href="#connections-tab" class="nav-link active" title="" aria-controls="tab-1" role="tab" data-bs-toggle="tab">
-                                            Index 1
-                                        </a>
-                                    </li>
+                                    <f:for each="{connection.indexes}" as="index" iteration="iteration">
+                                        <li role="presentation" class="t3js-tabmenu-item nav-item">
+                                            <a href="#connections-tab" class="nav-link active" title="" aria-controls="tab-1" role="tab" data-bs-toggle="tab">
+                                                Index {index.uid}
+                                            </a>
+                                        </li>
+                                    </f:for>
+
                                 </ul>
                                 <div class="tab-content">
-                                    <div role="tabpanel" class="tab-pane active" id="connections-tab">
-                                        <div class="panel panel-tab">
-                                            <div class="panel-body">
-                                                <f:render section="IndexInfo" arguments="{index:index}"/>
+                                    <f:for each="{connection.indexes}" as="index" iteration="iteration">
+                                        <div role="tabpanel" class="tab-pane active" id="connections-tab">
+                                            <div class="panel panel-tab">
+                                                <div class="panel-body">
+                                                    <f:render section="IndexInfo" arguments="{index:index}"/>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </f:for>
+
                                 </div>
                             </div>
                         </div>
@@ -94,12 +100,12 @@
 
 <f:section name="IndexInfo">
 
-
     <div class="table-fit">
         <table data-table="pages" class="table table-striped table-hover">
             <tbody data-multi-record-selection-row-selection="true">
             <tr class="t3js-entity">
-                edwd
+                <th>Documents</th>
+                <td>{t3ms:backend.documentsCount(index:index)}</td>
             </tr>
             </tbody>
         </table>

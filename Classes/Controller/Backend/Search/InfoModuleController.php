@@ -108,9 +108,9 @@ class InfoModuleController extends AbstractModuleController
                 'healthy' => $service->getClient()->isHealthy(),
                 'client' => $service->getClient(),
                 'service' => $service,
+                'stats' => $service->getClient()->stats(),
+                'indexes' => $service->getClient()->getIndexes(),
             ];
-
-            $data[$key]['stats'] = $service->getClient()->stats();
 
         }
 

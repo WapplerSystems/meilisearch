@@ -55,28 +55,28 @@ defined('TYPO3') or die('Access denied.');
     // adding scheduler tasks
 
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][OptimizeIndexTask::class] = [
-        'extension' => 'meilisearch',
+        'extension' => 't3_meilisearch',
         'title' => 'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang.xlf:optimizeindex_title',
         'description' => 'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang.xlf:optimizeindex_description',
         'additionalFields' => OptimizeIndexTaskAdditionalFieldProvider::class,
     ];
 
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][ReIndexTask::class] = [
-        'extension' => 'meilisearch',
+        'extension' => 't3_meilisearch',
         'title' => 'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang.xlf:reindex_title',
         'description' => 'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang.xlf:reindex_description',
         'additionalFields' => ReIndexTaskAdditionalFieldProvider::class,
     ];
 
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][IndexQueueWorkerTask::class] = [
-        'extension' => 'meilisearch',
+        'extension' => 't3_meilisearch',
         'title' => 'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang.xlf:indexqueueworker_title',
         'description' => 'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang.xlf:indexqueueworker_description',
         'additionalFields' => IndexQueueWorkerTaskAdditionalFieldProvider::class,
     ];
 
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][EventQueueWorkerTask::class] = [
-        'extension' => 'meilisearch',
+        'extension' => 't3_meilisearch',
         'title' => 'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang_be.xlf:task.eventQueueWorkerTask.title',
         'description' => 'LLL:EXT:t3_meilisearch/Resources/Private/Language/locallang_be.xlf:task.eventQueueWorkerTask.description',
         'additionalFields' => EventQueueWorkerTaskAdditionalFieldProvider::class,
@@ -113,7 +113,6 @@ defined('TYPO3') or die('Access denied.');
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['tx_t3meilisearch_configuration']['groups'] = ['all'];
     }
 
-    // ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- # ----- #
     /** @var ExtensionConfiguration $extensionConfiguration */
     $extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class);
 
@@ -130,15 +129,15 @@ defined('TYPO3') or die('Access denied.');
     );
 
 
-    if (!isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['meilisearch']['searchResultClassName '])) {
-        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['meilisearch']['searchResultClassName '] = SearchResult::class;
+    if (!isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['t3_meilisearch']['searchResultClassName '])) {
+        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['t3_meilisearch']['searchResultClassName '] = SearchResult::class;
     }
 
-    if (!isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['meilisearch']['searchResultSetClassName '])) {
-        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['meilisearch']['searchResultSetClassName '] = SearchResultSet::class;
+    if (!isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['t3_meilisearch']['searchResultSetClassName '])) {
+        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['t3_meilisearch']['searchResultSetClassName '] = SearchResultSet::class;
     }
 
-    if (!isset($GLOBALS['TYPO3_CONF_VARS']['LOG']['WapplerSystems']['Meilisearch']['writerConfiguration'])) {
+    if (!isset($GLOBALS['TYPO3_CONF_VARS']['LOG']['WapplerSystems']['t3_meilisearch']['writerConfiguration'])) {
         $context = Environment::getContext();
         if ($context->isProduction()) {
             $logLevel = LogLevel::ERROR;
@@ -147,10 +146,10 @@ defined('TYPO3') or die('Access denied.');
         } else {
             $logLevel = LogLevel::INFO;
         }
-        $GLOBALS['TYPO3_CONF_VARS']['LOG']['WapplerSystems']['Meilisearch']['writerConfiguration'] = [
+        $GLOBALS['TYPO3_CONF_VARS']['LOG']['WapplerSystems']['t3_meilisearch']['writerConfiguration'] = [
             $logLevel => [
                 FileWriter::class => [
-                    'logFileInfix' => 'meilisearch',
+                    'logFileInfix' => 't3_meilisearch',
                 ],
             ],
         ];
@@ -158,7 +157,7 @@ defined('TYPO3') or die('Access denied.');
 
 
     ExtensionUtility::configurePlugin(
-        'Meilisearch',
+        't3_meilisearch',
         'pi_results',
         [
             SearchController::class => 'results,form,detail',
@@ -169,7 +168,7 @@ defined('TYPO3') or die('Access denied.');
     );
 
     ExtensionUtility::configurePlugin(
-        'Meilisearch',
+        't3_meilisearch',
         'pi_search',
         [
             SearchController::class => 'form',
@@ -177,7 +176,7 @@ defined('TYPO3') or die('Access denied.');
     );
 
     ExtensionUtility::configurePlugin(
-        'Meilisearch',
+        't3_meilisearch',
         'pi_frequentlySearched',
         [
             SearchController::class => 'frequentlySearched',
@@ -188,7 +187,7 @@ defined('TYPO3') or die('Access denied.');
     );
 
     ExtensionUtility::configurePlugin(
-        'Meilisearch',
+        't3_meilisearch',
         'pi_suggest',
         [
             SuggestController::class => 'suggest',
@@ -198,7 +197,7 @@ defined('TYPO3') or die('Access denied.');
         ]
     );
 
-    // register the Fluid namespace 'meilisearch' globally
+    // register the Fluid namespace 't3ms' globally
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['fluid']['namespaces']['t3ms'] = ['WapplerSystems\\Meilisearch\\ViewHelpers'];
 
     /*
@@ -212,7 +211,7 @@ defined('TYPO3') or die('Access denied.');
      * access protected pages.
      */
     ExtensionManagementUtility::addService(
-        'meilisearch',
+        't3_meilisearch',
         'auth',
         AuthorizationService::class,
         [// service meta data
@@ -240,6 +239,6 @@ defined('TYPO3') or die('Access denied.');
 $isComposerMode = defined('TYPO3_COMPOSER_MODE') && TYPO3_COMPOSER_MODE;
 if (!$isComposerMode) {
     // we load the autoloader for our libraries
-    $dir = ExtensionManagementUtility::extPath('meilisearch');
+    $dir = ExtensionManagementUtility::extPath('t3_meilisearch');
     require $dir . '/Resources/Private/Php/ComposerLibraries/vendor/autoload.php';
 }

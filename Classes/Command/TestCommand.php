@@ -53,8 +53,11 @@ class TestCommand extends Command
 
         $indexId = 'pages_656';
 
-        //$result = $client->createIndex($indexId, ['primaryKey' => 'uid']);
-        //DebugUtility::debug($result);
+        try {
+            $pageIndex = $client->getIndex($indexId);
+        } catch (\Meilisearch\Exceptions\ApiException $e) {
+            $client->createIndex($indexId, ['primaryKey' => 'uid']);
+        }
 
         $result = $client->index($indexId)->search('boy');
         DebugUtility::debug($result->toArray(), 'search');
@@ -75,6 +78,7 @@ class TestCommand extends Command
 
 
         $indexes = $client->getIndexes();
+        DebugUtility::debug($indexes, 'indexes');
 
 
         return Command::SUCCESS;

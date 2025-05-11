@@ -3,64 +3,49 @@
 	<sheets>
 		<sDEF>
 			<ROOT>
-				<TCEforms>
-					<sheetTitle>Search</sheetTitle>
-				</TCEforms>
+				<sheetTitle>Search</sheetTitle>
 				<type>array</type>
 				<el>
 					<search.targetPage>
-						<TCEforms>
-							<label>Target Page</label>
-							<config>
-								<type>group</type>
-								<internal_type>db</internal_type>
-								<allowed>pages</allowed>
-							</config>
-						</TCEforms>
+                        <label>Target Page</label>
+                        <config>
+                            <type>group</type>
+                            <allowed>pages</allowed>
+                        </config>
 					</search.targetPage>
 				</el>
 			</ROOT>
 		</sDEF>
 		<sQuery>
 			<ROOT>
-				<TCEforms>
-					<sheetTitle>Query</sheetTitle>
-				</TCEforms>
+                <sheetTitle>Query</sheetTitle>
 				<type>array</type>
 				<el>
 					<search.initializeWithEmptyQuery>
-						<TCEforms>
-							<label>Initialize search with empty query</label>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
+                        <label>Initialize search with empty query</label>
+                        <config>
+                            <type>check</type>
+                        </config>
 					</search.initializeWithEmptyQuery>
 					<search.showResultsOfInitialEmptyQuery>
-						<TCEforms>
-							<label>Show results of initial empty query</label>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
+                        <label>Show results of initial empty query</label>
+                        <config>
+                            <type>check</type>
+                        </config>
 					</search.showResultsOfInitialEmptyQuery>
 					<search.initializeWithQuery>
-						<TCEforms>
-							<exclude>1</exclude>
-							<label>Initialize with query</label>
-							<config>
-								<type>input</type>
-								<eval>trim</eval>
-							</config>
-						</TCEforms>
+                        <exclude>1</exclude>
+                        <label>Initialize with query</label>
+                        <config>
+                            <type>input</type>
+                            <eval>trim</eval>
+                        </config>
 					</search.initializeWithQuery>
 					<search.showResultsOfInitialQuery>
-						<TCEforms>
-							<label>Show results of initial query</label>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
+                        <label>Show results of initial query</label>
+                        <config>
+                            <type>check</type>
+                        </config>
 					</search.showResultsOfInitialQuery>
 					<search.query.filter>
 						<section>1</section>
@@ -71,129 +56,107 @@
 								<title>Filter</title>
 								<el>
 									<field>
-										<TCEforms>
-											<label>Field</label>
-											<config>
-												<section>1</section>
-												<type>select</type>
-												<renderType>selectSingle</renderType>
-												<itemsProcFunc>
-													WapplerSystems\Meilisearch\System\UserFunctions\FlexFormUserFunctions->getFacetFieldsFromSchema
-												</itemsProcFunc>
-											</config>
-										</TCEforms>
+                                        <label>Field</label>
+                                        <config>
+                                            <section>1</section>
+                                            <type>select</type>
+                                            <renderType>selectSingle</renderType>
+                                            <itemsProcFunc>
+                                                WapplerSystems\Meilisearch\System\UserFunctions\FlexFormUserFunctions->getFacetFieldsFromSchema
+                                            </itemsProcFunc>
+                                        </config>
 									</field>
 									<value>
-										<TCEforms>
-											<label>Value</label>
-											<config>
-												<section>1</section>
-												<type>input</type>
-											</config>
-										</TCEforms>
+                                        <label>Value</label>
+                                        <config>
+                                            <section>1</section>
+                                            <type>input</type>
+                                        </config>
 									</value>
 								</el>
 							</field>
 						</el>
 					</search.query.filter>
 					<search.query.sortBy>
-						<TCEforms>
-							<exclude>1</exclude>
-							<label>Sorting</label>
-							<config>
-								<type>input</type>
-								<eval>trim</eval>
-							</config>
-						</TCEforms>
+						<exclude>1</exclude>
+						<label>Sorting</label>
+						<config>
+							<type>input</type>
+							<eval>trim</eval>
+						</config>
 					</search.query.sortBy>
 					<search.results.resultsPerPage>
-						<TCEforms>
-							<exclude>1</exclude>
-							<label>Results per Page</label>
-							<config>
-								<type>input</type>
-								<eval>int+</eval>
-							</config>
-						</TCEforms>
+						<exclude>1</exclude>
+						<label>Results per Page</label>
+						<config>
+							<type>input</type>
+							<eval>int+</eval>
+						</config>
 					</search.results.resultsPerPage>
 					<search.query.boostFunction>
-						<TCEforms>
-							<exclude>1</exclude>
-							<label>Boost Function</label>
-							<config>
-								<type>input</type>
-								<eval>trim</eval>
-							</config>
-						</TCEforms>
+						<exclude>1</exclude>
+						<label>Boost Function</label>
+						<config>
+							<type>input</type>
+							<eval>trim</eval>
+						</config>
 					</search.query.boostFunction>
 					<search.query.boostQuery>
-						<TCEforms>
-							<exclude>1</exclude>
-							<label>Boost Query</label>
-							<config>
-								<type>input</type>
-								<eval>trim</eval>
-							</config>
-						</TCEforms>
+						<exclude>1</exclude>
+						<label>Boost Query</label>
+						<config>
+							<type>input</type>
+							<eval>trim</eval>
+						</config>
 					</search.query.boostQuery>
 					<search.query.tieParameter>
-						<TCEforms>
-							<exclude>1</exclude>
-							<label>Tie Breaker</label>
-							<config>
-								<type>input</type>
-								<eval>trim</eval>
-							</config>
-						</TCEforms>
+						<exclude>1</exclude>
+						<label>Tie Breaker</label>
+						<config>
+							<type>input</type>
+							<eval>trim</eval>
+						</config>
 					</search.query.tieParameter>
 				</el>
 			</ROOT>
 		</sQuery>
 		<sOptions>
 			<ROOT>
-				<TCEforms>
-					<sheetTitle>Options</sheetTitle>
-				</TCEforms>
+				<sheetTitle>Options</sheetTitle>
 				<type>array</type>
 				<el>
 					<view.templateFiles.results>
-						<TCEforms>
-							<label>Custom Template</label>
-							<config>
-								<section>1</section>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<itemsProcFunc>
-									WapplerSystems\Meilisearch\System\UserFunctions\FlexFormUserFunctions->getAvailableTemplates
-								</itemsProcFunc>
-							</config>
-						</TCEforms>
+                        <label>Custom Template</label>
+                        <config>
+                            <section>1</section>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <itemsProcFunc>
+                                WapplerSystems\Meilisearch\System\UserFunctions\FlexFormUserFunctions->getAvailableTemplates
+                            </itemsProcFunc>
+                        </config>
 					</view.templateFiles.results>
 					<view.pluginNamespace>
-						<TCEforms>
-							<exclude>1</exclude>
-							<label>Plugin Namespace</label>
-							<config>
-								<section>1</section>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<itemsProcFunc>
-									WapplerSystems\Meilisearch\System\UserFunctions\FlexFormUserFunctions->getAvailablePluginNamespaces
-								</itemsProcFunc>
-								<default>tx_t3meilisearch</default>
-							</config>
-						</TCEforms>
+                        <exclude>1</exclude>
+                        <label>Plugin Namespace</label>
+                        <config>
+                            <section>1</section>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <itemsProcFunc>
+                                WapplerSystems\Meilisearch\System\UserFunctions\FlexFormUserFunctions->getAvailablePluginNamespaces
+                            </itemsProcFunc>
+                            <default>tx_t3meilisearch</default>
+                        </config>
 					</view.pluginNamespace>
 
 					<search.ignoreGlobalQParameter>
-						<TCEforms>
-							<exclude>1</exclude>
-							<label>Ignore the global q parameter</label>
-							<config>
-								<type>check</type>
-								<default>0</default>
-							</config>
-						</TCEforms>
+						<exclude>1</exclude>
+						<label>Ignore the global q parameter</label>
+						<config>
+							<type>check</type>
+							<default>0</default>
+						</config>
 					</search.ignoreGlobalQParameter>
 				</el>
 			</ROOT>

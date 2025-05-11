@@ -1,18 +1,18 @@
 <?php
 
-$EM_CONF['meilisearch'] = [
+$EM_CONF['t3_meilisearch'] = [
     'title' => 'Meilisearch for TYPO3',
     'description' => '',
-    'version' => '12.0.0',
+    'version' => '13.0.0',
     'state' => 'stable',
     'category' => 'plugin',
-    'author' => 'Ingo Renner, Timo Hund, Markus Friedrich',
-    'author_email' => 'ingo@typo3.org',
-    'author_company' => 'dkd Internet Service GmbH',
+    'author' => 'Sven Wappler, Ingo Renner, Timo Hund, Markus Friedrich',
+    'author_email' => 'typo3@wappler.systems',
+    'author_company' => 'WapplerSystems',
     'constraints' => [
         'depends' => [
             'scheduler' => '',
-            'typo3' => '12.4.3-12.4.99',
+            'typo3' => '13.4.3-13.4.99',
         ],
         'conflicts' => [],
         'suggests' => [],
