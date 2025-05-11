@@ -82,6 +82,25 @@ class SiteRepository
         return $this->getSiteByRootPageId($rootPageId);
     }
 
+
+    /**
+     * @param string $identifier
+     * @return Site
+     * @throws SiteNotFoundException
+     * @throws UnexpectedTYPO3SiteInitializationException
+     */
+    public function getSiteByIdentifier(string $identifier): Site
+    {
+        $sites = $this->getAvailableSites();
+        /** @var Site $site */
+        foreach ($sites as $site) {
+            if ($site->getTypo3SiteObject()->getIdentifier() === $identifier) {
+                return $site;
+            }
+        }
+        throw new SiteNotFoundException();
+    }
+
     /**
      * Gets the Site for a specific root page-id.
      *

@@ -15,7 +15,6 @@
 
 namespace WapplerSystems\Meilisearch\Domain\Search\Query;
 
-use Solarium\QueryType\Select\Query\Query as SolariumQuery;
 
 class Query extends SolariumQuery
 {

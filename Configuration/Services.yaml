@@ -6,6 +6,13 @@ services:
   WapplerSystems\Meilisearch\:
     resource: '../Classes/*'
 
+  commands:
+    namespace: WapplerSystems\Meilisearch\Command\
+    resource: '../Classes/Command/*'
+    public: true
+    autowire: true
+    autoconfigure: true
+
   controller:
     namespace: WapplerSystems\Meilisearch\Controller\
     resource: '../Classes/Controller/*'
@@ -333,20 +340,6 @@ services:
   WapplerSystems\Meilisearch\ConnectionManager:
     public: true
     autowire: true
-
-  WapplerSystems\Meilisearch\Command\IndexPageCommand:
-    autowire: true
-    tags:
-      - name: 'console.command'
-        command: 'meilisearch:indexPage'
-        description: 'Index single page'
-
-  WapplerSystems\Meilisearch\Command\TestCommand:
-    autowire: true
-    tags:
-      - name: 'console.command'
-        command: 'meilisearch:test'
-        description: 'Test'
 
   WapplerSystems\Meilisearch\Indexer\IndexerFactory:
     arguments:
