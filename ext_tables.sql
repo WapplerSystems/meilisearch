@@ -8,7 +8,7 @@ CREATE TABLE tx_t3meilisearch_last_searches
 	keywords    varchar(128)        DEFAULT ''  NOT NULL,
 
 	PRIMARY KEY (sequence_id)
-) ENGINE = InnoDB;
+);
 
 
 #
@@ -40,7 +40,7 @@ CREATE TABLE tx_t3meilisearch_statistics
 	PRIMARY KEY (uid),
 	KEY rootpid_keywords (root_pid, keywords),
 	KEY rootpid_tstamp (root_pid, tstamp)
-) ENGINE = InnoDB;
+);
 
 
 #
@@ -69,7 +69,7 @@ CREATE TABLE tx_t3meilisearch_indexqueue_item
 	KEY item_id (item_type(191), item_uid),
 	KEY site_statistics (root, indexing_configuration),
 	KEY pages_mountpoint (item_type(191), item_uid, has_indexing_properties, pages_mountidentifier(191))
-) ENGINE = InnoDB;
+);
 
 
 #
@@ -87,7 +87,7 @@ CREATE TABLE tx_t3meilisearch_indexqueue_indexing_property
 
 	PRIMARY KEY (uid),
 	KEY item_id (item_id)
-) ENGINE = InnoDB;
+);
 
 #
 # Table structure for table 'tx_t3meilisearch_eventqueue_item'
@@ -103,15 +103,6 @@ CREATE TABLE tx_t3meilisearch_eventqueue_item
 
 	PRIMARY KEY (uid),
 	KEY tstamp (tstamp),
-	KEY error (error),
-) ENGINE = InnoDB;
-
-#
-# Extending 'pages' table with extra keys
-#
-CREATE TABLE pages
-(
-	no_search_sub_entries tinyint(3) unsigned DEFAULT '0' NOT NULL,
-	KEY content_from_pid_deleted (content_from_pid, deleted),
-	KEY doktype_no_search_deleted (doktype, no_search, deleted)
+	KEY error (error)
 );
+

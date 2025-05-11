@@ -17,14 +17,12 @@ declare(strict_types=1);
 
 namespace WapplerSystems\Meilisearch;
 
-use WapplerSystems\Meilisearch\FrontendEnvironment\Tsfe;
-use WapplerSystems\Meilisearch\FrontendEnvironment\TypoScript;
+use WapplerSystems\Meilisearch\System\Configuration\ConfigurationManager;
 use WapplerSystems\Meilisearch\System\Configuration\TypoScriptConfiguration;
-use Doctrine\DBAL\Exception as DBALException;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Exception\SiteNotFoundException;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
  * Class FrontendEnvironment is responsible for initializing/simulating the frontend in backend context
@@ -36,27 +34,10 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 class FrontendEnvironment implements SingletonInterface
 {
     /**
-     * Loads the TypoScript configuration for a given page id and language.
-     * Language usage may be disabled to get the default TypoScript
-     * configuration.
-     *
-     * @throws DBALException
-     */
-    public function getConfigurationFromPageId(
-        int $pageId,
-        ?string $path = '',
-        ?int $language = 0,
-        ?int $rootPageId = null,
-    ): TypoScriptConfiguration {
-        $typoScript = GeneralUtility::makeInstance(TypoScript::class);
-        return $typoScript->getConfigurationFromPageId($pageId, $path, $language, $rootPageId);
-    }
-
-    /**
      * Check whether the page record is within the configured allowed pages types(doktype) for indexing.
      * Uses TypoScript: plugin.tx_t3meilisearch.index.queue.<queue name>.allowedPageTypes
      *
-     * @throws DBALException
+     * @throws SiteNotFoundException
      */
     public function isAllowedPageType(
         array $pageRecord,
@@ -73,11 +54,13 @@ class FrontendEnvironment implements SingletonInterface
             $rootPageRecordUid = $pageRecord['l10n_parent'];
         }
 
-        $tsfe = GeneralUtility::makeInstance(Tsfe::class)->getTsfeByPageIdIgnoringLanguage($rootPageRecordUid);
-        if (!$tsfe instanceof TypoScriptFrontendController) {
-            return false;
+        // @todo: ensure that the fallbacks for the Site Language are checked.
+        $languageId = (int)$pageRecord['sys_language_uid'];
+        if ($languageId < 0) {
+            $languageId = 0;
         }
-        $configuration = $this->getConfigurationFromPageId($rootPageRecordUid, '', $tsfe->getLanguage()->getLanguageId());
+        $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
+        $configuration = $configurationManager->getTypoScriptConfiguration($rootPageRecordUid, $languageId);
         if ($configurationName !== null) {
             $allowedPageTypes = $configuration->getIndexQueueAllowedPageTypesArrayByConfigurationName($configurationName);
         } else {
@@ -91,13 +74,19 @@ class FrontendEnvironment implements SingletonInterface
     /**
      * Returns TypoScriptConfiguration for desired page ID and language id.
      *
-     * @throws DBALException
+     * @throws SiteNotFoundException
+     *
+     * @todo: check when to use $rootPageId and if it can be removed.
+     *   Most probably that belongs to mounted pages or to plugin.tx_solr.index.queue.[indexConfig].additionalPageIds
+     *   For both cases, the indexing configuration must be used from desired/current root page given by `tx_solr_indexqueue_item`.`root`.
+     *   Note about Site-config languages mismatch troubles: https://github.com/TYPO3-Solr/ext-solr/issues/3325#issuecomment-1900091020
      */
     public function getMeilisearchConfigurationFromPageId(
         int $pageId,
         ?int $language = 0,
         ?int $rootPageId = null,
     ): TypoScriptConfiguration {
-        return $this->getConfigurationFromPageId($pageId, '', $language, $rootPageId);
+        $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
+        return $configurationManager->getTypoScriptConfiguration($pageId, $language);
     }
 }

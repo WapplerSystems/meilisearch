@@ -15,7 +15,6 @@
 
 namespace WapplerSystems\Meilisearch\Domain\Index;
 
-use TYPO3\CMS\Core\Utility\DebugUtility;
 use WapplerSystems\Meilisearch\ConnectionManager;
 use WapplerSystems\Meilisearch\Domain\Site\Site;
 use WapplerSystems\Meilisearch\Event\Indexing\AfterItemHasBeenIndexedEvent;

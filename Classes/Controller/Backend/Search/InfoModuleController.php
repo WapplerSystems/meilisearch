@@ -15,8 +15,6 @@
 
 namespace WapplerSystems\Meilisearch\Controller\Backend\Search;
 
-use TYPO3\CMS\Core\Utility\DebugUtility;
-use WapplerSystems\Meilisearch\Api;
 use WapplerSystems\Meilisearch\Domain\Search\MeilisearchDocument\Repository as MeilisearchDocumentRepository;
 use WapplerSystems\Meilisearch\Domain\Search\Statistics\StatisticsRepository;
 use WapplerSystems\Meilisearch\Domain\Site\Exception\UnexpectedTYPO3SiteInitializationException;
@@ -57,13 +55,13 @@ class InfoModuleController extends AbstractModuleController
     {
         $this->initializeAction();
         if ($this->selectedSite === null) {
-            $this->view->assign('can_not_proceed', true);
-            return $this->getModuleTemplateResponse();
+            $this->moduleTemplate->assign('can_not_proceed', true);
+            return $this->moduleTemplate->renderResponse('Backend/Search/InfoModule/Index');
         }
 
         $this->collectConnectionInfos();
 
-        return $this->getModuleTemplateResponse();
+        return $this->moduleTemplate->renderResponse('Backend/Search/InfoModule/Index');
     }
 
     /**
@@ -75,8 +73,8 @@ class InfoModuleController extends AbstractModuleController
     public function documentsDetailsAction(string $type, int $uid, int $pageId, int $languageUid): ResponseInterface
     {
         $documents = $this->meilisearchDocumentRepository->findByTypeAndPidAndUidAndLanguageId($type, $uid, $pageId, $languageUid);
-        $this->view->assign('documents', $documents);
-        return $this->getModuleTemplateResponse();
+        $this->moduleTemplate->assign('documents', $documents);
+        return $this->moduleTemplate->renderResponse('Backend/Search/InfoModule/DocumentsDetails');
     }
 
     /**
@@ -90,7 +88,7 @@ class InfoModuleController extends AbstractModuleController
         $data = [];
 
         if (empty($connections)) {
-            $this->view->assign('can_not_proceed', true);
+            $this->moduleTemplate->assign('can_not_proceed', true);
             return;
         }
 
@@ -116,7 +114,7 @@ class InfoModuleController extends AbstractModuleController
 
         }
 
-        $this->view->assignMultiple([
+        $this->moduleTemplate->assignMultiple([
             'site' => $this->selectedSite,
             'connections' => $connections,
             'data' => $data,
@@ -145,7 +143,7 @@ class InfoModuleController extends AbstractModuleController
         /** @var StatisticsRepository $statisticsRepository */
         $statisticsRepository = GeneralUtility::makeInstance(StatisticsRepository::class);
 
-        $this->view->assign(
+        $this->moduleTemplate->assign(
             'top_search_phrases',
             $statisticsRepository->getTopKeyWordsWithHits(
                 $siteRootPageId,
@@ -153,7 +151,7 @@ class InfoModuleController extends AbstractModuleController
                 $topHitsLimit
             )
         );
-        $this->view->assign(
+        $this->moduleTemplate->assign(
             'top_search_phrases_without_hits',
             $statisticsRepository->getTopKeyWordsWithoutHits(
                 $siteRootPageId,
@@ -161,7 +159,7 @@ class InfoModuleController extends AbstractModuleController
                 $noHitsLimit
             )
         );
-        $this->view->assign(
+        $this->moduleTemplate->assign(
             'search_phrases_statistics',
             $statisticsRepository->getSearchStatistics(
                 $siteRootPageId,
@@ -183,10 +181,10 @@ class InfoModuleController extends AbstractModuleController
             $data[] = (int)$bucket['numQueries'];
         }
 
-        $this->view->assign('queriesChartLabels', json_encode($labels));
-        $this->view->assign('queriesChartData', json_encode($data));
-        $this->view->assign('topHitsLimit', $topHitsLimit);
-        $this->view->assign('noHitsLimit', $noHitsLimit);
+        $this->moduleTemplate->assign('queriesChartLabels', json_encode($labels));
+        $this->moduleTemplate->assign('queriesChartData', json_encode($data));
+        $this->moduleTemplate->assign('topHitsLimit', $topHitsLimit);
+        $this->moduleTemplate->assign('noHitsLimit', $noHitsLimit);
     }
 
     /**
@@ -227,7 +225,7 @@ class InfoModuleController extends AbstractModuleController
             }
             $indexFieldsInfoByCorePaths[$service->getCorePath()] = $indexFieldsInfo;
         }
-        $this->view->assign('indexFieldsInfoByCorePaths', $indexFieldsInfoByCorePaths);
+        $this->moduleTemplate->assign('indexFieldsInfoByCorePaths', $indexFieldsInfoByCorePaths);
     }
 
 
@@ -268,7 +266,7 @@ class InfoModuleController extends AbstractModuleController
             }
             $indexFieldsInfoByCorePaths[$service->getCorePath()] = $indexFieldsInfo;
         }
-        $this->view->assign('indexFieldsInfoByCorePaths', $indexFieldsInfoByCorePaths);
+        $this->moduleTemplate->assign('indexFieldsInfoByCorePaths', $indexFieldsInfoByCorePaths);
     }
 
 
@@ -306,7 +304,7 @@ class InfoModuleController extends AbstractModuleController
             }
             $indexFieldsInfoByCorePaths[$service->getCorePath()] = $indexFieldsInfo;
         }
-        $this->view->assign('indexFieldsInfoByCorePaths', $indexFieldsInfoByCorePaths);
+        $this->moduleTemplate->assign('indexFieldsInfoByCorePaths', $indexFieldsInfoByCorePaths);
     }
 
 
@@ -343,7 +341,7 @@ class InfoModuleController extends AbstractModuleController
             $documentsByCoreAndType[$languageId]['documents'] = $documentsByType;
         }
 
-        $this->view->assignMultiple([
+        $this->moduleTemplate->assignMultiple([
             'pageId' => $this->selectedPageUID,
             'indexInspectorDocumentsByLanguageAndType' => $documentsByCoreAndType,
         ]);

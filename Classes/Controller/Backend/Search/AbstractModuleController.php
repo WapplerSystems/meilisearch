@@ -149,8 +149,8 @@ abstract class AbstractModuleController extends ActionController
         $sites = $this->siteRepository->getAvailableSites();
 
         $selectOtherPage = count($sites) > 0 || $this->selectedPageUID < 1;
-        $this->view->assign('showSelectOtherPage', $selectOtherPage);
-        $this->view->assign('pageUID', $this->selectedPageUID);
+        $this->moduleTemplate->assign('showSelectOtherPage', $selectOtherPage);
+        $this->moduleTemplate->assign('pageUID', $this->selectedPageUID);
         if ($this->selectedPageUID < 1) {
             return;
         }
@@ -261,7 +261,7 @@ abstract class AbstractModuleController extends ActionController
      */
     protected function getModuleTemplateResponse(): ResponseInterface
     {
-        $this->moduleTemplate->setContent($this->view->render());
+        $this->moduleTemplate->setContent($this->moduleTemplate->render());
         return $this->htmlResponse($this->moduleTemplate->renderContent());
     }
 

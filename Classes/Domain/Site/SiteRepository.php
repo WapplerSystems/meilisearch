@@ -19,25 +19,25 @@ namespace WapplerSystems\Meilisearch\Domain\Site;
 
 use WapplerSystems\Meilisearch\Domain\Index\Queue\RecordMonitor\Helper\RootPageResolver;
 use WapplerSystems\Meilisearch\Domain\Site\Exception\UnexpectedTYPO3SiteInitializationException;
+use WapplerSystems\Meilisearch\Event\Site\AfterDomainHasBeenDeterminedForSiteEvent;
 use WapplerSystems\Meilisearch\Exception\InvalidArgumentException;
 use WapplerSystems\Meilisearch\FrontendEnvironment;
-use WapplerSystems\Meilisearch\FrontendEnvironment\Tsfe;
 use WapplerSystems\Meilisearch\System\Cache\TwoLevelCache;
 use WapplerSystems\Meilisearch\System\Configuration\ExtensionConfiguration;
 use WapplerSystems\Meilisearch\System\Records\Pages\PagesRepository;
 use WapplerSystems\Meilisearch\System\Util\SiteUtility;
 use Doctrine\DBAL\Exception as DBALException;
 use Throwable;
+use Generator;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Site\Entity\Site as CoreSite;
 use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
+use Psr\EventDispatcher\EventDispatcherInterface;
+use TYPO3\CMS\Core\Exception\SiteNotFoundException;
 
 /**
  * Class SiteRepository is responsible to retrieve instances of Site objects
- *
- * @author Thomas Hohn <tho@systime.dk>
  */
 class SiteRepository
 {
@@ -51,18 +51,22 @@ class SiteRepository
 
     protected FrontendEnvironment $frontendEnvironment;
 
+    protected EventDispatcherInterface $eventDispatcher;
+
     public function __construct(
-        RootPageResolver $rootPageResolver = null,
-        TwoLevelCache $twoLevelCache = null,
-        SiteFinder $siteFinder = null,
-        ExtensionConfiguration $extensionConfiguration = null,
-        FrontendEnvironment $frontendEnvironment = null
+        ?RootPageResolver $rootPageResolver = null,
+        ?TwoLevelCache $twoLevelCache = null,
+        ?SiteFinder $siteFinder = null,
+        ?ExtensionConfiguration $extensionConfiguration = null,
+        ?FrontendEnvironment $frontendEnvironment = null,
+        ?EventDispatcherInterface $eventDispatcherInterface = null
     ) {
         $this->rootPageResolver = $rootPageResolver ?? GeneralUtility::makeInstance(RootPageResolver::class);
         $this->runtimeCache = $twoLevelCache ?? GeneralUtility::makeInstance(TwoLevelCache::class, 'runtime');
         $this->siteFinder = $siteFinder ?? GeneralUtility::makeInstance(SiteFinder::class);
         $this->extensionConfiguration = $extensionConfiguration ?? GeneralUtility::makeInstance(ExtensionConfiguration::class);
         $this->frontendEnvironment = $frontendEnvironment ?? GeneralUtility::makeInstance(FrontendEnvironment::class);
+        $this->eventDispatcher = $eventDispatcherInterface ?? GeneralUtility::makeInstance(EventDispatcherInterface::class);
     }
 
     /**
@@ -70,6 +74,7 @@ class SiteRepository
      *
      * @throws DBALException
      * @throws InvalidArgumentException
+     * @throws SiteNotFoundException
      */
     public function getSiteByPageId(int $pageId, string $mountPointIdentifier = ''): ?Site
     {
@@ -80,8 +85,8 @@ class SiteRepository
     /**
      * Gets the Site for a specific root page-id.
      *
-     * @throws DBALException
      * @throws InvalidArgumentException
+     * @throws SiteNotFoundException
      */
     public function getSiteByRootPageId(int $rootPageId): ?Site
     {
@@ -105,12 +110,18 @@ class SiteRepository
      */
     public function getFirstAvailableSite(bool $stopOnInvalidSite = false): ?Site
     {
-        $sites = $this->getAvailableSites($stopOnInvalidSite);
-        return array_shift($sites);
+        $siteGenerator = $this->getAvailableTYPO3ManagedSites($stopOnInvalidSite);
+        $siteGenerator->rewind();
+        if (!$siteGenerator->valid()) {
+            return null;
+        }
+        $site = $siteGenerator->current();
+
+        return $site instanceof Site ? $site : null;
     }
 
     /**
-     * Gets all available TYPO3 sites with Meilisearch configured.
+     * Gets all available TYPO3 sites with Solr configured.
      *
      * @return Site[] An array of available sites
      *
@@ -121,37 +132,90 @@ class SiteRepository
         $cacheId = 'SiteRepository' . '_' . 'getAvailableSites';
 
         $sites = $this->runtimeCache->get($cacheId);
-        if (!empty($sites)) {
+        if (is_array($sites) && $sites !== []) {
             return $sites;
         }
 
-        $sites = $this->getAvailableTYPO3ManagedSites($stopOnInvalidSite);
+        $siteGenerator = $this->getAvailableTYPO3ManagedSites($stopOnInvalidSite);
+        $siteGenerator->rewind();
+
+        $sites = [];
+        if (!$siteGenerator->valid()) {
+            return $sites;
+        }
+        foreach ($siteGenerator as $rootPageId => $site) {
+            if (isset($sites[$rootPageId])) {
+                //get each site only once
+                continue;
+            }
+            $sites[$rootPageId] = $site;
+        }
         $this->runtimeCache->set($cacheId, $sites);
 
         return $sites;
     }
 
     /**
-     * Returns available TYPO3 sites
-     *
-     * @return Site[]
+     * Check, if there are any managed sites available
      *
      * @throws UnexpectedTYPO3SiteInitializationException
      */
-    protected function getAvailableTYPO3ManagedSites(bool $stopOnInvalidSite): array
+    public function hasAvailableSites(bool $stopOnInvalidSite = false): bool
     {
-        $typo3ManagedMeilisearchSites = [];
-        $typo3Sites = $this->siteFinder->getAllSites();
-        foreach ($typo3Sites as $typo3Site) {
+        $siteGenerator = $this->getAvailableTYPO3ManagedSites($stopOnInvalidSite);
+        $siteGenerator->rewind();
+        if (!$siteGenerator->valid()) {
+            return false;
+        }
+
+        return ($site = $siteGenerator->current()) && $site instanceof Site;
+    }
+
+    /**
+     * Check, if there is exactly one managed site available
+     * Needed in AbstractModuleController::autoSelectFirstSiteAndRootPageWhenOnlyOneSiteIsAvailable
+     *
+     * @throws UnexpectedTYPO3SiteInitializationException
+     */
+    public function hasExactlyOneAvailableSite(bool $stopOnInvalidSite = false): bool
+    {
+        if (!$this->hasAvailableSites($stopOnInvalidSite)) {
+            return false;
+        }
+
+        $siteGenerator = $this->getAvailableTYPO3ManagedSites($stopOnInvalidSite);
+        $siteGenerator->rewind();
+        if (!$siteGenerator->valid()) {
+            return false;
+        }
+
+        // We start with 1 here as we know from hasAvailableSites() above we have at least one site
+        $counter = 1;
+        foreach ($siteGenerator as $_) {
+            if ($counter > 1) {
+                return false;
+            }
+            $counter++;
+        }
+
+        return true;
+    }
+
+    /**
+     * Returns available TYPO3 sites
+     *
+     * @return Site[]|Generator
+     *
+     * @throws UnexpectedTYPO3SiteInitializationException
+     */
+    protected function getAvailableTYPO3ManagedSites(bool $stopOnInvalidSite): Generator
+    {
+        foreach ($this->siteFinder->getAllSites() as $typo3Site) {
             try {
                 $rootPageId = $typo3Site->getRootPageId();
-                if (isset($typo3ManagedMeilisearchSites[$rootPageId])) {
-                    //get each site only once
-                    continue;
-                }
-                $typo3ManagedMeilisearchSite = $this->buildSite($rootPageId);
-                if ($typo3ManagedMeilisearchSite->isEnabled()) {
-                    $typo3ManagedMeilisearchSites[$rootPageId] = $typo3ManagedMeilisearchSite;
+                $typo3ManagedSolrSite = $this->buildSite($rootPageId);
+                if ($typo3ManagedSolrSite->isEnabled()) {
+                    yield $rootPageId => $typo3ManagedSolrSite;
                 }
             } catch (Throwable $e) {
                 if ($stopOnInvalidSite) {
@@ -163,14 +227,13 @@ class SiteRepository
                 }
             }
         }
-        return $typo3ManagedMeilisearchSites;
     }
 
     /**
      * Creates an instance of the Site object.
      *
-     * @throws DBALException
      * @throws InvalidArgumentException
+     * @throws SiteNotFoundException
      */
     protected function buildSite(int $rootPageId): ?Site
     {
@@ -200,6 +263,11 @@ class SiteRepository
     /**
      * Validates given root page record, if it fits requirements.
      *
+     * @param array{
+     *    'uid'?: int,
+     *    'is_siteroot'?: int
+     * } $rootPageRecord
+     *
      * @throws InvalidArgumentException
      */
     protected function validateRootPageRecord(array $rootPageRecord): void
@@ -214,8 +282,12 @@ class SiteRepository
 
     /**
      * Builds a TYPO3 managed site with TypoScript configuration.
+     * @param array{
+     *    'uid': int,
+     *    'pid'?: int
+     * } $rootPageRecord
      *
-     * @throws DBALException
+     * @throws SiteNotFoundException
      */
     protected function buildTypo3ManagedSite(array $rootPageRecord): ?Site
     {
@@ -225,6 +297,10 @@ class SiteRepository
         }
 
         $domain = $typo3Site->getBase()->getHost();
+        $event = $this->eventDispatcher->dispatch(
+            new AfterDomainHasBeenDeterminedForSiteEvent($domain, $rootPageRecord, $typo3Site, $this->extensionConfiguration)
+        );
+        $domain = $event->getDomain();
 
         $siteHash = $this->getSiteHashForDomain($domain);
         $defaultLanguage = $typo3Site->getDefaultLanguage()->getLanguageId();
@@ -233,41 +309,39 @@ class SiteRepository
             return $language->getLanguageId();
         }, $typo3Site->getLanguages());
 
-        // Try to get first instantiable TSFE for one of site languages, to get TypoScript with `plugin.tx_t3meilisearch.index.*`,
+        // Try to get first instantiable TSFE for one of site languages, to get TypoScript with `plugin.tx_solr.index.*`,
         // to be able to collect indexing configuration,
         // which are required for BE-Modules/CLI-Commands or RecordMonitor within BE/TCE-commands.
-        // If TSFE for none of languages can be initialized, then the \WapplerSystems\Meilisearch\Domain\Site\Site object unusable at all,
+        // If TSFE for none of languages can be initialized, then the \ApacheSolrForTypo3\Solr\Domain\Site\Site object unusable at all,
         // so the rest of the steps in this method are not necessary, and therefore the null will be returned.
-        $tsfeFactory = GeneralUtility::makeInstance(Tsfe::class);
-        $tsfeToUseForTypoScriptConfiguration = $tsfeFactory->getTsfeByPageIdAndLanguageFallbackChain($typo3Site->getRootPageId(), ...$availableLanguageIds);
-        if (!$tsfeToUseForTypoScriptConfiguration instanceof TypoScriptFrontendController) {
-            return null;
-        }
+        $solrConnectionConfigurations = [];
 
-        $meilisearchConnectionConfigurations = [];
-
+        $firstLanguage = null;
         foreach ($availableLanguageIds as $languageUid) {
-            $meilisearchConnection = SiteUtility::getMeilisearchConnectionConfiguration($typo3Site, $languageUid);
-            if ($meilisearchConnection !== null) {
-                $meilisearchConnectionConfigurations[$languageUid] = $meilisearchConnection;
+            $solrConnection = SiteUtility::getMeilisearchConnectionConfiguration($typo3Site, $languageUid);
+            if ($solrConnection !== null) {
+                $solrConnectionConfigurations[$languageUid] = $solrConnection;
+            }
+            if ($firstLanguage === null) {
+                $firstLanguage = $typo3Site->getLanguageById($languageUid);
             }
         }
 
-        $meilisearchConfiguration = $this->frontendEnvironment->getMeilisearchConfigurationFromPageId(
+        $solrConfiguration = $this->frontendEnvironment->getMeilisearchConfigurationFromPageId(
             $rootPageRecord['uid'],
-            $tsfeToUseForTypoScriptConfiguration->getLanguage()->getLanguageId()
+            $firstLanguage->getLanguageId(),
         );
 
         return GeneralUtility::makeInstance(
             Site::class,
-            $meilisearchConfiguration,
+            $solrConfiguration,
             $rootPageRecord,
             $domain,
             $siteHash,
             $pageRepository,
             $defaultLanguage,
             $availableLanguageIds,
-            $meilisearchConnectionConfigurations,
+            $solrConnectionConfigurations,
             $typo3Site
         );
     }

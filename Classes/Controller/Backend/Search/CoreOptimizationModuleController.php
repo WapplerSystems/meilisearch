@@ -41,7 +41,7 @@ class CoreOptimizationModuleController extends AbstractModuleController
         parent::initializeView($view);
         $this->generateCoreSelectorMenuUsingPageTree();
         $coreOptimizationTabs = $this->moduleTemplate->getDynamicTabMenu([], 'coreOptimization');
-        $this->view->assign('tabs', $coreOptimizationTabs);
+        $this->moduleTemplate->assign('tabs', $coreOptimizationTabs);
     }
 
     /**
@@ -52,7 +52,7 @@ class CoreOptimizationModuleController extends AbstractModuleController
     public function indexAction(): ResponseInterface
     {
         if ($this->selectedMeilisearchCoreConnection === null) {
-            $this->view->assign('can_not_proceed', true);
+            $this->moduleTemplate->assign('can_not_proceed', true);
             return $this->getModuleTemplateResponse();
         }
 
@@ -64,7 +64,7 @@ class CoreOptimizationModuleController extends AbstractModuleController
         }
 
         $stopWords = $coreAdmin->getStopWords();
-        $this->view->assignMultiple([
+        $this->moduleTemplate->assignMultiple([
             'synonyms' => $synonyms,
             'stopWords' => implode(PHP_EOL, $stopWords),
             'stopWordsCount' => count($stopWords),

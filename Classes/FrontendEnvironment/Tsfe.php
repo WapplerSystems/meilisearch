@@ -19,13 +19,15 @@
 
 namespace WapplerSystems\Meilisearch\FrontendEnvironment;
 
+use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
+use TYPO3\CMS\Frontend\Page\PageInformation;
+use WapplerSystems\Meilisearch\System\Configuration\ConfigurationManager;
 use WapplerSystems\Meilisearch\System\Configuration\ConfigurationPageResolver;
 use Doctrine\DBAL\Exception as DBALException;
 use Throwable;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\LanguageAspectFactory;
-use TYPO3\CMS\Core\Context\TypoScriptAspect;
 use TYPO3\CMS\Core\Context\UserAspect;
 use TYPO3\CMS\Core\Context\VisibilityAspect;
 use TYPO3\CMS\Core\Core\SystemEnvironmentBuilder;
@@ -36,7 +38,6 @@ use TYPO3\CMS\Core\Localization\Locales;
 use TYPO3\CMS\Core\Routing\PageArguments;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Site\SiteFinder;
-use TYPO3\CMS\Core\TypoScript\TemplateService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
@@ -83,7 +84,7 @@ class Tsfe implements SingletonInterface
         $cacheIdentifier = $this->getCacheIdentifier($pageId, $language, $rootPageId);
 
         // Handle spacer and sys-folders, since they are not accessible in frontend, and TSFE can not be fully initialized on them.
-        // Apart from this, the plugin.tx_t3meilisearch.index.queue.[indexConfig].additionalPageIds is handled as well.
+        // Apart from this, the plugin.tx_solr.index.queue.[indexConfig].additionalPageIds is handled as well.
         $pidToUse = $this->getPidToUseForTsfeInitialization($pageId, $rootPageId);
         if ($pidToUse !== $pageId) {
             $this->initializeTsfe($pidToUse, $language, $rootPageId);
@@ -109,21 +110,34 @@ class Tsfe implements SingletonInterface
         $languageAspect = LanguageAspectFactory::createFromSiteLanguage($siteLanguage);
         $context->setAspect('language', $languageAspect);
 
+        $pageInformation = new PageInformation();
+        $pageInformation->setId($pageId);
+        $pageInformation->setPageRecord(BackendUtility::getRecord('pages', $pageId));
+        $pageInformation->setContentFromPid($pageId);
         $serverRequest = $this->serverRequestCache[$cacheIdentifier] ?? null;
+        $pageArguments = GeneralUtility::makeInstance(PageArguments::class, $pageId, '0', []);
         if (!isset($this->serverRequestCache[$cacheIdentifier])) {
-            $serverRequest = GeneralUtility::makeInstance(ServerRequest::class);
-            $this->serverRequestCache[$cacheIdentifier] = $serverRequest =
-                $serverRequest->withAttribute('site', $site)
+            $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
+
+            $serverRequest = GeneralUtility::makeInstance(ServerRequest::class)
+                ->withAttribute('site', $site)
                 ->withAttribute('language', $siteLanguage)
+                ->withAttribute('routing', $pageArguments)
+                ->withAttribute('frontend.page.information', $pageInformation)
                 ->withAttribute('applicationType', SystemEnvironmentBuilder::REQUESTTYPE_FE)
                 ->withUri($site->getBase());
+
+            $this->serverRequestCache[$cacheIdentifier] = $serverRequest = $serverRequest->withAttribute(
+                'frontend.typoscript',
+                $configurationManager->getCoreTypoScriptFrontendByRequest($serverRequest)
+            );
         }
 
         if (!isset($this->tsfeCache[$cacheIdentifier])) {
             // TYPO3 by default enables a preview mode if a backend user is logged in,
             // the VisibilityAspect is configured to show hidden elements.
             // Due to this setting hidden relations/translations might be indexed
-            // when running the Meilisearch indexer via the TYPO3 backend.
+            // when running the Solr indexer via the TYPO3 backend.
             // To avoid this, the VisibilityAspect is adapted for indexing.
             $context->setAspect(
                 'visibility',
@@ -149,49 +163,11 @@ class Tsfe implements SingletonInterface
             $feUser->fetchGroupData($serverRequest);
             $context->setAspect('frontend.user', GeneralUtility::makeInstance(UserAspect::class, $feUser, $userGroups));
 
-            /** @var PageArguments $pageArguments */
-            $pageArguments = GeneralUtility::makeInstance(PageArguments::class, $pageId, '0', []);
-
+            $serverRequest = $serverRequest->withAttribute('frontend.user', $feUser);
             /** @var TypoScriptFrontendController $tsfe */
-            $tsfe = GeneralUtility::makeInstance(TypoScriptFrontendController::class, $context, $site, $siteLanguage, $pageArguments, $feUser);
-
-            // @extensionScannerIgnoreLine
-            /** Done in {@link TypoScriptFrontendController::settingLanguage} */
-            //$tsfe->sys_page = GeneralUtility::makeInstance(PageRepository::class);
-
-            $template = GeneralUtility::makeInstance(TemplateService::class, $context, null, $tsfe);
-            $template->tt_track = false;
-            $tsfe->tmpl = $template;
-            $context->setAspect('typoscript', GeneralUtility::makeInstance(TypoScriptAspect::class, true));
-            $tsfe->no_cache = true;
-
-            $backedUpBackendUser = $GLOBALS['BE_USER'] ?? null;
-            try {
-                $serverRequest = $serverRequest->withAttribute('frontend.controller', $tsfe);
-                $tsfe->determineId($serverRequest);
-                $tsfe->no_cache = false;
-                /** @var ServerRequest $serverRequest */
-                $serverRequest = $tsfe->getFromCache($serverRequest);
-                // The manual releasing of locks is low level api and should be avoided in EXT:t3_meilisearch.
-                $tsfe->releaseLocks();
-
-                $tsfe->newCObj($serverRequest);
-                $tsfe->absRefPrefix = self::getAbsRefPrefixFromTSFE($tsfe);
-                $tsfe->calculateLinkVars([]);
-            } catch (Throwable $exception) {
-                // @todo: logging
-                $this->serverRequestCache[$cacheIdentifier] = null;
-                $this->tsfeCache[$cacheIdentifier] = null;
-                // Restore backend user, happens when initializeTsfe() is called from Backend context
-                if ($backedUpBackendUser) {
-                    $GLOBALS['BE_USER'] = $backedUpBackendUser;
-                }
-                return;
-            }
-            // Restore backend user, happens when initializeTsfe() is called from Backend context
-            if ($backedUpBackendUser) {
-                $GLOBALS['BE_USER'] = $backedUpBackendUser;
-            }
+            $tsfe = GeneralUtility::makeInstance(TypoScriptFrontendController::class);
+            $tsfe->id = $pageId;
+            $tsfe->newCObj($serverRequest);
 
             $this->serverRequestCache[$cacheIdentifier] = $serverRequest;
             $this->tsfeCache[$cacheIdentifier] = $tsfe;
@@ -218,7 +194,7 @@ class Tsfe implements SingletonInterface
      * Returns TypoScriptFrontendController for first available language id in fallback chain.
      *
      * Is usable for BE-Modules/CLI-Commands stack only, where the rendered TypoScript configuration
-     * of EXT:t3_meilisearch* stack is wanted and the language id does not matter.
+     * of EXT:solr* stack is wanted and the language id does not matter.
      *
      * NOTE: This method MUST NOT be used on indexing context.
      *
@@ -244,7 +220,7 @@ class Tsfe implements SingletonInterface
      * Returns TSFE for first initializable site language.
      *
      * Is usable for BE-Modules/CLI-Commands stack only, where the rendered TypoScript configuration
-     * of EXT:t3_meilisearch* stack is wanted and the language id does not matter.
+     * of EXT:solr* stack is wanted and the language id does not matter.
      */
     public function getTsfeByPageIdIgnoringLanguage(int $pageId): ?TypoScriptFrontendController
     {
@@ -294,9 +270,6 @@ class Tsfe implements SingletonInterface
             $this->initializeTsfe($pageId, $language, $rootPageId);
             return;
         }
-        if ($this->tsfeCache[$cacheIdentifier] instanceof TypoScriptFrontendController) {
-            $this->tsfeCache[$cacheIdentifier]->newCObj($this->serverRequestCache[$cacheIdentifier]);
-        }
     }
 
     /**
@@ -311,8 +284,9 @@ class Tsfe implements SingletonInterface
      * The TSFE can not be initialized for Spacer and sys-folders.
      * See: "Spacer and sys folders is not accessible in frontend" on {@link TypoScriptFrontendController::getPageAndRootline}
      *
-     * Note: The requested $pidToUse can be one of configured plugin.tx_t3meilisearch.index.queue.[indexConfig].additionalPageIds.
+     * Note: The requested $pidToUse can be one of configured plugin.tx_solr.index.queue.[indexConfig].additionalPageIds.
      *
+     * @throws AspectNotFoundException
      * @throws Exception\Exception
      * @throws DBALException
      */
@@ -321,7 +295,7 @@ class Tsfe implements SingletonInterface
         $incomingPidToUse = $pidToUse;
         $incomingRootPageId = $rootPageId;
 
-        // handle plugin.tx_t3meilisearch.index.queue.[indexConfig].additionalPageIds
+        // handle plugin.tx_solr.index.queue.[indexConfig].additionalPageIds
         if (isset($rootPageId) && !$this->isRequestedPageAPartOfRequestedSite($pidToUse)) {
             return $rootPageId;
         }
@@ -360,7 +334,7 @@ class Tsfe implements SingletonInterface
      *
      * @param array $pageRecord
      * @return bool
-     * @throws \TYPO3\CMS\Core\Context\Exception\AspectNotFoundException
+     * @throws AspectNotFoundException
      */
     protected function isPageAvailableForTSFE(array $pageRecord): bool
     {
@@ -368,7 +342,7 @@ class Tsfe implements SingletonInterface
         return $pageRecord['hidden'] === 0 &&
             $pageRecord['starttime'] <= $currentTime &&
             ($pageRecord['endtime'] === 0 || $pageRecord['endtime'] > 0 && $pageRecord['endtime'] > $currentTime)
-        ;
+            ;
     }
 
     /**
@@ -385,24 +359,5 @@ class Tsfe implements SingletonInterface
             return false;
         }
         return $rootPageId === $site->getRootPageId();
-    }
-
-    /**
-     * Resolves the configured absRefPrefix to a valid value and resolved if absRefPrefix
-     * is set to "auto".
-     */
-    private function getAbsRefPrefixFromTSFE(TypoScriptFrontendController $TSFE): string
-    {
-        $absRefPrefix = '';
-        if (empty($TSFE->config['config']['absRefPrefix'])) {
-            return $absRefPrefix;
-        }
-
-        $absRefPrefix = trim($TSFE->config['config']['absRefPrefix']);
-        if ($absRefPrefix === 'auto') {
-            $absRefPrefix = GeneralUtility::getIndpEnv('TYPO3_SITE_PATH');
-        }
-
-        return $absRefPrefix;
     }
 }
