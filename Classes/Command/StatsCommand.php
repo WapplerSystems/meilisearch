@@ -78,9 +78,8 @@ class StatsCommand extends Command
         $output->writeln('lastUpdate: '. $stats['lastUpdate']);
         $output->writeln('Indexes:');
 
+        $rows = [];
         foreach ($stats['indexes'] as $indexName => $index) {
-
-            $rows = [];
             $fieldDistribution = [];
             $i = 0;
             foreach ($index['fieldDistribution'] as $field => $value) {
@@ -92,6 +91,7 @@ class StatsCommand extends Command
                 }
             }
             $rows[] = [
+                $indexName,
                 $index['numberOfDocuments'],
                 $index['rawDocumentDbSize'],
                 $index['avgDocumentSize'],
@@ -100,16 +100,14 @@ class StatsCommand extends Command
                 $index['numberOfEmbeddedDocuments'],
                 implode(', ', $fieldDistribution),
             ];
-
-            $table = new Table($output);
-            $table
-                ->setHeaderTitle($indexName)
-                ->setHeaders(['numberOfDocuments', 'rawDocumentDbSize', 'avgDocumentSize', 'isIndexing', 'numberOfEmbeddings', 'numberOfEmbeddedDocuments', 'fieldDistribution'])
-                ->setVertical()
-                ->setRows($rows)
-            ;
-            $table->render();
         }
+
+        $table = new Table($output);
+        $table
+            ->setHeaders(['index', 'numberOfDocuments', 'rawDocumentDbSize', 'avgDocumentSize', 'isIndexing', 'numberOfEmbeddings', 'numberOfEmbeddedDocuments', 'fieldDistribution'])
+            ->setRows($rows)
+        ;
+        $table->render();
 
         return Command::SUCCESS;
     }
