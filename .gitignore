@@ -19,3 +19,4 @@ typo3temp
 uploads
 var
 vendor
+.env*
