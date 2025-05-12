@@ -77,7 +77,7 @@
 	},
 	"scripts": {
 		"post-autoload-dump": [
-			"mkdir -p .Build/vendor/apache-meilisearch-for-typo3",
+			"mkdir -p .Build/vendor/wapplersystems",
 			"[ -L .Build/vendor/wapplersystems/meilisearch ] || ln -snvf ../../../. .Build/vendor/wapplersystems/meilisearch"
 		],
 		"t3:docs:build": [
@@ -89,9 +89,6 @@
 		],
 		"t3:docs:clean": [
 			"rm -Rf Documentation-GENERATED-temp/ $(readlink -f Documentation.HTML) Documentation.HTML"
-		],
-		"extension-create-libs": [
-			"@composer req -d Resources/Private/Php/ComposerLibraries solarium/solarium:$(Build/Helpers/GET_LOCAL_PACKAGE_VERSION_CONSTRAINT.sh solarium/solarium)"
 		],
 		"extension-build": [
 			"@extension-create-libs"
