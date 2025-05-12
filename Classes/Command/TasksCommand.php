@@ -11,6 +11,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use TYPO3\CMS\Core\Exception\SiteNotFoundException;
+use TYPO3\CMS\Core\Utility\DebugUtility;
 use WapplerSystems\Meilisearch\ConnectionManager;
 use WapplerSystems\Meilisearch\Domain\Site\SiteRepository;
 use WapplerSystems\Meilisearch\System\Meilisearch\MeilisearchConnection;
@@ -55,7 +56,6 @@ class TasksCommand extends Command
     {
 
         $siteIdentifier = (string)$input->getArgument('siteIdentifier');
-
         try {
             $site = $this->siteRepository->getSiteByIdentifier($siteIdentifier);
         } catch (SiteNotFoundException $e) {
@@ -70,7 +70,8 @@ class TasksCommand extends Command
 
         $client = $connection->getService()->getClient();
 
-        $tasks = $client->getTasks();
+        $tasks = $client->getTasks()->toArray();
+        $tasks = array_reverse($tasks['results']);
         $output->writeln('Tasks:');
 
         $rows = [];
