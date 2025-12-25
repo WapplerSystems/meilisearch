@@ -60,9 +60,9 @@ class QueryBuilder extends AbstractQueryBuilder
     protected SiteHashService $siteHashService;
 
     public function __construct(
-        TypoScriptConfiguration $configuration = null,
-        MeilisearchLogManager   $meilisearchLogManager = null,
-        SiteHashService         $siteHashService = null,
+        ?TypoScriptConfiguration $configuration = null,
+        ?MeilisearchLogManager   $meilisearchLogManager = null,
+        ?SiteHashService         $siteHashService = null,
     ) {
         $this->typoScriptConfiguration = $configuration ?? Util::getMeilisearchConfiguration();
         $this->logger = $meilisearchLogManager ?? GeneralUtility::makeInstance(MeilisearchLogManager::class, __CLASS__);

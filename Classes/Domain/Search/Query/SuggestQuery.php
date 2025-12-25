@@ -33,7 +33,7 @@ class SuggestQuery extends Query
 
     protected string $prefix;
 
-    public function __construct(string $keywords, TypoScriptConfiguration $meilisearchConfiguration = null)
+    public function __construct(string $keywords, ?TypoScriptConfiguration $meilisearchConfiguration = null)
     {
         parent::__construct();
         $meilisearchConfiguration = $meilisearchConfiguration ?? Util::getMeilisearchConfiguration();

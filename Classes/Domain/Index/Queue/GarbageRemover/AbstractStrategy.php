@@ -37,8 +37,8 @@ abstract class AbstractStrategy
     protected ConnectionManager $connectionManager;
 
     public function __construct(
-        QueueInterface $queue = null,
-        ConnectionManager $connectionManager = null,
+        ?QueueInterface $queue = null,
+        ?ConnectionManager $connectionManager = null,
     ) {
         $this->queue = $queue ?? GeneralUtility::makeInstance(Queue::class);
         $this->connectionManager = $connectionManager ?? GeneralUtility::makeInstance(ConnectionManager::class);
@@ -103,6 +103,7 @@ abstract class AbstractStrategy
                 $this->queue->deleteItem($indexQueueItem->getType(), $indexQueueItem->getIndexQueueUid());
                 continue;
             }
+            return;
 
             $enableCommitsSetting = $site->getMeilisearchConfiguration()->getEnableCommits();
             $siteHash = $site->getSiteHash();

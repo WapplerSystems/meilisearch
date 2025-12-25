@@ -54,9 +54,9 @@ class IndexService
 
     public function __construct(
         Site                     $site,
-        QueueInterface           $queue = null,
-        EventDispatcherInterface $eventDispatcher = null,
-        MeilisearchLogManager    $meilisearchLogManager = null,
+        ?QueueInterface           $queue = null,
+        ?EventDispatcherInterface $eventDispatcher = null,
+        ?MeilisearchLogManager    $meilisearchLogManager = null,
     ) {
         $this->site = $site;
         $this->indexQueue = $queue ?? GeneralUtility::makeInstance(Queue::class);

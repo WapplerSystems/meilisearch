@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 namespace WapplerSystems\Meilisearch\Domain\Site;
 
+use TYPO3\CMS\Core\Utility\DebugUtility;
 use WapplerSystems\Meilisearch\Domain\Index\Queue\RecordMonitor\Helper\RootPageResolver;
 use WapplerSystems\Meilisearch\Domain\Site\Exception\UnexpectedTYPO3SiteInitializationException;
 use WapplerSystems\Meilisearch\Event\Site\AfterDomainHasBeenDeterminedForSiteEvent;
@@ -109,7 +110,7 @@ class SiteRepository
      */
     public function getSiteByRootPageId(int $rootPageId): ?Site
     {
-        $cacheId = 'SiteRepository' . '_' . 'getSiteByPageId' . '_' . $rootPageId;
+        $cacheId = 'SiteRepository' . '_' . 'getSiteByPageId' . '_Meilisearch_' . $rootPageId;
 
         $methodResult = $this->runtimeCache->get($cacheId);
         if (!empty($methodResult)) {
@@ -148,7 +149,7 @@ class SiteRepository
      */
     public function getAvailableSites(bool $stopOnInvalidSite = false): array
     {
-        $cacheId = 'SiteRepository' . '_' . 'getAvailableSites';
+        $cacheId = 'SiteRepository' . '_' . 'getAvailableSites_Meilisearch';
 
         $sites = $this->runtimeCache->get($cacheId);
         if (is_array($sites) && $sites !== []) {
@@ -328,39 +329,39 @@ class SiteRepository
             return $language->getLanguageId();
         }, $typo3Site->getLanguages());
 
-        // Try to get first instantiable TSFE for one of site languages, to get TypoScript with `plugin.tx_solr.index.*`,
+        // Try to get first instantiable TSFE for one of site languages, to get TypoScript with `plugin.tx_meilisearch.index.*`,
         // to be able to collect indexing configuration,
         // which are required for BE-Modules/CLI-Commands or RecordMonitor within BE/TCE-commands.
         // If TSFE for none of languages can be initialized, then the \ApacheSolrForTypo3\Solr\Domain\Site\Site object unusable at all,
         // so the rest of the steps in this method are not necessary, and therefore the null will be returned.
-        $solrConnectionConfigurations = [];
+        $meilisearchConnectionConfigurations = [];
 
         $firstLanguage = null;
         foreach ($availableLanguageIds as $languageUid) {
-            $solrConnection = SiteUtility::getMeilisearchConnectionConfiguration($typo3Site, $languageUid);
-            if ($solrConnection !== null) {
-                $solrConnectionConfigurations[$languageUid] = $solrConnection;
+            $meilisearchConnection = SiteUtility::getMeilisearchConnectionConfiguration($typo3Site, $languageUid);
+            if ($meilisearchConnection !== null) {
+                $meilisearchConnectionConfigurations[$languageUid] = $meilisearchConnection;
             }
             if ($firstLanguage === null) {
                 $firstLanguage = $typo3Site->getLanguageById($languageUid);
             }
         }
 
-        $solrConfiguration = $this->frontendEnvironment->getMeilisearchConfigurationFromPageId(
+        $meilisearchConfiguration = $this->frontendEnvironment->getMeilisearchConfigurationFromPageId(
             $rootPageRecord['uid'],
             $firstLanguage->getLanguageId(),
         );
 
         return GeneralUtility::makeInstance(
             Site::class,
-            $solrConfiguration,
+            $meilisearchConfiguration,
             $rootPageRecord,
             $domain,
             $siteHash,
             $pageRepository,
             $defaultLanguage,
             $availableLanguageIds,
-            $solrConnectionConfigurations,
+            $meilisearchConnectionConfigurations,
             $typo3Site
         );
     }

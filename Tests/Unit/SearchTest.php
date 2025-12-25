@@ -50,7 +50,7 @@ class SearchTest extends SetUpUnitTestCase
             ->getMock();
 
         $this->meilisearchConnectionMock = $this->createMock(MeilisearchConnection::class);
-        $this->meilisearchConnectionMock->expects(self::any())->method('getService')->willReturn($this->meilisearchReadServiceMock);
+        $this->meilisearchConnectionMock->expects($this->any())->method('getService')->willReturn($this->meilisearchReadServiceMock);
         $this->search = new Search($this->meilisearchConnectionMock);
         parent::setUp();
     }
@@ -62,7 +62,7 @@ class SearchTest extends SetUpUnitTestCase
     {
         $query = new SearchQuery();
         $limit = 99;
-        $this->meilisearchReadServiceMock->expects(self::once())->method('search')->willReturnCallback(
+        $this->meilisearchReadServiceMock->expects($this->once())->method('search')->willReturnCallback(
             function ($query) use ($limit) {
                 $this->assertSame($limit, $query->getRows(), 'Unexpected limit was passed');
                 return $this->createMock(ResponseAdapter::class);

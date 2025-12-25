@@ -40,9 +40,9 @@ class PageUriBuilder
     protected EventDispatcherInterface $eventDispatcher;
 
     public function __construct(
-        MeilisearchLogManager    $logger = null,
-        SiteFinder               $siteFinder = null,
-        EventDispatcherInterface $eventDispatcher = null
+        ?MeilisearchLogManager    $logger = null,
+        ?SiteFinder               $siteFinder = null,
+        ?EventDispatcherInterface $eventDispatcher = null
     ) {
         $this->logger = $logger ?? GeneralUtility::makeInstance(MeilisearchLogManager::class, __CLASS__);
         $this->siteFinder = $siteFinder ?? GeneralUtility::makeInstance(SiteFinder::class);

@@ -43,7 +43,7 @@ class QueueItemRepository extends AbstractRepository
     protected MeilisearchLogManager $logger;
     protected EventDispatcherInterface $eventDispatcher;
 
-    public function __construct(MeilisearchLogManager $logManager = null, EventDispatcherInterface $eventDispatcher = null)
+    public function __construct(?MeilisearchLogManager $logManager = null, ?EventDispatcherInterface $eventDispatcher = null)
     {
         $this->logger = $logManager ?? GeneralUtility::makeInstance(
             MeilisearchLogManager::class,
@@ -238,11 +238,12 @@ class QueueItemRepository extends AbstractRepository
      */
     public function getPageItemChangedTimeByPageUid(int $pageUid): ?int
     {
+        /** @var QueryBuilder $queryBuilder */
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getQueryBuilderForTable('tt_content');
         $queryBuilder->getRestrictions()->removeAll();
         $pageContentLastChangedTime = $queryBuilder
-            ->add('select', $queryBuilder->expr()->max('tstamp', 'changed_time'))
+            ->selectLiteral($queryBuilder->expr()->max('tstamp', 'changed_time'))
             ->from('tt_content')
             ->where(
                 $queryBuilder->expr()->eq('pid', $pageUid)
@@ -270,7 +271,7 @@ class QueueItemRepository extends AbstractRepository
             $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($itemType);
             $queryBuilder->getRestrictions()->removeAll();
             $localizedChangedTime = $queryBuilder
-                ->add('select', $queryBuilder->expr()->max($timeStampField, 'changed_time'))
+                ->selectLiteral($queryBuilder->expr()->max($timeStampField, 'changed_time'))
                 ->from($itemType)
                 ->orWhere(
                     $queryBuilder->expr()->eq('uid', $itemUid),
@@ -343,7 +344,7 @@ class QueueItemRepository extends AbstractRepository
      *
      * @throws DBALException
      */
-    public function deleteItem(string $itemType, int $itemUid = null): void
+    public function deleteItem(string $itemType, ?int $itemUid = null): void
     {
         $itemUids = empty($itemUid) ? [] : [$itemUid];
         $this->deleteItems([], [], [$itemType], $itemUids);

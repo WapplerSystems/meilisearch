@@ -61,7 +61,7 @@ class Search
      * @throws DBALException
      * @throws NoMeilisearchConnectionFoundException
      */
-    public function __construct(MeilisearchConnection $meilisearchConnection = null)
+    public function __construct(?MeilisearchConnection $meilisearchConnection = null)
     {
         $this->logger = new MeilisearchLogManager(__CLASS__, GeneralUtility::makeInstance(DebugWriter::class));
 
