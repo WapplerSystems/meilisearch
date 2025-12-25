@@ -88,7 +88,7 @@ abstract class AbstractMeilisearchService
         string           $message,
         string           $url,
         ?ResponseAdapter $meilisearchResponse,
-        Throwable        $exception = null,
+        ?Throwable       $exception = null,
         string           $contentSend = ''
     ): void
     {
@@ -101,7 +101,7 @@ abstract class AbstractMeilisearchService
      */
     protected function buildLogDataFromResponse(
         ResponseAdapter $meilisearchResponse,
-        Throwable       $e = null,
+        ?Throwable      $e = null,
         string          $url = '',
         string          $contentSend = ''
     ): array

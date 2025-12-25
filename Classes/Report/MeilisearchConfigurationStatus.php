@@ -41,8 +41,8 @@ class MeilisearchConfigurationStatus extends AbstractMeilisearchStatus
     protected FrontendEnvironment $frontendEnvironment;
 
     public function __construct(
-        ExtensionConfiguration $extensionConfiguration = null,
-        FrontendEnvironment $frontendEnvironment = null
+        ?ExtensionConfiguration $extensionConfiguration = null,
+        ?FrontendEnvironment    $frontendEnvironment = null
     ) {
         $this->extensionConfiguration = $extensionConfiguration ?? GeneralUtility::makeInstance(ExtensionConfiguration::class);
         $this->frontendEnvironment = $frontendEnvironment ?? GeneralUtility::makeInstance(FrontendEnvironment::class);

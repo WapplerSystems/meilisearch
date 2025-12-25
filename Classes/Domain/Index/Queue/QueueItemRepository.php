@@ -567,8 +567,8 @@ class QueueItemRepository extends AbstractRepository
      * @throws DBALException
      */
     protected function getItemsByCompositeExpression(
-        CompositeExpression $expression = null,
-        QueryBuilder $queryBuilder = null
+        ?CompositeExpression $expression = null,
+        ?QueryBuilder $queryBuilder = null
     ): array {
         if (!$queryBuilder instanceof QueryBuilder) {
             $queryBuilder = $this->getQueryBuilder();

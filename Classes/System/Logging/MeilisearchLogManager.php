@@ -38,7 +38,7 @@ class MeilisearchLogManager implements LoggerInterface
 
     protected string $className;
 
-    public function __construct(string $className, DebugWriter $debugWriter = null)
+    public function __construct(string $className, ?DebugWriter $debugWriter = null)
     {
         $this->className = $className;
         $this->debugWriter = $debugWriter ?? GeneralUtility::makeInstance(DebugWriter::class);

@@ -51,17 +51,17 @@ class MeilisearchConnectionTest extends SetUpUnitTestCase
      * @return MeilisearchConnection|null
      */
     protected function getMeilisearchConnectionWithDummyConstructorArgs(
-        Endpoint                 $readEndpoint = null,
-        Endpoint                 $writeEndpoint = null,
-        TypoScriptConfiguration  $configuration = null,
-        SynonymParser            $synonymParser = null,
-        StopWordParser           $stopWordParser = null,
-        SchemaParser             $schemaParser = null,
-        MeilisearchLogManager    $logManager = null,
-        ClientInterface          $psr7Client = null,
-        RequestFactoryInterface  $requestFactory = null,
-        StreamFactoryInterface   $streamFactory = null,
-        EventDispatcherInterface $eventDispatcher = null
+        ?Endpoint                 $readEndpoint = null,
+        ?Endpoint                 $writeEndpoint = null,
+        ?TypoScriptConfiguration  $configuration = null,
+        ?SynonymParser            $synonymParser = null,
+        ?StopWordParser           $stopWordParser = null,
+        ?SchemaParser             $schemaParser = null,
+        ?MeilisearchLogManager    $logManager = null,
+        ?ClientInterface          $psr7Client = null,
+        ?RequestFactoryInterface  $requestFactory = null,
+        ?StreamFactoryInterface   $streamFactory = null,
+        ?EventDispatcherInterface $eventDispatcher = null
     ): ?MeilisearchConnection {
         try {
             return new MeilisearchConnection(

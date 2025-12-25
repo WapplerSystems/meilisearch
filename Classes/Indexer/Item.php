@@ -121,10 +121,10 @@ class Item implements ItemInterface, MountPointAwareItemInterface
      * @param array $fullRecord Optional full record for the item. If provided, can save some SQL queries.
      */
     public function __construct(
-        array                                $itemMetaData,
-        array                                $fullRecord = [],
-        IndexQueueIndexingPropertyRepository $indexQueueIndexingPropertyRepository = null,
-        QueueItemRepository                  $queueItemRepository = null
+        array                                 $itemMetaData,
+        array                                 $fullRecord = [],
+        ?IndexQueueIndexingPropertyRepository $indexQueueIndexingPropertyRepository = null,
+        ?QueueItemRepository                  $queueItemRepository = null
     )
     {
         $this->indexQueueUid = $itemMetaData['uid'] ?? null;

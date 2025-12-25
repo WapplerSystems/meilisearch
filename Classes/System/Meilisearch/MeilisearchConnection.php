@@ -73,16 +73,16 @@ class MeilisearchConnection
      * @throws NotFoundExceptionInterface
      */
     public function __construct(
-        array $clientConfiguration = [],
-        TypoScriptConfiguration  $configuration = null,
-        SynonymParser            $synonymParser = null,
-        StopWordParser           $stopWordParser = null,
-        SchemaParser             $schemaParser = null,
-        MeilisearchLogManager    $logManager = null,
-        ClientInterface          $psr7Client = null,
-        RequestFactoryInterface  $requestFactory = null,
-        StreamFactoryInterface   $streamFactory = null,
-        EventDispatcherInterface $eventDispatcher = null,
+        array                     $clientConfiguration = [],
+        ?TypoScriptConfiguration  $configuration = null,
+        ?SynonymParser            $synonymParser = null,
+        ?StopWordParser           $stopWordParser = null,
+        ?SchemaParser             $schemaParser = null,
+        ?MeilisearchLogManager    $logManager = null,
+        ?ClientInterface          $psr7Client = null,
+        ?RequestFactoryInterface  $requestFactory = null,
+        ?StreamFactoryInterface   $streamFactory = null,
+        ?EventDispatcherInterface $eventDispatcher = null,
     ) {
         $this->clientConfiguration = $clientConfiguration;
         $this->configuration = $configuration ?? Util::getMeilisearchConfiguration();

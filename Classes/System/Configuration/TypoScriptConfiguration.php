@@ -65,9 +65,9 @@ class TypoScriptConfiguration
     protected ContentObjectService $contentObjectService;
 
     public function __construct(
-        array $configuration,
-        int $contextPageId = null,
-        ContentObjectService $contentObjectService = null,
+        array                 $configuration,
+        ?int                  $contextPageId = null,
+        ?ContentObjectService $contentObjectService = null,
     ) {
         $this->configurationAccess = new ArrayAccessor($configuration, '.', true);
         $this->contextPageId = $contextPageId ?? 0;

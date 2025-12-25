@@ -331,7 +331,7 @@ class PageIndexer extends AbstractIndexer
      *
      * @throws DBALException
      */
-    protected function getAccessRootline(Item $item, int $language = 0, int $contentAccessGroup = null): string
+    protected function getAccessRootline(Item $item, int $language = 0, ?int $contentAccessGroup = null): string
     {
         static $accessRootlineCache;
 
