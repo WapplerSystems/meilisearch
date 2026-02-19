@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 namespace WapplerSystems\Meilisearch\Domain\Index\Queue\Statistic;
 
+use Doctrine\DBAL\ParameterType;
 use WapplerSystems\Meilisearch\System\Records\AbstractRepository;
 use Doctrine\DBAL\Exception as DBALException;
 use PDO;
@@ -47,19 +48,19 @@ class QueueStatisticsRepository extends AbstractRepository
     ): QueueStatistic {
         $queryBuilder = $this->getQueryBuilder();
         $queryBuilder
-            ->add('select', vsprintf('(%s < %s) AS %s', [
+            ->selectLiteral(vsprintf('(%s < %s) AS %s', [
                 $queryBuilder->quoteIdentifier($this->columnIndexed),
                 $queryBuilder->quoteIdentifier($this->columnChanged),
                 $queryBuilder->quoteIdentifier('pending'),
-            ]), true)
-            ->add('select', vsprintf('(%s) AS %s', [
+            ]))
+            ->addSelectLiteral(vsprintf('(%s) AS %s', [
                 $queryBuilder->expr()->notLike($this->columnErrors, $queryBuilder->createNamedParameter('')),
                 $queryBuilder->quoteIdentifier('failed'),
-            ]), true)
-            ->add('select', $queryBuilder->expr()->count('*', 'count'), true)
+            ]))
+            ->addSelectLiteral($queryBuilder->expr()->count('*', 'count'))
             ->from($this->table)
             ->where(
-                $queryBuilder->expr()->eq($this->columnRootpage, $queryBuilder->createNamedParameter($rootPid, PDO::PARAM_INT))
+                $queryBuilder->expr()->eq($this->columnRootpage, $queryBuilder->createNamedParameter($rootPid, ParameterType::INTEGER))
             )->groupBy('pending', 'failed');
 
         if (!empty($indexingConfigurationName)) {
@@ -70,7 +71,6 @@ class QueueStatisticsRepository extends AbstractRepository
                 )
             );
         }
-
         return $this->buildQueueStatisticFromResultSet(
             $queryBuilder
                 ->executeQuery()
